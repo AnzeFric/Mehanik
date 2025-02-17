@@ -10,4 +10,26 @@ export const AppStyles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 25,
   },
+  textInput: {
+    borderWidth: 1,
+    borderColor: Colors.light.textInputBorder,
+    borderRadius: 8,
+    padding: 15,
+    fontSize: 16,
+    fontFamily: "Jaldi-Regular",
+    backgroundColor: Colors.light.textInputBackground,
+  },
+  button: {
+    backgroundColor: Colors.light.specialBlue,
+    padding: 15,
+    borderRadius: 8,
+    alignItems: "center",
+    marginTop: 20,
+  },
+  buttonText: {
+    color: Colors.light.darkButtonText,
+    fontSize: 24,
+    lineHeight: 24,
+    fontFamily: "Jaldi-Bold",
+  },
 });

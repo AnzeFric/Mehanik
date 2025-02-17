@@ -2,10 +2,10 @@ import { View, Text, StyleSheet } from "react-native";
 import { Colors } from "@/constants/Colors";
 import { AppStyles } from "@/constants/Styles";
 
-export default function HomeScreen() {
+export default function HomeUserScreen() {
   return (
     <View style={AppStyles.parentPadding}>
-      <Text style={styles.userGreeting}>Zdravo User!</Text>
+      <Text style={styles.userGreeting}>Zdravo Stranka!</Text>
     </View>
   );
 }
