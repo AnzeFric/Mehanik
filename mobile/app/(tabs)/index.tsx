@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
+import { Colors } from "@/constants/Colors";
 
 export default function HomeScreen() {
   return (
@@ -11,8 +12,6 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   userGreeting: {
     fontSize: 36,
-    paddingTop: 20,
-    paddingStart: 25,
     fontFamily: "Jaldi-Regular",
   },
 });
