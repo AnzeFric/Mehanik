@@ -6,4 +6,8 @@ export const AppStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.light.background,
   },
+  parentPadding: {
+    paddingVertical: 20,
+    paddingHorizontal: 25,
+  },
 });
