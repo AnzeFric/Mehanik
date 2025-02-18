@@ -16,6 +16,7 @@ export default function LoginScreen() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [userType, setUserType] = useState("user"); // Default: Normal user
 
   const handleRegistration = () => {
     console.log(
@@ -23,7 +24,9 @@ export default function LoginScreen() {
       email,
       name,
       password,
-      confirmPassword
+      confirmPassword,
+      "User Type:",
+      userType
     );
   };
 
@@ -31,7 +34,9 @@ export default function LoginScreen() {
     <View style={[AppStyles.parentPadding, styles.container]}>
       <View style={styles.headerContainer}>
         <Text style={styles.title}>Ustvarite račun</Text>
-        <Text style={styles.subtitle}>Izpolnite polja za registracijo</Text>
+        <Text style={styles.subtitle}>
+          Izberite vrsto računa in izpolnite podatke
+        </Text>
       </View>
 
       <View style={{ gap: 20 }}>
@@ -67,6 +72,30 @@ export default function LoginScreen() {
           onChangeText={setConfirmPassword}
           secureTextEntry
         />
+        <View style={{ gap: 10 }}>
+          <Text>Kdo ste?</Text>
+          <View style={styles.userTypeContainer}>
+            <TouchableOpacity
+              style={[
+                styles.userTypeButton,
+                userType === "user" && styles.selectedButton,
+              ]}
+              onPress={() => setUserType("user")}
+            >
+              <Text style={styles.userTypeText}>Sem stranka</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[
+                styles.userTypeButton,
+                userType === "mechanic" && styles.selectedButton,
+              ]}
+              onPress={() => setUserType("mechanic")}
+            >
+              <Text style={styles.userTypeText}>Sem avtomehanik</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
 
         <TouchableHighlight
           style={AppStyles.button}
@@ -105,6 +134,26 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.light.secondaryText,
     fontFamily: "Jaldi-Regular",
+  },
+  userTypeContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    gap: 10,
+  },
+  userTypeButton: {
+    flex: 1,
+    paddingVertical: 12,
+    backgroundColor: Colors.light.inactiveButton,
+    borderRadius: 8,
+    alignItems: "center",
+  },
+  selectedButton: {
+    backgroundColor: Colors.light.specialBlue,
+  },
+  userTypeText: {
+    fontSize: 16,
+    fontFamily: "Jaldi-Bold",
+    color: "white",
   },
   loginContainer: {
     flexDirection: "row",

@@ -11,6 +11,7 @@ export const Colors = {
     specialBlueClick: "#0055A4",
     textInputBackground: "#F8F8F8",
     textInputBorder: "#DDDDDD",
+    inactiveButton: "#C3C3C3",
 
     text: "#11181C",
     tint: tintColorLight,
