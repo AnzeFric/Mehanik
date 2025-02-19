@@ -1,5 +1,5 @@
-import { View, Text, ScrollView, StyleSheet } from "react-native";
-import { Colors } from "@/constants/Colors";
+import { View, ScrollView, StyleSheet } from "react-native";
+import HorizontalButton from "./HorizontalButton";
 
 const days = ["Pon", "Tor", "Sre", "Čet", "Pet", "Sob", "Ned"];
 
@@ -12,9 +12,7 @@ export default function HorizontalButtons() {
     >
       <View style={styles.container}>
         {days.map((item, index) => (
-          <Text style={styles.weekText} key={index}>
-            {item}
-          </Text>
+          <HorizontalButton buttonText={item} key={index} />
         ))}
       </View>
     </ScrollView>
@@ -26,15 +24,5 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     gap: 10,
-  },
-  weekText: {
-    fontFamily: "Jaldi-Bold",
-    fontSize: 20,
-    backgroundColor: Colors.light.specialBlue,
-    color: Colors.light.darkButtonText,
-    padding: 20,
-    borderRadius: 30,
-    minWidth: 80,
-    textAlign: "center",
   },
 });
