@@ -1,10 +1,7 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
-import { Colors } from "@/constants/Colors";
+import { View, Text, StyleSheet } from "react-native";
 import { AppStyles } from "@/constants/Styles";
 import MenuIcon from "@/assets/icons/MenuIcon.svg";
 import HorizontalButtons from "@/components/mechanic/home/HorizontalButtons";
-
-const days = ["Pon", "Tor", "Sre", "Čet", "Pet", "Sob", "Ned"];
 
 export default function HomeMechanicScreen() {
   return (
@@ -23,9 +20,6 @@ export default function HomeMechanicScreen() {
       </View>
       <View>
         <Text style={styles.title}>Pregled terminov</Text>
-
-        <Text>Zamenji gumbe za component</Text>
-
         <HorizontalButtons />
         <Text>Tu se pol prikažejo termini za vsak dan, ko se klikne gumb</Text>
       </View>
