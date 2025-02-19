@@ -1,12 +1,29 @@
-import { Text, StyleSheet } from "react-native";
+import { Text, StyleSheet, Pressable } from "react-native";
 import { Colors } from "@/constants/Colors";
 
 interface Props {
   buttonText: string;
+  isSelected: boolean;
+  onPress: () => void;
 }
 
-export default function HorizontalButton({ buttonText }: Props) {
-  return <Text style={styles.weekText}>{buttonText}</Text>;
+export default function HorizontalButton({
+  buttonText,
+  isSelected,
+  onPress,
+}: Props) {
+  return (
+    <Pressable onPress={onPress}>
+      <Text
+        style={[
+          styles.weekText,
+          !isSelected && { backgroundColor: Colors.light.inactiveButton },
+        ]}
+      >
+        {buttonText}
+      </Text>
+    </Pressable>
+  );
 }
 
 const styles = StyleSheet.create({
