@@ -14,9 +14,18 @@ export default function HomeMechanicScreen() {
 
       <View>
         <Text style={styles.title}>Prihodki</Text>
-        <Text style={styles.text}>Danes</Text>
-        <Text style={styles.text}>Teden</Text>
-        <Text style={styles.text}>Mesec</Text>
+        <View style={styles.incomeContainer}>
+          <Text style={styles.text}>Danes</Text>
+          <Text style={[styles.text, { alignSelf: "flex-end" }]}>123.03€</Text>
+        </View>
+        <View style={styles.incomeContainer}>
+          <Text style={styles.text}>Teden</Text>
+          <Text style={[styles.text, { alignSelf: "flex-end" }]}>323.03€</Text>
+        </View>
+        <View style={styles.incomeContainer}>
+          <Text style={styles.text}>Mesec</Text>
+          <Text style={[styles.text, { alignSelf: "flex-end" }]}>1203.03€</Text>
+        </View>
       </View>
       <View>
         <Text style={styles.title}>Pregled terminov</Text>
@@ -34,9 +43,15 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontFamily: "Jaldi-Regular",
+    paddingBottom: 10,
+  },
+  incomeContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   text: {
-    fontSize: 24,
+    fontSize: 22,
     fontFamily: "Jaldi-Regular",
   },
 
