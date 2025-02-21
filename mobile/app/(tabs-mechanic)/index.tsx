@@ -9,15 +9,8 @@ export default function HomeMechanicScreen() {
       <View style={styles.settingsIcon}>
         <MenuIcon height={30} width={30} onPress={() => {}} />
       </View>
-
-      <Text style={styles.userGreeting}>Zdravo Mehanik!</Text>
-
       <View>
         <Text style={styles.title}>Prihodki</Text>
-        <View style={styles.incomeContainer}>
-          <Text style={styles.text}>Danes</Text>
-          <Text style={[styles.text, { alignSelf: "flex-end" }]}>123.03€</Text>
-        </View>
         <View style={styles.incomeContainer}>
           <Text style={styles.text}>Teden</Text>
           <Text style={[styles.text, { alignSelf: "flex-end" }]}>323.03€</Text>
@@ -42,7 +35,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontFamily: "Jaldi-Regular",
-    paddingBottom: 10,
   },
   incomeContainer: {
     display: "flex",
@@ -52,6 +44,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 22,
     fontFamily: "Jaldi-Regular",
+    lineHeight: 28,
   },
 
   userGreeting: {
