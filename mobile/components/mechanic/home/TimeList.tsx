@@ -1,4 +1,5 @@
 import { ScrollView, Text, View, StyleSheet } from "react-native";
+import { Colors } from "@/constants/Colors";
 
 const times = [
   "00:00",
@@ -42,13 +43,13 @@ export default function TimeList({ selectedDay }: TimeListProps) {
     <ScrollView>
       {times.map((time, index) => (
         <View key={index} style={styles.container}>
-          <Text style={{ alignSelf: "center" }}>{time}</Text>
+          <Text style={[styles.text, { alignSelf: "center" }]}>{time}</Text>
           <View style={{ flexShrink: 1 }}>
             <View style={styles.customer}>
-              <Text>Ime Priimek</Text>
-              <Text>Škoda Octavia</Text>
+              <Text style={styles.text}>Ime Priimek</Text>
+              <Text style={styles.text}>Škoda Octavia</Text>
             </View>
-            <Text>
+            <Text style={styles.textSmall}>
               Nek daljši opis ob vnosu termina iz strani avtomehanika. Recimo
               redni servis, ali menjava zavornih ploščic...
             </Text>
@@ -63,11 +64,21 @@ const styles = StyleSheet.create({
   container: {
     display: "flex",
     flexDirection: "row",
-    paddingVertical: 10,
+    paddingVertical: 15,
+    paddingHorizontal: 5,
     gap: 20,
-    borderColor: "#003366",
+    borderColor: Colors.light.specialBlue,
     borderBottomWidth: 2.5,
     borderStyle: "dashed",
+  },
+  text: {
+    fontSize: 16,
+    fontFamily: "Jaldi-Regulat",
+    lineHeight: 16,
+  },
+  textSmall: {
+    fontSize: 14,
+    fontFamily: "Jaldi-Regulat",
   },
   customer: {
     display: "flex",
