@@ -5,7 +5,7 @@ import DaySchedule from "@/components/mechanic/home/DaySchedule";
 
 export default function HomeMechanicScreen() {
   return (
-    <View style={AppStyles.parentPadding}>
+    <View style={[AppStyles.parentPadding, { flex: 1 }]}>
       <View style={styles.settingsIcon}>
         <MenuIcon height={30} width={30} onPress={() => {}} />
       </View>
@@ -27,7 +27,7 @@ export default function HomeMechanicScreen() {
           <Text style={[styles.text, { alignSelf: "flex-end" }]}>1203.03€</Text>
         </View>
       </View>
-      <View>
+      <View style={{ flex: 1 }}>
         <Text style={styles.title}>Pregled terminov</Text>
         <DaySchedule />
       </View>
