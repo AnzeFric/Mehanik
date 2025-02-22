@@ -12,6 +12,7 @@ export const Colors = {
     textInputBackground: "#F8F8F8",
     textInputBorder: "#DDDDDD",
     inactiveButton: "#C3C3C3",
+    inactiveBorder: "#C3C3C3",
 
     text: "#11181C",
     tint: tintColorLight,

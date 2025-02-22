@@ -1,5 +1,5 @@
 import { ScrollView, View, StyleSheet } from "react-native";
-import HorizontalButton from "./HorizontalButton";
+import HorizontalButton from "./items/HorizontalButton";
 
 const days = ["Pon", "Tor", "Sre", "Čet", "Pet", "Sob", "Ned"];
 
