@@ -1,18 +1,26 @@
-import { View, Text, StyleSheet } from "react-native";
-import { Colors } from "@/constants/Colors";
+import { View, StyleSheet } from "react-native";
 import { AppStyles } from "@/constants/Styles";
+import MenuIcon from "@/assets/icons/MenuIcon.svg";
+import { router } from "expo-router";
 
 export default function HomeUserScreen() {
   return (
-    <View style={AppStyles.parentPadding}>
-      <Text style={styles.userGreeting}>Zdravo Stranka!</Text>
+    <View style={[AppStyles.parentPadding, { flex: 1 }]}>
+      <View style={styles.settingsIcon}>
+        <MenuIcon
+          height={30}
+          width={30}
+          onPress={() => {
+            router.push("/(tabs-mechanic)/settings");
+          }}
+        />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  userGreeting: {
-    fontSize: 36,
-    fontFamily: "Jaldi-Regular",
+  settingsIcon: {
+    alignSelf: "flex-end",
   },
 });
