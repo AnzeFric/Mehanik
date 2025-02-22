@@ -1,13 +1,20 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { AppStyles } from "@/constants/Styles";
 import MenuIcon from "@/assets/icons/MenuIcon.svg";
 import DaySchedule from "@/components/mechanic/home/DaySchedule";
+import { router } from "expo-router";
 
 export default function HomeMechanicScreen() {
   return (
     <View style={[AppStyles.parentPadding, { flex: 1 }]}>
       <View style={styles.settingsIcon}>
-        <MenuIcon height={30} width={30} onPress={() => {}} />
+        <MenuIcon
+          height={30}
+          width={30}
+          onPress={() => {
+            router.push("/(tabs-mechanic)/settings");
+          }}
+        />
       </View>
       <View>
         <Text style={styles.title}>Prihodki</Text>

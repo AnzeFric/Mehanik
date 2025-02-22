@@ -13,6 +13,7 @@ export default function TabLayout() {
         }}
       >
         <Stack.Screen name="index" />
+        <Stack.Screen name="settings" />
       </Stack>
     </SafeAreaView>
   );
