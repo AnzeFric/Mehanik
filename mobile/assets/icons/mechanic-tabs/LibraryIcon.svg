@@ -1,0 +1,27 @@
+<svg 
+    width="200" 
+    height="200" 
+    viewBox="0 0 200 200" 
+    fill="none" 
+    xmlns="http://www.w3.org/2000/svg">
+    
+    <!-- Book Outer Shape with Rounded Top -->
+    <path 
+        d="M50 30 H130 Q150 30 150 50 V170 H30 Q30 0 30 150 Q30 30 30 30 Z" 
+        stroke="black" 
+        stroke-width="8" 
+        fill="none" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"/>
+    
+    <!-- Label Rectangle on the Book Cover -->
+    <rect 
+        x="55" 
+        y="60" 
+        width="75" 
+        height="25" 
+        stroke="black" 
+        stroke-width="8" 
+        fill="none" 
+        stroke-linejoin="round"/>
+</svg>
