@@ -1,5 +1,6 @@
-import { Tabs } from "expo-router";
+import { Tabs, router } from "expo-router";
 import React from "react";
+import { Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "@/constants/Colors";
 import { View } from "react-native";
@@ -12,12 +13,18 @@ export default function TabLayout() {
     <SafeAreaView style={{ flex: 1 }}>
       <Tabs
         screenOptions={({ route }) => ({
-          tabBarActiveTintColor: Colors["light"].tint,
           headerShown: false,
           tabBarShowLabel: false,
           tabBarStyle: {
             height: 64,
           },
+          sceneStyle: { backgroundColor: Colors.light.background },
+          tabBarButton: (props) => (
+            <Pressable
+              {...props}
+              android_ripple={{ borderless: false, color: "transparent" }}
+            />
+          ),
         })}
         backBehavior="history"
       >
@@ -25,9 +32,11 @@ export default function TabLayout() {
           name="index"
           options={{
             title: "Home",
+            tabBarActiveTintColor: "#FFFFFF",
+            tabBarInactiveTintColor: "#FFFFFF",
             tabBarIcon: ({ color, focused }) => (
               <View style={{ margin: 20, padding: 20 }}>
-                <HomeIcon color={Colors.light.tint} width={28} height={28} />
+                <HomeIcon width={28} height={28} />
               </View>
             ),
           }}
@@ -38,13 +47,10 @@ export default function TabLayout() {
             title: "Appointments",
             tabBarIcon: ({ color, focused }) => (
               <View style={{ margin: 20, padding: 20 }}>
-                <AppointmentsIcon
-                  color={Colors.light.tint}
-                  width={28}
-                  height={28}
-                />
+                <AppointmentsIcon width={28} height={28} />
               </View>
             ),
+            headerPressColor: "white",
           }}
         />
         <Tabs.Screen
@@ -53,7 +59,7 @@ export default function TabLayout() {
             title: "Library",
             tabBarIcon: ({ color, focused }) => (
               <View style={{ margin: 20, marginTop: 23, padding: 20 }}>
-                <LibraryIcon color={Colors.light.tint} width={28} height={28} />
+                <LibraryIcon width={28} height={28} />
               </View>
             ),
           }}
