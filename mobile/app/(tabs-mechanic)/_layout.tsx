@@ -68,6 +68,7 @@ export default function TabLayout() {
           name="settings"
           options={{
             href: null,
+            animation: "shift",
           }}
         />
       </Tabs>
