@@ -1,7 +1,10 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TextInput } from "react-native";
 import { useState } from "react";
 import DisplayItems from "@/components/mechanic/DisplayItems";
 import Service from "@/components/mechanic/items/Service";
+import SearchIcon from "@/assets/icons/SearchIcon.svg";
+import { AppStyles } from "@/constants/Styles";
+import { Colors } from "@/constants/Colors";
 
 export interface ServiceData {
   name: string;
@@ -47,10 +50,23 @@ const fakeServices: ServiceData[] = [
 export default function LibraryScreen() {
   const [serviceList, setServiceList] =
     useState<Array<ServiceData>>(fakeServices);
+  const [search, setSearch] = useState<string>("");
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Knjižnica servisov</Text>
+      <View style={styles.header}>
+        <Text style={styles.title}>Knjižnica servisov</Text>
+        <View style={styles.textInputContainer}>
+          <SearchIcon color={Colors.light.primaryText} height={20} width={20} />
+          <TextInput
+            style={styles.textInput}
+            placeholder="Išči"
+            value={search}
+            onChangeText={setSearch}
+            numberOfLines={1}
+          />
+        </View>
+      </View>
       <DisplayItems
         list={serviceList}
         renderItem={(service, index) => (
@@ -67,9 +83,26 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     flex: 1,
   },
+  header: {
+    paddingHorizontal: 25,
+  },
   title: {
     fontSize: 32,
     fontFamily: "Jaldi-Regular",
-    paddingHorizontal: 25,
+  },
+  textInputContainer: {
+    display: "flex",
+    flexDirection: "row",
+    borderWidth: 1,
+    borderColor: Colors.light.textInputBorder,
+    alignItems: "center",
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    gap: 10,
+  },
+  textInput: {
+    width: "100%",
+    fontSize: 20,
+    fontFamily: "Jaldi-Regular",
   },
 });
