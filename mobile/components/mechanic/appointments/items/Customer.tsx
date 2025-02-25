@@ -16,15 +16,12 @@ export default function Customer({ customerData }: Props) {
       <Text style={styles.date}>{customerData.day.toDateString()}</Text>
       <Text style={styles.description}>{customerData.description}</Text>
       <TouchableOpacity style={[styles.buttonChange, styles.button]}>
-        <View>
-          <Text style={styles.buttonText}>Predlagaj spremembo</Text>
-        </View>
+        <Text style={styles.buttonText}>Predlagaj spremembo</Text>
       </TouchableOpacity>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={[styles.buttonReject, styles.button]}>
           <Text style={styles.buttonText}>Zavrni</Text>
         </TouchableOpacity>
-
         <TouchableOpacity style={[styles.buttonAccept, styles.button]}>
           <Text style={styles.buttonText}>Potrdi</Text>
         </TouchableOpacity>
