@@ -1,11 +1,17 @@
 import { View, Text } from "react-native";
-import { ServiceData } from "@/app/(tabs-mechanic)/library";
+
+export interface ServiceData {
+  name: string;
+  image: string;
+  vehicle: string;
+  vin: string;
+}
 
 interface Props {
   serviceData: ServiceData;
 }
 
-export default function Customer({ serviceData }: Props) {
+export default function Service({ serviceData }: Props) {
   return (
     <View>
       <Text>{serviceData.image}</Text>

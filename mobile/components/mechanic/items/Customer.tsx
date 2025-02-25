@@ -1,6 +1,12 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { CustomerData } from "@/app/(tabs-mechanic)/appointments";
 import { Colors } from "@/constants/Colors";
+
+export interface CustomerData {
+  name: string;
+  vehicle: string;
+  day: Date;
+  description: string;
+}
 
 interface Props {
   customerData: CustomerData;

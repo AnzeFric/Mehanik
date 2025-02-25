@@ -1,21 +1,23 @@
 import { View, Text, StyleSheet, ScrollView } from "react-native";
-import { CustomerData } from "@/app/(tabs-mechanic)/appointments";
-import Customer from "./items/Customer";
 
-interface Props {
-  customerList: CustomerData[];
+interface Props<T> {
+  list: T[];
+  renderItem: (item: T, index: number) => React.ReactNode;
+  emptyMessage?: string;
 }
 
-export default function Customers({ customerList }: Props) {
+export default function DisplayItems<T>({
+  list,
+  renderItem,
+  emptyMessage = "",
+}: Props<T>) {
   return (
     <ScrollView style={styles.scrollContainer}>
       <View style={styles.container}>
-        {customerList.length > 0 ? (
-          customerList.map((customer, index) => (
-            <Customer customerData={customer} key={index} />
-          ))
+        {list.length > 0 ? (
+          list.map((item, index) => renderItem(item, index))
         ) : (
-          <Text style={styles.text}>Nimate novih terminov.</Text>
+          <Text style={styles.text}>{emptyMessage}</Text>
         )}
       </View>
     </ScrollView>

@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import { useState } from "react";
-import { AppStyles } from "@/constants/Styles";
-import Customers from "@/components/mechanic/appointments/Customers";
+import DisplayItems from "@/components/mechanic/DisplayItems";
+import Customer from "@/components/mechanic/items/Customer";
 
 export interface CustomerData {
   name: string;
@@ -38,6 +38,7 @@ const fakeCustomers: CustomerData[] = [
   },
 ];
 
+// TODO: Get items from database
 export default function AppointmentsScreen() {
   const [customerList, setCustomerList] =
     useState<Array<CustomerData>>(fakeCustomers);
@@ -45,7 +46,13 @@ export default function AppointmentsScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Novi termini</Text>
-      <Customers customerList={customerList} />
+      <DisplayItems
+        list={customerList}
+        renderItem={(customer, index) => (
+          <Customer customerData={customer} key={index} />
+        )}
+        emptyMessage="Nimate novih terminov."
+      />
     </View>
   );
 }
