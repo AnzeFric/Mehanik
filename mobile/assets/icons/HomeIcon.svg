@@ -2,7 +2,7 @@
   <path 
     d="M5 9L12 3L19 9" 
     fill="none"
-    stroke="#000000"
+    stroke="currentColor"
     stroke-width="1"
     stroke-linecap="round"
     stroke-linejoin="round"
@@ -10,7 +10,7 @@
   <path 
     d="M7 10L7 15L17 15L17 10" 
     fill="none"
-    stroke="#000000"
+    stroke="currentColor"
     stroke-width="1"
     stroke-linecap="round"
     stroke-linejoin="round"

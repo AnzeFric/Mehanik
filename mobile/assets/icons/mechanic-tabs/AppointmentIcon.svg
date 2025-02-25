@@ -2,7 +2,7 @@
     width="200" 
     height="200" 
     viewBox="0 0 200 200" 
-    fill="none" 
+    fill="none"
     xmlns="http://www.w3.org/2000/svg">
     
     <!-- Clock Circle -->
@@ -10,7 +10,7 @@
         cx="100" 
         cy="110" 
         r="75" 
-        stroke="black" 
+        stroke="currentColor" 
         stroke-width="8" 
         fill="none"/>
     
@@ -20,7 +20,7 @@
         y1="60" 
         x2="100" 
         y2="110" 
-        stroke="black" 
+        stroke="currentColor" 
         stroke-width="8" 
         stroke-linecap="round"/>
     
@@ -29,7 +29,7 @@
         y1="110" 
         x2="130" 
         y2="120" 
-        stroke="black" 
+        stroke="currentColor" 
         stroke-width="8" 
         stroke-linecap="round"/>
 </svg>
