@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { CustomerData } from "@/app/(tabs-mechanic)/appointments";
 import { Colors } from "@/constants/Colors";
 
@@ -16,12 +16,12 @@ export default function Customer({ customerData }: Props) {
       <Text style={styles.date}>{customerData.day.toDateString()}</Text>
       <Text style={styles.description}>{customerData.description}</Text>
       <View style={styles.buttonContainer}>
-        <TouchableHighlight style={[styles.buttonReject, styles.button]}>
+        <TouchableOpacity style={[styles.buttonReject, styles.button]}>
           <Text style={styles.buttonText}>Zavrni</Text>
-        </TouchableHighlight>
-        <TouchableHighlight style={[styles.buttonAccept, styles.button]}>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.buttonAccept, styles.button]}>
           <Text style={styles.buttonText}>Potrdi</Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
       </View>
     </View>
   );
