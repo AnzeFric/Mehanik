@@ -43,7 +43,7 @@ export default function AppointmentsScreen() {
     useState<Array<CustomerData>>(fakeCustomers);
 
   return (
-    <View style={AppStyles.parentPadding}>
+    <View style={styles.container}>
       <Text style={styles.title}>Novi termini</Text>
       <Customers customerList={customerList} />
     </View>
@@ -51,8 +51,13 @@ export default function AppointmentsScreen() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    paddingTop: 20,
+    flex: 1,
+  },
   title: {
     fontSize: 32,
     fontFamily: "Jaldi-Regular",
+    paddingHorizontal: 25,
   },
 });
