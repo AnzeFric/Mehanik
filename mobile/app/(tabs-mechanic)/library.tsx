@@ -3,7 +3,6 @@ import { useState } from "react";
 import DisplayItems from "@/components/mechanic/DisplayItems";
 import Service from "@/components/mechanic/items/Service";
 import SearchIcon from "@/assets/icons/SearchIcon.svg";
-import { AppStyles } from "@/constants/Styles";
 import { Colors } from "@/constants/Colors";
 
 export interface ServiceData {
@@ -46,7 +45,8 @@ const fakeServices: ServiceData[] = [
   },
 ];
 
-// TODO: Get items from database
+/* TODO: Get items from database
+          Make search bar work and filter items based on input*/
 export default function LibraryScreen() {
   const [serviceList, setServiceList] =
     useState<Array<ServiceData>>(fakeServices);
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingHorizontal: 25,
-    paddingBottom: 20,
+    paddingBottom: 10,
     gap: 15,
   },
   title: {

@@ -12,6 +12,9 @@ interface Props {
   serviceData: ServiceData;
 }
 
+/* TODO:
+        OnClick takes the mechanic to a detail view of all past services
+*/
 export default function Service({ serviceData }: Props) {
   return (
     <View style={styles.container}>
