@@ -10,7 +10,9 @@ export default function Services({ serviceList }: Props) {
   return (
     <View>
       {serviceList.length > 0 ? (
-        serviceList.map((service) => <Service serviceData={service} />)
+        serviceList.map((service, index) => (
+          <Service serviceData={service} key={index} />
+        ))
       ) : (
         <Text style={styles.text}>Nimate vnešenih servisov.</Text>
       )}

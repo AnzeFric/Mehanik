@@ -9,8 +9,24 @@ export interface CustomerData {
   day: Date;
 }
 
+const fakeCustomers: CustomerData[] = [
+  {
+    name: "Marko Petrović",
+    vehicle: "Volkswagen Golf 7",
+    day: new Date("2024-03-01"),
+  },
+  { name: "Ivana Jovanović", vehicle: "Audi A4", day: new Date("2024-03-03") },
+  { name: "Nemanja Nikolić", vehicle: "BMW X5", day: new Date("2024-03-07") },
+  {
+    name: "Ana Simić",
+    vehicle: "Mercedes-Benz C200",
+    day: new Date("2024-03-10"),
+  },
+];
+
 export default function AppointmentsScreen() {
-  const [customerList, setCustomerList] = useState<Array<CustomerData>>([]);
+  const [customerList, setCustomerList] =
+    useState<Array<CustomerData>>(fakeCustomers);
 
   return (
     <View style={AppStyles.parentPadding}>

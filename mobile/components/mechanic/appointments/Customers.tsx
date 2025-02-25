@@ -10,7 +10,9 @@ export default function Customers({ customerList }: Props) {
   return (
     <View>
       {customerList.length > 0 ? (
-        customerList.map((customer) => <Customer customerData={customer} />)
+        customerList.map((customer, index) => (
+          <Customer customerData={customer} key={index} />
+        ))
       ) : (
         <Text style={styles.text}>Nimate novih terminov.</Text>
       )}
