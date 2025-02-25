@@ -8,7 +8,7 @@ interface Props {
 
 export default function Customers({ customerList }: Props) {
   return (
-    <View>
+    <View style={styles.container}>
       {customerList.length > 0 ? (
         customerList.map((customer, index) => (
           <Customer customerData={customer} key={index} />
@@ -21,6 +21,9 @@ export default function Customers({ customerList }: Props) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    gap: 10,
+  },
   text: {
     fontSize: 20,
     fontFamily: "Jaldi-Regular",

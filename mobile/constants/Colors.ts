@@ -13,6 +13,8 @@ export const Colors = {
     textInputBorder: "#DDDDDD",
     inactiveButton: "#C3C3C3",
     inactiveBorder: "#C3C3C3",
+    confirmButton: "#006db5",
+    cancelButton: "#c63500",
 
     text: "#11181C",
     tint: tintColorLight,
