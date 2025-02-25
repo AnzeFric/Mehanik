@@ -15,10 +15,16 @@ export default function Customer({ customerData }: Props) {
       </View>
       <Text style={styles.date}>{customerData.day.toDateString()}</Text>
       <Text style={styles.description}>{customerData.description}</Text>
+      <TouchableOpacity style={[styles.buttonChange, styles.button]}>
+        <View>
+          <Text style={styles.buttonText}>Predlagaj spremembo</Text>
+        </View>
+      </TouchableOpacity>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={[styles.buttonReject, styles.button]}>
           <Text style={styles.buttonText}>Zavrni</Text>
         </TouchableOpacity>
+
         <TouchableOpacity style={[styles.buttonAccept, styles.button]}>
           <Text style={styles.buttonText}>Potrdi</Text>
         </TouchableOpacity>
@@ -66,6 +72,11 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   buttonReject: { backgroundColor: Colors.light.cancelButton },
+  buttonChange: {
+    backgroundColor: Colors.light.inactiveButton,
+    alignSelf: "flex-end",
+    marginVertical: 10,
+  },
   buttonAccept: { backgroundColor: Colors.light.confirmButton },
   buttonText: {
     fontSize: 20,
