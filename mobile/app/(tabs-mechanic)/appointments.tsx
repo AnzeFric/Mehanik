@@ -7,6 +7,7 @@ export interface CustomerData {
   name: string;
   vehicle: string;
   day: Date;
+  description: string;
 }
 
 const fakeCustomers: CustomerData[] = [
@@ -14,13 +15,26 @@ const fakeCustomers: CustomerData[] = [
     name: "Marko Petrović",
     vehicle: "Volkswagen Golf 7",
     day: new Date("2024-03-01"),
+    description:
+      "Avto dela zanimive zvoke v mašini. To je nek daljsi zapis, da lahko vidim kaj se zgodi, ko se bo besedilo pričelo sekat.",
   },
-  { name: "Ivana Jovanović", vehicle: "Audi A4", day: new Date("2024-03-03") },
-  { name: "Nemanja Nikolić", vehicle: "BMW X5", day: new Date("2024-03-07") },
+  {
+    name: "Ivana Jovanović",
+    vehicle: "Audi A4",
+    day: new Date("2024-03-03"),
+    description: "Potrebujem redni servis",
+  },
+  {
+    name: "Nemanja Nikolić",
+    vehicle: "BMW X5",
+    day: new Date("2024-03-07"),
+    description: "Hladilna tekočina mi toči",
+  },
   {
     name: "Ana Simić",
     vehicle: "Mercedes-Benz C200",
     day: new Date("2024-03-10"),
+    description: "Menjava gum",
   },
 ];
 

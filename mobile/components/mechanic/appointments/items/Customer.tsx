@@ -14,6 +14,7 @@ export default function Customer({ customerData }: Props) {
         <Text style={styles.text}>{customerData.vehicle}</Text>
       </View>
       <Text style={styles.date}>{customerData.day.toDateString()}</Text>
+      <Text style={styles.description}>{customerData.description}</Text>
       <View style={styles.buttonContainer}>
         <TouchableHighlight style={[styles.buttonReject, styles.button]}>
           <Text style={styles.buttonText}>Zavrni</Text>
@@ -42,6 +43,12 @@ const styles = StyleSheet.create({
     textAlign: "right",
     fontSize: 16,
     fontFamily: "Jaldi-Bold",
+  },
+  description: {
+    fontSize: 16,
+    fontFamily: "Jaldi-Regular",
+    lineHeight: 20,
+    paddingVertical: 10,
   },
   text: {
     fontSize: 16,
