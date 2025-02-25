@@ -1,4 +1,4 @@
-import { ScrollView } from "react-native";
+import { View, ScrollView, StyleSheet } from "react-native";
 import TimeItem from "./items/TimeItem";
 
 const times = [
@@ -35,9 +35,18 @@ interface TimeListProps {
 export default function TimeList({ selectedDay }: TimeListProps) {
   return (
     <ScrollView>
-      {times.map((time, index) => (
-        <TimeItem key={index} text={time} />
-      ))}
+      <View style={styles.container}>
+        {times.map((time, index) => (
+          <TimeItem key={index} text={time} />
+        ))}
+      </View>
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 25,
+    paddingBottom: 20,
+  },
+});

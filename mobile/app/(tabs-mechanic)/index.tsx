@@ -6,29 +6,37 @@ import { router } from "expo-router";
 
 export default function HomeMechanicScreen() {
   return (
-    <View style={[AppStyles.parentPadding, { flex: 1 }]}>
-      <View style={styles.settingsIcon}>
-        <MenuIcon
-          height={30}
-          width={30}
-          onPress={() => {
-            router.push("/(tabs-mechanic)/settings");
-          }}
-        />
-      </View>
-      <View>
-        <Text style={styles.title}>Prihodki</Text>
-        <View style={styles.incomeContainer}>
-          <Text style={styles.text}>Teden</Text>
-          <Text style={[styles.text, { alignSelf: "flex-end" }]}>323.03€</Text>
+    <View style={styles.container}>
+      <View style={styles.contentContainer}>
+        <View style={styles.settingsIcon}>
+          <MenuIcon
+            height={30}
+            width={30}
+            onPress={() => {
+              router.push("/(tabs-mechanic)/settings");
+            }}
+          />
         </View>
-        <View style={styles.incomeContainer}>
-          <Text style={styles.text}>Mesec</Text>
-          <Text style={[styles.text, { alignSelf: "flex-end" }]}>1203.03€</Text>
+        <View>
+          <Text style={styles.title}>Prihodki</Text>
+          <View style={styles.incomeContainer}>
+            <Text style={styles.text}>Teden</Text>
+            <Text style={[styles.text, { alignSelf: "flex-end" }]}>
+              323.03€
+            </Text>
+          </View>
+          <View style={styles.incomeContainer}>
+            <Text style={styles.text}>Mesec</Text>
+            <Text style={[styles.text, { alignSelf: "flex-end" }]}>
+              1203.03€
+            </Text>
+          </View>
         </View>
       </View>
       <View style={{ flex: 1 }}>
-        <Text style={styles.title}>Pregled terminov</Text>
+        <Text style={[styles.title, { paddingHorizontal: 25 }]}>
+          Pregled terminov
+        </Text>
         <DaySchedule />
       </View>
     </View>
@@ -36,6 +44,13 @@ export default function HomeMechanicScreen() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 20,
+  },
+  contentContainer: {
+    paddingHorizontal: 25,
+  },
   settingsIcon: {
     alignSelf: "flex-end",
   },

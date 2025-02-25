@@ -12,6 +12,9 @@ interface Props {
   customerData: CustomerData;
 }
 
+/* TODO: onClick funkcionalnosti za vse tri gumbe.
+         potrdi in spremeni odpreta modal okno za vpis časa/datuma v tabelo na home
+         Datum prikaži v slovenski obliki */
 export default function Customer({ customerData }: Props) {
   return (
     <View style={styles.container}>

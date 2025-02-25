@@ -15,7 +15,7 @@ export default function DaySchedule() {
         flex: 1,
       }}
     >
-      <View>
+      <View style={{ paddingHorizontal: 25 }}>
         <DaySelector selectedDay={selectedDay} onDaySelect={setSelectedDay} />
       </View>
       <TimeList selectedDay={selectedDay} />
