@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
 import { useState } from "react";
 import { useLocalSearchParams, router } from "expo-router";
 import { AppStyles } from "@/constants/Styles";
@@ -13,6 +13,8 @@ export default function DetailServiceScreen() {
   const { id } = useLocalSearchParams();
   const [serviceList, setServiceList] = useState<Array<Service>>([]);
   // TODO: Get user data from database using id
+
+  const handleAdd = () => {};
 
   return (
     <View style={[AppStyles.parentPadding, styles.container]}>
@@ -35,6 +37,13 @@ export default function DetailServiceScreen() {
         vin={"A71239SASFV"}
       />
       <ServicesMap serviceList={serviceList} />
+      <TouchableHighlight
+        style={[AppStyles.button, styles.button]}
+        onPress={handleAdd}
+        underlayColor={Colors.light.specialBlueClick}
+      >
+        <Text style={[AppStyles.buttonText, styles.buttonText]}>Dodaj</Text>
+      </TouchableHighlight>
     </View>
   );
 }
@@ -57,5 +66,11 @@ const styles = StyleSheet.create({
     fontFamily: "Jaldi-Regular",
     flex: 1,
     textAlign: "center",
+  },
+  button: {
+    paddingVertical: 5,
+  },
+  buttonText: {
+    lineHeight: 40,
   },
 });
