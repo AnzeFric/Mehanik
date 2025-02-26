@@ -1,6 +1,8 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { useState } from "react";
 import { Colors } from "@/constants/Colors";
 import { AppStyles } from "@/constants/Styles";
+import ModalReject from "../modals/ModalReject";
 
 export interface CustomerData {
   id: number;
@@ -14,10 +16,11 @@ interface Props {
   customerData: CustomerData;
 }
 
-/* TODO: onClick funkcionalnosti za vse tri gumbe.
-         potrdi in spremeni odpreta modal okno za vpis časa/datuma v tabelo na home
+/* TODO: onClick funkcionalnosti za potrdi in spremeni odpreta modal okno za vpis časa/datuma v tabelo na home
          Datum prikaži v slovenski obliki */
 export default function Customer({ customerData }: Props) {
+  const [isRejectOpen, setIsRejectOpen] = useState<boolean>(false);
+
   return (
     <View style={styles.container}>
       <View style={styles.userInfo}>
@@ -34,13 +37,22 @@ export default function Customer({ customerData }: Props) {
         <Text style={styles.buttonText}>Predlagaj spremembo</Text>
       </TouchableOpacity>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={[styles.buttonReject, styles.button]}>
+        <TouchableOpacity
+          style={[styles.buttonReject, styles.button]}
+          onPress={() => setIsRejectOpen(true)}
+        >
           <Text style={styles.buttonText}>Zavrni</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.buttonAccept, styles.button]}>
           <Text style={styles.buttonText}>Potrdi</Text>
         </TouchableOpacity>
       </View>
+      <ModalReject
+        isVisible={isRejectOpen}
+        message={"Ste prepričani, da želite zavrniti stranko?"}
+        onCancel={() => setIsRejectOpen(false)}
+        onConfirm={() => {}}
+      />
     </View>
   );
 }

@@ -70,7 +70,6 @@ export default function DetailServiceScreen() {
         vin={"A71239SASFV"}
       />
       <ServicesMap serviceList={serviceList} />
-
       {isModalOpen && (
         <ModalReject
           isVisible={isModalOpen}
