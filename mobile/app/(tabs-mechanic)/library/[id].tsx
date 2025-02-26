@@ -67,9 +67,7 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: "center",
   },
-  button: {
-    paddingVertical: 5,
-  },
+  button: { paddingVertical: 0 },
   buttonText: {
     lineHeight: 40,
   },
