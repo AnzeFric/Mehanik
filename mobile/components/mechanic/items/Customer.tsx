@@ -33,8 +33,9 @@ export default function Customer({ customerData }: Props) {
       <Text style={[AppStyles.smallText, styles.description]}>
         {customerData.description}
       </Text>
-      <TouchableOpacity style={[styles.buttonChange, styles.button]}>
-        <Text style={styles.buttonText}>Predlagaj spremembo</Text>
+
+      <TouchableOpacity style={[styles.buttonAccept, styles.button]}>
+        <Text style={styles.buttonText}>Potrdi</Text>
       </TouchableOpacity>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
@@ -43,8 +44,8 @@ export default function Customer({ customerData }: Props) {
         >
           <Text style={styles.buttonText}>Zavrni</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.buttonAccept, styles.button]}>
-          <Text style={styles.buttonText}>Potrdi</Text>
+        <TouchableOpacity style={[styles.buttonChange, styles.button]}>
+          <Text style={styles.buttonText}>Spremeni</Text>
         </TouchableOpacity>
       </View>
       <ModalReject
@@ -87,12 +88,12 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   buttonReject: { backgroundColor: Colors.light.cancelButton },
-  buttonChange: {
-    backgroundColor: Colors.light.inactiveButton,
+  buttonAccept: {
+    backgroundColor: Colors.light.confirmButton,
     alignSelf: "flex-end",
     marginVertical: 10,
   },
-  buttonAccept: { backgroundColor: Colors.light.confirmButton },
+  buttonChange: { backgroundColor: Colors.light.inactiveButton },
   buttonText: {
     fontSize: 20,
     fontFamily: "Jaldi-Regular",
