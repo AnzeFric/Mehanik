@@ -32,4 +32,19 @@ export const AppStyles = StyleSheet.create({
     lineHeight: 24,
     fontFamily: "Jaldi-Bold",
   },
+  title: {
+    fontSize: 24,
+    fontFamily: "Jaldi-Regular",
+    lineHeight: 28,
+  },
+  smallText: {
+    fontSize: 16,
+    fontFamily: "Jaldi-Regular",
+    lineHeight: 20,
+  },
+  mediumText: {
+    fontSize: 20,
+    fontFamily: "Jaldi-Regular",
+    lineHeight: 24,
+  },
 });
