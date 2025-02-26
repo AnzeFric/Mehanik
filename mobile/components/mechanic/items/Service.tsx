@@ -1,7 +1,15 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableHighlight,
+  StyleSheet,
+} from "react-native";
+import { router } from "expo-router";
 import { Colors } from "@/constants/Colors";
 
 export interface ServiceData {
+  id: number;
   name: string;
   image: string;
   vehicle: string;
@@ -12,22 +20,27 @@ interface Props {
   serviceData: ServiceData;
 }
 
-/* TODO:
-        OnClick takes the mechanic to a detail view of all past services
-*/
 export default function Service({ serviceData }: Props) {
   return (
-    <View style={styles.container}>
-      <Image
-        source={require("@/assets/images/logo-main.png")}
-        style={styles.image}
-      />
-      <View style={styles.customerInfo}>
-        <Text style={styles.textBold}>{serviceData.name}</Text>
-        <Text style={styles.text}>{serviceData.vehicle}</Text>
-        <Text style={styles.text}>{serviceData.vin}</Text>
-      </View>
-    </View>
+    <TouchableHighlight
+      style={styles.container}
+      underlayColor={Colors.light.underlayColor}
+      onPress={() => {
+        router.push(`/library/${serviceData.id}`);
+      }}
+    >
+      <>
+        <Image
+          source={require("@/assets/images/logo-main.png")}
+          style={styles.image}
+        />
+        <View style={styles.customerInfo}>
+          <Text style={styles.textBold}>{serviceData.name}</Text>
+          <Text style={styles.text}>{serviceData.vehicle}</Text>
+          <Text style={styles.text}>{serviceData.vin}</Text>
+        </View>
+      </>
+    </TouchableHighlight>
   );
 }
 

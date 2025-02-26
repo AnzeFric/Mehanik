@@ -1,43 +1,41 @@
 import { View, Text, StyleSheet, TextInput } from "react-native";
 import { useState } from "react";
 import DisplayItems from "@/components/mechanic/DisplayItems";
-import Service from "@/components/mechanic/items/Service";
+import Service, { ServiceData } from "@/components/mechanic/items/Service";
 import SearchIcon from "@/assets/icons/SearchIcon.svg";
 import { Colors } from "@/constants/Colors";
 
-export interface ServiceData {
-  name: string;
-  image: string;
-  vehicle: string;
-  vin: string;
-}
-
 const fakeServices: ServiceData[] = [
   {
+    id: 0,
     name: "Anže Fric",
     image: "https://source.unsplash.com/200x200/?car,oil",
     vehicle: "BMW 320i 2020",
     vin: "WBAAL31029PZ12345",
   },
   {
+    id: 1,
     name: "Dana Fric",
     image: "https://source.unsplash.com/200x200/?car,brake",
     vehicle: "Audi A4 2019",
     vin: "WAUZZZ8K9LA123456",
   },
   {
+    id: 2,
     name: "Saguaro Miyazaki",
     image: "https://source.unsplash.com/200x200/?car,tire",
     vehicle: "Toyota Camry 2018",
     vin: "4T1BF1FK5GU654321",
   },
   {
+    id: 3,
     name: "Ime Priimek",
     image: "https://source.unsplash.com/200x200/?car,engine",
     vehicle: "Mercedes C300 2021",
     vin: "WDDWF4KB2LR987654",
   },
   {
+    id: 4,
     name: "Mitja Pavlekovič",
     image: "https://source.unsplash.com/200x200/?car,ac",
     vehicle: "Tesla Model 3 2022",

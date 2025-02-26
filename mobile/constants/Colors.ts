@@ -15,6 +15,7 @@ export const Colors = {
     inactiveBorder: "#C3C3C3",
     confirmButton: "#006db5",
     cancelButton: "#c63500",
+    underlayColor: "#DDDDDD",
 
     text: "#11181C",
     tint: tintColorLight,
