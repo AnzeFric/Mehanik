@@ -9,26 +9,37 @@ export interface Service {
 interface Props {
   serviceList: Service[];
 }
-
+// TODO: expand Service interface, when you start saving to db
 export default function ServicesMap({ serviceList }: Props) {
   return (
-    <View>
-      <Text style={AppStyles.title}>Narejeni servisi</Text>
-      <View style={styles.buttonsContainer}>
-        <TouchableHighlight
-          style={styles.button}
-          underlayColor={Colors.light.underlayColor}
-          onPress={() => {}}
+    <>
+      <View style={styles.container}>
+        <Text
+          style={[
+            AppStyles.title,
+            {
+              textAlignVertical: "bottom",
+            },
+          ]}
         >
-          <Text style={styles.buttonText}>Filter</Text>
-        </TouchableHighlight>
-        <TouchableHighlight
-          style={styles.button}
-          underlayColor={Colors.light.underlayColor}
-          onPress={() => {}}
-        >
-          <Text style={styles.buttonText}>Sortiraj</Text>
-        </TouchableHighlight>
+          Narejeni servisi
+        </Text>
+        <View style={styles.buttonsContainer}>
+          <TouchableHighlight
+            style={styles.button}
+            underlayColor={Colors.light.underlayColor}
+            onPress={() => {}}
+          >
+            <Text style={styles.buttonText}>Filter</Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            style={styles.button}
+            underlayColor={Colors.light.underlayColor}
+            onPress={() => {}}
+          >
+            <Text style={styles.buttonText}>Sortiraj</Text>
+          </TouchableHighlight>
+        </View>
       </View>
       <View style={styles.servicesContainer}>
         {serviceList.length > 0 ? (
@@ -39,16 +50,20 @@ export default function ServicesMap({ serviceList }: Props) {
           </Text>
         )}
       </View>
-    </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
   buttonsContainer: {
     display: "flex",
     flexDirection: "row",
     gap: 10,
-    alignSelf: "flex-end",
   },
   button: {
     backgroundColor: Colors.light.utilityButton,
