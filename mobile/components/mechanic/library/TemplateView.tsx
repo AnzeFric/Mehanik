@@ -1,19 +1,25 @@
-import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
-import { useState } from "react";
-import { useLocalSearchParams, router } from "expo-router";
+import { Text, View, TouchableHighlight, StyleSheet } from "react-native";
 import { AppStyles } from "@/constants/Styles";
 import { Colors } from "@/constants/Colors";
 import BackIcon from "@/assets/icons/BackIcon.svg";
-import VehicleData from "@/components/mechanic/library/VehicleData";
-import ServicesMap, {
-  Service,
-} from "@/components/mechanic/library/ServicesMap";
+import { router } from "expo-router";
+import React from "react";
 
-export default function DetailServiceScreen() {
-  const { id } = useLocalSearchParams();
-  const [serviceList, setServiceList] = useState<Array<Service>>([]);
-  // TODO: Get user data from database using id
+interface TemplateScreenProps {
+  title: string;
+  children: React.ReactNode;
+  buttonText: string;
+  onButtonPress: () => void;
+}
 
+/* This is a template view for adding and editing customer and service data in mechanic library
+   It displays a header with the intended action(ex: Dodaj servis) and a button in the footer to confirm the action */
+export default function TemplateView({
+  title,
+  children,
+  buttonText,
+  onButtonPress,
+}: TemplateScreenProps) {
   return (
     <View style={[AppStyles.parentPadding, styles.container]}>
       <View style={styles.header}>
@@ -25,24 +31,19 @@ export default function DetailServiceScreen() {
             router.back();
           }}
         />
-        <Text style={styles.userName}>Oseba {id}</Text>
+        <Text style={styles.userName}>{title}</Text>
       </View>
-      <VehicleData
-        imageUri={""}
-        brandAndSeries={"Volkswagen Golf"}
-        year={2009}
-        description={"Nek dodaten opis"}
-        vin={"A71239SASFV"}
-      />
-      <ServicesMap serviceList={serviceList} />
+
+      <View>{children}</View>
+
       <TouchableHighlight
         style={[AppStyles.button, styles.button]}
-        onPress={() => {
-          router.push(`/(tabs-mechanic)/library/service-add/${id}`);
-        }}
+        onPress={onButtonPress}
         underlayColor={Colors.light.specialBlueClick}
       >
-        <Text style={[AppStyles.buttonText, styles.buttonText]}>Dodaj</Text>
+        <Text style={[AppStyles.buttonText, styles.buttonText]}>
+          {buttonText}
+        </Text>
       </TouchableHighlight>
     </View>
   );
@@ -51,6 +52,7 @@ export default function DetailServiceScreen() {
 const styles = StyleSheet.create({
   container: {
     gap: 15,
+    flex: 1,
   },
   header: {
     borderBottomColor: Colors.light.inactiveBorder,
@@ -67,7 +69,9 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: "center",
   },
-  button: { paddingVertical: 0 },
+  button: {
+    paddingVertical: 0,
+  },
   buttonText: {
     lineHeight: 40,
   },

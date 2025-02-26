@@ -96,7 +96,19 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="library/edit-customer"
+          name="library/customer-edit/[id]"
+          options={{
+            href: null,
+          }}
+        />
+        <Tabs.Screen
+          name="library/service-add/[id]"
+          options={{
+            href: null,
+          }}
+        />
+        <Tabs.Screen
+          name="library/service-edit/[id]"
           options={{
             href: null,
           }}
