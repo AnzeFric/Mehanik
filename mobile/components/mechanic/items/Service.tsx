@@ -14,21 +14,26 @@ export interface ServiceData {
   name: string;
   image: string;
   vehicle: string;
+  year: number;
   vin: string;
 }
 
 interface Props {
   serviceData: ServiceData;
+  setSearch: (text: string) => void;
 }
 
-export default function Service({ serviceData }: Props) {
+export default function Service({ serviceData, setSearch }: Props) {
+  const handlePress = () => {
+    setSearch("");
+    router.push(`/library/${serviceData.id}`);
+  };
+
   return (
     <TouchableHighlight
       style={styles.container}
       underlayColor={Colors.light.underlayColor}
-      onPress={() => {
-        router.push(`/library/${serviceData.id}`);
-      }}
+      onPress={handlePress}
     >
       <>
         <Image
@@ -37,7 +42,9 @@ export default function Service({ serviceData }: Props) {
         />
         <View style={styles.customerInfo}>
           <Text style={AppStyles.boldTitle}>{serviceData.name}</Text>
-          <Text style={AppStyles.smallText}>{serviceData.vehicle}</Text>
+          <Text style={AppStyles.smallText}>
+            {serviceData.vehicle}, {serviceData.year}
+          </Text>
           <Text style={AppStyles.smallText}>{serviceData.vin}</Text>
         </View>
       </>

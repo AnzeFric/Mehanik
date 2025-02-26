@@ -11,45 +11,64 @@ const fakeServices: ServiceData[] = [
     id: 0,
     name: "Anže Fric",
     image: "https://source.unsplash.com/200x200/?car,oil",
-    vehicle: "BMW 320i 2020",
+    vehicle: "BMW 320i",
+    year: 2020,
     vin: "WBAAL31029PZ12345",
   },
   {
     id: 1,
     name: "Dana Fric",
     image: "https://source.unsplash.com/200x200/?car,brake",
-    vehicle: "Audi A4 2019",
+    vehicle: "Audi A4",
+    year: 2019,
     vin: "WAUZZZ8K9LA123456",
   },
   {
     id: 2,
     name: "Saguaro Miyazaki",
     image: "https://source.unsplash.com/200x200/?car,tire",
-    vehicle: "Toyota Camry 2018",
+    vehicle: "Toyota Camry",
+    year: 2018,
     vin: "4T1BF1FK5GU654321",
   },
   {
     id: 3,
     name: "Ime Priimek",
     image: "https://source.unsplash.com/200x200/?car,engine",
-    vehicle: "Mercedes C300 2021",
+    vehicle: "Mercedes C300",
+    year: 2021,
     vin: "WDDWF4KB2LR987654",
   },
   {
     id: 4,
     name: "Mitja Pavlekovič",
     image: "https://source.unsplash.com/200x200/?car,ac",
-    vehicle: "Tesla Model 3 2022",
+    vehicle: "Tesla Model 3",
+    year: 2022,
     vin: "5YJ3E1EA8MF765432",
   },
 ];
 
-/* TODO: Get items from database
-          Make search bar work and filter items based on input*/
+/* TODO: Get items from database*/
+
 export default function LibraryScreen() {
   const [serviceList, setServiceList] =
     useState<Array<ServiceData>>(fakeServices);
   const [search, setSearch] = useState<string>("");
+
+  const filteredServices =
+    search.trim() === ""
+      ? serviceList
+      : serviceList.filter(
+          (service) =>
+            service.name.toLowerCase().includes(search.toLowerCase()) ||
+            service.vehicle.toLowerCase().includes(search.toLowerCase()) ||
+            service.vin.toLowerCase().includes(search.toLowerCase())
+        );
+
+  const handleSearch = (text: string) => {
+    setSearch(text);
+  };
 
   return (
     <View style={styles.container}>
@@ -61,17 +80,17 @@ export default function LibraryScreen() {
             style={[AppStyles.text, styles.textInput]}
             placeholder="Išči"
             value={search}
-            onChangeText={setSearch}
+            onChangeText={handleSearch}
             numberOfLines={1}
           />
         </View>
       </View>
       <DisplayItems
-        list={serviceList}
+        list={filteredServices}
         renderItem={(service, index) => (
-          <Service serviceData={service} key={index} />
+          <Service serviceData={service} setSearch={setSearch} key={index} />
         )}
-        emptyMessage="Nimate vpisanih servisov."
+        emptyMessage="Servisi ne obstajajo."
       />
     </View>
   );
