@@ -7,6 +7,7 @@ import React from "react";
 
 interface TemplateScreenProps {
   title: string;
+  menuIcon?: React.ReactNode;
   children: React.ReactNode;
   buttonText: string;
   onButtonPress: () => void;
@@ -16,6 +17,7 @@ interface TemplateScreenProps {
    It displays a header with the intended action(ex: Add Service) and a button in the footer to confirm the action */
 export default function TemplateView({
   title,
+  menuIcon,
   children,
   buttonText,
   onButtonPress,
@@ -32,6 +34,7 @@ export default function TemplateView({
           }}
         />
         <Text style={styles.userName}>{title}</Text>
+        {menuIcon && <View>{menuIcon}</View>}
       </View>
       <View>{children}</View>
       <TouchableHighlight

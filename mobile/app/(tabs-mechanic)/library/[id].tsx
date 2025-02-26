@@ -1,20 +1,13 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableHighlight,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useState, useCallback } from "react";
 import { useLocalSearchParams, router, useFocusEffect } from "expo-router";
-import { AppStyles } from "@/constants/Styles";
 import { Colors } from "@/constants/Colors";
-import BackIcon from "@/assets/icons/BackIcon.svg";
 import MenuIcon from "@/assets/icons/MenuIcon.svg";
 import VehicleData from "@/components/mechanic/library/VehicleData";
 import ServicesMap, {
   Service,
 } from "@/components/mechanic/library/ServicesMap";
+import TemplateView from "@/components/mechanic/library/TemplateView";
 
 export default function DetailServiceScreen() {
   const { id } = useLocalSearchParams();
@@ -22,46 +15,47 @@ export default function DetailServiceScreen() {
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
   // TODO: Get user data from database using id
 
-  // Hide menu upon closing screen
+  // CallBack for screen closing
   useFocusEffect(
     useCallback(() => {
       setIsMenuVisible(false);
     }, [])
   );
 
+  const handlePress = () => {
+    router.push(`/(tabs-mechanic)/library/service-add/${id}`);
+  };
+
+  const menuIcon: React.ReactNode = (
+    <MenuIcon
+      height={30}
+      width={30}
+      style={{ alignSelf: "flex-start" }}
+      onPress={() => {
+        setIsMenuVisible(!isMenuVisible);
+      }}
+    />
+  );
+
   return (
-    <View style={[AppStyles.parentPadding, styles.container]}>
-      <View style={styles.header}>
-        <BackIcon
-          height={30}
-          width={30}
-          style={{ alignSelf: "flex-start" }}
-          onPress={() => {
-            router.back();
-          }}
-        />
-        <Text style={styles.userName}>Oseba {id}</Text>
-        <MenuIcon
-          height={30}
-          width={30}
-          style={{ alignSelf: "flex-start" }}
-          onPress={() => {
-            setIsMenuVisible(!isMenuVisible);
-          }}
-        />
-        {isMenuVisible && (
-          <View style={styles.menuContainer}>
-            <TouchableOpacity
-              onPress={() => router.push(`/library/customer-edit/${id}`)}
-            >
-              <Text style={[styles.menuItem, styles.menuItemTop]}>UREDI</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => {}}>
-              <Text style={styles.menuItem}>IZBRIŠI</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-      </View>
+    <TemplateView
+      title={`Oseba ${id}`}
+      buttonText={"Dodaj"}
+      onButtonPress={handlePress}
+      menuIcon={menuIcon}
+    >
+      {isMenuVisible && (
+        <View style={styles.menuContainer}>
+          <TouchableOpacity
+            onPress={() => router.push(`/library/customer-edit/${id}`)}
+          >
+            <Text style={[styles.menuItem, styles.menuItemTop]}>UREDI</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => {}}>
+            <Text style={styles.menuItem}>IZBRIŠI</Text>
+          </TouchableOpacity>
+        </View>
+      )}
       <VehicleData
         imageUri={""}
         brandAndSeries={"Volkswagen Golf"}
@@ -70,46 +64,15 @@ export default function DetailServiceScreen() {
         vin={"A71239SASFV"}
       />
       <ServicesMap serviceList={serviceList} />
-      <TouchableHighlight
-        style={[AppStyles.button, styles.button]}
-        onPress={() => {
-          router.push(`/(tabs-mechanic)/library/service-add/${id}`);
-        }}
-        underlayColor={Colors.light.specialBlueClick}
-      >
-        <Text style={[AppStyles.buttonText, styles.buttonText]}>Dodaj</Text>
-      </TouchableHighlight>
-    </View>
+    </TemplateView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    gap: 15,
-  },
-  header: {
-    borderBottomColor: Colors.light.inactiveBorder,
-    borderBottomWidth: 1,
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    borderStyle: "dashed",
-  },
-  userName: {
-    fontSize: 32,
-    lineHeight: 40,
-    fontFamily: "Jaldi-Regular",
-    flex: 1,
-    textAlign: "center",
-  },
-  button: { paddingVertical: 0 },
-  buttonText: {
-    lineHeight: 40,
-  },
   menuContainer: {
     position: "absolute",
     right: 0,
-    top: 40,
+    top: -20,
     backgroundColor: Colors.light.background,
     width: 200,
     borderRadius: 8,
