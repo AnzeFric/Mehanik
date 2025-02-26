@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Colors } from "@/constants/Colors";
+import { AppStyles } from "@/constants/Styles";
 
 export interface CustomerData {
   id: number;
@@ -20,11 +21,15 @@ export default function Customer({ customerData }: Props) {
   return (
     <View style={styles.container}>
       <View style={styles.userInfo}>
-        <Text style={styles.text}>{customerData.name}</Text>
-        <Text style={styles.text}>{customerData.vehicle}</Text>
+        <Text style={AppStyles.smallText}>{customerData.name}</Text>
+        <Text style={AppStyles.smallText}>{customerData.vehicle}</Text>
       </View>
-      <Text style={styles.date}>{customerData.day.toDateString()}</Text>
-      <Text style={styles.description}>{customerData.description}</Text>
+      <Text style={[AppStyles.smallBoldText, styles.date]}>
+        {customerData.day.toDateString()}
+      </Text>
+      <Text style={[AppStyles.smallText, styles.description]}>
+        {customerData.description}
+      </Text>
       <TouchableOpacity style={[styles.buttonChange, styles.button]}>
         <Text style={styles.buttonText}>Predlagaj spremembo</Text>
       </TouchableOpacity>
@@ -54,18 +59,9 @@ const styles = StyleSheet.create({
   },
   date: {
     textAlign: "right",
-    fontSize: 16,
-    fontFamily: "Jaldi-Bold",
   },
   description: {
-    fontSize: 16,
-    fontFamily: "Jaldi-Regular",
-    lineHeight: 20,
     paddingVertical: 10,
-  },
-  text: {
-    fontSize: 16,
-    fontFamily: "Jaldi-Regular",
   },
   buttonContainer: {
     display: "flex",

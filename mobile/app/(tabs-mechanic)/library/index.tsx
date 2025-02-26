@@ -4,6 +4,7 @@ import DisplayItems from "@/components/mechanic/DisplayItems";
 import Service, { ServiceData } from "@/components/mechanic/items/Service";
 import SearchIcon from "@/assets/icons/SearchIcon.svg";
 import { Colors } from "@/constants/Colors";
+import { AppStyles } from "@/constants/Styles";
 
 const fakeServices: ServiceData[] = [
   {
@@ -53,11 +54,11 @@ export default function LibraryScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Knjižnica servisov</Text>
+        <Text style={AppStyles.bigTitle}>Knjižnica servisov</Text>
         <View style={styles.textInputContainer}>
           <SearchIcon color={Colors.light.primaryText} height={20} width={20} />
           <TextInput
-            style={styles.textInput}
+            style={[AppStyles.text, styles.textInput]}
             placeholder="Išči"
             value={search}
             onChangeText={setSearch}
@@ -86,10 +87,6 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     gap: 15,
   },
-  title: {
-    fontSize: 32,
-    fontFamily: "Jaldi-Regular",
-  },
   textInputContainer: {
     display: "flex",
     flexDirection: "row",
@@ -102,7 +99,6 @@ const styles = StyleSheet.create({
   },
   textInput: {
     width: "100%",
-    fontSize: 20,
-    fontFamily: "Jaldi-Regular",
+    lineHeight: 32,
   },
 });

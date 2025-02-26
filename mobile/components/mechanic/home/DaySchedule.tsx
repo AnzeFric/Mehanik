@@ -9,16 +9,21 @@ export default function DaySchedule() {
   const [selectedDay, setSelectedDay] = useState<string>(days[0]);
 
   return (
-    <View
-      style={{
-        gap: 20,
-        flex: 1,
-      }}
-    >
-      <View style={{ paddingHorizontal: 25 }}>
+    <View style={styles.container}>
+      <View style={styles.daySelectorContainer}>
         <DaySelector selectedDay={selectedDay} onDaySelect={setSelectedDay} />
       </View>
       <TimeList selectedDay={selectedDay} />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    gap: 20,
+    flex: 1,
+  },
+  daySelectorContainer: {
+    paddingHorizontal: 25,
+  },
+});

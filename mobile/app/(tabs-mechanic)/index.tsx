@@ -18,23 +18,19 @@ export default function HomeMechanicScreen() {
           />
         </View>
         <View>
-          <Text style={styles.title}>Prihodki</Text>
+          <Text style={AppStyles.bigTitle}>Prihodki</Text>
           <View style={styles.incomeContainer}>
-            <Text style={styles.text}>Teden</Text>
-            <Text style={[styles.text, { alignSelf: "flex-end" }]}>
-              323.03€
-            </Text>
+            <Text style={AppStyles.title}>Teden</Text>
+            <Text style={[AppStyles.title, styles.moneyText]}>323.03€</Text>
           </View>
           <View style={styles.incomeContainer}>
-            <Text style={styles.text}>Mesec</Text>
-            <Text style={[styles.text, { alignSelf: "flex-end" }]}>
-              1203.03€
-            </Text>
+            <Text style={AppStyles.title}>Mesec</Text>
+            <Text style={[AppStyles.title, styles.moneyText]}>1203.03€</Text>
           </View>
         </View>
       </View>
       <View style={{ flex: 1 }}>
-        <Text style={[styles.title, { paddingHorizontal: 25 }]}>
+        <Text style={[AppStyles.bigTitle, { paddingHorizontal: 25 }]}>
           Pregled terminov
         </Text>
         <DaySchedule />
@@ -54,21 +50,14 @@ const styles = StyleSheet.create({
   settingsIcon: {
     alignSelf: "flex-end",
   },
-  title: {
-    fontSize: 32,
-    fontFamily: "Jaldi-Regular",
-  },
   incomeContainer: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  text: {
-    fontSize: 22,
-    fontFamily: "Jaldi-Regular",
-    lineHeight: 28,
+  moneyText: {
+    alignSelf: "flex-end",
   },
-
   userGreeting: {
     fontSize: 36,
     fontFamily: "Jaldi-Regular",

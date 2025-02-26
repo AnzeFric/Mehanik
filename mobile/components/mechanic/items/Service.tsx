@@ -7,6 +7,7 @@ import {
 } from "react-native";
 import { router } from "expo-router";
 import { Colors } from "@/constants/Colors";
+import { AppStyles } from "@/constants/Styles";
 
 export interface ServiceData {
   id: number;
@@ -35,9 +36,9 @@ export default function Service({ serviceData }: Props) {
           style={styles.image}
         />
         <View style={styles.customerInfo}>
-          <Text style={styles.textBold}>{serviceData.name}</Text>
-          <Text style={styles.text}>{serviceData.vehicle}</Text>
-          <Text style={styles.text}>{serviceData.vin}</Text>
+          <Text style={AppStyles.boldTitle}>{serviceData.name}</Text>
+          <Text style={AppStyles.smallText}>{serviceData.vehicle}</Text>
+          <Text style={AppStyles.smallText}>{serviceData.vin}</Text>
         </View>
       </>
     </TouchableHighlight>
@@ -61,15 +62,5 @@ const styles = StyleSheet.create({
   },
   customerInfo: {
     gap: 5,
-  },
-  text: {
-    fontSize: 16,
-    lineHeight: 20,
-    fontFamily: "Jaldi-Regular",
-  },
-  textBold: {
-    fontSize: 24,
-    lineHeight: 32,
-    fontFamily: "Jaldi-Bold",
   },
 });

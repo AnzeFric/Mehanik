@@ -1,5 +1,6 @@
 import { Text, View, TouchableHighlight, StyleSheet } from "react-native";
 import { Colors } from "@/constants/Colors";
+import { AppStyles } from "@/constants/Styles";
 
 export interface Service {
   type: string;
@@ -12,28 +13,30 @@ interface Props {
 export default function ServicesMap({ serviceList }: Props) {
   return (
     <View>
-      <Text style={styles.title}>Narejeni servisi</Text>
+      <Text style={AppStyles.title}>Narejeni servisi</Text>
       <View style={styles.buttonsContainer}>
         <TouchableHighlight
           style={styles.button}
           underlayColor={Colors.light.underlayColor}
           onPress={() => {}}
         >
-          <Text style={styles.text}>Filter</Text>
+          <Text style={styles.buttonText}>Filter</Text>
         </TouchableHighlight>
         <TouchableHighlight
           style={styles.button}
           underlayColor={Colors.light.underlayColor}
           onPress={() => {}}
         >
-          <Text style={styles.text}>Sortiraj</Text>
+          <Text style={styles.buttonText}>Sortiraj</Text>
         </TouchableHighlight>
       </View>
       <View style={styles.servicesContainer}>
         {serviceList.length > 0 ? (
           serviceList.map((service) => <Text>{service.type}</Text>)
         ) : (
-          <Text style={styles.listEmptyText}>Nimate vnešenih servisov.</Text>
+          <Text style={[AppStyles.smallText, styles.listEmptyText]}>
+            Nimate vnešenih servisov.
+          </Text>
         )}
       </View>
     </View>
@@ -41,10 +44,6 @@ export default function ServicesMap({ serviceList }: Props) {
 }
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 24,
-    fontFamily: "Jaldi-Regular",
-  },
   buttonsContainer: {
     display: "flex",
     flexDirection: "row",
@@ -58,18 +57,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     elevation: 2,
   },
-  text: {
+  buttonText: {
     fontSize: 16,
     fontFamily: "Jaldi-Regular",
     color: "white",
     textAlign: "center",
   },
   servicesContainer: {
-    paddingTop: 20,
+    paddingTop: 40,
   },
   listEmptyText: {
     textAlign: "center",
-    fontSize: 16,
-    fontFamily: "Jaldi-Regular",
   },
 });

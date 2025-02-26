@@ -2,6 +2,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { useState } from "react";
 import DisplayItems from "@/components/mechanic/DisplayItems";
 import Customer, { CustomerData } from "@/components/mechanic/items/Customer";
+import { AppStyles } from "@/constants/Styles";
 
 const fakeCustomers: CustomerData[] = [
   {
@@ -42,7 +43,7 @@ export default function AppointmentsScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Novi termini</Text>
+      <Text style={[AppStyles.bigTitle, styles.title]}>Novi termini</Text>
       <DisplayItems
         list={customerList}
         renderItem={(customer, index) => (
@@ -60,8 +61,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 32,
-    fontFamily: "Jaldi-Regular",
     paddingHorizontal: 25,
   },
 });

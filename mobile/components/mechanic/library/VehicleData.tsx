@@ -1,4 +1,5 @@
 import { Text, View, Image, StyleSheet } from "react-native";
+import { AppStyles } from "@/constants/Styles";
 
 interface Props {
   imageUri: string;
@@ -16,39 +17,30 @@ export default function VehicleData({
   vin,
 }: Props) {
   return (
-    <View>
+    <View style={styles.container}>
       <Image
         source={require("@/assets/images/logo-main.png")}
         style={styles.image}
       />
-      <Text style={styles.title}>Podatki o vozilu</Text>
-      <Text style={styles.text}>
-        {brandAndSeries}, {year}
-      </Text>
-      <Text style={styles.boldText}>{vin}</Text>
-      <Text style={styles.text}>{description}</Text>
+      <Text style={AppStyles.title}>Podatki o vozilu</Text>
+      <View>
+        <Text style={AppStyles.text}>
+          {brandAndSeries}, {year}
+        </Text>
+        <Text style={AppStyles.boldText}>{vin}</Text>
+      </View>
+
+      <Text style={AppStyles.text}>{description}</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    gap: 10,
+  },
   image: {
     width: "100%",
     height: 250,
-  },
-  title: {
-    fontSize: 24,
-    fontFamily: "Jaldi-Regular",
-  },
-  text: {
-    fontSize: 20,
-    fontFamily: "Jaldi-Regular",
-    lineHeight: 28,
-  },
-  boldText: {
-    fontSize: 20,
-    fontFamily: "Jaldi-Bold",
-    lineHeight: 24,
-    paddingBottom: 10,
   },
 });

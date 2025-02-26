@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import { Colors } from "@/constants/Colors";
+import { AppStyles } from "@/constants/Styles";
 
 /*
 TODO:
@@ -13,13 +14,13 @@ interface Props {
 export default function TimeItem({ text }: Props) {
   return (
     <View style={styles.container}>
-      <Text style={[styles.text, { alignSelf: "center" }]}>{text}</Text>
+      <Text style={[AppStyles.text, { alignSelf: "center" }]}>{text}</Text>
       <View style={{ flexShrink: 1 }}>
         <View style={styles.customer}>
-          <Text style={styles.text}>Ime Priimek</Text>
-          <Text style={styles.text}>Škoda Octavia</Text>
+          <Text style={AppStyles.text}>Ime Priimek</Text>
+          <Text style={AppStyles.text}>Škoda Octavia</Text>
         </View>
-        <Text style={styles.textSmall}>
+        <Text style={AppStyles.smallText}>
           Nek daljši opis ob vnosu termina iz strani avtomehanika. Recimo redni
           servis, ali menjava zavornih ploščic...
         </Text>
@@ -38,15 +39,6 @@ const styles = StyleSheet.create({
     borderColor: Colors.light.specialBlue,
     borderBottomWidth: 2.5,
     borderStyle: "dashed",
-  },
-  text: {
-    fontSize: 16,
-    fontFamily: "Jaldi-Regulat",
-    lineHeight: 16,
-  },
-  textSmall: {
-    fontSize: 14,
-    fontFamily: "Jaldi-Regulat",
   },
   customer: {
     display: "flex",
