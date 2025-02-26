@@ -1,9 +1,16 @@
-import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
-import { useState } from "react";
-import { useLocalSearchParams, router } from "expo-router";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableHighlight,
+  TouchableOpacity,
+} from "react-native";
+import { useState, useCallback } from "react";
+import { useLocalSearchParams, router, useFocusEffect } from "expo-router";
 import { AppStyles } from "@/constants/Styles";
 import { Colors } from "@/constants/Colors";
 import BackIcon from "@/assets/icons/BackIcon.svg";
+import MenuIcon from "@/assets/icons/MenuIcon.svg";
 import VehicleData from "@/components/mechanic/library/VehicleData";
 import ServicesMap, {
   Service,
@@ -12,7 +19,15 @@ import ServicesMap, {
 export default function DetailServiceScreen() {
   const { id } = useLocalSearchParams();
   const [serviceList, setServiceList] = useState<Array<Service>>([]);
+  const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
   // TODO: Get user data from database using id
+
+  // Hide menu upon closing screen
+  useFocusEffect(
+    useCallback(() => {
+      setIsMenuVisible(false);
+    }, [])
+  );
 
   return (
     <View style={[AppStyles.parentPadding, styles.container]}>
@@ -26,6 +41,26 @@ export default function DetailServiceScreen() {
           }}
         />
         <Text style={styles.userName}>Oseba {id}</Text>
+        <MenuIcon
+          height={30}
+          width={30}
+          style={{ alignSelf: "flex-start" }}
+          onPress={() => {
+            setIsMenuVisible(!isMenuVisible);
+          }}
+        />
+        {isMenuVisible && (
+          <View style={styles.menuContainer}>
+            <TouchableOpacity
+              onPress={() => router.push(`/library/customer-edit/${id}`)}
+            >
+              <Text style={[styles.menuItem, styles.menuItemTop]}>UREDI</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => {}}>
+              <Text style={styles.menuItem}>IZBRIŠI</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
       <VehicleData
         imageUri={""}
@@ -70,5 +105,32 @@ const styles = StyleSheet.create({
   button: { paddingVertical: 0 },
   buttonText: {
     lineHeight: 40,
+  },
+  menuContainer: {
+    position: "absolute",
+    right: 0,
+    top: 40,
+    backgroundColor: Colors.light.background,
+    width: 200,
+    borderRadius: 8,
+    shadowColor: Colors.light.shadowColor,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    zIndex: 5,
+  },
+  menuItem: {
+    textAlign: "center",
+    paddingVertical: 12,
+    fontSize: 18,
+    fontFamily: "Jaldi-Bold",
+  },
+  menuItemTop: {
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.light.inactiveBorder,
   },
 });

@@ -12,8 +12,8 @@ interface TemplateScreenProps {
   onButtonPress: () => void;
 }
 
-/* This is a template view for adding and editing customer and service data in mechanic library
-   It displays a header with the intended action(ex: Dodaj servis) and a button in the footer to confirm the action */
+/* This is a template view for adding/editing customer/service data in the mechanic library
+   It displays a header with the intended action(ex: Add Service) and a button in the footer to confirm the action */
 export default function TemplateView({
   title,
   children,
@@ -33,9 +33,7 @@ export default function TemplateView({
         />
         <Text style={styles.userName}>{title}</Text>
       </View>
-
       <View>{children}</View>
-
       <TouchableHighlight
         style={[AppStyles.button, styles.button]}
         onPress={onButtonPress}

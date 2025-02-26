@@ -29,7 +29,6 @@ export default function VehicleData({
         </Text>
         <Text style={AppStyles.boldText}>{vin}</Text>
       </View>
-
       <Text style={AppStyles.text}>{description}</Text>
     </View>
   );
