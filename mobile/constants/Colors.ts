@@ -16,6 +16,7 @@ export const Colors = {
     confirmButton: "#006db5",
     cancelButton: "#c63500",
     underlayColor: "#DDDDDD",
+    utilityButton: "#3C3C3C",
 
     text: "#11181C",
     tint: tintColorLight,
