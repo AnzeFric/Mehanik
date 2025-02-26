@@ -70,7 +70,15 @@ export default function TabLayout() {
             title: "Library",
             tabBarIcon: ({ color }) => (
               <View style={{ margin: 20, marginTop: 23, padding: 20 }}>
-                <LibraryIcon color={color} width={28} height={28} />
+                <LibraryIcon
+                  color={
+                    pathName.startsWith("/library") // Color LibraryIcon as active if we are on detail page
+                      ? Colors.light.specialBlue
+                      : color
+                  }
+                  width={28}
+                  height={28}
+                />
               </View>
             ),
           }}
