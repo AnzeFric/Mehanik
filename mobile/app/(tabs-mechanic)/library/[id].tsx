@@ -8,11 +8,13 @@ import ServicesMap, {
   Service,
 } from "@/components/mechanic/library/ServicesMap";
 import TemplateView from "@/components/mechanic/library/TemplateView";
+import ModalReject from "@/components/mechanic/modals/ModalReject";
 
 export default function DetailServiceScreen() {
   const { id } = useLocalSearchParams();
   const [serviceList, setServiceList] = useState<Array<Service>>([]);
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   // TODO: Get user data from database using id
 
   // CallBack for screen closing
@@ -51,7 +53,11 @@ export default function DetailServiceScreen() {
           >
             <Text style={[styles.menuItem, styles.menuItemTop]}>UREDI</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity
+            onPress={() => {
+              setIsModalOpen(true);
+            }}
+          >
             <Text style={styles.menuItem}>IZBRIŠI</Text>
           </TouchableOpacity>
         </View>
@@ -64,6 +70,15 @@ export default function DetailServiceScreen() {
         vin={"A71239SASFV"}
       />
       <ServicesMap serviceList={serviceList} />
+
+      {isModalOpen && (
+        <ModalReject
+          isVisible={isModalOpen}
+          message={"Trajno boste izbrisali uporabnika. Ste prepričani?"}
+          onCancel={() => setIsModalOpen(false)}
+          onConfirm={() => {}}
+        />
+      )}
     </TemplateView>
   );
 }
