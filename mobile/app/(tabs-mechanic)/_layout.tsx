@@ -65,7 +65,7 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="library"
+          name="library/index"
           options={{
             title: "Library",
             tabBarIcon: ({ color }) => (
@@ -73,6 +73,12 @@ export default function TabLayout() {
                 <LibraryIcon color={color} width={28} height={28} />
               </View>
             ),
+          }}
+        />
+        <Tabs.Screen
+          name="library/[id]"
+          options={{
+            href: null,
           }}
         />
         <Tabs.Screen
