@@ -1,17 +1,11 @@
 import { View, Text, StyleSheet } from "react-native";
 import { useState } from "react";
 import DisplayItems from "@/components/mechanic/DisplayItems";
-import Customer from "@/components/mechanic/items/Customer";
-
-export interface CustomerData {
-  name: string;
-  vehicle: string;
-  day: Date;
-  description: string;
-}
+import Customer, { CustomerData } from "@/components/mechanic/items/Customer";
 
 const fakeCustomers: CustomerData[] = [
   {
+    id: 0,
     name: "Marko Petrović",
     vehicle: "Volkswagen Golf 7",
     day: new Date("2024-03-01"),
@@ -19,18 +13,21 @@ const fakeCustomers: CustomerData[] = [
       "Avto dela zanimive zvoke v mašini. To je nek daljsi zapis, da lahko vidim kaj se zgodi, ko se bo besedilo pričelo sekat.",
   },
   {
+    id: 1,
     name: "Ivana Jovanović",
     vehicle: "Audi A4",
     day: new Date("2024-03-03"),
     description: "Potrebujem redni servis",
   },
   {
+    id: 2,
     name: "Nemanja Nikolić",
     vehicle: "BMW X5",
     day: new Date("2024-03-07"),
     description: "Hladilna tekočina mi toči",
   },
   {
+    id: 3,
     name: "Ana Simić",
     vehicle: "Mercedes-Benz C200",
     day: new Date("2024-03-10"),

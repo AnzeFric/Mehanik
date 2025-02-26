@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Colors } from "@/constants/Colors";
 
 export interface CustomerData {
+  id: number;
   name: string;
   vehicle: string;
   day: Date;
