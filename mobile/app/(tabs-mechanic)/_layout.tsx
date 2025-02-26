@@ -90,6 +90,12 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
+          name="library/add-customer"
+          options={{
+            href: null,
+          }}
+        />
+        <Tabs.Screen
           name="settings"
           options={{
             href: null,

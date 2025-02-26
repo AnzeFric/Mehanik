@@ -79,7 +79,7 @@ export default function LibraryScreen() {
   };
 
   const handleAdd = () => {
-    router.push("/");
+    router.push("/library/add-customer");
   };
 
   return (
