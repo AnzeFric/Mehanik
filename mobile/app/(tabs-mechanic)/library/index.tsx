@@ -1,10 +1,18 @@
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableHighlight,
+  StyleSheet,
+} from "react-native";
 import { useState } from "react";
 import DisplayItems from "@/components/mechanic/DisplayItems";
 import Service, { ServiceData } from "@/components/mechanic/items/Service";
 import SearchIcon from "@/assets/icons/SearchIcon.svg";
 import { Colors } from "@/constants/Colors";
 import { AppStyles } from "@/constants/Styles";
+import PlusIcon from "@/assets/icons/PlusIcon.svg";
+import { router } from "expo-router";
 
 const fakeServices: ServiceData[] = [
   {
@@ -70,6 +78,10 @@ export default function LibraryScreen() {
     setSearch(text);
   };
 
+  const handleAdd = () => {
+    router.push("/");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -92,6 +104,13 @@ export default function LibraryScreen() {
         )}
         emptyMessage="Servisi ne obstajajo."
       />
+      <TouchableHighlight
+        style={styles.fixedAddButton}
+        underlayColor={Colors.light.specialBlueClick}
+        onPress={handleAdd}
+      >
+        <PlusIcon height={35} width={35} color={Colors.light.background} />
+      </TouchableHighlight>
     </View>
   );
 }
@@ -119,5 +138,21 @@ const styles = StyleSheet.create({
   textInput: {
     width: "100%",
     lineHeight: 32,
+  },
+  fixedAddButton: {
+    position: "absolute",
+    bottom: 20,
+    right: 20,
+    backgroundColor: Colors.light.specialBlue,
+    borderRadius: 30,
+    width: 60,
+    height: 60,
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 3.5,
+    shadowColor: Colors.light.shadowColor,
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 1,
+    shadowRadius: 3,
   },
 });
