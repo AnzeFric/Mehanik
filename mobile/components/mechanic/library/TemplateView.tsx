@@ -13,20 +13,24 @@ import React from "react";
 
 interface TemplateScreenProps {
   title: string;
-  menuIcon?: React.ReactNode;
   children: React.ReactNode;
   buttonText: string;
   onButtonPress: () => void;
+  isMenuVisible?: boolean;
+  menu?: React.ReactNode;
+  menuIcon?: React.ReactNode;
 }
 
 /* This is a template view for adding/editing customer/service data in the mechanic library
    It displays a header with the intended action(ex: Add Service) and a button in the footer to confirm the action */
 export default function TemplateView({
   title,
-  menuIcon,
   children,
   buttonText,
   onButtonPress,
+  isMenuVisible,
+  menu,
+  menuIcon,
 }: TemplateScreenProps) {
   return (
     <View style={styles.container}>
@@ -41,6 +45,7 @@ export default function TemplateView({
         />
         <Text style={styles.userName}>{title}</Text>
         {menuIcon && <View>{menuIcon}</View>}
+        {isMenuVisible && <View>{menu}</View>}
       </View>
       <ScrollView style={styles.childrenContainer}>
         {children}

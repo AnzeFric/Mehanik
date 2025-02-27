@@ -39,57 +39,65 @@ export default function DetailServiceScreen() {
     />
   );
 
+  const menu: React.ReactNode = (
+    <View style={styles.menuContainer}>
+      <TouchableOpacity onPress={() => {}}>
+        <Text style={[styles.menuItem, styles.menuItemTop]}>PROMETNA</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => router.push(`/library/customer-edit/${id}`)}
+      >
+        <Text style={[styles.menuItem, styles.menuItemTop]}>UREDI</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          setIsModalOpen(true);
+        }}
+      >
+        <Text style={styles.menuItem}>IZBRIŠI</Text>
+      </TouchableOpacity>
+    </View>
+  );
+
   return (
     <TemplateView
       title={`Oseba ${id}`}
       buttonText={"Dodaj"}
       onButtonPress={handlePress}
+      isMenuVisible={isMenuVisible}
+      menu={menu}
       menuIcon={menuIcon}
     >
-      {isMenuVisible && (
-        <View style={styles.menuContainer}>
-          <TouchableOpacity onPress={() => {}}>
-            <Text style={[styles.menuItem, styles.menuItemTop]}>PROMETNA</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => router.push(`/library/customer-edit/${id}`)}
-          >
-            <Text style={[styles.menuItem, styles.menuItemTop]}>UREDI</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              setIsModalOpen(true);
-            }}
-          >
-            <Text style={styles.menuItem}>IZBRIŠI</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-      <VehicleData
-        imageUri={""}
-        brandAndSeries={"Volkswagen Golf"}
-        year={2009}
-        description={"Nek dodaten opis"}
-        vin={"A71239SASFV"}
-      />
-      <ServicesMap serviceList={serviceList} />
-      {isModalOpen && (
-        <ModalPrompt
-          isVisible={isModalOpen}
-          message={"Trajno boste izbrisali uporabnika. Ste prepričani?"}
-          onCancel={() => setIsModalOpen(false)}
-          onConfirm={() => {}}
+      <View style={styles.container}>
+        <VehicleData
+          imageUri={""}
+          brandAndSeries={"Volkswagen Golf"}
+          year={2009}
+          description={"Nek dodaten opis"}
+          vin={"A71239SASFV"}
         />
-      )}
+        <ServicesMap serviceList={serviceList} />
+        {isModalOpen && (
+          <ModalPrompt
+            isVisible={isModalOpen}
+            message={"Trajno boste izbrisali uporabnika. Ste prepričani?"}
+            onCancel={() => setIsModalOpen(false)}
+            onConfirm={() => {}}
+          />
+        )}
+      </View>
     </TemplateView>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 25,
+  },
   menuContainer: {
     position: "absolute",
     right: 0,
-    top: -20,
+    top: 20,
     backgroundColor: Colors.light.background,
     width: 200,
     borderRadius: 8,
