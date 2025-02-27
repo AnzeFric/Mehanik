@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useState } from "react";
 import { Colors } from "@/constants/Colors";
 import { AppStyles } from "@/constants/Styles";
-import ModalReject from "../modals/ModalReject";
+import ModalPrompt from "../modals/ModalPrompt";
 import ModalTime from "../modals/ModalTime";
 import { formatDate } from "@/constants/util";
 
@@ -56,7 +56,7 @@ export default function Customer({ customerData }: Props) {
           <Text style={styles.buttonText}>Spremeni</Text>
         </TouchableOpacity>
       </View>
-      <ModalReject
+      <ModalPrompt
         isVisible={isRejectOpen}
         message={"Ste prepričani, da želite zavrniti stranko?"}
         onCancel={() => setIsRejectOpen(false)}

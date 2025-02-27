@@ -8,7 +8,7 @@ import ServicesMap, {
   Service,
 } from "@/components/mechanic/library/ServicesMap";
 import TemplateView from "@/components/mechanic/library/TemplateView";
-import ModalReject from "@/components/mechanic/modals/ModalReject";
+import ModalPrompt from "@/components/mechanic/modals/ModalPrompt";
 
 export default function DetailServiceScreen() {
   const { id } = useLocalSearchParams();
@@ -74,7 +74,7 @@ export default function DetailServiceScreen() {
       />
       <ServicesMap serviceList={serviceList} />
       {isModalOpen && (
-        <ModalReject
+        <ModalPrompt
           isVisible={isModalOpen}
           message={"Trajno boste izbrisali uporabnika. Ste prepričani?"}
           onCancel={() => setIsModalOpen(false)}
