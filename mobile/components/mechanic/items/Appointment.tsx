@@ -6,7 +6,7 @@ import ModalPrompt from "../modals/ModalPrompt";
 import ModalTime from "../modals/ModalTime";
 import { formatDate } from "@/constants/util";
 
-export interface CustomerData {
+export interface AppointmentData {
   id: number;
   name: string;
   vehicle: string;
@@ -15,10 +15,10 @@ export interface CustomerData {
 }
 
 interface Props {
-  customerData: CustomerData;
+  appointmentData: AppointmentData;
 }
 
-export default function Customer({ customerData }: Props) {
+export default function Appointment({ appointmentData }: Props) {
   const [isRejectOpen, setIsRejectOpen] = useState<boolean>(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);
   const [isChangeOpen, setIsChangeOpen] = useState<boolean>(false);
@@ -26,14 +26,14 @@ export default function Customer({ customerData }: Props) {
   return (
     <View style={styles.container}>
       <View style={styles.userInfo}>
-        <Text style={AppStyles.smallText}>{customerData.name}</Text>
-        <Text style={AppStyles.smallText}>{customerData.vehicle}</Text>
+        <Text style={AppStyles.smallText}>{appointmentData.name}</Text>
+        <Text style={AppStyles.smallText}>{appointmentData.vehicle}</Text>
       </View>
       <Text style={[AppStyles.smallBoldText, styles.date]}>
-        {formatDate(customerData.day)}
+        {formatDate(appointmentData.day)}
       </Text>
       <Text style={[AppStyles.smallText, styles.description]}>
-        {customerData.description}
+        {appointmentData.description}
       </Text>
 
       <TouchableOpacity

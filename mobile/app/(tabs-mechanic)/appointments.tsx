@@ -1,10 +1,12 @@
 import { View, Text, StyleSheet } from "react-native";
 import { useState } from "react";
 import DisplayItems from "@/components/mechanic/DisplayItems";
-import Customer, { CustomerData } from "@/components/mechanic/items/Customer";
+import Appointment, {
+  AppointmentData,
+} from "@/components/mechanic/items/Appointment";
 import { AppStyles } from "@/constants/Styles";
 
-const fakeCustomers: CustomerData[] = [
+const fakeAppointments: AppointmentData[] = [
   {
     id: 0,
     name: "Marko Petrović",
@@ -38,16 +40,16 @@ const fakeCustomers: CustomerData[] = [
 
 // TODO: Get items from database
 export default function AppointmentsScreen() {
-  const [customerList, setCustomerList] =
-    useState<Array<CustomerData>>(fakeCustomers);
+  const [appointmentList, setAppointmentList] =
+    useState<Array<AppointmentData>>(fakeAppointments);
 
   return (
     <View style={styles.container}>
       <Text style={[AppStyles.bigTitle, styles.title]}>Novi termini</Text>
       <DisplayItems
-        list={customerList}
-        renderItem={(customer, index) => (
-          <Customer customerData={customer} key={index} />
+        list={appointmentList}
+        renderItem={(appointment, index) => (
+          <Appointment appointmentData={appointment} key={index} />
         )}
         emptyMessage="Nimate novih terminov."
       />
