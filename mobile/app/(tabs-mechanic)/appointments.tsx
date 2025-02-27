@@ -31,7 +31,7 @@ const fakeCustomers: CustomerData[] = [
     id: 3,
     name: "Ana Simić",
     vehicle: "Mercedes-Benz C200",
-    day: new Date("2024-03-10"),
+    day: new Date("2022-11-10"),
     description: "Menjava gum",
   },
 ];

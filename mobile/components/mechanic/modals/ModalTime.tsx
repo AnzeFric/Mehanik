@@ -1,4 +1,4 @@
-import { View, Modal, StyleSheet } from "react-native";
+import { Text, View, Modal, StyleSheet } from "react-native";
 import { Colors } from "@/constants/Colors";
 
 interface Props {
@@ -17,7 +17,9 @@ export default function ModalTime({
   return (
     <Modal transparent={true} visible={isVisible} onRequestClose={onCancel}>
       <View style={styles.centeredView}>
-        <View style={styles.modalView}></View>
+        <View style={styles.modalView}>
+          <Text>{message}</Text>
+        </View>
       </View>
     </Modal>
   );
