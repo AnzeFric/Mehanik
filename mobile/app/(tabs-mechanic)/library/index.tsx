@@ -7,14 +7,14 @@ import {
 } from "react-native";
 import { useState } from "react";
 import DisplayItems from "@/components/mechanic/DisplayItems";
-import Service, { ServiceData } from "@/components/mechanic/items/Service";
+import Customer, { CustomerData } from "@/components/mechanic/items/Customer";
 import SearchIcon from "@/assets/icons/SearchIcon.svg";
 import { Colors } from "@/constants/Colors";
 import { AppStyles } from "@/constants/Styles";
 import PlusIcon from "@/assets/icons/PlusIcon.svg";
 import { router } from "expo-router";
 
-const fakeServices: ServiceData[] = [
+const fakeCustomers: CustomerData[] = [
   {
     id: 0,
     name: "Anže Fric",
@@ -60,18 +60,18 @@ const fakeServices: ServiceData[] = [
 /* TODO: Get items from database*/
 
 export default function LibraryScreen() {
-  const [serviceList, setServiceList] =
-    useState<Array<ServiceData>>(fakeServices);
+  const [customerList, setCustomerList] =
+    useState<Array<CustomerData>>(fakeCustomers);
   const [search, setSearch] = useState<string>("");
 
-  const filteredServices =
+  const filteredCustomers =
     search.trim() === ""
-      ? serviceList
-      : serviceList.filter(
-          (service) =>
-            service.name.toLowerCase().includes(search.toLowerCase()) ||
-            service.vehicle.toLowerCase().includes(search.toLowerCase()) ||
-            service.vin.toLowerCase().includes(search.toLowerCase())
+      ? customerList
+      : customerList.filter(
+          (customer) =>
+            customer.name.toLowerCase().includes(search.toLowerCase()) ||
+            customer.vehicle.toLowerCase().includes(search.toLowerCase()) ||
+            customer.vin.toLowerCase().includes(search.toLowerCase())
         );
 
   const handleSearch = (text: string) => {
@@ -98,11 +98,11 @@ export default function LibraryScreen() {
         </View>
       </View>
       <DisplayItems
-        list={filteredServices}
-        renderItem={(service, index) => (
-          <Service serviceData={service} setSearch={setSearch} key={index} />
+        list={filteredCustomers}
+        renderItem={(customer, index) => (
+          <Customer customerData={customer} setSearch={setSearch} key={index} />
         )}
-        emptyMessage="Servisi ne obstajajo."
+        emptyMessage="Stranke ne obstajajo."
       />
       <TouchableHighlight
         style={styles.fixedAddButton}

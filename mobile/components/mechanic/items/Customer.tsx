@@ -9,7 +9,7 @@ import { router } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { AppStyles } from "@/constants/Styles";
 
-export interface ServiceData {
+export interface CustomerData {
   id: number;
   name: string;
   image: string;
@@ -19,14 +19,14 @@ export interface ServiceData {
 }
 
 interface Props {
-  serviceData: ServiceData;
+  customerData: CustomerData;
   setSearch: (text: string) => void;
 }
 
-export default function Service({ serviceData, setSearch }: Props) {
+export default function Customer({ customerData, setSearch }: Props) {
   const handlePress = () => {
     setSearch("");
-    router.push(`/library/${serviceData.id}`);
+    router.push(`/library/${customerData.id}`);
   };
 
   return (
@@ -41,11 +41,11 @@ export default function Service({ serviceData, setSearch }: Props) {
           style={styles.image}
         />
         <View style={styles.customerInfo}>
-          <Text style={AppStyles.boldTitle}>{serviceData.name}</Text>
+          <Text style={AppStyles.boldTitle}>{customerData.name}</Text>
           <Text style={AppStyles.smallText}>
-            {serviceData.vehicle}, {serviceData.year}
+            {customerData.vehicle}, {customerData.year}
           </Text>
-          <Text style={AppStyles.smallText}>{serviceData.vin}</Text>
+          <Text style={AppStyles.smallText}>{customerData.vin}</Text>
         </View>
       </>
     </TouchableHighlight>

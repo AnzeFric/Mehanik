@@ -58,7 +58,7 @@ export default function Appointment({ appointmentData }: Props) {
       </View>
       <ModalPrompt
         isVisible={isRejectOpen}
-        message={"Ste prepričani, da želite zavrniti stranko?"}
+        message={"Ste prepričani, da želite zavrniti termin?"}
         onCancel={() => setIsRejectOpen(false)}
         onConfirm={() => {}}
       />
