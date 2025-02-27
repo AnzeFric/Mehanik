@@ -95,9 +95,8 @@ export default function CustomerForm() {
 
   const pickCustomerImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [16, 14],
       quality: 1,
     });
 
@@ -155,7 +154,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
-    height: 200,
+    height: 300,
   },
   image: {
     width: "100%",

@@ -50,8 +50,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   checkboxSelected: {
-    backgroundColor: Colors.light.tint,
-    borderColor: Colors.light.tint,
+    backgroundColor: Colors.light.specialBlue,
+    borderColor: Colors.light.specialBlue,
   },
   checkboxLabel: {
     fontSize: 18,
