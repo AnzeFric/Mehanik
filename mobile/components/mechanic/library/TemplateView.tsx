@@ -1,4 +1,10 @@
-import { Text, View, TouchableHighlight, StyleSheet } from "react-native";
+import {
+  Text,
+  View,
+  TouchableHighlight,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
 import { AppStyles } from "@/constants/Styles";
 import { Colors } from "@/constants/Colors";
 import BackIcon from "@/assets/icons/BackIcon.svg";
@@ -23,7 +29,7 @@ export default function TemplateView({
   onButtonPress,
 }: TemplateScreenProps) {
   return (
-    <View style={[AppStyles.parentPadding, styles.container]}>
+    <View style={styles.container}>
       <View style={styles.header}>
         <BackIcon
           height={30}
@@ -36,24 +42,26 @@ export default function TemplateView({
         <Text style={styles.userName}>{title}</Text>
         {menuIcon && <View>{menuIcon}</View>}
       </View>
-      <View>{children}</View>
-      <TouchableHighlight
-        style={[AppStyles.button, styles.button]}
-        onPress={onButtonPress}
-        underlayColor={Colors.light.specialBlueClick}
-      >
-        <Text style={[AppStyles.buttonText, styles.buttonText]}>
-          {buttonText}
-        </Text>
-      </TouchableHighlight>
+      <ScrollView style={styles.childrenContainer}>
+        {children}
+        <TouchableHighlight
+          style={[AppStyles.button, styles.button]}
+          onPress={onButtonPress}
+          underlayColor={Colors.light.specialBlueClick}
+        >
+          <Text style={[AppStyles.buttonText, styles.buttonText]}>
+            {buttonText}
+          </Text>
+        </TouchableHighlight>
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    gap: 15,
     flex: 1,
+    gap: 15,
   },
   header: {
     borderBottomColor: Colors.light.inactiveBorder,
@@ -62,6 +70,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     borderStyle: "dashed",
+    paddingTop: 20,
+    marginHorizontal: 25,
   },
   userName: {
     fontSize: 32,
@@ -70,8 +80,13 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: "center",
   },
+  childrenContainer: {
+    flex: 1,
+  },
   button: {
     paddingVertical: 0,
+    marginHorizontal: 25,
+    marginBottom: 25,
   },
   buttonText: {
     lineHeight: 40,

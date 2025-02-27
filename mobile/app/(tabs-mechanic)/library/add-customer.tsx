@@ -1,6 +1,6 @@
-import { Text, View } from "react-native";
 import { router } from "expo-router";
 import TemplateView from "@/components/mechanic/library/TemplateView";
+import CustomerUI from "@/components/mechanic/library/CustomerUI";
 
 export default function AddCustomerScreen() {
   const handlePress = () => {
@@ -13,7 +13,7 @@ export default function AddCustomerScreen() {
       buttonText={"Dodaj"}
       onButtonPress={handlePress}
     >
-      <Text>Tukaj bo komponenta oz. vmesnik za dodajanje nove stranke</Text>
+      <CustomerUI />
     </TemplateView>
   );
 }
