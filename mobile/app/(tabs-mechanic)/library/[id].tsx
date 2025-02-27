@@ -48,6 +48,9 @@ export default function DetailServiceScreen() {
     >
       {isMenuVisible && (
         <View style={styles.menuContainer}>
+          <TouchableOpacity onPress={() => {}}>
+            <Text style={[styles.menuItem, styles.menuItemTop]}>PROMETNA</Text>
+          </TouchableOpacity>
           <TouchableOpacity
             onPress={() => router.push(`/library/customer-edit/${id}`)}
           >
