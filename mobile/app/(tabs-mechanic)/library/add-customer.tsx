@@ -1,6 +1,6 @@
 import { router } from "expo-router";
 import TemplateView from "@/components/mechanic/library/TemplateView";
-import CustomerUI from "@/components/mechanic/library/CustomerUI";
+import CustomerForm from "@/components/mechanic/library/customer-form/CustomerForm";
 
 export default function AddCustomerScreen() {
   const handlePress = () => {
@@ -13,7 +13,7 @@ export default function AddCustomerScreen() {
       buttonText={"Dodaj"}
       onButtonPress={handlePress}
     >
-      <CustomerUI />
+      <CustomerForm />
     </TemplateView>
   );
 }
