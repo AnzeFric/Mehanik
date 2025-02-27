@@ -4,15 +4,166 @@ import { useLocalSearchParams, router, useFocusEffect } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import MenuIcon from "@/assets/icons/MenuIcon.svg";
 import VehicleData from "@/components/mechanic/library/VehicleData";
-import ServicesMap, {
-  Service,
-} from "@/components/mechanic/library/ServicesMap";
+import ServicesMap from "@/components/mechanic/library/ServicesMap";
+import { ServiceData } from "@/components/mechanic/items/Service";
 import TemplateView from "@/components/mechanic/library/TemplateView";
 import ModalPrompt from "@/components/mechanic/modals/ModalPrompt";
 
+const fakeServiceData: ServiceData[] = [
+  {
+    id: 1,
+    date: "2024-11-15",
+    serviceType: "small",
+    serviceItems: {
+      oilChange: true,
+      filterChange: true,
+      brakeCheck: true,
+      fluidCheck: true,
+      batteryCheck: true,
+    },
+    serviceNotes:
+      "Regular maintenance completed. Recommended timing belt check in next service.",
+    servicePrice: "89.99",
+  },
+  {
+    id: 2,
+    date: "2024-10-22",
+    serviceType: "large",
+    serviceItems: {
+      oilChange: true,
+      filterChange: true,
+      brakeCheck: true,
+      tireRotation: true,
+      fluidCheck: true,
+      batteryCheck: true,
+      sparkPlugs: true,
+      airFilter: true,
+      cabinFilter: true,
+      suspension: true,
+    },
+    serviceNotes:
+      "Complete service performed. Noticed slight wear on rear brake pads - will need replacement in approximately 5000km.",
+    serviceImages: ["brake_check_22102024.jpg", "suspension_22102024.jpg"],
+    servicePrice: "329.50",
+  },
+  {
+    id: 3,
+    date: "2024-09-05",
+    serviceType: "small",
+    serviceItems: {
+      oilChange: true,
+      filterChange: true,
+      fluidCheck: true,
+    },
+    serviceNotes:
+      "Quick service performed. Customer requested minimal work due to budget constraints.",
+    servicePrice: "65.75",
+  },
+  {
+    id: 4,
+    date: "2024-08-17",
+    serviceType: "other",
+    customServiceDescription: "Emergency brake system repair",
+    serviceNotes:
+      "Replaced brake master cylinder and bled entire system. Tested functionality - all working properly now.",
+    serviceImages: ["brake_repair_before.jpg", "brake_repair_after.jpg"],
+    servicePrice: "245.00",
+  },
+  {
+    id: 5,
+    date: "2024-07-30",
+    serviceType: "large",
+    serviceItems: {
+      oilChange: true,
+      filterChange: true,
+      brakeCheck: true,
+      tireRotation: true,
+      fluidCheck: true,
+      batteryCheck: true,
+      sparkPlugs: false,
+      airFilter: true,
+      cabinFilter: true,
+      suspension: true,
+      timing: true,
+      coolant: true,
+    },
+    serviceNotes:
+      "Annual comprehensive service completed. Timing belt replaced as scheduled maintenance. All systems functioning properly.",
+    serviceImages: ["timing_belt_30072024.jpg", "coolant_flush_30072024.jpg"],
+    servicePrice: "495.25",
+  },
+  {
+    id: 6,
+    date: "2024-06-12",
+    serviceType: "other",
+    customServiceDescription: "Air conditioning system repair",
+    serviceNotes:
+      "Recharged AC system and replaced faulty compressor. System now cooling properly.",
+    servicePrice: "385.00",
+  },
+  {
+    id: 7,
+    date: "2024-05-28",
+    serviceType: "small",
+    serviceItems: {
+      oilChange: true,
+      filterChange: true,
+      brakeCheck: true,
+      fluidCheck: true,
+    },
+    serviceNotes: "Standard service performed. All fluids topped up.",
+    servicePrice: "79.99",
+  },
+  {
+    id: 8,
+    date: "2024-04-03",
+    serviceType: "large",
+    serviceItems: {
+      oilChange: true,
+      filterChange: true,
+      brakeCheck: true,
+      tireRotation: true,
+      fluidCheck: true,
+      batteryCheck: true,
+      sparkPlugs: true,
+      airFilter: true,
+      cabinFilter: true,
+      coolant: true,
+    },
+    serviceNotes:
+      "Major service completed. Replaced all spark plugs and performed coolant flush.",
+    serviceImages: ["sparkplugs_03042024.jpg"],
+    servicePrice: "375.50",
+  },
+  {
+    id: 9,
+    date: "2024-03-19",
+    serviceType: "other",
+    customServiceDescription: "Engine diagnostic and tune-up",
+    serviceNotes:
+      "Performed complete engine diagnostic after customer reported rough idling. Adjusted fuel mixture and cleaned injectors. Engine now running smoothly.",
+    serviceImages: ["engine_diagnostic_19032024.jpg"],
+    servicePrice: "195.00",
+  },
+  {
+    id: 10,
+    date: "2024-02-05",
+    serviceType: "small",
+    serviceItems: {
+      oilChange: true,
+      filterChange: true,
+      tireRotation: true,
+      batteryCheck: true,
+    },
+    serviceNotes:
+      "Winter service check completed. Battery tested and showing good health for cold weather.",
+    servicePrice: "95.50",
+  },
+];
+
 export default function DetailServiceScreen() {
   const { id } = useLocalSearchParams();
-  const [serviceList, setServiceList] = useState<Array<Service>>([]);
+  const [serviceList, setServiceList] = useState<Array<ServiceData>>([]);
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   // TODO: Get user data from database using id
@@ -76,7 +227,7 @@ export default function DetailServiceScreen() {
           description={"Nek dodaten opis"}
           vin={"A71239SASFV"}
         />
-        <ServicesMap serviceList={serviceList} />
+        <ServicesMap serviceList={fakeServiceData} />
         {isModalOpen && (
           <ModalPrompt
             isVisible={isModalOpen}

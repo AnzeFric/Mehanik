@@ -35,7 +35,7 @@ export const AppStyles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontFamily: "Jaldi-Regular",
-    lineHeight: 28,
+    lineHeight: 29,
   },
   smallText: {
     fontSize: 16,

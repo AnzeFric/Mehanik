@@ -8,3 +8,14 @@ export function formatDate(date: Date): string {
 
   return `${paddedDay}. ${paddedMonth}. ${year}`;
 }
+
+export function formatServiceType(type: string): string {
+  switch (type) {
+    case "small":
+      return "Mali servis";
+    case "large":
+      return "Veliki servis";
+    default:
+      return "Drugo";
+  }
+}

@@ -1,15 +1,12 @@
 import { Text, View, TouchableHighlight, StyleSheet } from "react-native";
 import { Colors } from "@/constants/Colors";
 import { AppStyles } from "@/constants/Styles";
-
-export interface Service {
-  type: string;
-}
+import Service, { ServiceData } from "../items/Service";
 
 interface Props {
-  serviceList: Service[];
+  serviceList: ServiceData[];
 }
-// TODO: expand Service interface, when you start saving to db
+
 export default function ServicesMap({ serviceList }: Props) {
   return (
     <>
@@ -43,7 +40,9 @@ export default function ServicesMap({ serviceList }: Props) {
       </View>
       <View style={styles.servicesContainer}>
         {serviceList.length > 0 ? (
-          serviceList.map((service) => <Text>{service.type}</Text>)
+          serviceList.map((service, index) => (
+            <Service serviceData={service} key={index} />
+          ))
         ) : (
           <Text style={[AppStyles.smallText, styles.listEmptyText]}>
             Nimate vnešenih servisov.
@@ -79,7 +78,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   servicesContainer: {
-    paddingTop: 40,
+    paddingTop: 20,
+    gap: 10,
   },
   listEmptyText: {
     textAlign: "center",
