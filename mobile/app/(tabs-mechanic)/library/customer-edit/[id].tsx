@@ -1,9 +1,24 @@
-import { Text } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 import TemplateView from "@/components/mechanic/library/TemplateView";
+import UserForm from "@/components/mechanic/library/customer-form/components/forms/UserForm";
+import { useForm } from "react-hook-form";
+import { ServiceFormData } from "@/components/mechanic/library/customer-form/CustomerForm";
 
 export default function EditCustomerScreen() {
   const { id } = useLocalSearchParams();
+  const {
+    control,
+    formState: { errors },
+  } = useForm<ServiceFormData>({
+    defaultValues: {
+      imageUri: "",
+      firstName: "",
+      lastName: "",
+      address: "",
+      phoneNumber: "",
+      email: "",
+    },
+  });
 
   const handlePress = () => {
     router.push(`/(tabs-mechanic)/library/${id}`);
@@ -15,7 +30,7 @@ export default function EditCustomerScreen() {
       buttonText={"Uredi"}
       onButtonPress={handlePress}
     >
-      <Text>Tukaj bo komponenta oz. vmesnik za urejanje izbrane stranke</Text>
+      <UserForm control={control} errors={errors} />
     </TemplateView>
   );
 }

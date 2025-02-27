@@ -1,18 +1,10 @@
-import {
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableHighlight,
-  Image,
-} from "react-native";
-import { useForm, Controller } from "react-hook-form";
+import { Text, StyleSheet, ScrollView } from "react-native";
+import { useForm } from "react-hook-form";
 import UserForm from "./components/forms/UserForm";
 import VehicleForm from "./components/forms/VehicleForm";
 import ServiceForm from "./components/forms/ServiceForm";
-import CameraIcon from "@/assets/icons/CameraIcon.svg";
-import { Colors } from "@/constants/Colors";
-import * as ImagePicker from "expo-image-picker";
 import { AppStyles } from "@/constants/Styles";
+import ImageForm from "./components/forms/ImageForm";
 
 export type ServiceFormData = {
   // Customer info
@@ -93,37 +85,9 @@ export default function CustomerForm() {
     },
   });
 
-  const pickCustomerImage = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
-      aspect: [16, 14],
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      setValue("imageUri", result.assets[0].uri);
-    }
-  };
-
   return (
     <ScrollView style={styles.container}>
-      <Controller
-        control={control}
-        name="imageUri"
-        render={({ field: { value } }) => (
-          <TouchableHighlight
-            style={styles.cameraContainer}
-            underlayColor={Colors.light.underlayColor}
-            onPress={pickCustomerImage}
-          >
-            {value ? (
-              <Image source={{ uri: value }} style={styles.image} />
-            ) : (
-              <CameraIcon height={30} width={30} />
-            )}
-          </TouchableHighlight>
-        )}
-      />
+      <ImageForm control={control} setValue={setValue} />
       <Text style={styles.sectionTitle}>Informacije o stranki</Text>
       <UserForm control={control} errors={errors} />
       <Text style={styles.sectionTitle}>Informacije o vozilu</Text>
@@ -147,18 +111,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginTop: 20,
     marginBottom: 10,
-  },
-  cameraContainer: {
-    borderWidth: 1,
-    borderColor: Colors.light.inactiveBorder,
-    borderRadius: 8,
-    alignItems: "center",
-    justifyContent: "center",
-    height: 300,
-  },
-  image: {
-    width: "100%",
-    height: "100%",
-    borderRadius: 8,
   },
 });
