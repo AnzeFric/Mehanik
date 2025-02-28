@@ -1,7 +1,14 @@
-import { View, Text, ScrollView, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
+import { useState, useCallback } from "react";
 import { AppStyles } from "@/constants/Styles";
 import BackIcon from "@/assets/icons/BackIcon.svg";
-import { router, useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams, useFocusEffect } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import {
   formatDate,
@@ -9,6 +16,8 @@ import {
   formatServiceItems,
 } from "@/constants/util";
 import { ServiceData } from "@/interfaces/mechanic";
+import ModalPrompt from "@/components/mechanic/modals/ModalPrompt";
+import MenuIcon from "@/assets/icons/MenuIcon.svg";
 
 const fakeData: ServiceData = {
   id: 4,
@@ -36,6 +45,16 @@ const fakeData: ServiceData = {
 
 export default function ServiceDetailScreen() {
   const { id } = useLocalSearchParams();
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        setIsMenuVisible(false);
+      };
+    }, [])
+  );
 
   return (
     <View style={styles.container}>
@@ -51,6 +70,30 @@ export default function ServiceDetailScreen() {
         <Text style={styles.title}>
           {formatServiceType(fakeData.serviceType)}
         </Text>
+        <MenuIcon
+          height={30}
+          width={30}
+          style={{ alignSelf: "center" }}
+          onPress={() => {
+            setIsMenuVisible(!isMenuVisible);
+          }}
+        />
+        {isMenuVisible && (
+          <View style={styles.menuContainer}>
+            <TouchableOpacity
+              onPress={() => router.push(`/library/service-edit/${id}`)}
+            >
+              <Text style={[styles.menuItem, styles.menuItemTop]}>UREDI</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setIsModalOpen(true);
+              }}
+            >
+              <Text style={styles.menuItem}>IZBRIŠI</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
       <ScrollView style={styles.container}>
         <View style={styles.scrollViewContent}>
@@ -89,6 +132,14 @@ export default function ServiceDetailScreen() {
           </View>
         </View>
       </ScrollView>
+      {isModalOpen && (
+        <ModalPrompt
+          isVisible={isModalOpen}
+          message={"Trajno boste izbrisali servis. Ste prepričani?"}
+          onCancel={() => setIsModalOpen(false)}
+          onConfirm={() => {}}
+        />
+      )}
     </View>
   );
 }
@@ -105,7 +156,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderStyle: "dashed",
     paddingTop: 20,
-    paddingHorizontal: 25,
+    marginHorizontal: 25,
   },
   title: {
     fontSize: 32,
@@ -118,5 +169,32 @@ const styles = StyleSheet.create({
     gap: 20,
     paddingHorizontal: 25,
     paddingVertical: 20,
+  },
+  menuContainer: {
+    position: "absolute",
+    right: 0,
+    top: 60,
+    backgroundColor: Colors.light.background,
+    width: 200,
+    borderRadius: 8,
+    shadowColor: Colors.light.shadowColor,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    zIndex: 5,
+  },
+  menuItem: {
+    textAlign: "center",
+    paddingVertical: 12,
+    fontSize: 18,
+    fontFamily: "Jaldi-Bold",
+  },
+  menuItemTop: {
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.light.inactiveBorder,
   },
 });
