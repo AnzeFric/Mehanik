@@ -1,11 +1,16 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, ScrollView, StyleSheet } from "react-native";
 import { AppStyles } from "@/constants/Styles";
 import BackIcon from "@/assets/icons/BackIcon.svg";
 import { router, useLocalSearchParams } from "expo-router";
 import { Colors } from "@/constants/Colors";
-import { formatDate, formatServiceType } from "@/constants/util";
+import {
+  formatDate,
+  formatServiceType,
+  formatServiceItems,
+} from "@/constants/util";
+import { ServiceData } from "@/interfaces/mechanic";
 
-const fakeData = {
+const fakeData: ServiceData = {
   id: 4,
   date: new Date(2024, 7, 30),
   serviceType: "large",
@@ -33,7 +38,7 @@ export default function ServiceDetailScreen() {
   const { id } = useLocalSearchParams();
 
   return (
-    <View style={AppStyles.parentPadding}>
+    <View style={styles.container}>
       <View style={styles.header}>
         <BackIcon
           height={30}
@@ -47,14 +52,51 @@ export default function ServiceDetailScreen() {
           {formatServiceType(fakeData.serviceType)}
         </Text>
       </View>
-      <View>
-        <Text>Datum izvedbe: {formatDate(fakeData.date)}</Text>
-      </View>
+      <ScrollView style={styles.container}>
+        <View style={styles.scrollViewContent}>
+          <View>
+            <Text style={AppStyles.title}>Datum izvedbe:</Text>
+            <Text style={AppStyles.text}>{formatDate(fakeData.date)}</Text>
+          </View>
+          <View>
+            <Text style={AppStyles.title}>Cena:</Text>
+            <Text style={AppStyles.text}>{fakeData.servicePrice}</Text>
+          </View>
+          <View>
+            <Text style={AppStyles.title}>Izvedena popravila:</Text>
+            {fakeData.serviceItems &&
+              Object.entries(fakeData.serviceItems)
+                .filter(([_, value]) => value) // Filter only true values
+                .map(([key]) => (
+                  <Text key={key} style={AppStyles.text}>
+                    - {formatServiceItems(key)}
+                  </Text>
+                ))}
+            {fakeData.customServiceDescription && (
+              <Text style={AppStyles.text}>
+                {fakeData.customServiceDescription}
+              </Text>
+            )}
+          </View>
+
+          <View>
+            <Text style={AppStyles.title}>Dodatne opombe:</Text>
+            <Text style={AppStyles.text}>{fakeData.serviceNotes}</Text>
+          </View>
+          <View>
+            <Text style={AppStyles.title}>Slike servisa:</Text>
+            <Text style={AppStyles.text}>"Slike"</Text>
+          </View>
+        </View>
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   header: {
     borderBottomColor: Colors.light.inactiveBorder,
     borderBottomWidth: 1,
@@ -62,6 +104,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     borderStyle: "dashed",
+    paddingTop: 20,
+    paddingHorizontal: 25,
   },
   title: {
     fontSize: 32,
@@ -69,5 +113,10 @@ const styles = StyleSheet.create({
     fontFamily: "Jaldi-Regular",
     flex: 1,
     textAlign: "center",
+  },
+  scrollViewContent: {
+    gap: 20,
+    paddingHorizontal: 25,
+    paddingVertical: 20,
   },
 });

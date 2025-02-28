@@ -1,4 +1,5 @@
 export interface ServiceFormData {
+  id: number;
   // Customer info
   imageUri?: string;
   firstName: string;
