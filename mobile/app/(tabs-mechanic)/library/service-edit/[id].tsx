@@ -13,12 +13,28 @@ export default function EditServiceScreen() {
     watch,
   } = useForm<ServiceFormData>({
     defaultValues: {
-      imageUri: "",
-      firstName: "",
-      lastName: "",
-      address: "",
-      phoneNumber: "",
-      email: "",
+      // Service info
+      serviceType: "small",
+      serviceItems: {
+        oilChange: false,
+        filterChange: false,
+        brakeCheck: false,
+        tireRotation: false,
+        fluidCheck: false,
+        batteryCheck: false,
+        sparkPlugs: false,
+        airFilter: false,
+        cabinFilter: false,
+        suspension: false,
+        timing: false,
+        coolant: false,
+      },
+      serviceNotes: "",
+      serviceImages: [],
+      servicePrice: "",
+
+      // Custom service (type is "other")
+      customServiceDescription: "",
     },
   });
 

@@ -7,12 +7,13 @@ import {
 } from "react-native";
 import { useState } from "react";
 import DisplayItems from "@/components/mechanic/DisplayItems";
-import Customer, { CustomerData } from "@/components/mechanic/items/Customer";
+import Customer from "@/components/mechanic/items/Customer";
 import SearchIcon from "@/assets/icons/SearchIcon.svg";
 import { Colors } from "@/constants/Colors";
 import { AppStyles } from "@/constants/Styles";
 import PlusIcon from "@/assets/icons/PlusIcon.svg";
 import { router } from "expo-router";
+import { CustomerData } from "@/interfaces/mechanic";
 
 const fakeCustomers: CustomerData[] = [
   {

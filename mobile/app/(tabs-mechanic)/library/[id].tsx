@@ -5,14 +5,14 @@ import { Colors } from "@/constants/Colors";
 import MenuIcon from "@/assets/icons/MenuIcon.svg";
 import VehicleData from "@/components/mechanic/library/VehicleData";
 import ServicesMap from "@/components/mechanic/library/ServicesMap";
-import { ServiceData } from "@/components/mechanic/items/Service";
+import { ServiceData } from "@/interfaces/mechanic";
 import TemplateView from "@/components/mechanic/library/TemplateView";
 import ModalPrompt from "@/components/mechanic/modals/ModalPrompt";
 
 const fakeServiceData: ServiceData[] = [
   {
-    id: 1,
-    date: "2024-11-15",
+    id: 0,
+    date: new Date(2024, 10, 15),
     serviceType: "small",
     serviceItems: {
       oilChange: true,
@@ -26,8 +26,8 @@ const fakeServiceData: ServiceData[] = [
     servicePrice: "89.99",
   },
   {
-    id: 2,
-    date: "2024-10-22",
+    id: 1,
+    date: new Date(2024, 10, 22),
     serviceType: "large",
     serviceItems: {
       oilChange: true,
@@ -47,8 +47,8 @@ const fakeServiceData: ServiceData[] = [
     servicePrice: "329.50",
   },
   {
-    id: 3,
-    date: "2024-09-05",
+    id: 2,
+    date: new Date(2024, 9, 5),
     serviceType: "small",
     serviceItems: {
       oilChange: true,
@@ -60,8 +60,8 @@ const fakeServiceData: ServiceData[] = [
     servicePrice: "65.75",
   },
   {
-    id: 4,
-    date: "2024-08-17",
+    id: 3,
+    date: new Date(2024, 8, 17),
     serviceType: "other",
     customServiceDescription: "Emergency brake system repair",
     serviceNotes:
@@ -70,8 +70,8 @@ const fakeServiceData: ServiceData[] = [
     servicePrice: "245.00",
   },
   {
-    id: 5,
-    date: "2024-07-30",
+    id: 4,
+    date: new Date(2024, 7, 30),
     serviceType: "large",
     serviceItems: {
       oilChange: true,
@@ -93,8 +93,8 @@ const fakeServiceData: ServiceData[] = [
     servicePrice: "495.25",
   },
   {
-    id: 6,
-    date: "2024-06-12",
+    id: 5,
+    date: new Date(2024, 6, 12),
     serviceType: "other",
     customServiceDescription: "Air conditioning system repair",
     serviceNotes:
@@ -102,8 +102,8 @@ const fakeServiceData: ServiceData[] = [
     servicePrice: "385.00",
   },
   {
-    id: 7,
-    date: "2024-05-28",
+    id: 6,
+    date: new Date(2024, 5, 28),
     serviceType: "small",
     serviceItems: {
       oilChange: true,
@@ -115,8 +115,8 @@ const fakeServiceData: ServiceData[] = [
     servicePrice: "79.99",
   },
   {
-    id: 8,
-    date: "2024-04-03",
+    id: 7,
+    date: new Date(2024, 4, 3),
     serviceType: "large",
     serviceItems: {
       oilChange: true,
@@ -136,8 +136,8 @@ const fakeServiceData: ServiceData[] = [
     servicePrice: "375.50",
   },
   {
-    id: 9,
-    date: "2024-03-19",
+    id: 8,
+    date: new Date(2024, 3, 19),
     serviceType: "other",
     customServiceDescription: "Engine diagnostic and tune-up",
     serviceNotes:
@@ -146,8 +146,8 @@ const fakeServiceData: ServiceData[] = [
     servicePrice: "195.00",
   },
   {
-    id: 10,
-    date: "2024-02-05",
+    id: 9,
+    date: new Date(2024, 2, 5),
     serviceType: "small",
     serviceItems: {
       oilChange: true,

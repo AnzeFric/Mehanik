@@ -1,7 +1,8 @@
 import { Text, View, TouchableHighlight, StyleSheet } from "react-native";
 import { Colors } from "@/constants/Colors";
 import { AppStyles } from "@/constants/Styles";
-import Service, { ServiceData } from "../items/Service";
+import Service from "../items/Service";
+import { ServiceData } from "@/interfaces/mechanic";
 
 interface Props {
   serviceList: ServiceData[];

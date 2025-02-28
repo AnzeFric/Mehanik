@@ -5,14 +5,7 @@ import { AppStyles } from "@/constants/Styles";
 import ModalPrompt from "../modals/ModalPrompt";
 import ModalTime from "../modals/ModalTime";
 import { formatDate } from "@/constants/util";
-
-export interface AppointmentData {
-  id: number;
-  name: string;
-  vehicle: string;
-  day: Date;
-  description: string;
-}
+import { AppointmentData } from "@/interfaces/mechanic";
 
 interface Props {
   appointmentData: AppointmentData;

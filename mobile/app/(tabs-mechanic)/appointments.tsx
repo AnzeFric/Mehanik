@@ -1,10 +1,9 @@
 import { View, Text, StyleSheet } from "react-native";
 import { useState } from "react";
 import DisplayItems from "@/components/mechanic/DisplayItems";
-import Appointment, {
-  AppointmentData,
-} from "@/components/mechanic/items/Appointment";
+import Appointment from "@/components/mechanic/items/Appointment";
 import { AppStyles } from "@/constants/Styles";
+import { AppointmentData } from "@/interfaces/mechanic";
 
 const fakeAppointments: AppointmentData[] = [
   {

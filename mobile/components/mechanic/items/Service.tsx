@@ -1,33 +1,9 @@
 import { View, Text, TouchableHighlight, StyleSheet } from "react-native";
+import { router } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { formatDate, formatServiceType } from "@/constants/util";
 import { AppStyles } from "@/constants/Styles";
-
-export interface ServiceData {
-  id: number;
-  date: string;
-  serviceType: "small" | "large" | "other";
-  serviceItems?: {
-    oilChange?: boolean;
-    filterChange?: boolean;
-    brakeCheck?: boolean;
-    tireRotation?: boolean;
-    fluidCheck?: boolean;
-    batteryCheck?: boolean;
-    sparkPlugs?: boolean;
-    airFilter?: boolean;
-    cabinFilter?: boolean;
-    suspension?: boolean;
-    timing?: boolean;
-    coolant?: boolean;
-  };
-  serviceNotes?: string;
-  serviceImages?: string[];
-  servicePrice?: string;
-
-  // Custom service (type is "other")
-  customServiceDescription?: string;
-}
+import { ServiceData } from "@/interfaces/mechanic";
 
 interface Props {
   serviceData: ServiceData;
@@ -38,7 +14,11 @@ export default function Service({ serviceData }: Props) {
     <TouchableHighlight
       style={styles.container}
       underlayColor={Colors.light.underlayColor}
-      onPress={() => {}}
+      onPress={() => {
+        router.push(
+          `/(tabs-mechanic)/library/service-detail/${serviceData.id}`
+        );
+      }}
     >
       <>
         <View style={styles.titleContainer}>

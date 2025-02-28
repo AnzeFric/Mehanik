@@ -8,15 +8,7 @@ import {
 import { router } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { AppStyles } from "@/constants/Styles";
-
-export interface CustomerData {
-  id: number;
-  name: string;
-  image: string;
-  vehicle: string;
-  year: number;
-  vin: string;
-}
+import { CustomerData } from "@/interfaces/mechanic";
 
 interface Props {
   customerData: CustomerData;
