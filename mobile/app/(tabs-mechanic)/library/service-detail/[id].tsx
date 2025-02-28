@@ -14,6 +14,7 @@ import {
   formatDate,
   formatServiceType,
   formatServiceItems,
+  formatCurrency,
 } from "@/constants/util";
 import { ServiceData } from "@/interfaces/mechanic";
 import ModalPrompt from "@/components/mechanic/modals/ModalPrompt";
@@ -103,7 +104,9 @@ export default function ServiceDetailScreen() {
           </View>
           <View>
             <Text style={AppStyles.title}>Cena:</Text>
-            <Text style={AppStyles.text}>{fakeData.servicePrice}</Text>
+            <Text style={AppStyles.text}>
+              {formatCurrency(fakeData.servicePrice)}
+            </Text>
           </View>
           <View>
             <Text style={AppStyles.title}>Izvedena popravila:</Text>
