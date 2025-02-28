@@ -16,6 +16,7 @@ export interface ServiceFormData {
 
   // Service info
   serviceType: "small" | "large" | "other";
+  date: Date;
   serviceItems?: {
     oilChange?: boolean;
     filterChange?: boolean;
@@ -38,10 +39,28 @@ export interface ServiceFormData {
   customServiceDescription?: string;
 }
 
+export interface CustomerData {
+  id: number;
+  name: string;
+  image: string;
+  vehicle: string;
+  year: number;
+  vin: string;
+}
+
+export interface VehicleData {
+  id: number;
+  carBrand: string;
+  carModel: string;
+  carYear?: string;
+  vin?: string;
+  carDescription?: string;
+}
+
 export interface ServiceData {
   id: number;
-  date: Date;
   serviceType: "small" | "large" | "other";
+  date: Date;
   serviceItems?: {
     oilChange?: boolean;
     filterChange?: boolean;
@@ -68,15 +87,6 @@ export interface AppointmentData {
   id: number;
   name: string;
   vehicle: string;
-  day: Date;
+  date: Date;
   description: string;
-}
-
-export interface CustomerData {
-  id: number;
-  name: string;
-  image: string;
-  vehicle: string;
-  year: number;
-  vin: string;
 }

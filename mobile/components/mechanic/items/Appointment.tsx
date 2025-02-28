@@ -23,7 +23,7 @@ export default function Appointment({ appointmentData }: Props) {
         <Text style={AppStyles.smallText}>{appointmentData.vehicle}</Text>
       </View>
       <Text style={[AppStyles.smallBoldText, styles.date]}>
-        {formatDate(appointmentData.day)}
+        {formatDate(appointmentData.date)}
       </Text>
       <Text style={[AppStyles.smallText, styles.description]}>
         {appointmentData.description}

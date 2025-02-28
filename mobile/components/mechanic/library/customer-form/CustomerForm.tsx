@@ -15,6 +15,7 @@ export default function CustomerForm() {
     setValue,
   } = useForm<ServiceFormData>({
     defaultValues: {
+      imageUri: "",
       firstName: "",
       lastName: "",
       address: "",
@@ -41,6 +42,7 @@ export default function CustomerForm() {
         coolant: false,
       },
       serviceNotes: "",
+      serviceImages: [],
       servicePrice: "",
       customServiceDescription: "",
     },
