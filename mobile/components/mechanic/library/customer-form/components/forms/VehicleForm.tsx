@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { Control, FieldErrors } from "react-hook-form";
-import { ServiceFormData } from "../../CustomerForm";
+import { ServiceFormData } from "@/interfaces/mechanic";
 import CustomController from "../CustomController";
 
 type CustomerInfoProps = {

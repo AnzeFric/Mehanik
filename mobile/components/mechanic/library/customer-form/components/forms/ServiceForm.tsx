@@ -14,7 +14,7 @@ import {
 import CameraIcon from "@/assets/icons/CameraIcon.svg";
 import { Colors } from "@/constants/Colors";
 import * as ImagePicker from "expo-image-picker";
-import { ServiceFormData } from "../../CustomerForm";
+import { ServiceFormData } from "@/interfaces/mechanic";
 import { useState } from "react";
 import CustomRadioButton from "../CustomRadioButton";
 import CustomCheckBox from "../CustomCheckBox";

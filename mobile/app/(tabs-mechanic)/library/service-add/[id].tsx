@@ -3,7 +3,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import TemplateView from "@/components/mechanic/library/TemplateView";
 import ServiceForm from "@/components/mechanic/library/customer-form/components/forms/ServiceForm";
 import { useForm } from "react-hook-form";
-import { ServiceFormData } from "@/components/mechanic/library/customer-form/CustomerForm";
+import { ServiceFormData } from "@/interfaces/mechanic";
 
 export default function AddServiceScreen() {
   const { id } = useLocalSearchParams();

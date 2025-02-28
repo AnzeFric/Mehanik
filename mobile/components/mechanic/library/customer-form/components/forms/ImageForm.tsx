@@ -2,7 +2,7 @@ import { TouchableHighlight, Image, StyleSheet } from "react-native";
 import { Controller, Control, UseFormSetValue } from "react-hook-form";
 import CameraIcon from "@/assets/icons/CameraIcon.svg";
 import { Colors } from "@/constants/Colors";
-import { ServiceFormData } from "../../CustomerForm";
+import { ServiceFormData } from "@/interfaces/mechanic";
 import * as ImagePicker from "expo-image-picker";
 
 interface Props {

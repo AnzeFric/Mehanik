@@ -4,7 +4,7 @@ import TemplateView from "@/components/mechanic/library/TemplateView";
 import UserForm from "@/components/mechanic/library/customer-form/components/forms/UserForm";
 import ImageForm from "@/components/mechanic/library/customer-form/components/forms/ImageForm";
 import { useForm } from "react-hook-form";
-import { ServiceFormData } from "@/components/mechanic/library/customer-form/CustomerForm";
+import { ServiceFormData } from "@/interfaces/mechanic";
 
 export default function EditCustomerScreen() {
   const { id } = useLocalSearchParams();
