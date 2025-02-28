@@ -1,7 +1,11 @@
 import { View, Text, TouchableHighlight, StyleSheet } from "react-native";
 import { router } from "expo-router";
 import { Colors } from "@/constants/Colors";
-import { formatDate, formatServiceType } from "@/constants/util";
+import {
+  formatDate,
+  formatServiceType,
+  formatCurrency,
+} from "@/constants/util";
 import { AppStyles } from "@/constants/Styles";
 import { ServiceData } from "@/interfaces/mechanic";
 
@@ -25,11 +29,13 @@ export default function Service({ serviceData }: Props) {
           <Text style={[AppStyles.title, styles.title]}>
             {formatServiceType(serviceData.serviceType)}
           </Text>
-
-          <Text style={AppStyles.smallBoldText}>
-            {formatDate(new Date(serviceData.date))}
+          <Text style={AppStyles.text}>
+            {formatCurrency(serviceData.servicePrice)}
           </Text>
         </View>
+        <Text style={AppStyles.smallBoldText}>
+          {formatDate(new Date(serviceData.date))}
+        </Text>
         {serviceData.serviceType === "other" && (
           <Text style={AppStyles.text}>
             {serviceData.customServiceDescription}

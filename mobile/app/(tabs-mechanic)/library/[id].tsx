@@ -23,7 +23,7 @@ const fakeServiceData: ServiceData[] = [
     },
     serviceNotes:
       "Regular maintenance completed. Recommended timing belt check in next service.",
-    servicePrice: "89.99",
+    servicePrice: 89.99,
   },
   {
     id: 1,
@@ -44,7 +44,7 @@ const fakeServiceData: ServiceData[] = [
     serviceNotes:
       "Complete service performed. Noticed slight wear on rear brake pads - will need replacement in approximately 5000km.",
     serviceImages: ["brake_check_22102024.jpg", "suspension_22102024.jpg"],
-    servicePrice: "329.50",
+    servicePrice: 329.5,
   },
   {
     id: 2,
@@ -57,7 +57,7 @@ const fakeServiceData: ServiceData[] = [
     },
     serviceNotes:
       "Quick service performed. Customer requested minimal work due to budget constraints.",
-    servicePrice: "65.75",
+    servicePrice: 65.75,
   },
   {
     id: 3,
@@ -67,7 +67,7 @@ const fakeServiceData: ServiceData[] = [
     serviceNotes:
       "Replaced brake master cylinder and bled entire system. Tested functionality - all working properly now.",
     serviceImages: ["brake_repair_before.jpg", "brake_repair_after.jpg"],
-    servicePrice: "245.00",
+    servicePrice: 245.0,
   },
   {
     id: 4,
@@ -90,7 +90,7 @@ const fakeServiceData: ServiceData[] = [
     serviceNotes:
       "Annual comprehensive service completed. Timing belt replaced as scheduled maintenance. All systems functioning properly.",
     serviceImages: ["timing_belt_30072024.jpg", "coolant_flush_30072024.jpg"],
-    servicePrice: "495.25",
+    servicePrice: 495.25,
   },
   {
     id: 5,
@@ -99,7 +99,7 @@ const fakeServiceData: ServiceData[] = [
     customServiceDescription: "Air conditioning system repair",
     serviceNotes:
       "Recharged AC system and replaced faulty compressor. System now cooling properly.",
-    servicePrice: "385.00",
+    servicePrice: 385.0,
   },
   {
     id: 6,
@@ -112,7 +112,7 @@ const fakeServiceData: ServiceData[] = [
       fluidCheck: true,
     },
     serviceNotes: "Standard service performed. All fluids topped up.",
-    servicePrice: "79.99",
+    servicePrice: 79.99,
   },
   {
     id: 7,
@@ -133,7 +133,7 @@ const fakeServiceData: ServiceData[] = [
     serviceNotes:
       "Major service completed. Replaced all spark plugs and performed coolant flush.",
     serviceImages: ["sparkplugs_03042024.jpg"],
-    servicePrice: "375.50",
+    servicePrice: 375.5,
   },
   {
     id: 8,
@@ -143,7 +143,7 @@ const fakeServiceData: ServiceData[] = [
     serviceNotes:
       "Performed complete engine diagnostic after customer reported rough idling. Adjusted fuel mixture and cleaned injectors. Engine now running smoothly.",
     serviceImages: ["engine_diagnostic_19032024.jpg"],
-    servicePrice: "195.00",
+    servicePrice: 195.0,
   },
   {
     id: 9,
@@ -157,7 +157,7 @@ const fakeServiceData: ServiceData[] = [
     },
     serviceNotes:
       "Winter service check completed. Battery tested and showing good health for cold weather.",
-    servicePrice: "95.50",
+    servicePrice: 95.5,
   },
 ];
 

@@ -40,7 +40,7 @@ const fakeData: ServiceData = {
   serviceNotes:
     "Annual comprehensive service completed. Timing belt replaced as scheduled maintenance. All systems functioning properly.",
   serviceImages: ["timing_belt_30072024.jpg", "coolant_flush_30072024.jpg"],
-  servicePrice: "495.25",
+  servicePrice: 495.25,
 };
 
 export default function ServiceDetailScreen() {

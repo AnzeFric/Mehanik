@@ -50,3 +50,10 @@ export function formatServiceItems(item: string): string {
       return "";
   }
 }
+
+export function formatCurrency(price: number | undefined): string {
+  if (price && typeof price === "number") {
+    return `${price.toFixed(2)} €`;
+  }
+  return "0.00 €";
+}

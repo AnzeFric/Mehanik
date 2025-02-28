@@ -78,7 +78,7 @@ export interface ServiceData {
   };
   serviceNotes?: string;
   serviceImages?: string[];
-  servicePrice?: string;
+  servicePrice?: number;
 
   // Custom service (type is "other")
   customServiceDescription?: string;
