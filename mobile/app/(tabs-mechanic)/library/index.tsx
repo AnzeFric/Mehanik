@@ -14,6 +14,7 @@ import { AppStyles } from "@/constants/Styles";
 import PlusIcon from "@/assets/icons/PlusIcon.svg";
 import { router } from "expo-router";
 import { CustomerData } from "@/interfaces/mechanic";
+import PlusButton from "@/components/global-ui/PlusButton";
 
 const fakeCustomers: CustomerData[] = [
   {
@@ -75,14 +76,6 @@ export default function LibraryScreen() {
             customer.vin.toLowerCase().includes(search.toLowerCase())
         );
 
-  const handleSearch = (text: string) => {
-    setSearch(text);
-  };
-
-  const handleAdd = () => {
-    router.push("/library/add-customer");
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -93,7 +86,9 @@ export default function LibraryScreen() {
             style={[AppStyles.text, styles.textInput]}
             placeholder="Išči"
             value={search}
-            onChangeText={handleSearch}
+            onChangeText={(text: string) => {
+              setSearch(text);
+            }}
             numberOfLines={1}
           />
         </View>
@@ -105,13 +100,11 @@ export default function LibraryScreen() {
         )}
         emptyMessage="Stranke ne obstajajo."
       />
-      <TouchableHighlight
-        style={styles.fixedAddButton}
-        underlayColor={Colors.light.specialBlueClick}
-        onPress={handleAdd}
-      >
-        <PlusIcon height={35} width={35} color={Colors.light.background} />
-      </TouchableHighlight>
+      <PlusButton
+        onPress={() => {
+          router.push("/library/add-customer");
+        }}
+      />
     </View>
   );
 }
@@ -139,21 +132,5 @@ const styles = StyleSheet.create({
   textInput: {
     width: "100%",
     lineHeight: 32,
-  },
-  fixedAddButton: {
-    position: "absolute",
-    bottom: 20,
-    right: 20,
-    backgroundColor: Colors.light.specialBlue,
-    borderRadius: 30,
-    width: 60,
-    height: 60,
-    justifyContent: "center",
-    alignItems: "center",
-    elevation: 3.5,
-    shadowColor: Colors.light.shadowColor,
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 1,
-    shadowRadius: 3,
   },
 });

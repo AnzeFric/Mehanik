@@ -8,6 +8,7 @@ import ServicesMap from "@/components/mechanic/library/ServicesMap";
 import { ServiceData } from "@/interfaces/mechanic";
 import TemplateView from "@/components/mechanic/library/TemplateView";
 import ModalPrompt from "@/components/mechanic/modals/ModalPrompt";
+import PlusButton from "@/components/global-ui/PlusButton";
 
 const fakeServiceData: ServiceData[] = [
   {
@@ -211,39 +212,41 @@ export default function DetailServiceScreen() {
   );
 
   return (
-    <TemplateView
-      title={`Oseba ${id}`}
-      buttonText={"Dodaj"}
-      onButtonPress={handlePress}
-      isMenuVisible={isMenuVisible}
-      menu={menu}
-      menuIcon={menuIcon}
-    >
-      <View style={styles.container}>
-        <VehicleData
-          imageUri={""}
-          brandAndSeries={"Volkswagen Golf"}
-          year={2009}
-          description={"Nek dodaten opis"}
-          vin={"A71239SASFV"}
-        />
-        <ServicesMap serviceList={fakeServiceData} />
-        {isModalOpen && (
-          <ModalPrompt
-            isVisible={isModalOpen}
-            message={"Trajno boste izbrisali uporabnika. Ste prepričani?"}
-            onCancel={() => setIsModalOpen(false)}
-            onConfirm={() => {}}
+    <>
+      <TemplateView
+        title={`Oseba ${id}`}
+        isMenuVisible={isMenuVisible}
+        menu={menu}
+        menuIcon={menuIcon}
+      >
+        <View style={styles.container}>
+          <VehicleData
+            imageUri={""}
+            brandAndSeries={"Volkswagen Golf"}
+            year={2009}
+            description={"Nek dodaten opis"}
+            vin={"A71239SASFV"}
           />
-        )}
-      </View>
-    </TemplateView>
+          <ServicesMap serviceList={fakeServiceData} />
+          {isModalOpen && (
+            <ModalPrompt
+              isVisible={isModalOpen}
+              message={"Trajno boste izbrisali uporabnika. Ste prepričani?"}
+              onCancel={() => setIsModalOpen(false)}
+              onConfirm={() => {}}
+            />
+          )}
+        </View>
+      </TemplateView>
+      <PlusButton onPress={handlePress} />
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 25,
+    paddingBottom: 20,
   },
   menuContainer: {
     position: "absolute",

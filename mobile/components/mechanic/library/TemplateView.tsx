@@ -14,20 +14,19 @@ import { useCallback, useRef } from "react";
 interface TemplateScreenProps {
   title: string;
   children: React.ReactNode;
-  buttonText: string;
-  onButtonPress: () => void;
+  buttonText?: string;
+  onButtonPress?: () => void;
   isMenuVisible?: boolean;
   menu?: React.ReactNode;
   menuIcon?: React.ReactNode;
 }
 
-/* This is a template view for adding/editing customer/service data in the mechanic library
-   It displays a header with the intended action(ex: Add Service) and a button in the footer to confirm the action */
+/* Displays a fixed header(optional menu button) and an optional button in the footer to confirm the action. If there is no button leave the buttonText empty */
 export default function TemplateView({
   title,
   children,
   buttonText,
-  onButtonPress,
+  onButtonPress = () => {},
   isMenuVisible,
   menu,
   menuIcon,
@@ -64,15 +63,19 @@ export default function TemplateView({
       </View>
       <ScrollView style={styles.childrenContainer} ref={scrollRef}>
         {children}
-        <TouchableHighlight
-          style={[AppStyles.button, styles.button]}
-          onPress={onButtonPress}
-          underlayColor={Colors.light.specialBlueClick}
-        >
-          <Text style={[AppStyles.buttonText, styles.buttonText]}>
-            {buttonText}
-          </Text>
-        </TouchableHighlight>
+        {buttonText ? (
+          <TouchableHighlight
+            style={[AppStyles.button, styles.button]}
+            onPress={onButtonPress}
+            underlayColor={Colors.light.specialBlueClick}
+          >
+            <Text style={[AppStyles.buttonText, styles.buttonText]}>
+              {buttonText}
+            </Text>
+          </TouchableHighlight>
+        ) : (
+          <View style={styles.button} />
+        )}
       </ScrollView>
     </View>
   );
