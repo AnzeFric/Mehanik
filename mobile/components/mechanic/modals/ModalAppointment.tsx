@@ -31,9 +31,7 @@ export default function ModalTime({
   const [screenNumber, setScreenNumber] = useState<number>(0);
 
   const handlePreviousPress = () => {
-    if (screenNumber === 0) {
-      onCancel();
-    } else {
+    if (screenNumber > 0) {
       setScreenNumber((prevScreenNumber) => prevScreenNumber - 1);
     }
   };
@@ -51,7 +49,7 @@ export default function ModalTime({
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <CloseIcon
-            color={Colors.light.inactiveIcon}
+            color={Colors.light.activeIcon}
             height={28}
             width={28}
             onPress={onCancel}
@@ -101,17 +99,20 @@ export default function ModalTime({
 
           <View style={styles.buttonContainer}>
             <TouchableOpacity
-              style={[styles.button, styles.buttonCancel]}
+              style={[
+                styles.button,
+                screenNumber === 0 ? styles.butonInactive : styles.buttonCancel,
+              ]}
               onPress={handlePreviousPress}
             >
-              <Text style={styles.textStyle}>Prekliči</Text>
+              <Text style={styles.textStyle}>Nazaj</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.button, styles.buttonConfirm]}
               onPress={handleNextPress}
             >
               <Text style={styles.textStyle}>
-                {screenNumber === 2 ? "Potrdi" : "Naslednji"}
+                {screenNumber === 2 ? "Potrdi" : "Naprej"}
               </Text>
             </TouchableOpacity>
           </View>
@@ -157,6 +158,9 @@ const styles = StyleSheet.create({
   },
   buttonCancel: {
     backgroundColor: Colors.light.cancelButton,
+  },
+  butonInactive: {
+    backgroundColor: Colors.light.inactiveButton,
   },
   buttonConfirm: {
     backgroundColor: Colors.light.confirmButton,

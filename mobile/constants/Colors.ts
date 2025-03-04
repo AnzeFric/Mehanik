@@ -18,6 +18,7 @@ export const Colors = {
     underlayColor: "#DDDDDD",
     utilityButton: "#3C3C3C",
     shadowColor: "#000000",
+    activeIcon: "#000000",
     inactiveIcon: "#C3C3C3",
 
     text: "#11181C",
