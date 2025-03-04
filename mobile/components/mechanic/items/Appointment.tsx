@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Colors } from "@/constants/Colors";
 import { AppStyles } from "@/constants/Styles";
 import ModalPrompt from "../modals/ModalPrompt";
-import ModalTime from "../modals/ModalTime";
+import ModalAppointment from "../modals/ModalAppointment";
 import { formatDate } from "@/constants/util";
 import { AppointmentData } from "@/interfaces/mechanic";
 
@@ -55,13 +55,13 @@ export default function Appointment({ appointmentData }: Props) {
         onCancel={() => setIsRejectOpen(false)}
         onConfirm={() => {}}
       />
-      <ModalTime
+      <ModalAppointment
         isVisible={isConfirmOpen}
         message={"To je modal okno za potrditev termina"}
         onCancel={() => setIsConfirmOpen(false)}
         onConfirm={() => {}}
       />
-      <ModalTime
+      <ModalAppointment
         isVisible={isChangeOpen}
         message={"To je modal okno za spremembo termina"}
         onCancel={() => setIsChangeOpen(false)}
