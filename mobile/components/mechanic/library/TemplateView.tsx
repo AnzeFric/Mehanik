@@ -8,8 +8,8 @@ import {
 import { AppStyles } from "@/constants/Styles";
 import { Colors } from "@/constants/Colors";
 import BackIcon from "@/assets/icons/BackIcon.svg";
-import { router } from "expo-router";
-import React from "react";
+import { router, useFocusEffect } from "expo-router";
+import { useCallback, useRef } from "react";
 
 interface TemplateScreenProps {
   title: string;
@@ -32,6 +32,21 @@ export default function TemplateView({
   menu,
   menuIcon,
 }: TemplateScreenProps) {
+  const scrollRef = useRef<ScrollView>(null);
+
+  // Make ScrollView return to top after screen is unfocused
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        setTimeout(() => {
+          if (scrollRef.current) {
+            scrollRef.current.scrollTo({ y: 0 });
+          }
+        }, 100); // For smooth transition between screens
+      };
+    }, [])
+  );
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -47,7 +62,7 @@ export default function TemplateView({
         {menuIcon && <View>{menuIcon}</View>}
         {isMenuVisible && <View>{menu}</View>}
       </View>
-      <ScrollView style={styles.childrenContainer}>
+      <ScrollView style={styles.childrenContainer} ref={scrollRef}>
         {children}
         <TouchableHighlight
           style={[AppStyles.button, styles.button]}
