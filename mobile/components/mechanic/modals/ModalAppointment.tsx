@@ -1,59 +1,118 @@
-import { Text, View, Modal, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  Text,
+  View,
+  Modal,
+  TouchableOpacity,
+  StyleSheet,
+  TextInput,
+} from "react-native";
 import { useState } from "react";
 import { Colors } from "@/constants/Colors";
 import DatePicker from "react-native-date-picker";
+import { AppStyles } from "@/constants/Styles";
+import CloseIcon from "@/assets/icons/XIcon.svg";
 
 interface Props {
   isVisible: boolean;
-  message: string;
+  title: string;
   onConfirm: () => void;
   onCancel: () => void;
 }
 
 export default function ModalTime({
   isVisible,
-  message,
+  title,
   onConfirm,
   onCancel,
 }: Props) {
   const [date, setDate] = useState<Date>(new Date());
   const [time, setTime] = useState<Date>(new Date());
+  const [description, setDescription] = useState<string>("");
+  const [screenNumber, setScreenNumber] = useState<number>(0);
+
+  const handlePreviousPress = () => {
+    if (screenNumber === 0) {
+      onCancel();
+    } else {
+      setScreenNumber((prevScreenNumber) => prevScreenNumber - 1);
+    }
+  };
+
+  const handleNextPress = () => {
+    if (screenNumber === 2) {
+      onConfirm();
+    } else {
+      setScreenNumber((prevScreenNumber) => prevScreenNumber + 1);
+    }
+  };
 
   return (
     <Modal transparent={true} visible={isVisible} onRequestClose={onCancel}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
-          <Text>{message}</Text>
-          <Text>Izberite datum</Text>
-          <DatePicker
-            date={date}
-            onDateChange={(newDate: Date) => {
-              setDate(newDate);
-            }}
-            mode="date"
-            is24hourSource="locale"
+          <CloseIcon
+            color={Colors.light.inactiveIcon}
+            height={28}
+            width={28}
+            onPress={onCancel}
           />
-          <Text>Izberite čas</Text>
-          <DatePicker
-            date={time}
-            onDateChange={(newTime: Date) => {
-              setTime(newTime);
-            }}
-            mode={"time"}
-            is24hourSource={"locale"}
-          />
+          <Text style={AppStyles.title}>{title}</Text>
+          {screenNumber === 0 && (
+            <View>
+              <Text style={AppStyles.text}>Izberite datum</Text>
+              <DatePicker
+                date={date}
+                onDateChange={(newDate: Date) => {
+                  setDate(newDate);
+                }}
+                mode="date"
+                is24hourSource="locale"
+              />
+            </View>
+          )}
+
+          {screenNumber === 1 && (
+            <View>
+              <Text style={AppStyles.text}>Izberite čas</Text>
+              <DatePicker
+                date={time}
+                onDateChange={(newTime: Date) => {
+                  setTime(newTime);
+                }}
+                mode={"time"}
+                is24hourSource={"locale"}
+              />
+            </View>
+          )}
+
+          {screenNumber === 2 && (
+            <View>
+              <Text style={AppStyles.text}>Dodajte opis</Text>
+              <TextInput
+                style={AppStyles.textInput}
+                placeholder="Dodatno sporočilo stranki"
+                value={description}
+                onChangeText={setDescription}
+                numberOfLines={4}
+                multiline={true}
+              />
+            </View>
+          )}
+
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={[styles.button, styles.buttonCancel]}
-              onPress={onCancel}
+              onPress={handlePreviousPress}
             >
               <Text style={styles.textStyle}>Prekliči</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.button, styles.buttonConfirm]}
-              onPress={onConfirm}
+              onPress={handleNextPress}
             >
-              <Text style={styles.textStyle}>Potrdi</Text>
+              <Text style={styles.textStyle}>
+                {screenNumber === 2 ? "Potrdi" : "Naslednji"}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
