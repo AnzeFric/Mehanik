@@ -57,13 +57,13 @@ export default function Appointment({ appointmentData }: Props) {
       />
       <ModalAppointment
         isVisible={isConfirmOpen}
-        message={"To je modal okno za potrditev termina"}
+        message={"Potrditev termina"}
         onCancel={() => setIsConfirmOpen(false)}
         onConfirm={() => {}}
       />
       <ModalAppointment
         isVisible={isChangeOpen}
-        message={"To je modal okno za spremembo termina"}
+        message={"Sprememba termina"}
         onCancel={() => setIsChangeOpen(false)}
         onConfirm={() => {}}
       />
