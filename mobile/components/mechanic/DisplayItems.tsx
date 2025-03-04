@@ -1,4 +1,6 @@
 import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { useCallback, useRef } from "react";
+import { useFocusEffect } from "expo-router";
 
 interface Props<T> {
   list: T[];
@@ -11,8 +13,23 @@ export default function DisplayItems<T>({
   renderItem,
   emptyMessage = "",
 }: Props<T>) {
+  const scrollRef = useRef<ScrollView>(null);
+
+  // Make ScrollView return to top after screen is unfocused
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        setTimeout(() => {
+          if (scrollRef.current) {
+            scrollRef.current.scrollTo({ y: 0 });
+          }
+        }, 100); // For smooth transition between screens
+      };
+    }, [])
+  );
+
   return (
-    <ScrollView style={styles.scrollContainer}>
+    <ScrollView style={styles.scrollContainer} ref={scrollRef}>
       <View style={styles.container}>
         {list.length > 0 ? (
           list.map((item, index) => renderItem(item, index))

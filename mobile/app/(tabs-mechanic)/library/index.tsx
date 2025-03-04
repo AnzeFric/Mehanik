@@ -1,17 +1,10 @@
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableHighlight,
-  StyleSheet,
-} from "react-native";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 import { useState } from "react";
 import DisplayItems from "@/components/mechanic/DisplayItems";
 import Customer from "@/components/mechanic/items/Customer";
 import SearchIcon from "@/assets/icons/SearchIcon.svg";
 import { Colors } from "@/constants/Colors";
 import { AppStyles } from "@/constants/Styles";
-import PlusIcon from "@/assets/icons/PlusIcon.svg";
 import { router } from "expo-router";
 import { CustomerData } from "@/interfaces/mechanic";
 import PlusButton from "@/components/global-ui/PlusButton";
