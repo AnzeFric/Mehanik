@@ -15,6 +15,7 @@ import CloseIcon from "@/assets/icons/XIcon.svg";
 interface Props {
   isVisible: boolean;
   title: string;
+  firstScreen: number;
   onConfirm: () => void;
   onCancel: () => void;
 }
@@ -22,16 +23,17 @@ interface Props {
 export default function ModalTime({
   isVisible,
   title,
+  firstScreen,
   onConfirm,
   onCancel,
 }: Props) {
   const [date, setDate] = useState<Date>(new Date());
   const [time, setTime] = useState<Date>(new Date());
   const [description, setDescription] = useState<string>("");
-  const [screenNumber, setScreenNumber] = useState<number>(0);
+  const [screenNumber, setScreenNumber] = useState<number>(firstScreen);
 
   const handlePreviousPress = () => {
-    if (screenNumber > 0) {
+    if (screenNumber > firstScreen) {
       setScreenNumber((prevScreenNumber) => prevScreenNumber - 1);
     }
   };
@@ -45,7 +47,7 @@ export default function ModalTime({
   };
 
   const handleModalClose = () => {
-    setScreenNumber(0);
+    setScreenNumber(firstScreen);
     setDescription("");
     onCancel();
   };
@@ -104,7 +106,7 @@ export default function ModalTime({
             {screenNumber === 2 && (
               <TextInput
                 style={[styles.input, styles.inputText]}
-                placeholder={"Dodatno sporočilo za stranko"}
+                placeholder={"Sporočilo za stranko (ni obvezno)"}
                 value={description}
                 onChangeText={setDescription}
                 multiline={true}
@@ -116,7 +118,7 @@ export default function ModalTime({
               <TouchableOpacity
                 style={[
                   styles.button,
-                  screenNumber === 0
+                  screenNumber === firstScreen
                     ? styles.butonInactive
                     : styles.buttonCancel,
                 ]}
