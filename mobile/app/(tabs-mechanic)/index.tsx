@@ -7,32 +7,16 @@ import { router } from "expo-router";
 export default function HomeMechanicScreen() {
   return (
     <View style={styles.container}>
+      <MenuIcon
+        style={styles.settingsIcon}
+        height={30}
+        width={30}
+        onPress={() => {
+          router.push("/(tabs-mechanic)/settings");
+        }}
+      />
       <View style={styles.contentContainer}>
-        <View style={styles.settingsIcon}>
-          <MenuIcon
-            height={30}
-            width={30}
-            onPress={() => {
-              router.push("/(tabs-mechanic)/settings");
-            }}
-          />
-        </View>
-        <View>
-          <Text style={AppStyles.bigTitle}>Prihodki</Text>
-          <View style={styles.incomeContainer}>
-            <Text style={AppStyles.title}>Teden</Text>
-            <Text style={[AppStyles.title, styles.moneyText]}>323.03€</Text>
-          </View>
-          <View style={styles.incomeContainer}>
-            <Text style={AppStyles.title}>Mesec</Text>
-            <Text style={[AppStyles.title, styles.moneyText]}>1203.03€</Text>
-          </View>
-        </View>
-      </View>
-      <View style={{ flex: 1 }}>
-        <Text style={[AppStyles.bigTitle, { paddingHorizontal: 25 }]}>
-          Pregled terminov
-        </Text>
+        <Text style={[AppStyles.bigTitle, styles.title]}>Pregled terminov</Text>
         <DaySchedule />
       </View>
     </View>
@@ -44,22 +28,14 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 20,
   },
-  contentContainer: {
-    paddingHorizontal: 25,
-  },
   settingsIcon: {
     alignSelf: "flex-end",
+    paddingHorizontal: 25,
   },
-  incomeContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
+  contentContainer: {
+    flex: 1,
   },
-  moneyText: {
-    alignSelf: "flex-end",
-  },
-  userGreeting: {
-    fontSize: 36,
-    fontFamily: "Jaldi-Regular",
+  title: {
+    paddingHorizontal: 25,
   },
 });
