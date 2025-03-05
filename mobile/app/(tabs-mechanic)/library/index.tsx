@@ -1,11 +1,11 @@
 import { View, Text, TextInput, StyleSheet } from "react-native";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import DisplayItems from "@/components/mechanic/DisplayItems";
 import Customer from "@/components/mechanic/items/Customer";
 import SearchIcon from "@/assets/icons/SearchIcon.svg";
 import { Colors } from "@/constants/Colors";
 import { AppStyles } from "@/constants/Styles";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import { CustomerData } from "@/interfaces/mechanic";
 import PlusButton from "@/components/global-ui/PlusButton";
 
@@ -69,6 +69,16 @@ export default function LibraryScreen() {
             customer.vin.toLowerCase().includes(search.toLowerCase())
         );
 
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        setTimeout(() => {
+          setSearch("");
+        }, 100); // For smooth transition between screens
+      };
+    }, [])
+  );
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -123,6 +133,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   textInput: {
+    height: 50,
     width: "100%",
     lineHeight: 32,
   },
