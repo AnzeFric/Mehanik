@@ -44,15 +44,25 @@ export default function ModalTime({
     }
   };
 
+  const handleModalClose = () => {
+    setScreenNumber(0);
+    setDescription("");
+    onCancel();
+  };
+
   return (
-    <Modal transparent={true} visible={isVisible} onRequestClose={onCancel}>
+    <Modal
+      transparent={true}
+      visible={isVisible}
+      onRequestClose={handleModalClose}
+    >
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <CloseIcon
             color={Colors.light.activeIcon}
             height={28}
             width={28}
-            onPress={onCancel}
+            onPress={handleModalClose}
           />
           <Text style={AppStyles.title}>{title}</Text>
           {screenNumber === 0 && (
