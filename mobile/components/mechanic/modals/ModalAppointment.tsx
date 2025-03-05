@@ -58,73 +58,81 @@ export default function ModalTime({
     >
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
-          <CloseIcon
-            color={Colors.light.activeIcon}
-            height={28}
-            width={28}
-            onPress={handleModalClose}
-          />
-          <Text style={AppStyles.title}>{title}</Text>
-          {screenNumber === 0 && (
-            <View>
-              <Text style={AppStyles.text}>Izberite datum</Text>
-              <DatePicker
-                date={date}
-                onDateChange={(newDate: Date) => {
-                  setDate(newDate);
-                }}
-                mode="date"
-                is24hourSource="locale"
-              />
-            </View>
-          )}
+          <View style={styles.header}>
+            <CloseIcon
+              style={styles.closeIcon}
+              color={Colors.light.activeIcon}
+              height={28}
+              width={28}
+              onPress={handleModalClose}
+            />
+            <Text style={[AppStyles.title, styles.title]}>{title}</Text>
+          </View>
+          <View style={styles.contentContainer}>
+            {screenNumber === 0 && (
+              <>
+                <Text style={[AppStyles.text, styles.itemTitle]}>
+                  Izberite datum
+                </Text>
+                <DatePicker
+                  date={date}
+                  onDateChange={(newDate: Date) => {
+                    setDate(newDate);
+                  }}
+                  mode="date"
+                  is24hourSource="locale"
+                />
+              </>
+            )}
 
-          {screenNumber === 1 && (
-            <View>
-              <Text style={AppStyles.text}>Izberite čas</Text>
-              <DatePicker
-                date={time}
-                onDateChange={(newTime: Date) => {
-                  setTime(newTime);
-                }}
-                mode={"time"}
-                is24hourSource={"locale"}
-              />
-            </View>
-          )}
+            {screenNumber === 1 && (
+              <>
+                <Text style={[AppStyles.text, styles.itemTitle]}>
+                  Izberite čas
+                </Text>
+                <DatePicker
+                  date={time}
+                  onDateChange={(newTime: Date) => {
+                    setTime(newTime);
+                  }}
+                  mode={"time"}
+                  is24hourSource={"locale"}
+                />
+              </>
+            )}
 
-          {screenNumber === 2 && (
-            <View>
-              <Text style={AppStyles.text}>Dodajte opis</Text>
+            {screenNumber === 2 && (
               <TextInput
-                style={AppStyles.textInput}
-                placeholder="Dodatno sporočilo stranki"
+                style={[styles.input, styles.inputText]}
+                placeholder={"Dodatno sporočilo za stranko"}
                 value={description}
                 onChangeText={setDescription}
-                numberOfLines={4}
                 multiline={true}
+                numberOfLines={5}
               />
-            </View>
-          )}
+            )}
 
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={[
-                styles.button,
-                screenNumber === 0 ? styles.butonInactive : styles.buttonCancel,
-              ]}
-              onPress={handlePreviousPress}
-            >
-              <Text style={styles.textStyle}>Nazaj</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.button, styles.buttonConfirm]}
-              onPress={handleNextPress}
-            >
-              <Text style={styles.textStyle}>
-                {screenNumber === 2 ? "Potrdi" : "Naprej"}
-              </Text>
-            </TouchableOpacity>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={[
+                  styles.button,
+                  screenNumber === 0
+                    ? styles.butonInactive
+                    : styles.buttonCancel,
+                ]}
+                onPress={handlePreviousPress}
+              >
+                <Text style={styles.buttonText}>Nazaj</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.button, styles.buttonConfirm]}
+                onPress={handleNextPress}
+              >
+                <Text style={styles.buttonText}>
+                  {screenNumber === 2 ? "Potrdi" : "Naprej"}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>
@@ -140,13 +148,10 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalView: {
-    padding: 35,
     backgroundColor: Colors.light.background,
     borderRadius: 20,
-    alignItems: "center",
     shadowColor: Colors.light.shadowColor,
     width: "75%",
-
     shadowOffset: {
       width: 0,
       height: 2,
@@ -154,6 +159,25 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+  },
+  header: {
+    display: "flex",
+    paddingStart: 35,
+    paddingEnd: 15,
+    paddingTop: 10,
+  },
+  closeIcon: {
+    alignSelf: "flex-end",
+  },
+  title: {
+    alignSelf: "flex-start",
+  },
+  contentContainer: {
+    alignItems: "center",
+    paddingBottom: 20,
+  },
+  itemTitle: {
+    paddingVertical: 10,
   },
   buttonContainer: {
     flexDirection: "row",
@@ -175,17 +199,25 @@ const styles = StyleSheet.create({
   buttonConfirm: {
     backgroundColor: Colors.light.confirmButton,
   },
-  textStyle: {
+  input: {
+    height: 130,
+    width: "80%",
+    fontSize: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.light.inactiveBorder,
+    marginBottom: 15,
+  },
+  inputText: {
+    textAlign: "left",
+    verticalAlign: "bottom",
+    fontSize: 16,
+    lineHeight: 20,
+    fontFamily: "Jaldi-Regular",
+  },
+  buttonText: {
     color: Colors.light.background,
     textAlign: "center",
     fontSize: 16,
     fontFamily: "Jaldi-Bold",
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center",
-    fontFamily: "Jaldi-Regular",
-    fontSize: 20,
-    lineHeight: 24,
   },
 });
