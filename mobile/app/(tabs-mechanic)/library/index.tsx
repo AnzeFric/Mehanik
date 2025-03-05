@@ -1,6 +1,6 @@
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import { useState, useCallback } from "react";
-import DisplayItems from "@/components/mechanic/DisplayItems";
+import DisplayItems from "@/components/global-help/DisplayItems";
 import Customer from "@/components/mechanic/items/Customer";
 import SearchIcon from "@/assets/icons/SearchIcon.svg";
 import { Colors } from "@/constants/Colors";

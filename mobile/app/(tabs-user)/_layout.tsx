@@ -58,9 +58,23 @@ export default function TabLayout() {
             title: "Mechanics",
             tabBarIcon: ({ color }) => (
               <View style={{ margin: 20, padding: 20 }}>
-                <MechanicsIcon color={color} width={30} height={30} />
+                <MechanicsIcon
+                  color={
+                    pathName.startsWith("/mechanic") // Color Mechanic as active if we are on [id] page
+                      ? Colors.light.specialBlue
+                      : color
+                  }
+                  width={30}
+                  height={30}
+                />
               </View>
             ),
+          }}
+        />
+        <Tabs.Screen
+          name="mechanic/[id]"
+          options={{
+            href: null,
           }}
         />
         <Tabs.Screen
