@@ -9,6 +9,18 @@ export function formatDate(date: Date): string {
   return `${paddedDay}. ${paddedMonth}. ${year}`;
 }
 
+export function formatDateTime(dateTime: Date): string {
+  const date = formatDate(dateTime);
+
+  const hour = dateTime.getHours();
+  const minute = dateTime.getMinutes();
+
+  const paddedHour = hour.toString().padStart(2, "0");
+  const paddedMinute = minute.toString().padStart(2, "0");
+
+  return `${date}, ${paddedHour}:${paddedMinute}`;
+}
+
 export function formatServiceType(type: string): string {
   switch (type) {
     case "small":

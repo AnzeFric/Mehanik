@@ -4,7 +4,7 @@ import { Colors } from "@/constants/Colors";
 import { AppStyles } from "@/constants/Styles";
 import ModalPrompt from "../modals/ModalPrompt";
 import ModalAppointment from "../modals/ModalAppointment";
-import { formatDate } from "@/constants/util";
+import { formatDateTime } from "@/constants/util";
 import { AppointmentData } from "@/interfaces/mechanic";
 
 interface Props {
@@ -23,7 +23,7 @@ export default function Appointment({ appointmentData }: Props) {
         <Text style={AppStyles.smallText}>{appointmentData.vehicle}</Text>
       </View>
       <Text style={[AppStyles.smallBoldText, styles.date]}>
-        {formatDate(appointmentData.date)}
+        {formatDateTime(appointmentData.dateTime)}
       </Text>
       <Text style={[AppStyles.smallText, styles.description]}>
         {appointmentData.description}

@@ -88,6 +88,6 @@ export interface AppointmentData {
   id: number;
   name: string;
   vehicle: string;
-  date: Date;
+  dateTime: Date;
   description: string;
 }
