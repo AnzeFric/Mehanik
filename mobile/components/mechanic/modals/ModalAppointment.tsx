@@ -15,7 +15,7 @@ import CloseIcon from "@/assets/icons/XIcon.svg";
 interface Props {
   isVisible: boolean;
   title: string;
-  firstScreen: number;
+  firstScreen: number; // 0 - date picker, 1 - time picker, 2 - text input for message
   onConfirm: () => void;
   onCancel: () => void;
 }
@@ -27,13 +27,18 @@ export default function ModalTime({
   onConfirm,
   onCancel,
 }: Props) {
+  // Ensure firstScreen is within valid range
+  const normalizedFirstScreen = Math.min(Math.max(firstScreen, 0), 2);
+
   const [date, setDate] = useState<Date>(new Date());
   const [time, setTime] = useState<Date>(new Date());
   const [description, setDescription] = useState<string>("");
-  const [screenNumber, setScreenNumber] = useState<number>(firstScreen);
+  const [screenNumber, setScreenNumber] = useState<number>(
+    normalizedFirstScreen
+  );
 
   const handlePreviousPress = () => {
-    if (screenNumber > firstScreen) {
+    if (screenNumber > normalizedFirstScreen) {
       setScreenNumber((prevScreenNumber) => prevScreenNumber - 1);
     }
   };
@@ -47,7 +52,7 @@ export default function ModalTime({
   };
 
   const handleModalClose = () => {
-    setScreenNumber(firstScreen);
+    setScreenNumber(normalizedFirstScreen);
     setDescription("");
     onCancel();
   };
@@ -57,6 +62,7 @@ export default function ModalTime({
       transparent={true}
       visible={isVisible}
       onRequestClose={handleModalClose}
+      animationType={"fade"}
     >
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
@@ -118,7 +124,7 @@ export default function ModalTime({
               <TouchableOpacity
                 style={[
                   styles.button,
-                  screenNumber === firstScreen
+                  screenNumber === normalizedFirstScreen
                     ? styles.butonInactive
                     : styles.buttonCancel,
                 ]}
