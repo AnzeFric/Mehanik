@@ -1,4 +1,11 @@
-import { Text, View, Image, ScrollView, StyleSheet } from "react-native";
+import {
+  Text,
+  View,
+  Image,
+  ScrollView,
+  StyleSheet,
+  TouchableHighlight,
+} from "react-native";
 import { useState } from "react";
 import { AppStyles } from "@/constants/Styles";
 import { Colors } from "@/constants/Colors";
@@ -66,43 +73,65 @@ export default function MechanicScreen() {
           {mechanicData?.firstName} {mechanicData?.lastName}
         </Text>
       </View>
-      <ScrollView style={styles.childrenContainer} ref={scrollRef}>
-        <Image
-          source={require("@/assets/images/logo-main.png")}
-          style={styles.image}
-        />
-        <Text>Lokacija: {mechanicData.address}</Text>
-        <Text>Mesto/kraj: {mechanicData.city}</Text>
-        <Text>Telefon: {mechanicData.phoneNumber}</Text>
-        <Text>Email: {mechanicData.email}</Text>
-        <Text>Cene</Text>
-        <Text>Številke so okvirne in se razlikujejo med modeli</Text>
-        <View>
-          <Text>Mali servis:</Text>
-          {mechanicData.smallServicePrice &&
-            mechanicData.smallServicePrice?.map((brand, index) => (
-              <Text key={index}>
-                {brand.name}: {brand.price}
+      <ScrollView ref={scrollRef}>
+        <View style={styles.childrenContainer}>
+          <Image
+            source={require("@/assets/images/logo-main.png")}
+            style={styles.image}
+          />
+          <View>
+            <Text style={AppStyles.title}>Lokacija</Text>
+            <Text style={AppStyles.text}>
+              {mechanicData.address}, {mechanicData.city}
+            </Text>
+          </View>
+          <View>
+            <Text style={AppStyles.title}>Kontakt</Text>
+            <Text style={AppStyles.text}>{mechanicData.phoneNumber}</Text>
+            <Text style={AppStyles.text}>{mechanicData.email}</Text>
+          </View>
+          <View style={styles.priceContainer}>
+            <View>
+              <Text style={AppStyles.title}>Cene</Text>
+              <Text style={AppStyles.text}>
+                Številke so okvirne in se razlikujejo med modeli
               </Text>
-            ))}
-        </View>
-        <View>
-          <Text>Veliki servis:</Text>
-          {mechanicData.largeServicePrice &&
-            mechanicData.largeServicePrice.map((brand, index) => (
-              <Text key={index}>
-                {brand.name}: {brand.price}
-              </Text>
-            ))}
-        </View>
-        <View>
-          <Text>Menjava gum:</Text>
-          {mechanicData.tireChangePrice &&
-            mechanicData.tireChangePrice.map((brand, index) => (
-              <Text key={index}>
-                {brand.name}: {brand.price}
-              </Text>
-            ))}
+            </View>
+            <View>
+              <Text style={AppStyles.text}>Mali servisi</Text>
+              {mechanicData.smallServicePrice &&
+                mechanicData.smallServicePrice?.map((brand, index) => (
+                  <Text style={AppStyles.smallText} key={index}>
+                    {brand.name}: {brand.price}
+                  </Text>
+                ))}
+            </View>
+            <View>
+              <Text style={AppStyles.text}>Veliki servis:</Text>
+              {mechanicData.largeServicePrice &&
+                mechanicData.largeServicePrice.map((brand, index) => (
+                  <Text style={AppStyles.smallText} key={index}>
+                    {brand.name}: {brand.price}
+                  </Text>
+                ))}
+            </View>
+            <View>
+              <Text style={AppStyles.text}>Menjava gum:</Text>
+              {mechanicData.tireChangePrice &&
+                mechanicData.tireChangePrice.map((brand, index) => (
+                  <Text style={AppStyles.smallText} key={index}>
+                    {brand.name}: {brand.price}
+                  </Text>
+                ))}
+            </View>
+          </View>
+          <TouchableHighlight
+            style={styles.button}
+            onPress={() => {}}
+            underlayColor={Colors.light.specialBlueClick}
+          >
+            <Text style={styles.buttonText}>Preveri proste termine</Text>
+          </TouchableHighlight>
         </View>
       </ScrollView>
     </View>
@@ -138,13 +167,22 @@ const styles = StyleSheet.create({
   },
   childrenContainer: {
     flex: 1,
+    gap: 20,
+    paddingBottom: 20,
+    paddingHorizontal: 25,
+  },
+  priceContainer: {
+    gap: 10,
   },
   button: {
-    paddingVertical: 0,
-    marginHorizontal: 25,
-    marginBottom: 25,
+    paddingVertical: 8,
+    backgroundColor: Colors.light.specialBlue,
+    borderRadius: 8,
+    alignItems: "center",
   },
   buttonText: {
-    lineHeight: 40,
+    fontSize: 20,
+    color: Colors.light.darkButtonText,
+    fontFamily: "Jaldi-Bold",
   },
 });
