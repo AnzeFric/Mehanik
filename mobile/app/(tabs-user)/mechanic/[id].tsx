@@ -4,14 +4,15 @@ import {
   Image,
   ScrollView,
   StyleSheet,
-  TouchableHighlight,
+  TouchableOpacity,
+  TextInput,
 } from "react-native";
-import { useState } from "react";
+import { useState, useCallback, useRef } from "react";
 import { AppStyles } from "@/constants/Styles";
 import { Colors } from "@/constants/Colors";
 import BackIcon from "@/assets/icons/BackIcon.svg";
+import SearchIcon from "@/assets/icons/SearchIcon.svg";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
-import { useCallback, useRef } from "react";
 import { MechanicData } from "@/interfaces/user";
 
 const fakeMechanicData: MechanicData = {
@@ -33,19 +34,14 @@ const fakeMechanicData: MechanicData = {
     { name: "BMW", price: 250 },
     { name: "Mercedes Benz", price: 270 },
   ],
-  tireChangePrice: [
-    { name: "Ford", price: 50 },
-    { name: "Volkswagen", price: 55 },
-  ],
+  tireChangePrice: [],
 };
 
 export default function MechanicScreen() {
   const { id } = useLocalSearchParams();
-  const [mechanicData, setMechanicData] =
-    useState<MechanicData>(fakeMechanicData);
+  const [mechanicData] = useState<MechanicData>(fakeMechanicData);
   const scrollRef = useRef<ScrollView>(null);
 
-  // Make ScrollView return to top after screen is unfocused
   useFocusEffect(
     useCallback(() => {
       return () => {
@@ -53,7 +49,7 @@ export default function MechanicScreen() {
           if (scrollRef.current) {
             scrollRef.current.scrollTo({ y: 0 });
           }
-        }, 100); // For smooth transition between screens
+        }, 100);
       };
     }, [])
   );
@@ -61,80 +57,104 @@ export default function MechanicScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <BackIcon
-          height={30}
-          width={30}
-          style={{ alignSelf: "flex-start" }}
-          onPress={() => {
-            router.back();
-          }}
-        />
-        <Text style={styles.userName}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => router.back()}
+        >
+          <BackIcon height={24} width={24} />
+        </TouchableOpacity>
+        <Text style={AppStyles.bigTitle}>
           {mechanicData?.firstName} {mechanicData?.lastName}
         </Text>
       </View>
-      <ScrollView ref={scrollRef}>
-        <View style={styles.childrenContainer}>
-          <Image
-            source={require("@/assets/images/logo-main.png")}
-            style={styles.image}
-          />
-          <View>
-            <Text style={AppStyles.title}>Lokacija</Text>
-            <Text style={AppStyles.text}>
-              {mechanicData.address}, {mechanicData.city}
-            </Text>
-          </View>
-          <View>
-            <Text style={AppStyles.title}>Kontakt</Text>
-            <Text style={AppStyles.text}>{mechanicData.phoneNumber}</Text>
-            <Text style={AppStyles.text}>{mechanicData.email}</Text>
-          </View>
-          <View style={styles.priceContainer}>
-            <View>
-              <Text style={AppStyles.title}>Cene</Text>
-              <Text style={AppStyles.text}>
-                Številke so okvirne in se razlikujejo med modeli
-              </Text>
-            </View>
-            <View>
-              <Text style={AppStyles.text}>Mali servisi</Text>
-              {mechanicData.smallServicePrice &&
-                mechanicData.smallServicePrice?.map((brand, index) => (
-                  <Text style={AppStyles.smallText} key={index}>
-                    {brand.name}: {brand.price}
-                  </Text>
-                ))}
-            </View>
-            <View>
-              <Text style={AppStyles.text}>Veliki servis:</Text>
-              {mechanicData.largeServicePrice &&
-                mechanicData.largeServicePrice.map((brand, index) => (
-                  <Text style={AppStyles.smallText} key={index}>
-                    {brand.name}: {brand.price}
-                  </Text>
-                ))}
-            </View>
-            <View>
-              <Text style={AppStyles.text}>Menjava gum:</Text>
-              {mechanicData.tireChangePrice &&
-                mechanicData.tireChangePrice.map((brand, index) => (
-                  <Text style={AppStyles.smallText} key={index}>
-                    {brand.name}: {brand.price}
-                  </Text>
-                ))}
-            </View>
-          </View>
-          <TouchableHighlight
-            style={styles.button}
-            onPress={() => {
-              router.push(`/mechanic/appointment/${id}`);
-            }}
-            underlayColor={Colors.light.specialBlueClick}
-          >
-            <Text style={styles.buttonText}>Preveri proste termine</Text>
-          </TouchableHighlight>
+
+      <ScrollView
+        ref={scrollRef}
+        contentContainerStyle={styles.contentContainer}
+        showsVerticalScrollIndicator={false}
+      >
+        <Image
+          source={require("@/assets/images/logo-main.png")}
+          style={styles.image}
+        />
+
+        <View style={styles.sectionContainer}>
+          <Text style={AppStyles.title}>Lokacija</Text>
+          <Text style={AppStyles.text}>
+            {mechanicData.address}, {mechanicData.city}
+          </Text>
         </View>
+
+        <View style={styles.sectionContainer}>
+          <Text style={AppStyles.title}>Kontakt</Text>
+          <Text style={AppStyles.text}>{mechanicData.phoneNumber}</Text>
+          <Text style={AppStyles.text}>{mechanicData.email}</Text>
+        </View>
+
+        <View style={styles.priceContainer}>
+          <Text style={AppStyles.title}>Cene</Text>
+          <Text style={[AppStyles.text, styles.priceNote]}>
+            Številke so okvirne in se razlikujejo med modeli
+          </Text>
+
+          <View style={styles.servicePriceSection}>
+            <Text style={styles.serviceTitle}>Mali servisi</Text>
+            {mechanicData.smallServicePrice &&
+            mechanicData.smallServicePrice.length > 0 ? (
+              mechanicData.smallServicePrice.map((brand, index) => (
+                <View style={styles.priceRow} key={index}>
+                  <Text style={AppStyles.smallText}>{brand.name}</Text>
+                  <Text style={[AppStyles.smallText, styles.priceText]}>
+                    {brand.price}€
+                  </Text>
+                </View>
+              ))
+            ) : (
+              <Text style={AppStyles.smallText}>Cene niso podane</Text>
+            )}
+          </View>
+
+          <View style={styles.servicePriceSection}>
+            <Text style={styles.serviceTitle}>Veliki servis</Text>
+            {mechanicData.largeServicePrice &&
+            mechanicData.largeServicePrice.length > 0 ? (
+              mechanicData.largeServicePrice.map((brand, index) => (
+                <View style={styles.priceRow} key={index}>
+                  <Text style={AppStyles.smallText}>{brand.name}</Text>
+                  <Text style={[AppStyles.smallText, styles.priceText]}>
+                    {brand.price}€
+                  </Text>
+                </View>
+              ))
+            ) : (
+              <Text style={AppStyles.smallText}>Cene niso podane</Text>
+            )}
+          </View>
+
+          <View style={styles.servicePriceSection}>
+            <Text style={styles.serviceTitle}>Menjava gum</Text>
+            {mechanicData.tireChangePrice &&
+            mechanicData.tireChangePrice?.length > 0 ? (
+              mechanicData.tireChangePrice.map((brand, index) => (
+                <View style={styles.priceRow} key={index}>
+                  <Text style={AppStyles.smallText}>{brand.name}</Text>
+                  <Text style={[AppStyles.smallText, styles.priceText]}>
+                    {brand.price}€
+                  </Text>
+                </View>
+              ))
+            ) : (
+              <Text style={AppStyles.smallText}>Cene niso podane</Text>
+            )}
+          </View>
+        </View>
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => router.push(`/mechanic/appointment/${id}`)}
+        >
+          <Text style={styles.buttonText}>Preveri proste termine</Text>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );
@@ -143,48 +163,81 @@ export default function MechanicScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    gap: 15,
+    backgroundColor: Colors.light.background,
+    paddingTop: 20,
   },
   header: {
-    borderBottomColor: Colors.light.inactiveBorder,
-    borderBottomWidth: 1,
-    display: "flex",
     flexDirection: "row",
     alignItems: "center",
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.light.inactiveBorder,
     borderStyle: "dashed",
-    paddingTop: 20,
+    paddingBottom: 15,
     marginHorizontal: 25,
+    paddingHorizontal: 5,
+  },
+  backButton: {
+    marginRight: 15,
+  },
+  contentContainer: {
+    paddingHorizontal: 25,
+    paddingBottom: 30,
+    gap: 20,
   },
   image: {
-    width: "50%",
-    height: 250,
-    alignSelf: "center",
+    width: "100%",
+    height: 200,
+    borderRadius: 12,
+    marginTop: 20,
   },
-  userName: {
-    fontSize: 32,
-    lineHeight: 40,
-    fontFamily: "Jaldi-Regular",
-    flex: 1,
-    textAlign: "center",
-  },
-  childrenContainer: {
-    flex: 1,
-    gap: 20,
-    paddingBottom: 20,
-    paddingHorizontal: 25,
+  sectionContainer: {
+    gap: 5,
   },
   priceContainer: {
+    backgroundColor: "#fff",
+    padding: 15,
+    borderRadius: 12,
     gap: 10,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
+  },
+  priceNote: {
+    color: Colors.light.secondaryText,
+    marginBottom: 5,
+  },
+  servicePriceSection: {
+    marginTop: 5,
+    borderTopWidth: 1,
+    borderTopColor: Colors.light.inactiveBorder,
+    paddingTop: 8,
+  },
+  serviceTitle: {
+    ...AppStyles.text,
+    fontFamily: "Jaldi-Bold",
+    marginBottom: 5,
+  },
+  priceRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 3,
+  },
+  priceText: {
+    fontFamily: "Jaldi-Bold",
   },
   button: {
-    paddingVertical: 8,
     backgroundColor: Colors.light.specialBlue,
+    paddingVertical: 12,
     borderRadius: 8,
     alignItems: "center",
+    elevation: 3,
+    marginTop: 10,
   },
   buttonText: {
-    fontSize: 20,
     color: Colors.light.darkButtonText,
+    fontSize: 18,
     fontFamily: "Jaldi-Bold",
+    textAlign: "center",
   },
 });
