@@ -1,13 +1,6 @@
-import {
-  View,
-  Text,
-  Image,
-  TouchableHighlight,
-  StyleSheet,
-} from "react-native";
+import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { router } from "expo-router";
 import { Colors } from "@/constants/Colors";
-import { AppStyles } from "@/constants/Styles";
 import { MechanicData } from "@/interfaces/user";
 
 interface Props {
@@ -20,47 +13,72 @@ export default function Mechanic({ mechanicData }: Props) {
   };
 
   return (
-    <TouchableHighlight
+    <TouchableOpacity
       style={styles.container}
-      underlayColor={Colors.light.underlayColor}
+      activeOpacity={0.7}
       onPress={handlePress}
     >
-      <>
+      {mechanicData.image ? (
+        <Image source={{ uri: mechanicData.image }} style={styles.image} />
+      ) : (
         <Image
           source={require("@/assets/images/logo-main.png")}
           style={styles.image}
         />
-        <View style={styles.customerInfo}>
-          <Text style={AppStyles.boldTitle}>
-            {mechanicData.firstName} {mechanicData.lastName}
+      )}
+      <View style={styles.infoContainer}>
+        <Text style={styles.name}>
+          {mechanicData.firstName} {mechanicData.lastName}
+        </Text>
+        {mechanicData.address && (
+          <Text style={styles.address}>
+            {mechanicData.address}, {mechanicData.city}
           </Text>
-          <Text style={AppStyles.smallText}>
-            {mechanicData?.address} {mechanicData?.city}
-          </Text>
-          <Text style={AppStyles.smallText}>{mechanicData?.phoneNumber}</Text>
-          <Text style={AppStyles.smallText}>{mechanicData?.email}</Text>
-        </View>
-      </>
-    </TouchableHighlight>
+        )}
+        {mechanicData.phoneNumber && (
+          <Text style={styles.contact}>{mechanicData.phoneNumber}</Text>
+        )}
+        {mechanicData.email && (
+          <Text style={styles.contact}>{mechanicData.email}</Text>
+        )}
+      </View>
+    </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: 1,
-    borderColor: Colors.light.inactiveBorder,
-    borderRadius: 10,
-    padding: 20,
-    display: "flex",
     flexDirection: "row",
-    gap: 20,
+    backgroundColor: "#fff",
+    padding: 15,
+    borderLeftWidth: 6,
+    borderLeftColor: Colors.light.specialBlue,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
+    marginBottom: 10,
+    alignItems: "center",
   },
   image: {
-    height: 100,
-    width: 100,
-    borderRadius: 8,
+    width: 70,
+    height: 70,
+    borderRadius: 6,
+    marginRight: 15,
   },
-  customerInfo: {
-    gap: 3,
+  infoContainer: {
+    flex: 1,
+  },
+  name: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  address: {
+    fontSize: 14,
+    color: "#666",
+  },
+  contact: {
+    fontSize: 14,
+    color: "#888",
   },
 });
