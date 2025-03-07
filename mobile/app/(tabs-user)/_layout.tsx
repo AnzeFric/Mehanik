@@ -78,6 +78,12 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
+          name="mechanic/appointment/[id]"
+          options={{
+            href: null,
+          }}
+        />
+        <Tabs.Screen
           name="settings"
           options={{
             href: null,

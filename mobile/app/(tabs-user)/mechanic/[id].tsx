@@ -127,7 +127,9 @@ export default function MechanicScreen() {
           </View>
           <TouchableHighlight
             style={styles.button}
-            onPress={() => {}}
+            onPress={() => {
+              router.push(`/mechanic/appointment/${id}`);
+            }}
             underlayColor={Colors.light.specialBlueClick}
           >
             <Text style={styles.buttonText}>Preveri proste termine</Text>
