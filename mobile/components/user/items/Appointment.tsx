@@ -1,6 +1,7 @@
 import { Text, View, StyleSheet } from "react-native";
 import { AppointmentData, Status } from "@/interfaces/user";
 import { formatDate } from "@/constants/util";
+import { useMemo } from "react";
 
 interface Props {
   appointmentData: AppointmentData;
@@ -33,13 +34,12 @@ function getStatusTranslation(status: Status): string {
 }
 
 export default function Appointment({ appointmentData }: Props) {
+  const textColor = useMemo(() => {
+    return getColor(appointmentData.status);
+  }, [appointmentData.status]);
+
   return (
-    <View
-      style={[
-        styles.container,
-        { borderLeftColor: getColor(appointmentData.status) },
-      ]}
-    >
+    <View style={[styles.container, { borderLeftColor: textColor }]}>
       <View style={styles.detailsContainer}>
         <Text style={styles.name}>
           {appointmentData.mechanic.firstName}{" "}
@@ -80,8 +80,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: "#fff",
     padding: 15,
-    borderRadius: 10,
-    borderLeftWidth: 5,
+    borderRadius: 0,
+    borderLeftWidth: 8,
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 5,
