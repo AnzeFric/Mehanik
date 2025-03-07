@@ -60,7 +60,10 @@ export default function Appointment({ appointmentData }: Props) {
         )}
         <Text style={styles.statusText}>
           Termin {formatDate(appointmentData.date)},{" "}
-          {getStatusTranslation(appointmentData.status)}.
+          <Text style={{ color: textColor }}>
+            {getStatusTranslation(appointmentData.status)}
+          </Text>
+          .
         </Text>
         {appointmentData.mechanicMessage && (
           <View style={styles.messageContainer}>
