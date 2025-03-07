@@ -17,6 +17,18 @@ export interface BrandPrice {
   price: number;
 }
 
+export interface AppointmentData {
+  id: number;
+  mechanicId: number;
+  userId: number;
+  date: Date;
+  status: Status;
+  mechanicMessage?: string;
+  mechanic: MechanicData;
+}
+
+export type Status = "Accepted" | "Rejected" | "Changed" | "Pending";
+
 export type VehicleBrand =
   | "Audi"
   | "BMW"

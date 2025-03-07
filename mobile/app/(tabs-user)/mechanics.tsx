@@ -9,7 +9,7 @@ import { useState, useCallback } from "react";
 import SearchIcon from "@/assets/icons/SearchIcon.svg";
 import { Colors } from "@/constants/Colors";
 import { AppStyles } from "@/constants/Styles";
-import { router, useFocusEffect } from "expo-router";
+import { useFocusEffect } from "expo-router";
 import { MechanicData } from "@/interfaces/user";
 import Mechanic from "@/components/user/items/Mechanic";
 import DisplayItems from "@/components/global-help/DisplayItems";
