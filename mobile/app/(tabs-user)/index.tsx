@@ -5,6 +5,8 @@ import MenuIcon from "@/assets/icons/MenuIcon.svg";
 import { router, useFocusEffect } from "expo-router";
 import { AppointmentData } from "@/interfaces/user";
 import Appointment from "@/components/user/items/Appointment";
+import ModalAppointment from "@/components/mechanic/modals/ModalAppointment";
+import ModalPrompt from "@/components/mechanic/modals/ModalPrompt";
 
 const fakeAppointmentData: AppointmentData[] = [
   {
@@ -98,10 +100,28 @@ const fakeAppointmentData: AppointmentData[] = [
 ];
 
 export default function HomeUserScreen() {
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [selectedAppointment, setSelectedAppointment] =
+    useState<AppointmentData | null>(null);
+
   const scrollRef = useRef<ScrollView>(null);
+
   // TODO: post to backend and get all appointments as the loggined user id
   const [appointmentList, setAppointmentList] =
     useState<Array<AppointmentData>>(fakeAppointmentData);
+
+  const handleAppointmentPress = (appointment: AppointmentData) => {
+    setSelectedAppointment(appointment);
+    setModalVisible(true);
+  };
+
+  const handleModalConfirm = () => {
+    setModalVisible(false);
+  };
+
+  const handleModalCancel = () => {
+    setModalVisible(false);
+  };
 
   // Make ScrollView return to top after screen is unfocused
   useFocusEffect(
@@ -131,10 +151,36 @@ export default function HomeUserScreen() {
       <ScrollView style={{ paddingHorizontal: 25, flex: 1 }} ref={scrollRef}>
         <View style={styles.contentContainer}>
           {appointmentList.map((appointment, index) => (
-            <Appointment appointmentData={appointment} key={index} />
+            <Appointment
+              appointmentData={appointment}
+              onPress={() => handleAppointmentPress(appointment)}
+              key={index}
+            />
           ))}
         </View>
       </ScrollView>
+      {selectedAppointment &&
+        (selectedAppointment.status === "Accepted" ||
+        selectedAppointment.status === "Rejected" ? (
+          <ModalPrompt
+            isVisible={modalVisible}
+            message={"Termin boste trajno izbrisali."}
+            onConfirm={handleModalConfirm}
+            onCancel={handleModalCancel}
+          />
+        ) : (
+          <ModalAppointment
+            isVisible={modalVisible}
+            title={
+              selectedAppointment.status === "Pending"
+                ? "Spremeni termin"
+                : "Potrdi termin"
+            }
+            firstScreen={0}
+            onConfirm={handleModalConfirm}
+            onCancel={handleModalCancel}
+          />
+        ))}
     </View>
   );
 }

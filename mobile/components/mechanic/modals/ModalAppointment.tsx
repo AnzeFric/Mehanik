@@ -30,7 +30,7 @@ export default function ModalTime({
   // Ensure firstScreen is within valid range
   const normalizedFirstScreen = Math.min(Math.max(firstScreen, 0), 2);
 
-  const [date, setDate] = useState<Date>(new Date());
+  const [date, setDate] = useState<Date>(new Date()); // TODO: add prop date and get default values from there
   const [time, setTime] = useState<Date>(new Date());
   const [description, setDescription] = useState<string>("");
   const [screenNumber, setScreenNumber] = useState<number>(
@@ -112,7 +112,7 @@ export default function ModalTime({
             {screenNumber === 2 && (
               <TextInput
                 style={[styles.input, styles.inputText]}
-                placeholder={"Sporočilo za stranko (ni obvezno)"}
+                placeholder={"Sporočilo za stranko (ni obvezno)"} // TODO: Dodaj prop za stranka ali mehanik
                 value={description}
                 onChangeText={setDescription}
                 multiline={true}
