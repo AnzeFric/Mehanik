@@ -1,7 +1,6 @@
 import {
   Text,
   View,
-  Image,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
@@ -71,11 +70,6 @@ export default function MechanicScreen() {
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
       >
-        <Image
-          source={require("@/assets/images/logo-main.png")}
-          style={styles.image}
-        />
-
         <View style={styles.sectionContainer}>
           <Text style={AppStyles.title}>Lokacija</Text>
           <Text style={AppStyles.text}>
@@ -179,7 +173,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingHorizontal: 25,
-    paddingBottom: 30,
+    paddingVertical: 20,
     gap: 20,
   },
   image: {
