@@ -5,13 +5,11 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
-  TextInput,
 } from "react-native";
 import { useState, useCallback, useRef } from "react";
 import { AppStyles } from "@/constants/Styles";
 import { Colors } from "@/constants/Colors";
 import BackIcon from "@/assets/icons/BackIcon.svg";
-import SearchIcon from "@/assets/icons/SearchIcon.svg";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { MechanicData } from "@/interfaces/user";
 
@@ -151,7 +149,7 @@ export default function MechanicScreen() {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => router.push(`/mechanic/appointment/${id}`)}
+          onPress={() => router.push(`/mechanics/mechanic/appointment/${id}`)}
         >
           <Text style={styles.buttonText}>Preveri proste termine</Text>
         </TouchableOpacity>

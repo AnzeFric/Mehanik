@@ -1,7 +1,7 @@
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { AppointmentData, Status } from "@/interfaces/user";
 import { formatDate } from "@/constants/util";
-import { useMemo } from "react";
+import { useState, useMemo } from "react";
 
 interface Props {
   appointmentData: AppointmentData;
@@ -34,12 +34,19 @@ function getStatusTranslation(status: Status): string {
 }
 
 export default function Appointment({ appointmentData }: Props) {
+  const [showModal, setShowModal] = useState<boolean>(false);
   const textColor = useMemo(() => {
     return getColor(appointmentData.status);
   }, [appointmentData.status]);
 
   return (
-    <View style={[styles.container, { borderLeftColor: textColor }]}>
+    <TouchableOpacity
+      style={[styles.container, { borderLeftColor: textColor }]}
+      disabled={appointmentData.status === "Accepted" ? true : false}
+      onPress={() => {
+        setShowModal(!showModal);
+      }}
+    >
       <View style={styles.detailsContainer}>
         <Text style={styles.name}>
           {appointmentData.mechanic.firstName}{" "}
@@ -74,7 +81,7 @@ export default function Appointment({ appointmentData }: Props) {
           </View>
         )}
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

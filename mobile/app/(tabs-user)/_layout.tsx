@@ -53,14 +53,14 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="mechanics"
+          name="mechanics/index"
           options={{
             title: "Mechanics",
             tabBarIcon: ({ color }) => (
               <View style={{ margin: 20, padding: 20 }}>
                 <MechanicsIcon
                   color={
-                    pathName.startsWith("/mechanic") // Color Mechanic as active if we are on [id] page
+                    pathName.startsWith("/mechanics") // Color Mechanic as active if we are on [id] page
                       ? Colors.light.specialBlue
                       : color
                   }
@@ -72,13 +72,13 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="mechanic/[id]"
+          name="mechanics/mechanic/[id]"
           options={{
             href: null,
           }}
         />
         <Tabs.Screen
-          name="mechanic/appointment/[id]"
+          name="mechanics/mechanic/appointment/[id]"
           options={{
             href: null,
           }}
