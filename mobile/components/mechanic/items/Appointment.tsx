@@ -1,11 +1,11 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useState } from "react";
 import { Colors } from "@/constants/Colors";
-import { AppStyles } from "@/constants/Styles";
 import ModalPrompt from "../modals/ModalPrompt";
 import ModalAppointment from "../modals/ModalAppointment";
 import { formatDateTime } from "@/constants/util";
 import { AppointmentData } from "@/interfaces/mechanic";
+import { Ionicons } from "@expo/vector-icons";
 
 interface Props {
   appointmentData: AppointmentData;
@@ -18,37 +18,60 @@ export default function Appointment({ appointmentData }: Props) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.userInfo}>
-        <Text style={AppStyles.smallText}>{appointmentData.name}</Text>
-        <Text style={AppStyles.smallText}>{appointmentData.vehicle}</Text>
+      <View style={styles.header}>
+        <View style={styles.userInfo}>
+          <Text style={styles.userName}>{appointmentData.name}</Text>
+          <View style={styles.vehicleBadge}>
+            <Text style={styles.vehicleText}>{appointmentData.vehicle}</Text>
+          </View>
+        </View>
+        <Text style={styles.date}>
+          {formatDateTime(appointmentData.dateTime)}
+        </Text>
       </View>
-      <Text style={[AppStyles.smallBoldText, styles.date]}>
-        {formatDateTime(appointmentData.dateTime)}
-      </Text>
-      <Text style={[AppStyles.smallText, styles.description]}>
-        {appointmentData.description}
-      </Text>
 
-      <TouchableOpacity
-        style={[styles.buttonAccept, styles.button]}
-        onPress={() => setIsConfirmOpen(true)}
-      >
-        <Text style={styles.buttonText}>Potrdi</Text>
-      </TouchableOpacity>
-      <View style={styles.buttonContainer}>
+      <View style={styles.descriptionContainer}>
+        <Text style={styles.description}>{appointmentData.description}</Text>
+      </View>
+
+      <View style={styles.actionsContainer}>
         <TouchableOpacity
-          style={[styles.buttonReject, styles.button]}
+          style={styles.buttonReject}
           onPress={() => setIsRejectOpen(true)}
         >
+          <Ionicons
+            name="close-outline"
+            size={18}
+            color={Colors.light.darkButtonText}
+          />
           <Text style={styles.buttonText}>Zavrni</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
-          style={[styles.buttonChange, styles.button]}
+          style={styles.buttonChange}
           onPress={() => setIsChangeOpen(true)}
         >
+          <Ionicons
+            name="calendar-outline"
+            size={18}
+            color={Colors.light.darkButtonText}
+          />
           <Text style={styles.buttonText}>Spremeni</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.buttonAccept}
+          onPress={() => setIsConfirmOpen(true)}
+        >
+          <Ionicons
+            name="checkmark-outline"
+            size={18}
+            color={Colors.light.darkButtonText}
+          />
+          <Text style={styles.buttonText}>Potrdi</Text>
+        </TouchableOpacity>
       </View>
+
       <ModalPrompt
         isVisible={isRejectOpen}
         message={"Ste prepričani, da želite zavrniti termin?"}
@@ -75,42 +98,100 @@ export default function Appointment({ appointmentData }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: 1,
-    borderColor: Colors.light.inactiveBorder,
-    borderRadius: 10,
-    padding: 20,
+    padding: 16,
+    backgroundColor: "#FFFFFF",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3.84,
+    elevation: 3,
+    marginVertical: 8,
+    marginHorizontal: 2,
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 12,
   },
   userInfo: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: "column",
+    gap: 4,
+  },
+  userName: {
+    fontSize: 18,
+    fontFamily: "Jaldi-Bold",
+    color: Colors.light.text,
+  },
+  vehicleBadge: {
+    backgroundColor: Colors.light.inactiveButton,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 12,
+    alignSelf: "flex-start",
+  },
+  vehicleText: {
+    fontSize: 14,
+    fontFamily: "Jaldi-Regular",
+    color: Colors.light.darkButtonText,
   },
   date: {
-    textAlign: "right",
+    fontSize: 14,
+    fontFamily: "Jaldi-Bold",
+    color: Colors.light.secondaryText,
+    backgroundColor: "#F5F5F5",
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 12,
+  },
+  descriptionContainer: {
+    backgroundColor: "#F9F9F9",
+    borderRadius: 12,
+    padding: 12,
+    marginBottom: 16,
   },
   description: {
-    paddingVertical: 10,
+    fontSize: 16,
+    fontFamily: "Jaldi-Regular",
+    color: Colors.light.text,
+    lineHeight: 22,
   },
-  buttonContainer: {
-    display: "flex",
+  actionsContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  button: {
+  buttonReject: {
+    backgroundColor: Colors.light.cancelButton,
     borderRadius: 12,
-    paddingVertical: 4,
-    paddingHorizontal: 12,
-    elevation: 1,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
   },
-  buttonReject: { backgroundColor: Colors.light.cancelButton },
   buttonAccept: {
     backgroundColor: Colors.light.confirmButton,
-    alignSelf: "flex-end",
-    marginVertical: 10,
+    borderRadius: 12,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
   },
-  buttonChange: { backgroundColor: Colors.light.inactiveButton },
+  buttonChange: {
+    backgroundColor: Colors.light.inactiveButton,
+    borderRadius: 12,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  },
   buttonText: {
-    fontSize: 20,
+    fontSize: 16,
     fontFamily: "Jaldi-Regular",
     color: Colors.light.darkButtonText,
   },
