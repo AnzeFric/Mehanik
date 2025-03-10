@@ -7,16 +7,17 @@ import { router } from "expo-router";
 export default function HomeMechanicScreen() {
   return (
     <View style={styles.container}>
-      <MenuIcon
-        style={styles.settingsIcon}
-        height={30}
-        width={30}
-        onPress={() => {
-          router.push("/(tabs-mechanic)/settings");
-        }}
-      />
+      <View style={styles.header}>
+        <Text style={AppStyles.bigTitle}>Pregled terminov</Text>
+        <MenuIcon
+          height={30}
+          width={30}
+          onPress={() => {
+            router.push("/(tabs-user)/settings");
+          }}
+        />
+      </View>
       <View style={styles.contentContainer}>
-        <Text style={[AppStyles.bigTitle, styles.title]}>Pregled terminov</Text>
         <DaySchedule />
       </View>
     </View>
@@ -25,17 +26,19 @@ export default function HomeMechanicScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     paddingTop: 20,
+    flex: 1,
   },
-  settingsIcon: {
-    alignSelf: "flex-end",
+  header: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingHorizontal: 25,
   },
   contentContainer: {
+    gap: 10,
+    paddingTop: 15,
     flex: 1,
-  },
-  title: {
-    paddingHorizontal: 25,
   },
 });
