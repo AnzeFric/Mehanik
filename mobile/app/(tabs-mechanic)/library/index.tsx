@@ -13,7 +13,7 @@ const fakeCustomers: CustomerData[] = [
   {
     id: 0,
     name: "Anže Fric",
-    image: "https://source.unsplash.com/200x200/?car,oil",
+    image: "https://randomuser.me/api/portraits/men/1.jpg",
     vehicle: "BMW 320i",
     year: 2020,
     vin: "WBAAL31029PZ12345",
@@ -21,7 +21,7 @@ const fakeCustomers: CustomerData[] = [
   {
     id: 1,
     name: "Dana Fric",
-    image: "https://source.unsplash.com/200x200/?car,brake",
+    image: "https://randomuser.me/api/portraits/women/1.jpg",
     vehicle: "Audi A4",
     year: 2019,
     vin: "WAUZZZ8K9LA123456",
@@ -29,7 +29,7 @@ const fakeCustomers: CustomerData[] = [
   {
     id: 2,
     name: "Saguaro Miyazaki",
-    image: "https://source.unsplash.com/200x200/?car,tire",
+    image: "https://randomuser.me/api/portraits/men/2.jpg",
     vehicle: "Toyota Camry",
     year: 2018,
     vin: "4T1BF1FK5GU654321",
@@ -37,7 +37,7 @@ const fakeCustomers: CustomerData[] = [
   {
     id: 3,
     name: "Ime Priimek",
-    image: "https://source.unsplash.com/200x200/?car,engine",
+    image: "",
     vehicle: "Mercedes C300",
     year: 2021,
     vin: "WDDWF4KB2LR987654",
@@ -45,7 +45,7 @@ const fakeCustomers: CustomerData[] = [
   {
     id: 4,
     name: "Mitja Pavlekovič",
-    image: "https://source.unsplash.com/200x200/?car,ac",
+    image: "https://randomuser.me/api/portraits/men/4.jpg",
     vehicle: "Tesla Model 3",
     year: 2022,
     vin: "5YJ3E1EA8MF765432",
