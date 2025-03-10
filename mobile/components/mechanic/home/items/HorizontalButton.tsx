@@ -1,40 +1,67 @@
-import { Text, StyleSheet, Pressable } from "react-native";
+import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import { Colors } from "@/constants/Colors";
 
 interface Props {
-  buttonText: string;
+  buttonDay: string;
+  buttonDayNum: number;
   isSelected: boolean;
   onPress: () => void;
 }
 
 export default function HorizontalButton({
-  buttonText,
+  buttonDay,
+  buttonDayNum,
   isSelected,
   onPress,
 }: Props) {
   return (
-    <Pressable onPress={onPress}>
-      <Text
-        style={[
-          styles.weekText,
-          !isSelected && { backgroundColor: Colors.light.inactiveButton },
-        ]}
+    <View style={styles.dateButtonWrapper}>
+      <TouchableOpacity
+        style={[styles.dateButton, isSelected && styles.selectedDateButton]}
+        onPress={onPress}
       >
-        {buttonText}
-      </Text>
-    </Pressable>
+        <Text style={[styles.dayName, isSelected && styles.selectedText]}>
+          {buttonDay}
+        </Text>
+        <Text style={[styles.dayNumber, isSelected && styles.selectedText]}>
+          {buttonDayNum}
+        </Text>
+      </TouchableOpacity>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  weekText: {
-    fontFamily: "Jaldi-Bold",
-    fontSize: 20,
-    backgroundColor: Colors.light.specialBlue,
-    color: Colors.light.darkButtonText,
-    padding: 20,
-    borderRadius: 30,
-    minWidth: 80,
-    textAlign: "center",
+  dateButtonWrapper: {
+    alignItems: "center",
+  },
+  dateButton: {
+    width: 58,
+    alignItems: "center",
+    paddingVertical: 10,
+    borderRadius: 10,
+    backgroundColor: "#F3F4F6",
+  },
+  selectedDateButton: {
+    backgroundColor: "#3B82F6",
+  },
+  todayDateButton: {
+    borderWidth: 1,
+    borderColor: "#3B82F6",
+    backgroundColor: "#EBF5FF",
+  },
+  dayName: {
+    fontSize: 14,
+    fontWeight: "500",
+    color: "#4B5563",
+    marginBottom: 4,
+  },
+  dayNumber: {
+    fontSize: 18,
+    fontWeight: "700",
+    color: "#1F2937",
+  },
+  selectedText: {
+    color: "white",
   },
 });
