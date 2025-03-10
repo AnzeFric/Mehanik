@@ -1,4 +1,4 @@
-import { View, Text, TouchableHighlight, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { router } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import {
@@ -8,6 +8,7 @@ import {
 } from "@/constants/util";
 import { AppStyles } from "@/constants/Styles";
 import { ServiceData } from "@/interfaces/mechanic";
+import { Ionicons } from "@expo/vector-icons";
 
 interface Props {
   serviceData: ServiceData;
@@ -15,53 +16,124 @@ interface Props {
 
 export default function Service({ serviceData }: Props) {
   return (
-    <TouchableHighlight
+    <TouchableOpacity
       style={styles.container}
-      underlayColor={Colors.light.underlayColor}
+      activeOpacity={0.7}
       onPress={() => {
         router.push(
           `/(tabs-mechanic)/library/service-detail/${serviceData.id}`
         );
       }}
     >
-      <>
-        <View style={styles.titleContainer}>
-          <Text style={[AppStyles.title, styles.title]}>
-            {formatServiceType(serviceData.serviceType)}
-          </Text>
-          <Text style={AppStyles.text}>
+      <View style={styles.contentContainer}>
+        <View style={styles.header}>
+          <View style={styles.serviceTypeBadge}>
+            <Text style={styles.serviceTypeText}>
+              {formatServiceType(serviceData.serviceType)}
+            </Text>
+          </View>
+          <Text style={styles.priceText}>
             {formatCurrency(serviceData.servicePrice)}
           </Text>
         </View>
-        <Text style={AppStyles.smallBoldText}>
-          {formatDate(new Date(serviceData.date))}
-        </Text>
-        {serviceData.serviceType === "other" && (
-          <Text style={AppStyles.text}>
-            {serviceData.customServiceDescription}
+
+        <View style={styles.dateContainer}>
+          <Ionicons
+            name="calendar-outline"
+            size={16}
+            color={Colors.light.secondaryText}
+          />
+          <Text style={styles.dateText}>
+            {formatDate(new Date(serviceData.date))}
           </Text>
+        </View>
+
+        {serviceData.serviceType === "other" && (
+          <View style={styles.descriptionContainer}>
+            <Text style={styles.descriptionText}>
+              {serviceData.customServiceDescription}
+            </Text>
+          </View>
         )}
-      </>
-    </TouchableHighlight>
+      </View>
+
+      <View style={styles.arrowContainer}>
+        <Ionicons
+          name="chevron-forward"
+          size={20}
+          color={Colors.light.secondaryText}
+        />
+      </View>
+    </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: 1,
-    borderRadius: 16,
-    borderColor: Colors.light.inactiveBorder,
-    paddingHorizontal: 24,
-    paddingTop: 20,
-    paddingBottom: 10,
-  },
-  titleContainer: {
-    display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    marginVertical: 8,
+    marginHorizontal: 2,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3.84,
+    elevation: 3,
   },
-  title: {
-    lineHeight: 30,
+  contentContainer: {
+    flex: 1,
+    borderRightWidth: 1,
+    borderStyle: "dashed",
+    paddingRight: 20,
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  serviceTypeBadge: {
+    paddingVertical: 4,
+  },
+  serviceTypeText: {
+    fontSize: 16,
+    fontFamily: "Jaldi-Bold",
+  },
+  priceText: {
+    fontSize: 18,
+    fontFamily: "Jaldi-Bold",
+    color: Colors.light.text,
+  },
+  dateContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+    gap: 6,
+  },
+  dateText: {
+    fontSize: 14,
+    fontFamily: "Jaldi-Bold",
+    color: Colors.light.secondaryText,
+  },
+  descriptionContainer: {
+    backgroundColor: "#F9F9F9",
+    borderRadius: 12,
+    padding: 10,
+    marginTop: 6,
+  },
+  descriptionText: {
+    fontSize: 15,
+    fontFamily: "Jaldi-Regular",
+    color: Colors.light.text,
+  },
+  arrowContainer: {
+    paddingLeft: 8,
   },
 });
