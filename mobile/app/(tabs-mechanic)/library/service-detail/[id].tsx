@@ -265,6 +265,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 3.84,
     elevation: 2,
+    borderRadius: 8,
   },
   infoRow: {
     flexDirection: "row",

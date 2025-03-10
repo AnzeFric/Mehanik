@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.inactiveButton,
     paddingHorizontal: 8,
     paddingVertical: 2,
-    borderRadius: 12,
+    borderRadius: 8,
     alignSelf: "flex-start",
   },
   vehicleText: {
@@ -145,11 +145,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#F5F5F5",
     paddingHorizontal: 10,
     paddingVertical: 4,
-    borderRadius: 12,
+    borderRadius: 8,
   },
   descriptionContainer: {
     backgroundColor: "#F9F9F9",
-    borderRadius: 12,
+    borderRadius: 8,
     padding: 12,
     marginBottom: 16,
   },
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
   },
   buttonReject: {
     backgroundColor: Colors.light.cancelButton,
-    borderRadius: 12,
+    borderRadius: 8,
     paddingVertical: 8,
     paddingHorizontal: 14,
     flexDirection: "row",
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
   },
   buttonAccept: {
     backgroundColor: Colors.light.confirmButton,
-    borderRadius: 12,
+    borderRadius: 8,
     paddingVertical: 8,
     paddingHorizontal: 14,
     flexDirection: "row",
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   },
   buttonChange: {
     backgroundColor: Colors.light.inactiveButton,
-    borderRadius: 12,
+    borderRadius: 8,
     paddingVertical: 8,
     paddingHorizontal: 14,
     flexDirection: "row",
