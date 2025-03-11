@@ -1,20 +1,22 @@
 import { View, Text, StyleSheet } from "react-native";
 import { Colors } from "@/constants/Colors";
 import { AppStyles } from "@/constants/Styles";
-
+import { GroupedAppointmentData } from "../TimeList";
 /*
 TODO:
     onClick: Se prikaže modal z celotnim opisom in podrobnimi info
 */
 
 interface Props {
-  text: string;
+  appointment: GroupedAppointmentData;
 }
 
-export default function TimeItem({ text }: Props) {
+export default function TimeItem({ appointment }: Props) {
   return (
     <View style={styles.container}>
-      <Text style={[AppStyles.text, { alignSelf: "center" }]}>{text}</Text>
+      <Text style={[AppStyles.text, { alignSelf: "center" }]}>
+        {appointment.customerFirstName}
+      </Text>
       <View style={{ flexShrink: 1 }}>
         <View style={styles.customer}>
           <Text style={AppStyles.text}>Ime Priimek</Text>

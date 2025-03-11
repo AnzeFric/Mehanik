@@ -17,6 +17,7 @@ export interface BrandPrice {
   price: number;
 }
 
+// TODO: Remove mechanic and get that data by id on backend
 export interface AppointmentData {
   id: number;
   mechanicId: number;
