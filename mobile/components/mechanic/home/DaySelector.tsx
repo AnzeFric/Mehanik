@@ -174,7 +174,7 @@ export default function DaySelector({
 
       <View style={styles.weekNavigationContainer}>
         <TouchableOpacity
-          style={styles.weekNavButton}
+          style={[styles.weekNavButton, { paddingRight: 10 }]}
           onPress={goToPreviousWeek}
         >
           <Ionicons name="chevron-back" size={30} color="#3B82F6" />
@@ -184,7 +184,6 @@ export default function DaySelector({
           ref={scrollRef}
           horizontal
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.scrollContent}
         >
           <View style={styles.buttonContainer}>
             {dateRange.map((dateInfo, index) => (
@@ -222,7 +221,10 @@ export default function DaySelector({
           </View>
         </ScrollView>
 
-        <TouchableOpacity style={styles.weekNavButton} onPress={goToNextWeek}>
+        <TouchableOpacity
+          style={[styles.weekNavButton, { paddingLeft: 10 }]}
+          onPress={goToNextWeek}
+        >
           <Ionicons name="chevron-forward" size={30} color="#3B82F6" />
         </TouchableOpacity>
       </View>
@@ -251,7 +253,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingBottom: 8,
+    paddingBottom: 14,
+    paddingHorizontal: 10,
   },
   currentMonth: {
     fontSize: 16,
@@ -284,9 +287,6 @@ const styles = StyleSheet.create({
   weekNavButton: {
     justifyContent: "center",
     alignItems: "center",
-  },
-  scrollContent: {
-    paddingVertical: 12,
   },
   buttonContainer: {
     flexDirection: "row",

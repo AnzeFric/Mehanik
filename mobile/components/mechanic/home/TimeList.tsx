@@ -1,8 +1,9 @@
-import { View, ScrollView, StyleSheet } from "react-native";
+import { View, ScrollView, StyleSheet, Text } from "react-native";
 import { useEffect, useMemo, useState } from "react";
 import TimeItem from "./items/TimeItem";
 import { Status } from "@/interfaces/user";
 import { formatDate } from "@/constants/util";
+import { Colors } from "@/constants/Colors";
 
 const times = [
   "00:00",
@@ -31,16 +32,6 @@ const times = [
   "23:00",
 ];
 
-interface Appointment {
-  customerFirstName: string;
-  customerLastName: string;
-  dateTime: Date;
-  status: Status;
-  description: string;
-}
-
-// Get data from db. All the appointments from the same mechanic id
-// Data has to be sorted by date and hour, ascending. 10.3.2025, 9:00 => 10.3.2025, 10:00 => 11.3.2025, 13:00, ...
 const fakeAppointments: Appointment[] = [
   {
     customerFirstName: "Anze",
@@ -135,6 +126,14 @@ const fakeAppointments: Appointment[] = [
   },
 ];
 
+interface Appointment {
+  customerFirstName: string;
+  customerLastName: string;
+  dateTime: Date;
+  status: Status;
+  description: string;
+}
+
 export interface GroupedAppointmentData {
   customerFirstName: string;
   customerLastName: string;
@@ -142,13 +141,13 @@ export interface GroupedAppointmentData {
   endDateTime: Date;
   status: Status;
   description: string;
+  numAppointments: number;
 }
 
 interface TimeListProps {
   selectedDay: string;
 }
 
-// TODO: make a hook
 function groupAppointments(
   appointments: Appointment[]
 ): GroupedAppointmentData[] {
@@ -185,12 +184,15 @@ function groupAppointments(
         endDateTime: new Date(appointment.dateTime.getTime() + 60 * 60 * 1000), // Add 1 hour
         status: appointment.status,
         description: appointment.description,
+        numAppointments: 1,
       };
     } else {
       // Extend the current group end time
       currentGroup.endDateTime = new Date(
         appointment.dateTime.getTime() + 60 * 60 * 1000
       );
+      // Increment the appointment count
+      currentGroup.numAppointments += 1;
     }
   });
 
@@ -202,28 +204,126 @@ function groupAppointments(
 }
 
 export default function TimeList({ selectedDay }: TimeListProps) {
-  const [appointmentArr, setAppointmentArr] =
+  const [appointments, setAppointments] =
     useState<Array<Appointment>>(fakeAppointments);
 
-  const groupedArr = useMemo(() => {
-    const array = groupAppointments(appointmentArr);
-    return array;
-  }, [appointmentArr]);
+  const filteredAppointments = useMemo(() => {
+    // Filter appointments for the selected day
+    const today = new Date();
+    const dayNameToNumber: { [key: string]: number } = {
+      Pon: 1,
+      Tor: 2,
+      Sre: 3,
+      Čet: 4,
+      Pet: 5,
+      Sob: 6,
+      Ned: 0,
+    };
+
+    return appointments.filter((appointment) => {
+      const appointmentDay = appointment.dateTime.getDay();
+      return appointmentDay === dayNameToNumber[selectedDay];
+    });
+  }, [appointments, selectedDay]);
+
+  const groupedAppointments = useMemo(() => {
+    return groupAppointments(filteredAppointments);
+  }, [filteredAppointments]);
+
+  // Function to check if an appointment exists at a specific hour
+  const getAppointmentAtHour = (hour: number) => {
+    return groupedAppointments.find((app) => {
+      const startHour = app.startDateTime.getHours();
+      const endHour = app.endDateTime.getHours();
+      return hour >= startHour && hour < endHour;
+    });
+  };
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        {groupedArr.map((appointment, index) => (
-          <TimeItem appointment={appointment} key={index} />
-        ))}
+    <ScrollView style={styles.scrollContainer}>
+      <View style={{ display: "flex", flexDirection: "row" }}>
+        <View
+          style={{
+            backgroundColor: "red",
+            display: "flex",
+            alignSelf: "flex-start",
+          }}
+        >
+          {times.map((time, index) => (
+            <View style={{ height: 80 }} key={index}>
+              <Text style={styles.timeText}>{time}</Text>
+            </View>
+          ))}
+        </View>
+        <View style={styles.container}>
+          {times.map((time, index) => {
+            const hour = parseInt(time.split(":")[0]);
+            const appointment = getAppointmentAtHour(hour);
+
+            return (
+              <View key={index} style={styles.timeRow}>
+                <View style={styles.appointmentContainer}>
+                  {appointment &&
+                  appointment.startDateTime.getHours() === hour ? (
+                    <TimeItem appointment={appointment} />
+                  ) : (
+                    !getAppointmentAtHour(hour) && (
+                      <View style={styles.emptySlot}>
+                        <Text style={styles.emptyText}>Prazen termin</Text>
+                      </View>
+                    )
+                  )}
+                </View>
+              </View>
+            );
+          })}
+        </View>
       </View>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flex: 1,
+  },
   container: {
-    paddingHorizontal: 25,
-    paddingBottom: 20,
+    paddingHorizontal: 16,
+    display: "flex",
+    flex: 1,
+    flexDirection: "column",
+    backgroundColor: "blue",
+  },
+  timeRow: {
+    flexDirection: "row",
+  },
+  timeIndicator: {
+    width: 60,
+    justifyContent: "flex-start",
+    alignItems: "center",
+    paddingTop: 8,
+  },
+  timeText: {
+    fontSize: 14,
+    fontWeight: "500",
+    color: "#4B5563",
+  },
+  appointmentContainer: {
+    flex: 1,
+    marginLeft: 10,
+  },
+  emptySlot: {
+    height: 80,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderStyle: "dashed",
+    borderColor: "#D1D5DB",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#F9FAFB",
+  },
+  emptyText: {
+    color: "#9CA3AF",
+    fontSize: 14,
   },
 });

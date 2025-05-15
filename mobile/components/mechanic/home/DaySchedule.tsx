@@ -24,6 +24,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   daySelectorContainer: {
-    paddingHorizontal: 25,
+    paddingHorizontal: 15,
   },
 });
