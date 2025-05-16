@@ -1,1 +1,7 @@
-GET http://localhost:3000/users
+// Health check
+GET http://localhost:3000/api/health
+
+###
+
+GET http://localhost:3000/api/users/
+
