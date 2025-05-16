@@ -13,7 +13,7 @@ export default function HomeMechanicScreen() {
           height={30}
           width={30}
           onPress={() => {
-            router.push("/(tabs-user)/settings");
+            router.push("/(tabs-mechanic)/settings");
           }}
         />
       </View>
