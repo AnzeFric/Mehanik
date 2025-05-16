@@ -5,14 +5,23 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 interface ColorThemeStore {
   isLight: Boolean;
   changeColorTheme: () => void;
+  reset: () => void;
 }
+
+const initialState = {
+  isLight: true,
+};
 
 export const useColorThemeStore = create(
   persist<ColorThemeStore>(
     (set, get) => ({
-      isLight: true,
+      ...initialState,
       changeColorTheme: () => {
         set({ isLight: !get().isLight });
+      },
+      reset: async () => {
+        set(() => ({ ...initialState }));
+        useColorThemeStore.persist.clearStorage();
       },
     }),
     {
