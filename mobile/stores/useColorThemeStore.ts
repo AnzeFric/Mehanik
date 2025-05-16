@@ -12,7 +12,7 @@ const initialState = {
   isLight: true,
 };
 
-export const useColorThemeStore = create(
+const useColorThemeStore = create(
   persist<ColorThemeStore>(
     (set, get) => ({
       ...initialState,
@@ -30,3 +30,5 @@ export const useColorThemeStore = create(
     }
   )
 );
+
+export default useColorThemeStore;
