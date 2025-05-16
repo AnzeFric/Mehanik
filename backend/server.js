@@ -1,7 +1,5 @@
-const dotenv = require("dotenv");
+require("dotenv").config();
 const app = require("./src/app");
-
-dotenv.config();
 
 const PORT = process.env.BACKEND_PORT || 3000;
 app.listen(PORT, () => {

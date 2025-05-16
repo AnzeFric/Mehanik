@@ -7,8 +7,8 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-const usersRouter = require("./routes/users");
-app.use("/users", usersRouter);
+const userRouter = require("./routes/user");
+app.use("/users", userRouter);
 
 // 404 handler
 app.use("*", (req, res) => {
