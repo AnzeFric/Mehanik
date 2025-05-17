@@ -1,3 +1,7 @@
+import useAuthStore from "@/stores/useAuthStore";
+import useColorThemeStore from "@/stores/useColorThemeStore";
+import useUserStore from "@/stores/useUserStore";
+
 export function formatDate(date: Date): string {
   const year = date.getFullYear();
   const month = date.getMonth() + 1; // Months start at 0
@@ -68,4 +72,10 @@ export function formatCurrency(price: number | undefined): string {
     return `${price.toFixed(2)} €`;
   }
   return "0.00 €";
+}
+
+export function resetAllStores() {
+  useAuthStore.getState().reset();
+  useUserStore.getState().reset();
+  useColorThemeStore.getState().reset();
 }
