@@ -8,27 +8,18 @@ import {
 } from "react-native";
 import { useState } from "react";
 import { Link } from "expo-router";
-import { AppStyles } from "@/constants/Styles";
+import { useAuth } from "@/hooks/useAuth";
 import { Colors } from "@/constants/Colors";
+import { AppStyles } from "@/constants/Styles";
+import { AccountType } from "@/interfaces/account";
 
 export default function LoginScreen() {
+  const { handleRegister } = useAuth();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [userType, setUserType] = useState("user"); // Default: Normal user
-
-  const handleRegistration = () => {
-    console.log(
-      "Registration attempted with:",
-      email,
-      name,
-      password,
-      confirmPassword,
-      "User Type:",
-      userType
-    );
-  };
+  const [accountType, setAccountType] = useState<AccountType>("user"); // Default: Normal user
 
   return (
     <View style={[AppStyles.parentPadding, styles.container]}>
@@ -78,9 +69,9 @@ export default function LoginScreen() {
             <TouchableOpacity
               style={[
                 styles.userTypeButton,
-                userType === "user" && styles.selectedButton,
+                accountType === "user" && styles.selectedButton,
               ]}
-              onPress={() => setUserType("user")}
+              onPress={() => setAccountType("user")}
             >
               <Text style={styles.userTypeText}>Sem stranka</Text>
             </TouchableOpacity>
@@ -88,9 +79,9 @@ export default function LoginScreen() {
             <TouchableOpacity
               style={[
                 styles.userTypeButton,
-                userType === "mechanic" && styles.selectedButton,
+                accountType === "mechanic" && styles.selectedButton,
               ]}
-              onPress={() => setUserType("mechanic")}
+              onPress={() => setAccountType("mechanic")}
             >
               <Text style={styles.userTypeText}>Sem avtomehanik</Text>
             </TouchableOpacity>
@@ -99,7 +90,7 @@ export default function LoginScreen() {
 
         <TouchableHighlight
           style={AppStyles.button}
-          onPress={handleRegistration}
+          onPress={handleRegister}
           underlayColor={Colors.light.specialBlueClick}
         >
           <Text style={AppStyles.buttonText}>Registracija</Text>

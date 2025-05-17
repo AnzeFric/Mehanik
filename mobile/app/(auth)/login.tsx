@@ -10,14 +10,12 @@ import { useState } from "react";
 import { Link } from "expo-router";
 import { AppStyles } from "@/constants/Styles";
 import { Colors } from "@/constants/Colors";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function LoginScreen() {
+  const { handleLogin } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleLogin = () => {
-    console.log("Login attempted with:", email, password);
-  };
 
   return (
     <View style={[AppStyles.parentPadding, styles.container]}>
