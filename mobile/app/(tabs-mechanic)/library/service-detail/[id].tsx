@@ -7,7 +7,6 @@ import {
   StatusBar,
 } from "react-native";
 import { useState, useCallback } from "react";
-import { AppStyles } from "@/constants/Styles";
 import BackIcon from "@/assets/icons/BackIcon.svg";
 import { router, useLocalSearchParams, useFocusEffect } from "expo-router";
 import { Colors } from "@/constants/Colors";
