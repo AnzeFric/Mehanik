@@ -104,11 +104,11 @@ const styles = StyleSheet.create({
   },
   serviceTypeText: {
     fontSize: 16,
-    fontFamily: "Jaldi-Bold",
+    fontWeight: "bold",
   },
   priceText: {
     fontSize: 18,
-    fontFamily: "Jaldi-Bold",
+    fontWeight: "bold",
     color: Colors.light.text,
   },
   dateContainer: {
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   },
   dateText: {
     fontSize: 14,
-    fontFamily: "Jaldi-Bold",
+    fontWeight: "bold",
     color: Colors.light.secondaryText,
   },
   descriptionContainer: {
@@ -130,7 +130,6 @@ const styles = StyleSheet.create({
   },
   descriptionText: {
     fontSize: 15,
-    fontFamily: "Jaldi-Regular",
     color: Colors.light.text,
   },
   arrowContainer: {

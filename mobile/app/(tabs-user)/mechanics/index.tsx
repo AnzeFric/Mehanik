@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: Colors.light.darkButtonText,
     fontSize: 18,
-    fontFamily: "Jaldi-Bold",
+    fontWeight: "bold",
     textAlign: "center",
   },
   card: {

@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
   },
   userName: {
     fontSize: 18,
-    fontFamily: "Jaldi-Bold",
+    fontWeight: "bold",
     color: Colors.light.text,
   },
   vehicleBadge: {
@@ -135,12 +135,11 @@ const styles = StyleSheet.create({
   },
   vehicleText: {
     fontSize: 14,
-    fontFamily: "Jaldi-Regular",
     color: Colors.light.darkButtonText,
   },
   date: {
     fontSize: 14,
-    fontFamily: "Jaldi-Bold",
+    fontWeight: "bold",
     color: Colors.light.secondaryText,
     backgroundColor: "#F5F5F5",
     paddingHorizontal: 10,
@@ -155,7 +154,6 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: 16,
-    fontFamily: "Jaldi-Regular",
     color: Colors.light.text,
     lineHeight: 22,
   },
@@ -192,7 +190,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 16,
-    fontFamily: "Jaldi-Regular",
     color: Colors.light.darkButtonText,
   },
 });

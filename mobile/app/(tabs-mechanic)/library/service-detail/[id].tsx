@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontFamily: "Jaldi-Bold",
+    fontWeight: "bold",
     color: Colors.light.text,
   },
   scrollViewContent: {
@@ -276,7 +276,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 18,
-    fontFamily: "Jaldi-Bold",
+    fontWeight: "bold",
     color: Colors.light.text,
     marginBottom: 8,
   },
@@ -287,7 +287,6 @@ const styles = StyleSheet.create({
   },
   dateText: {
     fontSize: 16,
-    fontFamily: "Jaldi-Regular",
     color: Colors.light.text,
   },
   repairsList: {
@@ -308,18 +307,15 @@ const styles = StyleSheet.create({
   },
   repairText: {
     fontSize: 16,
-    fontFamily: "Jaldi-Regular",
     color: Colors.light.text,
   },
   customServiceText: {
     fontSize: 16,
-    fontFamily: "Jaldi-Regular",
     color: Colors.light.text,
     marginTop: 8,
   },
   notesText: {
     fontSize: 16,
-    fontFamily: "Jaldi-Regular",
     color: Colors.light.text,
     lineHeight: 22,
   },
@@ -334,7 +330,6 @@ const styles = StyleSheet.create({
   },
   imagesText: {
     fontSize: 16,
-    fontFamily: "Jaldi-Regular",
     color: Colors.light.secondaryText,
   },
   menuContainer: {
@@ -366,7 +361,7 @@ const styles = StyleSheet.create({
   },
   menuItem: {
     fontSize: 16,
-    fontFamily: "Jaldi-Bold",
+    fontWeight: "bold",
     marginLeft: 12,
     color: Colors.light.text,
   },

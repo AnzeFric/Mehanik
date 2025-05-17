@@ -124,7 +124,6 @@ const styles = StyleSheet.create({
   greeting: {
     fontSize: 32,
     lineHeight: 40,
-    fontFamily: "Jaldi-Regular",
     flex: 1,
     textAlign: "center",
   },
@@ -164,7 +163,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 20,
-    fontFamily: "Jaldi-Bold",
+    fontWeight: "bold",
     color: "white",
   },
   button: {

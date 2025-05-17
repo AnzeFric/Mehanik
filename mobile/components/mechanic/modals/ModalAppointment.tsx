@@ -220,12 +220,11 @@ const styles = StyleSheet.create({
     verticalAlign: "bottom",
     fontSize: 16,
     lineHeight: 20,
-    fontFamily: "Jaldi-Regular",
   },
   buttonText: {
     color: Colors.light.background,
     textAlign: "center",
     fontSize: 16,
-    fontFamily: "Jaldi-Bold",
+    fontWeight: "bold",
   },
 });

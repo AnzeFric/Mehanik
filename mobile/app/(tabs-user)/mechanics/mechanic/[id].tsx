@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
   },
   serviceTitle: {
     ...AppStyles.text,
-    fontFamily: "Jaldi-Bold",
+    fontWeight: "bold",
     marginBottom: 5,
   },
   priceRow: {
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     paddingVertical: 3,
   },
   priceText: {
-    fontFamily: "Jaldi-Bold",
+    fontWeight: "bold",
   },
   button: {
     backgroundColor: Colors.light.specialBlue,
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: Colors.light.darkButtonText,
     fontSize: 18,
-    fontFamily: "Jaldi-Bold",
+    fontWeight: "bold",
     textAlign: "center",
   },
 });

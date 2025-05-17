@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     paddingVertical: 12,
     fontSize: 18,
-    fontFamily: "Jaldi-Bold",
+    fontWeight: "bold",
   },
   menuItemTop: {
     borderBottomWidth: 1,

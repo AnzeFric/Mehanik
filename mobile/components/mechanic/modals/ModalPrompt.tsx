@@ -83,12 +83,11 @@ const styles = StyleSheet.create({
     color: Colors.light.background,
     textAlign: "center",
     fontSize: 16,
-    fontFamily: "Jaldi-Bold",
+    fontWeight: "bold",
   },
   modalText: {
     marginBottom: 15,
     textAlign: "center",
-    fontFamily: "Jaldi-Regular",
     fontSize: 20,
     lineHeight: 24,
   },

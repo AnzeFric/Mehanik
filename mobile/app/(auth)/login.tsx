@@ -74,13 +74,12 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 44,
-    fontFamily: "Jaldi-Bold",
+    fontWeight: "bold",
     lineHeight: 44,
   },
   subtitle: {
     fontSize: 16,
     color: Colors.light.secondaryText,
-    fontFamily: "Jaldi-Regular",
   },
   registerContainer: {
     flexDirection: "row",
@@ -88,12 +87,11 @@ const styles = StyleSheet.create({
   },
   registerText: {
     fontSize: 16,
-    fontFamily: "Jaldi-Regular",
     color: Colors.light.secondaryText,
   },
   registerLink: {
     fontSize: 16,
-    fontFamily: "Jaldi-Bold",
+    fontWeight: "bold",
     color: Colors.light.specialBlue,
   },
 });

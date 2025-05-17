@@ -127,13 +127,12 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 44,
-    fontFamily: "Jaldi-Bold",
+    fontWeight: "bold",
     lineHeight: 44,
   },
   subtitle: {
     fontSize: 16,
     color: Colors.light.secondaryText,
-    fontFamily: "Jaldi-Regular",
   },
   userTypeContainer: {
     flexDirection: "row",
@@ -152,7 +151,7 @@ const styles = StyleSheet.create({
   },
   userTypeText: {
     fontSize: 16,
-    fontFamily: "Jaldi-Bold",
+    fontWeight: "bold",
     color: "white",
   },
   loginContainer: {
@@ -161,12 +160,11 @@ const styles = StyleSheet.create({
   },
   loginText: {
     fontSize: 16,
-    fontFamily: "Jaldi-Regular",
     color: Colors.light.secondaryText,
   },
   loginLink: {
     fontSize: 16,
-    fontFamily: "Jaldi-Bold",
+    fontWeight: "bold",
     color: Colors.light.specialBlue,
   },
 });

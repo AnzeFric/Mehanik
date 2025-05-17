@@ -16,7 +16,6 @@ export const AppStyles = StyleSheet.create({
     borderRadius: 8,
     padding: 15,
     fontSize: 16,
-    fontFamily: "Jaldi-Regular",
     backgroundColor: Colors.light.textInputBackground,
   },
   button: {
@@ -30,40 +29,36 @@ export const AppStyles = StyleSheet.create({
     color: Colors.light.darkButtonText,
     fontSize: 24,
     lineHeight: 24,
-    fontFamily: "Jaldi-Bold",
+    fontWeight: "bold",
   },
   title: {
     fontSize: 24,
-    fontFamily: "Jaldi-Regular",
     lineHeight: 29,
   },
   smallText: {
     fontSize: 16,
-    fontFamily: "Jaldi-Regular",
     lineHeight: 20,
   },
   text: {
     fontSize: 20,
-    fontFamily: "Jaldi-Regular",
     lineHeight: 24,
   },
   boldTitle: {
     fontSize: 24,
-    fontFamily: "Jaldi-Bold",
+    fontWeight: "bold",
     lineHeight: 28,
   },
   smallBoldText: {
     fontSize: 16,
-    fontFamily: "Jaldi-Bold",
+    fontWeight: "bold",
     lineHeight: 20,
   },
   boldText: {
     fontSize: 20,
-    fontFamily: "Jaldi-Bold",
+    fontWeight: "bold",
     lineHeight: 24,
   },
   bigTitle: {
     fontSize: 32,
-    fontFamily: "Jaldi-Regular",
   },
 });

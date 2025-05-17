@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     lineHeight: 40,
-    fontFamily: "Jaldi-Regular",
     flex: 1,
     textAlign: "center",
   },
