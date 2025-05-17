@@ -9,9 +9,11 @@ export function useUser() {
     firstName,
     lastName,
     firstLogin,
+    accountType,
     setFirstName,
     setLastName,
     setFirstLogin,
+    setAccountType,
   } = useUserStore();
 
   const getUser = async () => {
@@ -59,6 +61,7 @@ export function useUser() {
     firstName,
     lastName,
     firstLogin,
+    accountType,
     getUser,
     deleteUser,
     setFirstLogin,
