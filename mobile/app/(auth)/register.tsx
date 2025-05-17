@@ -19,7 +19,7 @@ export default function LoginScreen() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [accountType, setAccountType] = useState<AccountType>("user"); // Default: Normal user
+  const [accountType, setAccountType] = useState<AccountType>("user");
 
   return (
     <View style={[AppStyles.parentPadding, styles.container]}>
@@ -33,36 +33,41 @@ export default function LoginScreen() {
       <View style={{ gap: 20 }}>
         <TextInput
           style={AppStyles.textInput}
-          placeholder="Ime"
+          placeholder={"Ime"}
           value={name}
           onChangeText={setName}
-          autoCapitalize="words"
+          autoCapitalize={"words"}
+          autoComplete={"off"}
         />
 
         <TextInput
           style={AppStyles.textInput}
-          placeholder="Email"
+          placeholder={"Email"}
           value={email}
           onChangeText={setEmail}
-          keyboardType="email-address"
-          autoCapitalize="none"
+          keyboardType={"email-address"}
+          autoCapitalize={"none"}
+          autoComplete={"off"}
         />
 
         <TextInput
           style={AppStyles.textInput}
-          placeholder="Geslo"
+          placeholder={"Geslo"}
           value={password}
           onChangeText={setPassword}
+          autoComplete={"off"}
           secureTextEntry
         />
 
         <TextInput
           style={AppStyles.textInput}
-          placeholder="Ponovite geslo"
+          placeholder={"Ponovite geslo"}
           value={confirmPassword}
           onChangeText={setConfirmPassword}
+          autoComplete={"off"}
           secureTextEntry
         />
+
         <View style={{ gap: 10 }}>
           <Text>Kdo ste?</Text>
           <View style={styles.userTypeContainer}>

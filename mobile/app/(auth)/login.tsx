@@ -27,18 +27,20 @@ export default function LoginScreen() {
       <View style={{ gap: 20 }}>
         <TextInput
           style={AppStyles.textInput}
-          placeholder="Email"
+          placeholder={"Email"}
           value={email}
           onChangeText={setEmail}
-          keyboardType="email-address"
-          autoCapitalize="none"
+          keyboardType={"email-address"}
+          autoCapitalize={"none"}
+          autoComplete={"off"}
         />
 
         <TextInput
           style={AppStyles.textInput}
-          placeholder="Geslo"
+          placeholder={"Geslo"}
           value={password}
           onChangeText={setPassword}
+          autoComplete={"off"}
           secureTextEntry
         />
 
