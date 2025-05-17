@@ -107,6 +107,20 @@ export default function Settings({ isMechanic }: Props) {
             <Text style={styles.buttonText}>Preberi</Text>
           </TouchableOpacity>
         </View>
+
+        <View style={{ gap: 15 }}>
+          <View>
+            <Text style={AppStyles.text}>Račun</Text>
+            <TouchableOpacity style={styles.button} onPress={() => {}}>
+              <Text style={styles.buttonText}>Odjava</Text>
+            </TouchableOpacity>
+          </View>
+          <View>
+            <TouchableOpacity style={styles.button} onPress={() => {}}>
+              <Text style={styles.buttonText}>Odstrani</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     </View>
   );
