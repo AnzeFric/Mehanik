@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const supabase = require("../config/database");
 
 const authService = {
-  async register({ email, password, name }) {
+  async register(email, password, name, accountType) {
     try {
       // Check if user already exists
       const { data: existingUser } = await supabase
@@ -25,6 +25,7 @@ const authService = {
             email,
             password: hashedPassword,
             name,
+            accountType,
             created_at: new Date().toISOString(),
           },
         ])
@@ -32,14 +33,14 @@ const authService = {
 
       if (error) throw error;
 
-      return { success: true, message: "User created!" };
+      return email;
     } catch (error) {
       console.error("Registration error:", error);
       throw error;
     }
   },
 
-  async login({ email, password }) {
+  async login(email, password) {
     try {
       const { data: user, error } = await supabase
         .from("users")
@@ -61,10 +62,7 @@ const authService = {
         { expiresIn: "24h" }
       );
 
-      return {
-        success: true,
-        data: { token },
-      };
+      return token;
     } catch (error) {
       console.error("Login error:", error);
       throw error;
