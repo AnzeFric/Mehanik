@@ -6,6 +6,7 @@ import {
   TouchableHighlight,
   ScrollView,
   StyleSheet,
+  Alert,
 } from "react-native";
 import { useState, useCallback } from "react";
 import { Link, useFocusEffect } from "expo-router";
@@ -36,6 +37,25 @@ export default function LoginScreen() {
     }, [])
   );
 
+  const handleRegisterPress = async () => {
+    if (
+      email === "" ||
+      firstName === "" ||
+      lastName === "" ||
+      password === "" ||
+      confirmPassword === ""
+    ) {
+      Alert.alert("Napačen vnos", "Vsa polja potrebujejo biti izpolnjena");
+      return;
+    }
+
+    if (password != confirmPassword) {
+      Alert.alert("Napačen vnos", "Gesla se ne ujemata");
+      return;
+    }
+
+    handleRegister(email, firstName, lastName, password, accountType);
+  };
   return (
     <View style={styles.container}>
       <ScrollView style={AppStyles.parentPadding}>
@@ -120,7 +140,7 @@ export default function LoginScreen() {
 
           <TouchableHighlight
             style={AppStyles.button}
-            onPress={handleRegister}
+            onPress={handleRegisterPress}
             underlayColor={Colors.light.specialBlueClick}
           >
             <Text style={AppStyles.buttonText}>Registracija</Text>

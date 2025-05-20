@@ -8,14 +8,13 @@ const BetterFetch = async (
   try {
     const { jwt } = useAuthStore.getState();
 
-    if (!jwt) {
-      return null;
-    }
-
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${jwt}`,
     };
+
+    if (jwt && !headers.Authorization) {
+      headers.Authorization = `Bearer ${jwt}`;
+    }
 
     const response = await fetch(url, {
       method: method,
