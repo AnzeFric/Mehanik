@@ -18,7 +18,7 @@ const BetterFetch = async (
 
     const response = await fetch(url, {
       method: method,
-      headers,
+      headers: headers,
       body: body,
     });
 

@@ -1,3 +1,9 @@
+Cloning file and running npx expo run:android, requires to add this:
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+in app build.gradle, top of file
+
+If you want to read from .env file
+
 # Welcome to your Expo app 👋
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
