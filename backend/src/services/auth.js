@@ -26,6 +26,7 @@ const authService = {
           first_name: firstName,
           last_name: lastName,
           account_type: accountType,
+          updated_at: new Date().toISOString(),
           enabled: true,
         })
         .eq("email", email)
@@ -46,8 +47,9 @@ const authService = {
           first_name: firstName,
           last_name: lastName,
           account_type: accountType,
-          enabled: true,
           created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+          enabled: true,
         })
         .select();
 
