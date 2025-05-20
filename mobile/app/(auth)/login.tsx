@@ -53,6 +53,7 @@ export default function LoginScreen() {
           placeholder={"Geslo"}
           value={password}
           onChangeText={setPassword}
+          autoCapitalize={"none"}
           autoComplete={"off"}
           secureTextEntry
         />

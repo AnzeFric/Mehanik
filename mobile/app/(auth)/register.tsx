@@ -100,6 +100,7 @@ export default function LoginScreen() {
             placeholder={"Geslo"}
             value={password}
             onChangeText={setPassword}
+            autoCapitalize={"none"}
             autoComplete={"off"}
             secureTextEntry
           />
@@ -109,6 +110,7 @@ export default function LoginScreen() {
             placeholder={"Ponovite geslo"}
             value={confirmPassword}
             onChangeText={setConfirmPassword}
+            autoCapitalize={"none"}
             autoComplete={"off"}
             secureTextEntry
           />
