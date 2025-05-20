@@ -12,6 +12,19 @@ const userController = {
       next(error);
     }
   },
+
+  async disable(req, res, next) {
+    try {
+      await userService.disableByEmail(req.user.email);
+
+      res.status(200).json({
+        success: true,
+        message: "User deleted successfully",
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
 };
 
 module.exports = userController;

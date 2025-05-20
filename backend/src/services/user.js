@@ -18,6 +18,19 @@ const userService = {
 
     return data;
   },
+
+  async disableByEmail(email) {
+    const { error } = await supabase
+      .from("users")
+      .update({ enabled: false })
+      .eq("email", email)
+      .select()
+      .maybeSingle();
+
+    if (error) {
+      throw new Error("Failed to disable user");
+    }
+  },
 };
 
 module.exports = userService;
