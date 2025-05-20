@@ -5,35 +5,54 @@ const { v4: uuidv4 } = require("uuid");
 
 const authService = {
   async register(email, password, firstName, lastName, accountType) {
-    // Check if user already exists
-    const { data: existingUser } = await supabase
+    const { data: existingUser, error: fetchError } = await supabase
       .from("users")
-      .select("email")
+      .select("email, enabled")
       .eq("email", email)
       .maybeSingle();
 
-    if (existingUser) {
-      throw new Error("User with this email already exists");
-    }
+    if (fetchError) throw fetchError;
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const generatedUuid = uuidv4();
 
-    const { error } = await supabase
-      .from("users")
-      .insert({
-        uuid: generatedUuid,
-        email: email,
-        password_hash: hashedPassword,
-        first_name: firstName,
-        last_name: lastName,
-        account_type: accountType,
-        enabled: true,
-        created_at: new Date().toISOString(),
-      })
-      .select();
+    if (existingUser && existingUser.enabled === true) {
+      throw new Error("User with this email already exists");
+    } else if (existingUser && existingUser.enabled === false) {
+      // Re-enable and update info
+      const { error: updateError } = await supabase
+        .from("users")
+        .update({
+          password_hash: hashedPassword,
+          first_name: firstName,
+          last_name: lastName,
+          account_type: accountType,
+          enabled: true,
+        })
+        .eq("email", email)
+        .select()
+        .maybeSingle();
 
-    if (error) throw error;
+      if (updateError) throw updateError;
+    } else {
+      // Create new user
+      const generatedUuid = uuidv4();
+
+      const { error: saveError } = await supabase
+        .from("users")
+        .insert({
+          uuid: generatedUuid,
+          email,
+          password_hash: hashedPassword,
+          first_name: firstName,
+          last_name: lastName,
+          account_type: accountType,
+          enabled: true,
+          created_at: new Date().toISOString(),
+        })
+        .select();
+
+      if (saveError) throw saveError;
+    }
 
     return email;
   },
@@ -43,6 +62,7 @@ const authService = {
       .from("users")
       .select("*")
       .eq("email", email)
+      .eq("enabled", true)
       .maybeSingle();
 
     if (error) throw error;

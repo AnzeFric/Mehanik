@@ -16,7 +16,6 @@ const userController = {
   async disable(req, res, next) {
     try {
       await userService.disableByEmailAndEnabled(req.user.email);
-
       res.status(200).json({
         success: true,
         message: "User deleted successfully",
