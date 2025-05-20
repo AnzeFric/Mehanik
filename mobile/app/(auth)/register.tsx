@@ -81,7 +81,7 @@ export default function LoginScreen() {
           />
 
           <View style={{ gap: 10 }}>
-            <Text>Kdo ste?</Text>
+            <Text style={styles.subtitle}>Kdo ste?</Text>
             <View style={styles.userTypeContainer}>
               <TouchableOpacity
                 style={[
@@ -114,7 +114,7 @@ export default function LoginScreen() {
           </TouchableHighlight>
 
           <View style={styles.loginContainer}>
-            <Text style={styles.loginText}>Že imate račun? </Text>
+            <Text style={styles.subtitle}>Že imate račun? </Text>
             <Link href="/(auth)/login" asChild>
               <TouchableOpacity>
                 <Text style={styles.loginLink}>Prijava</Text>
@@ -165,10 +165,6 @@ const styles = StyleSheet.create({
   loginContainer: {
     flexDirection: "row",
     justifyContent: "center",
-  },
-  loginText: {
-    fontSize: 16,
-    color: Colors.light.secondaryText,
   },
   loginLink: {
     fontSize: 16,

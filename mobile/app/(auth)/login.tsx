@@ -24,7 +24,11 @@ export default function LoginScreen() {
         <Text style={styles.subtitle}>Prijavite se za nadaljevanje</Text>
       </View>
 
-      <View style={{ gap: 20 }}>
+      <View
+        style={{
+          gap: 20,
+        }}
+      >
         <TextInput
           style={AppStyles.textInput}
           placeholder={"Email"}
@@ -67,7 +71,8 @@ export default function LoginScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    gap: 20,
+    paddingTop: 100,
   },
   headerContainer: {
     paddingVertical: 35,
