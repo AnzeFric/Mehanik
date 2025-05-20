@@ -5,3 +5,25 @@ GET http://localhost:3000/api/health
 
 GET http://localhost:3000/api/users/
 
+
+###
+
+DELETE http://localhost:3000/api/users/anze.fric@gmail.com
+
+###
+
+POST http://localhost:3000/api/auth/register
+content-type: application/json
+
+{
+    "email": "j@gmail.com",
+    "password": "a",
+    "name": "a",
+    "accountType": "user"
+}
+
+###
+
+POST http://localhost:3000/api/auth/login
+content-type: application/json
+

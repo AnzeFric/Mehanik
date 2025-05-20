@@ -1,9 +1,10 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const supabase = require("../config/database");
+const { v4: uuidv4 } = require("uuid");
 
 const authService = {
-  async register(email, password, name, accountType) {
+  async register(email, password, firstName, lastName, accountType) {
     try {
       // Check if user already exists
       const { data: existingUser } = await supabase
@@ -17,18 +18,20 @@ const authService = {
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);
+      const generatedUuid = uuidv4();
 
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("users")
-        .insert([
-          {
-            email,
-            password: hashedPassword,
-            name,
-            accountType,
-            created_at: new Date().toISOString(),
-          },
-        ])
+        .insert({
+          uuid: generatedUuid,
+          email: email,
+          password_hash: hashedPassword,
+          first_name: firstName,
+          last_name: lastName,
+          account_type: accountType,
+          enabled: true,
+          created_at: new Date().toISOString(),
+        })
         .select();
 
       if (error) throw error;

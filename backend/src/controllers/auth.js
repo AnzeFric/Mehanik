@@ -1,21 +1,22 @@
 const authService = require("../services/auth");
-const sendResponse = require("../utils/responseHandler");
-const ApiResponse = require("../utils/ApiResponse");
 
 const authController = {
   async register(req, res, next) {
     try {
-      const { email, password, name, accountType } = req.body;
+      console.log("User register req: ", req.body);
+      const { email, password, firstName, lastName, accountType } = req.body;
       const registeredEmail = await authService.register(
         email,
         password,
-        name,
+        firstName,
+        lastName,
         accountType
       );
-      return sendResponse(
-        res,
-        ApiResponse.success("Registration successful!", registeredEmail)
-      );
+      res.status(200).send({
+        success: true,
+        message: `Registration successful`,
+        email: registeredEmail,
+      });
     } catch (error) {
       next(error);
     }
@@ -25,7 +26,9 @@ const authController = {
     try {
       const { email, password } = req.body;
       const token = await authService.login(email, password);
-      return sendResponse(res, ApiResponse.success("Login successful!", token));
+      res
+        .status(200)
+        .send({ success: true, message: "Login successful", token: token });
     } catch (error) {
       next(error);
     }
