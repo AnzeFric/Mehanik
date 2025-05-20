@@ -30,8 +30,17 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-// Routes
+// Route imports
+const authRoutes = require("./routes/auth");
 const userRouter = require("./routes/user");
+
+// Public routes
+app.use("/api/auth", authRoutes);
+
+const authMiddleware = require("./middleware/auth");
+app.use(authMiddleware);
+
+// Private/protected routes
 app.use("/api/users", userRouter);
 
 // 404 handler
