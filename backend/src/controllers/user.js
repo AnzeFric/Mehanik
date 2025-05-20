@@ -3,7 +3,7 @@ const userService = require("../services/user");
 const userController = {
   async me(req, res, next) {
     try {
-      const user = await userService.getUserByEmail(req.user.email);
+      const user = await userService.getUserByEmailAndEnabled(req.user.email);
       res.status(200).json({
         success: true,
         user,
@@ -15,7 +15,7 @@ const userController = {
 
   async disable(req, res, next) {
     try {
-      await userService.disableByEmail(req.user.email);
+      await userService.disableByEmailAndEnabled(req.user.email);
 
       res.status(200).json({
         success: true,

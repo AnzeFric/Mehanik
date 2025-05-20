@@ -1,11 +1,12 @@
 const supabase = require("../config/database");
 
 const userService = {
-  async getUserByEmail(email) {
+  async getUserByEmailAndEnabled(email) {
     const { data, error } = await supabase
       .from("users")
       .select("uuid, email, first_name, last_name")
       .eq("email", email)
+      .eq("enabled", true)
       .maybeSingle();
 
     if (error) {
@@ -19,16 +20,21 @@ const userService = {
     return data;
   },
 
-  async disableByEmail(email) {
-    const { error } = await supabase
+  async disableByEmailAndEnabled(email) {
+    const { data, error } = await supabase
       .from("users")
       .update({ enabled: false })
       .eq("email", email)
+      .eq("enabled", true)
       .select()
       .maybeSingle();
 
     if (error) {
       throw new Error("Failed to disable user");
+    }
+
+    if (!data) {
+      throw new Error("User not found");
     }
   },
 };
