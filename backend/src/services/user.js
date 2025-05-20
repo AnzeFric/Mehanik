@@ -1,5 +1,23 @@
 const supabase = require("../config/database");
 
-const userService = {};
+const userService = {
+  async getUserByEmail(email) {
+    const { data, error } = await supabase
+      .from("users")
+      .select("uuid, email, first_name, last_name")
+      .eq("email", email)
+      .maybeSingle();
+
+    if (error) {
+      throw new Error("Failed to fetch user");
+    }
+
+    if (!data) {
+      throw new Error("User not found");
+    }
+
+    return data;
+  },
+};
 
 module.exports = userService;
