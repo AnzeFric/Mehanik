@@ -6,8 +6,8 @@ import {
   TouchableHighlight,
   StyleSheet,
 } from "react-native";
-import { useState } from "react";
-import { Link } from "expo-router";
+import { useState, useCallback } from "react";
+import { Link, useFocusEffect } from "expo-router";
 import { AppStyles } from "@/constants/Styles";
 import { Colors } from "@/constants/Colors";
 import { useAuth } from "@/hooks/useAuth";
@@ -16,6 +16,15 @@ export default function LoginScreen() {
   const { handleLogin } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        setEmail("");
+        setPassword("");
+      };
+    }, [])
+  );
 
   return (
     <View style={[AppStyles.parentPadding, styles.container]}>

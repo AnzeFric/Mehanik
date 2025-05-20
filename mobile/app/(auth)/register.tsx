@@ -7,8 +7,8 @@ import {
   ScrollView,
   StyleSheet,
 } from "react-native";
-import { useState } from "react";
-import { Link } from "expo-router";
+import { useState, useCallback } from "react";
+import { Link, useFocusEffect } from "expo-router";
 import { useAuth } from "@/hooks/useAuth";
 import { Colors } from "@/constants/Colors";
 import { AppStyles } from "@/constants/Styles";
@@ -22,6 +22,19 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [accountType, setAccountType] = useState<AccountType>("user");
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        setEmail("");
+        setFirstName("");
+        setLastName("");
+        setPassword("");
+        setConfirmPassword("");
+        setAccountType("user");
+      };
+    }, [])
+  );
 
   return (
     <View style={styles.container}>
