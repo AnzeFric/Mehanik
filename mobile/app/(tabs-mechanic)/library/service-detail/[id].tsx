@@ -316,7 +316,6 @@ const styles = StyleSheet.create({
   notesText: {
     fontSize: 16,
     color: Colors.light.text,
-    lineHeight: 22,
   },
   imagesPlaceholder: {
     flexDirection: "row",

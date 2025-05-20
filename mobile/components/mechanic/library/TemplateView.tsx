@@ -69,9 +69,7 @@ export default function TemplateView({
             onPress={onButtonPress}
             underlayColor={Colors.light.specialBlueClick}
           >
-            <Text style={[AppStyles.buttonText, styles.buttonText]}>
-              {buttonText}
-            </Text>
+            <Text style={AppStyles.buttonText}>{buttonText}</Text>
           </TouchableHighlight>
         ) : (
           <View style={styles.button} />
@@ -98,7 +96,6 @@ const styles = StyleSheet.create({
   },
   userName: {
     fontSize: 32,
-    lineHeight: 40,
     flex: 1,
     textAlign: "center",
   },
@@ -109,8 +106,5 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     marginHorizontal: 25,
     marginBottom: 25,
-  },
-  buttonText: {
-    lineHeight: 40,
   },
 });

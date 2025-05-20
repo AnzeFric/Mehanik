@@ -155,7 +155,6 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 16,
     color: Colors.light.text,
-    lineHeight: 22,
   },
   actionsContainer: {
     flexDirection: "row",

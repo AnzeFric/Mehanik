@@ -28,35 +28,28 @@ export const AppStyles = StyleSheet.create({
   buttonText: {
     color: Colors.light.darkButtonText,
     fontSize: 24,
-    lineHeight: 24,
     fontWeight: "bold",
   },
   title: {
     fontSize: 24,
-    lineHeight: 29,
   },
   smallText: {
     fontSize: 16,
-    lineHeight: 20,
   },
   text: {
     fontSize: 20,
-    lineHeight: 24,
   },
   boldTitle: {
     fontSize: 24,
     fontWeight: "bold",
-    lineHeight: 28,
   },
   smallBoldText: {
     fontSize: 16,
     fontWeight: "bold",
-    lineHeight: 20,
   },
   boldText: {
     fontSize: 20,
     fontWeight: "bold",
-    lineHeight: 24,
   },
   bigTitle: {
     fontSize: 32,

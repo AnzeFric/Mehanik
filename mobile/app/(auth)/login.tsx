@@ -70,12 +70,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerContainer: {
-    paddingVertical: 60,
+    paddingVertical: 35,
   },
   title: {
     fontSize: 44,
     fontWeight: "bold",
-    lineHeight: 44,
   },
   subtitle: {
     fontSize: 16,

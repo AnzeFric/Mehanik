@@ -89,6 +89,5 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: "center",
     fontSize: 20,
-    lineHeight: 24,
   },
 });

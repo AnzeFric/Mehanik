@@ -219,7 +219,6 @@ const styles = StyleSheet.create({
     textAlign: "left",
     verticalAlign: "bottom",
     fontSize: 16,
-    lineHeight: 20,
   },
   buttonText: {
     color: Colors.light.background,

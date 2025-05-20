@@ -137,7 +137,6 @@ const styles = StyleSheet.create({
   },
   greeting: {
     fontSize: 32,
-    lineHeight: 40,
     flex: 1,
     textAlign: "center",
   },

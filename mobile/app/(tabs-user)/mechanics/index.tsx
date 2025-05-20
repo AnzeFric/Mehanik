@@ -158,7 +158,6 @@ const styles = StyleSheet.create({
   textInput: {
     height: 50,
     flex: 1,
-    lineHeight: 32,
   },
   buttonContainer: {
     flexDirection: "row",

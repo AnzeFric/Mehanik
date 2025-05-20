@@ -135,6 +135,5 @@ const styles = StyleSheet.create({
   textInput: {
     height: 50,
     width: "100%",
-    lineHeight: 32,
   },
 });
