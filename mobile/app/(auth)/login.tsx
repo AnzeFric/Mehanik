@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   StyleSheet,
+  Alert,
 } from "react-native";
 import { useState, useCallback } from "react";
 import { Link, useFocusEffect } from "expo-router";
@@ -25,6 +26,15 @@ export default function LoginScreen() {
       };
     }, [])
   );
+
+  const handleLoginPress = async () => {
+    if (email === "" || password === "") {
+      Alert.alert("Napačen vnos", "Vsa polja potrebujejo biti izpolnjena");
+      return;
+    }
+
+    handleLogin(email, password);
+  };
 
   return (
     <View style={[AppStyles.parentPadding, styles.container]}>
@@ -60,7 +70,7 @@ export default function LoginScreen() {
 
         <TouchableHighlight
           style={AppStyles.button}
-          onPress={handleLogin}
+          onPress={handleLoginPress}
           underlayColor={Colors.light.specialBlueClick}
         >
           <Text style={AppStyles.buttonText}>Prijava</Text>

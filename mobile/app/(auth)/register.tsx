@@ -56,6 +56,7 @@ export default function LoginScreen() {
 
     handleRegister(email, firstName, lastName, password, accountType);
   };
+
   return (
     <View style={styles.container}>
       <ScrollView style={AppStyles.parentPadding}>

@@ -1,8 +1,8 @@
 import { router } from "expo-router";
 import useUserStore from "@/stores/useUserStore";
-import BetterFetch from "@/constants/BetterFetch";
 import { API_BASE_URL } from "@/constants/Config";
 import { resetAllStores } from "@/constants/util";
+import useAuthStore from "@/stores/useAuthStore";
 
 export function useUser() {
   const {
@@ -16,17 +16,28 @@ export function useUser() {
     setAccountType,
   } = useUserStore();
 
+  const { jwt } = useAuthStore();
+
   const getUser = async () => {
     try {
-      const response = await BetterFetch(
-        `${API_BASE_URL}/user/`,
-        "GET",
-        undefined
-      );
+      const response = await fetch(`${API_BASE_URL}/user/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + jwt,
+        },
+      });
 
-      if (response) {
-        setFirstName(response.firstName);
-        setLastName(response.lastName);
+      const data = await response.json();
+
+      if (data.success) {
+        const firstName = data.data.firstName;
+        const lastName = data.data.lastName;
+        const accountType = data.data.accountType;
+
+        setFirstName(firstName);
+        setLastName(lastName);
+        setAccountType(accountType);
         return true;
       }
 
@@ -40,13 +51,17 @@ export function useUser() {
 
   const deleteUser = async () => {
     try {
-      const response = await BetterFetch(
-        `${API_BASE_URL}/user/delete`,
-        "DELETE",
-        undefined
-      );
+      const response = await fetch(`${API_BASE_URL}/user/`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + jwt,
+        },
+      });
 
-      if (response) {
+      const data = await response.json();
+
+      if (data.success) {
         resetAllStores();
         router.replace("/(auth)/login"); // Using replace to prevent returning with hardware back button
       } else {
