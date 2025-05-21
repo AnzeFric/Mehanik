@@ -51,7 +51,7 @@ export function useUser() {
 
   const deleteUser = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/user/`, {
+      const response = await fetch(`${API_BASE_URL}/users/`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -63,7 +63,7 @@ export function useUser() {
 
       if (data.success) {
         resetAllStores();
-        router.replace("/(auth)/login"); // Using replace to prevent returning with hardware back button
+        router.replace("/(auth)/login");
       } else {
         console.log("Failed to delete user");
       }

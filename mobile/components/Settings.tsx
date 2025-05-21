@@ -11,6 +11,7 @@ import BackIcon from "@/assets/icons/BackIcon.svg";
 import { router } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { useAuth } from "@/hooks/useAuth";
+import { useUser } from "@/hooks/useUser";
 
 interface Props {
   isMechanic: boolean;
@@ -18,6 +19,7 @@ interface Props {
 
 export default function Settings({ isMechanic }: Props) {
   const { handleLogout } = useAuth();
+  const { deleteUser } = useUser();
 
   const [name, setName] = useState<string>("");
   const [isLightTheme, setIsLightTheme] = useState<boolean>(true); // TODO: get this from hook
@@ -119,7 +121,7 @@ export default function Settings({ isMechanic }: Props) {
             </TouchableOpacity>
           </View>
           <View>
-            <TouchableOpacity style={styles.button} onPress={() => {}}>
+            <TouchableOpacity style={styles.button} onPress={deleteUser}>
               <Text style={styles.buttonText}>Odstrani</Text>
             </TouchableOpacity>
           </View>
