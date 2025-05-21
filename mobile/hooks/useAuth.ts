@@ -5,8 +5,13 @@ import { AccountType } from "@/interfaces/account";
 import { Alert } from "react-native";
 
 export function useAuth() {
-  const { isLoggined, setJwt, setExpiration, setIssuedTime, setIsLoggined } =
-    useAuthStore();
+  const {
+    isLoggined,
+    expiredTimestamp,
+    setJwt,
+    setExpiredTimestamp,
+    setIsLoggined,
+  } = useAuthStore();
 
   const handleRegister = async (
     email: string,
@@ -65,8 +70,7 @@ export function useAuth() {
         const decodedJwt = decodeJWT(jwt);
 
         setJwt(jwt);
-        setExpiration(decodedJwt.exp);
-        setIssuedTime(decodedJwt.iat);
+        setExpiredTimestamp(decodedJwt.exp);
         setIsLoggined(true);
 
         router.replace("/");
@@ -102,6 +106,7 @@ export function useAuth() {
 
   return {
     isLoggined,
+    expiredTimestamp,
     handleRegister,
     handleLogin,
     handleLogout,
