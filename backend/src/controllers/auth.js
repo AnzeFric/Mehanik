@@ -26,14 +26,14 @@ const authController = {
     try {
       console.log("User login req: ", req.body);
       const { email, password } = req.body;
-      const jwtData = await authService.login(email, password);
-      res
-        .status(200)
-        .send({
-          success: true,
-          message: "Login successful",
-          data: { token: jwtData.token, expiresIn: jwtData.expiresIn },
-        });
+      const token = await authService.login(email, password);
+      res.status(200).send({
+        success: true,
+        message: "Login successful",
+        data: {
+          token: token,
+        },
+      });
     } catch (error) {
       next(error);
     }

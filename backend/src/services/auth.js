@@ -83,7 +83,7 @@ const authService = {
       { expiresIn: expiration + "Ms" }
     );
 
-    return { token: token, expiresIn: expiration };
+    return token;
   },
 };
 
