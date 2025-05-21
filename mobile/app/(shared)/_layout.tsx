@@ -1,10 +1,16 @@
 import { Stack } from "expo-router";
 
-export default function StackLayout() {
+export default function SettingsLayout() {
   return (
-    <Stack screenOptions={{ contentStyle: { backgroundColor: "white" } }}>
-      <Stack.Screen name="settings" options={{ headerShown: false }} />
-      <Stack.Screen name="terms" options={{ headerShown: false }} />
+    <Stack
+      screenOptions={{
+        contentStyle: { backgroundColor: "white" },
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="settings" />
+      <Stack.Screen name="terms/index" />
+      <Stack.Screen name="terms/items/[id]" />
     </Stack>
   );
 }

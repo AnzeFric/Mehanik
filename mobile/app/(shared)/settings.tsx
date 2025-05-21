@@ -104,7 +104,7 @@ export default function SettingsScreen() {
           <Text style={AppStyles.text}>Pogoji uporabe</Text>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => router.push("/(shared)/terms")}
+            onPress={() => router.push("../terms")}
           >
             <Text style={styles.buttonText}>Preberi</Text>
           </TouchableOpacity>

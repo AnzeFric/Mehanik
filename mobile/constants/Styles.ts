@@ -54,4 +54,18 @@ export const AppStyles = StyleSheet.create({
   bigTitle: {
     fontSize: 32,
   },
+  inputContainer: {
+    display: "flex",
+    flexDirection: "row",
+    borderWidth: 1,
+    borderColor: Colors.light.textInputBorder,
+    alignItems: "center",
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    gap: 10,
+  },
+  input: {
+    height: 50,
+    width: "100%",
+  },
 });
