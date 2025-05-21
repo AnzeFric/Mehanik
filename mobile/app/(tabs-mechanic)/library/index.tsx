@@ -1,4 +1,4 @@
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import { View, TextInput, StyleSheet } from "react-native";
 import { useState, useCallback } from "react";
 import DisplayItems from "@/components/global/DisplayItems";
 import Customer from "@/components/mechanic/items/Customer";
@@ -8,6 +8,7 @@ import { AppStyles } from "@/constants/Styles";
 import { router, useFocusEffect } from "expo-router";
 import { CustomerData } from "@/interfaces/mechanic";
 import PlusButton from "@/components/global/PlusButton";
+import TitleRow from "@/components/shared/TitleRow";
 
 const fakeCustomers: CustomerData[] = [
   {
@@ -82,7 +83,7 @@ export default function LibraryScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={AppStyles.bigTitle}>Knjižnica servisov</Text>
+        <TitleRow title={"Knjižnica servisov"} hasBackButton={false} />
         <View style={styles.textInputContainer}>
           <SearchIcon color={Colors.light.primaryText} height={20} width={20} />
           <TextInput
@@ -114,11 +115,9 @@ export default function LibraryScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 20,
     flex: 1,
   },
   header: {
-    paddingHorizontal: 25,
     paddingBottom: 10,
     gap: 15,
   },
@@ -130,6 +129,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 12,
     paddingHorizontal: 12,
+    marginHorizontal: 25,
     gap: 10,
   },
   textInput: {

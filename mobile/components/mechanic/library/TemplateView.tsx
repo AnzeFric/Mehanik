@@ -10,6 +10,7 @@ import { Colors } from "@/constants/Colors";
 import BackIcon from "@/assets/icons/BackIcon.svg";
 import { router, useFocusEffect } from "expo-router";
 import { useCallback, useRef } from "react";
+import TitleRow from "@/components/shared/TitleRow";
 
 interface TemplateScreenProps {
   title: string;
@@ -48,19 +49,8 @@ export default function TemplateView({
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <BackIcon
-          height={30}
-          width={30}
-          style={{ alignSelf: "flex-start" }}
-          onPress={() => {
-            router.back();
-          }}
-        />
-        <Text style={styles.userName}>{title}</Text>
-        {menuIcon && <View>{menuIcon}</View>}
-        {isMenuVisible && <View>{menu}</View>}
-      </View>
+      <TitleRow title={title} hasBackButton={true} menuButton={menuIcon} />
+      <View>{isMenuVisible && menu}</View>
       <ScrollView style={styles.childrenContainer} ref={scrollRef}>
         {children}
         {buttonText ? (

@@ -13,6 +13,7 @@ import { useFocusEffect } from "expo-router";
 import { MechanicData } from "@/interfaces/user";
 import Mechanic from "@/components/user/items/Mechanic";
 import DisplayItems from "@/components/global/DisplayItems";
+import TitleRow from "@/components/shared/TitleRow";
 
 const fakeMechanicsData: MechanicData[] = [
   {
@@ -98,7 +99,7 @@ export default function MechanicsScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={AppStyles.bigTitle}>Mehaniki</Text>
+        <TitleRow title={"Mehaniki"} hasBackButton={false} />
         <View style={styles.textInputContainer}>
           <SearchIcon color={Colors.light.primaryText} height={20} width={20} />
           <TextInput
@@ -133,11 +134,9 @@ export default function MechanicsScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 20,
     flex: 1,
   },
   header: {
-    marginHorizontal: 25,
     paddingBottom: 20,
     gap: 15,
     borderBottomColor: Colors.light.inactiveBorder,
@@ -151,6 +150,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 12,
     paddingHorizontal: 12,
+    marginHorizontal: 25,
     gap: 10,
     backgroundColor: "#fff",
     elevation: 3,
@@ -162,6 +162,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     gap: 10,
+    marginHorizontal: 25,
   },
   button: {
     backgroundColor: Colors.light.specialBlue,

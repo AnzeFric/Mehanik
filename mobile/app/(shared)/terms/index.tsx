@@ -30,7 +30,7 @@ export default function TermsScreen() {
 
   return (
     <ScrollView>
-      <TitleRow title={"Terms and conditions"} hasBackButton={true} />
+      <TitleRow title={"Pogoji in določila"} hasBackButton={true} />
       <View style={styles.contentContainer}>
         <View style={AppStyles.inputContainer}>
           <TextInput

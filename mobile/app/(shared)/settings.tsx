@@ -7,35 +7,25 @@ import {
 } from "react-native";
 import { useState } from "react";
 import { AppStyles } from "@/constants/Styles";
-import BackIcon from "@/assets/icons/BackIcon.svg";
 import { router } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { useAuth } from "@/hooks/useAuth";
 import { useUser } from "@/hooks/useUser";
+import TitleRow from "@/components/shared/TitleRow";
 
 export default function SettingsScreen() {
   const { handleLogout } = useAuth();
-  const { deleteUser } = useUser();
+  const { firstName, deleteUser } = useUser();
 
   const [name, setName] = useState<string>("");
   const [isLightTheme, setIsLightTheme] = useState<boolean>(true); // TODO: get this from hook
   const [isNotificationOn, setIsNotificationOn] = useState<boolean>(true);
 
   return (
-    <View style={AppStyles.parentPadding}>
-      <View style={styles.header}>
-        <BackIcon
-          height={30}
-          width={30}
-          style={{ alignSelf: "flex-start" }}
-          onPress={() => {
-            router.back();
-          }}
-        />
-        <Text style={styles.greeting}>Pozdravljen ime!</Text>
-      </View>
+    <View>
+      <TitleRow title={`Pozdravljen ${firstName}!`} hasBackButton={true} />
 
-      <View style={styles.contentContainer}>
+      <View style={[AppStyles.parentPadding, styles.contentContainer]}>
         <View>
           <Text style={AppStyles.text}>Spremeni Ime</Text>
           <View style={styles.nameInput}>
@@ -143,7 +133,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   contentContainer: {
-    paddingVertical: 20,
+    marginVertical: 20,
     gap: 20,
   },
   nameInput: {

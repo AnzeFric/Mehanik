@@ -333,7 +333,7 @@ const styles = StyleSheet.create({
   menuContainer: {
     position: "absolute",
     right: 16,
-    top: 80,
+    top: 60,
     backgroundColor: "#FFFFFF",
     width: 180,
     borderRadius: 12,

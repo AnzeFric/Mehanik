@@ -1,9 +1,9 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useState } from "react";
 import DisplayItems from "@/components/global/DisplayItems";
 import Appointment from "@/components/mechanic/items/Appointment";
-import { AppStyles } from "@/constants/Styles";
 import { AppointmentData } from "@/interfaces/mechanic";
+import TitleRow from "@/components/shared/TitleRow";
 
 const fakeAppointments: AppointmentData[] = [
   {
@@ -44,7 +44,7 @@ export default function AppointmentsScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={[AppStyles.bigTitle, styles.title]}>Novi termini</Text>
+      <TitleRow title={"Novi termini"} hasBackButton={false} />
       <DisplayItems
         list={appointmentList}
         renderItem={(appointment, index) => (
@@ -58,10 +58,6 @@ export default function AppointmentsScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 20,
     flex: 1,
-  },
-  title: {
-    paddingHorizontal: 25,
   },
 });

@@ -1,12 +1,12 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import { useState, useRef, useCallback } from "react";
-import { AppStyles } from "@/constants/Styles";
 import MenuIcon from "@/assets/icons/MenuIcon.svg";
 import { router, useFocusEffect } from "expo-router";
 import { AppointmentData } from "@/interfaces/user";
 import Appointment from "@/components/user/items/Appointment";
 import ModalAppointment from "@/components/mechanic/modals/ModalAppointment";
 import ModalPrompt from "@/components/mechanic/modals/ModalPrompt";
+import TitleRow from "@/components/shared/TitleRow";
 
 const fakeAppointmentData: AppointmentData[] = [
   {
@@ -138,16 +138,19 @@ export default function HomeUserScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={AppStyles.bigTitle}>Termini</Text>
-        <MenuIcon
-          height={30}
-          width={30}
-          onPress={() => {
-            router.push("/(shared)/settings");
-          }}
-        />
-      </View>
+      <TitleRow
+        title={"Termini"}
+        hasBackButton={false}
+        menuButton={
+          <MenuIcon
+            height={30}
+            width={30}
+            onPress={() => {
+              router.push("/(shared)/settings");
+            }}
+          />
+        }
+      />
       <ScrollView style={{ paddingHorizontal: 25, flex: 1 }} ref={scrollRef}>
         <View style={styles.contentContainer}>
           {appointmentList.map((appointment, index) => (
@@ -187,7 +190,6 @@ export default function HomeUserScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 20,
     flex: 1,
   },
   header: {

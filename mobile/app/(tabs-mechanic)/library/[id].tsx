@@ -250,8 +250,8 @@ const styles = StyleSheet.create({
   },
   menuContainer: {
     position: "absolute",
-    right: 0,
-    top: 20,
+    right: 20,
+    top: -10,
     backgroundColor: Colors.light.background,
     width: 200,
     borderRadius: 8,
