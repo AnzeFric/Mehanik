@@ -4,7 +4,7 @@ const userService = {
   async getUserByEmailAndEnabled(email) {
     const { data, error } = await supabase
       .from("users")
-      .select("uuid, email, first_name, last_name")
+      .select("uuid, email, first_name, last_name, account_type")
       .eq("email", email)
       .eq("enabled", true)
       .maybeSingle();

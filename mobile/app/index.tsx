@@ -5,22 +5,36 @@ import { useState, useEffect } from "react";
 import LoadingScreen from "@/components/global/LoadingScreen";
 
 export default function HomeScreen() {
-  const { accountType } = useUser();
+  const { accountType, getUser } = useUser();
   const { isLoggined, expiredTimestamp, handleLogout } = useAuth();
-
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const now = Date.now();
-    const tokenExpiresAt = expiredTimestamp * 1000; // Convert to milliseconds
+    const initialize = async () => {
+      try {
+        const now = Date.now();
+        const tokenExpiresAt = expiredTimestamp * 1000;
+        const timeRemaining = tokenExpiresAt - now;
+        const threshold = 4 * 24 * 60 * 60 * 1000; // 4 days
 
-    const timeRemaining = tokenExpiresAt - now;
-    const threshold = 4 * 24 * 60 * 60 * 1000; // 4 days in milliseconds
+        if (timeRemaining < threshold) {
+          handleLogout();
+          setLoading(false);
+          return;
+        }
 
-    if (timeRemaining < threshold) {
-      handleLogout();
-    }
-    setLoading(false);
+        if (isLoggined) {
+          await getUser();
+        }
+
+        setLoading(false);
+      } catch (error) {
+        console.error("Initialization error:", error);
+        setLoading(false);
+      }
+    };
+
+    initialize();
   }, []);
 
   if (loading) {

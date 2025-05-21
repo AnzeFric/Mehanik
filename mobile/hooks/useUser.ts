@@ -20,7 +20,7 @@ export function useUser() {
 
   const getUser = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/user/`, {
+      const response = await fetch(`${API_BASE_URL}/users/`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -31,9 +31,9 @@ export function useUser() {
       const data = await response.json();
 
       if (data.success) {
-        const firstName = data.data.firstName;
-        const lastName = data.data.lastName;
-        const accountType = data.data.accountType;
+        const firstName = data.user.first_name;
+        const lastName = data.user.last_name;
+        const accountType = data.user.account_type;
 
         setFirstName(firstName);
         setLastName(lastName);
