@@ -10,12 +10,15 @@ import { AppStyles } from "@/constants/Styles";
 import BackIcon from "@/assets/icons/BackIcon.svg";
 import { router } from "expo-router";
 import { Colors } from "@/constants/Colors";
+import { useAuth } from "@/hooks/useAuth";
 
 interface Props {
   isMechanic: boolean;
 }
 
 export default function Settings({ isMechanic }: Props) {
+  const { handleLogout } = useAuth();
+
   const [name, setName] = useState<string>("");
   const [isLightTheme, setIsLightTheme] = useState<boolean>(true); // TODO: get this from hook
   const [isNotificationOn, setIsNotificationOn] = useState<boolean>(true);
@@ -111,7 +114,7 @@ export default function Settings({ isMechanic }: Props) {
         <View style={{ gap: 15 }}>
           <View>
             <Text style={AppStyles.text}>Račun</Text>
-            <TouchableOpacity style={styles.button} onPress={() => {}}>
+            <TouchableOpacity style={styles.button} onPress={handleLogout}>
               <Text style={styles.buttonText}>Odjava</Text>
             </TouchableOpacity>
           </View>
