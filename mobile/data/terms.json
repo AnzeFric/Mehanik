@@ -1,0 +1,79 @@
+{
+  "items": [
+    {
+      "id": 0,
+      "title": "Sprejem pogojev",
+      "description": "Z ustvarjanjem računa in uporabo naše mobilne aplikacije, namenjene upravljanju avtoservisov, se strinjate s temi Pogoji uporabe. Če se s pogoji ne strinjate, aplikacije ne smete uporabljati."
+    },
+    {
+      "id": 1,
+      "title": "Vrste računov in upravičenost",
+      "description": "Aplikacija podpira dve vrsti računov: Uporabnik in Mehanik. Uporabniki lahko rezervirajo termine za popravilo, mehaniki pa upravljajo z razporedom storitev. Za ustvarjanje računa morate biti stari najmanj 18 let."
+    },
+    {
+      "id": 2,
+      "title": "Rezervacije in urniki",
+      "description": "Uporabniki lahko poiščejo razpoložljive mehanike in zaprosijo za termin v prostih časovnih obdobjih. Mehaniki imajo pravico termin sprejeti, zavrniti ali predlagati spremembo. Vsaka sprememba ali posodobitev sproži obvestilo za obe strani."
+    },
+    {
+      "id": 3,
+      "title": "Zapisniki storitev in zbiranje podatkov",
+      "description": "Mehaniki lahko shranjujejo podatke o opravljenih storitvah, vključno z zasebnimi podatki uporabnika, ki so pomembni za opravljeno storitev. Vsi osebni podatki se obdelujejo v skladu z našo Politiko zasebnosti in veljavno zakonodajo o varstvu podatkov."
+    },
+    {
+      "id": 4,
+      "title": "Obvestila",
+      "description": "Aplikacija pošilja obvestila v realnem času za zahteve za termine, potrditve, zavrnitve in spremembe terminov. Z uporabo aplikacije soglašate s prejemanjem teh obvestil."
+    },
+    {
+      "id": 5,
+      "title": "Odgovornosti uporabnika",
+      "description": "Uporabniki morajo zagotoviti točne osebne in podatke o vozilu. Vsaka zloraba sistema rezervacij, kot je pošiljanje lažnih ali zlonamernih zahtev, lahko vodi do ukinitve ali začasne onemogočitve računa."
+    },
+    {
+      "id": 6,
+      "title": "Odgovornosti mehanika",
+      "description": "Mehaniki so odgovorni za ažurno vnašanje razpoložljivosti in zapisov storitev ter za profesionalno upravljanje terminov. Zloraba osebnih podatkov uporabnikov ali neizvajanje dogovorjenih storitev lahko povzroči kazni ali ukinitev računa."
+    },
+    {
+      "id": 7,
+      "title": "Zasebnost in varstvo podatkov",
+      "description": "Vašo zasebnost jemljemo resno. Zbrane osebne informacije se uporabljajo izključno za omogočanje avtomehaničnih storitev in izboljšanje delovanja aplikacije. Več informacij najdete v naši Politiki zasebnosti."
+    },
+    {
+      "id": 8,
+      "title": "Spremembe pogojev",
+      "description": "Pridržujemo si pravico do spremembe teh Pogojev uporabe kadarkoli. Nadaljnja uporaba aplikacije po objavi sprememb pomeni, da se z novimi pogoji strinjate."
+    },
+    {
+      "id": 9,
+      "title": "Prenehanje uporabe",
+      "description": "Pridržujemo si pravico do ukinitve ali začasne onemogočitve računov, ki kršijo te pogoje ali povzročajo škodo. Uporabniki lahko kadarkoli zahtevajo izbris svojega računa."
+    },
+    {
+      "id": 10,
+      "title": "Omejitev odgovornosti",
+      "description": "Ne prevzemamo odgovornosti za zamujene termine, ravnanje mehanikov ali morebitno zlorabo podatkov s strani tretjih oseb. Aplikacija je zgolj orodje za povezovanje uporabnikov in mehanikov ter ne jamči za uspešnost opravljenih storitev."
+    },
+    {
+      "id": 11,
+      "title": "Pravo in pristojnost",
+      "description": "Ti Pogoji uporabe se urejajo in razlagajo v skladu z zakonodajo države, v kateri se aplikacija uporablja."
+    },
+    {
+      "id": 12,
+      "title": "Intelektualna lastnina",
+      "description": "Vsebine, dizajn, logotipi, kode in druge komponente aplikacije so zaščitene z avtorskimi pravicami in ostalimi pravicami intelektualne lastnine. Brez našega pisnega soglasja jih ni dovoljeno kopirati, razmnoževati ali distribuirati."
+    },
+    {
+      "id": 13,
+      "title": "Prepovedana uporaba",
+      "description": "Uporaba aplikacije v nezakonite, zlonamerne, obrekljive ali zavajajoče namene je strogo prepovedana. Prav tako je prepovedano pridobivanje podatkov drugih uporabnikov brez njihovega soglasja."
+    },
+    {
+      "id": 14,
+      "title": "Spremembe storitev",
+      "description": "Pridržujemo si pravico do spremembe, začasne prekinitve ali ukinitve katerega koli dela aplikacije ali storitve brez predhodnega obvestila. Ne odgovarjamo za posledice teh sprememb."
+    }
+  ]
+}
