@@ -60,16 +60,9 @@ export function useAuth() {
       const data = await response.json();
 
       if (data.success) {
-        const accountType: AccountType = data.data.accountType;
-        const jwt = data.data.jwt;
-        const expiration = data.data.expiration;
+        const log = decodeJWT(data.data.token);
 
-        setJwt(jwt);
-        setExpiration(expiration);
-        setIsLoggined(true);
-        router.replace(
-          accountType === "user" ? "/(tabs-user)" : "/(tabs-mechanic)"
-        );
+        router.replace("/");
       } else {
         Alert.alert(
           "Napaka",
@@ -83,8 +76,22 @@ export function useAuth() {
 
   const handleLogout = () => {
     useAuthStore.getState().reset();
-    router.replace("/(auth)/login"); // Using replace to prevent returning with hardware back button
+    router.replace("/(auth)/login");
   };
+
+  function decodeJWT(token: string) {
+    const parts = token.split(".");
+    if (parts.length !== 3) {
+      throw new Error("Invalid JWT format");
+    }
+
+    const payload = parts[1];
+    const decodedPayload = JSON.parse(
+      atob(payload.replace(/-/g, "+").replace(/_/g, "/"))
+    );
+
+    return decodedPayload;
+  }
 
   return {
     isLoggined,
