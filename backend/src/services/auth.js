@@ -16,7 +16,7 @@ const authService = {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     if (existingUser && existingUser.enabled === true) {
-      throw new Error("User with this email already exists");
+      throw new Error(`User with this email already exists: ${email}`);
     } else if (existingUser && existingUser.enabled === false) {
       // Re-enable and update info
       const { error: updateError } = await supabase

@@ -10,7 +10,7 @@ const userService = {
       .maybeSingle();
 
     if (error) {
-      throw new Error("Failed to fetch user");
+      throw new Error(`Failed to fetch user ${email}: ${error.message}`);
     }
 
     if (!data) {
@@ -30,11 +30,26 @@ const userService = {
       .maybeSingle();
 
     if (error) {
-      throw new Error("Failed to disable user");
+      throw new Error(`Failed to disable user ${email}: ${error.message}`);
     }
 
     if (!data) {
       throw new Error("User not found");
+    }
+
+    await this.resetUpdatedAtTimestamp(email);
+  },
+
+  async resetUpdatedAtTimestamp(email) {
+    const { error } = await supabase
+      .from("users")
+      .update({ updated_at: new Date().toISOString() })
+      .eq("email", email);
+
+    if (error) {
+      throw new Error(
+        `Failed to reset updated_at timestamp for user ${email}: ${error.message}`
+      );
     }
   },
 };
