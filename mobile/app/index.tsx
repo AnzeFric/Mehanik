@@ -13,21 +13,20 @@ export default function HomeScreen() {
   useEffect(() => {
     const initialize = async () => {
       try {
-        const now = Date.now();
-        const tokenExpiresAt = expiredTimestamp * 1000;
-        const timeRemaining = tokenExpiresAt - now;
-        const threshold = 4 * 24 * 60 * 60 * 1000; // 4 days
-
-        if (timeRemaining < threshold) {
-          handleLogout();
-          setLoading(false);
-          return;
-        }
-
         if (isLoggined) {
+          const now = Date.now();
+          const tokenExpiresAt = new Date(expiredTimestamp * 1000);
+          const timeRemaining = tokenExpiresAt.getTime() - now;
+          const threshold = 4 * 24 * 60 * 60 * 1000; // 4 days
+
+          if (timeRemaining < threshold) {
+            handleLogout();
+            setLoading(false);
+            return;
+          }
+
           await getUser();
         }
-
         setLoading(false);
       } catch (error) {
         console.error("Initialization error:", error);
