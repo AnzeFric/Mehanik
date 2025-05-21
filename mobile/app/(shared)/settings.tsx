@@ -13,11 +13,7 @@ import { Colors } from "@/constants/Colors";
 import { useAuth } from "@/hooks/useAuth";
 import { useUser } from "@/hooks/useUser";
 
-interface Props {
-  isMechanic: boolean;
-}
-
-export default function Settings({ isMechanic }: Props) {
+export default function SettingsScreen() {
   const { handleLogout } = useAuth();
   const { deleteUser } = useUser();
 
@@ -36,9 +32,7 @@ export default function Settings({ isMechanic }: Props) {
             router.back();
           }}
         />
-        <Text style={styles.greeting}>
-          Zdravo {isMechanic ? "Mehanik" : "Uporabnik"}!
-        </Text>
+        <Text style={styles.greeting}>Pozdravljen ime!</Text>
       </View>
 
       <View style={styles.contentContainer}>
@@ -108,7 +102,10 @@ export default function Settings({ isMechanic }: Props) {
 
         <View>
           <Text style={AppStyles.text}>Pogoji uporabe</Text>
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => router.push("/(shared)/terms")}
+          >
             <Text style={styles.buttonText}>Preberi</Text>
           </TouchableOpacity>
         </View>

@@ -7,6 +7,7 @@ import LoadingScreen from "@/components/global/LoadingScreen";
 export default function HomeScreen() {
   const { accountType, getUser } = useUser();
   const { isLoggined, expiredTimestamp, handleLogout } = useAuth();
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

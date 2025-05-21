@@ -144,7 +144,7 @@ export default function HomeUserScreen() {
           height={30}
           width={30}
           onPress={() => {
-            router.push("/(tabs-user)/settings");
+            router.push("/(shared)/settings");
           }}
         />
       </View>
