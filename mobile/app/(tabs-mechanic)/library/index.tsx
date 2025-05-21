@@ -1,13 +1,13 @@
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import { useState, useCallback } from "react";
-import DisplayItems from "@/components/global-help/DisplayItems";
+import DisplayItems from "@/components/global/DisplayItems";
 import Customer from "@/components/mechanic/items/Customer";
 import SearchIcon from "@/assets/icons/SearchIcon.svg";
 import { Colors } from "@/constants/Colors";
 import { AppStyles } from "@/constants/Styles";
 import { router, useFocusEffect } from "expo-router";
 import { CustomerData } from "@/interfaces/mechanic";
-import PlusButton from "@/components/global-ui/PlusButton";
+import PlusButton from "@/components/global/PlusButton";
 
 const fakeCustomers: CustomerData[] = [
   {

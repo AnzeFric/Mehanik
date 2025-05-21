@@ -8,7 +8,7 @@ import ServicesMap from "@/components/mechanic/library/ServicesMap";
 import { ServiceData } from "@/interfaces/mechanic";
 import TemplateView from "@/components/mechanic/library/TemplateView";
 import ModalPrompt from "@/components/mechanic/modals/ModalPrompt";
-import PlusButton from "@/components/global-ui/PlusButton";
+import PlusButton from "@/components/global/PlusButton";
 
 const fakeServiceData: ServiceData[] = [
   {

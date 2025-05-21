@@ -12,7 +12,7 @@ import { AppStyles } from "@/constants/Styles";
 import { useFocusEffect } from "expo-router";
 import { MechanicData } from "@/interfaces/user";
 import Mechanic from "@/components/user/items/Mechanic";
-import DisplayItems from "@/components/global-help/DisplayItems";
+import DisplayItems from "@/components/global/DisplayItems";
 
 const fakeMechanicsData: MechanicData[] = [
   {

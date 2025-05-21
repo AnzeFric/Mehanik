@@ -2,7 +2,7 @@ import { Redirect } from "expo-router";
 import { useUser } from "@/hooks/useUser";
 import { useAuth } from "@/hooks/useAuth";
 import { useState, useEffect } from "react";
-import LoadingScreen from "@/components/global-ui/LoadingScreen";
+import LoadingScreen from "@/components/global/LoadingScreen";
 
 export default function HomeScreen() {
   const { accountType } = useUser();
