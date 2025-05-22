@@ -2,13 +2,13 @@ const express = require("express");
 const userController = require("../controllers/user");
 const router = express.Router();
 
-// Getting user by email
+// Fetching authorized user
 router.get("/", userController.me);
 
-// Updating one. Using patch to only update the data provided. Put updates all data
-router.patch("/", (req, res) => {});
+// Updating authorized user by firstName and/or lastName
+router.patch("/", userController.update);
 
-// Deleteting/Disabling user by email
+// Disabling authorized user
 router.delete("/", userController.disable);
 
 module.exports = router;

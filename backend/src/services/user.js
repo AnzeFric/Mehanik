@@ -20,6 +20,26 @@ const userService = {
     return data;
   },
 
+  async updateByEmailAndEnabled(email, updateData) {
+    const { data, error } = await supabase
+      .from("users")
+      .update(updateData)
+      .eq("email", email)
+      .eq("enabled", true)
+      .select()
+      .maybeSingle();
+
+    if (error) {
+      throw new Error(`Failed to update user ${email}: ${error.message}`);
+    }
+
+    if (!data) {
+      throw new Error("User not found");
+    }
+
+    await this.resetUpdatedAtTimestamp(email);
+  },
+
   async disableByEmailAndEnabled(email) {
     const { data, error } = await supabase
       .from("users")
