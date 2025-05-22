@@ -1,5 +1,5 @@
 import { View, TextInput, ScrollView, StyleSheet } from "react-native";
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useRef } from "react";
 import { useFocusEffect } from "expo-router";
 import TitleRow from "@/components/shared/TitleRow";
 import { Colors } from "@/constants/Colors";
@@ -10,6 +10,8 @@ import { AppStyles } from "@/constants/Styles";
 
 export default function TermsScreen() {
   const [value, setValue] = useState("");
+  const inputRef = useRef<TextInput>(null);
+
   const terms = useMemo(() => {
     return items;
   }, [items]);
@@ -35,11 +37,17 @@ export default function TermsScreen() {
         <View style={AppStyles.inputContainer}>
           <TextInput
             style={AppStyles.input}
-            placeholder={"Search"}
+            placeholder={"Iskanje"}
             value={value}
             onChangeText={setValue}
+            ref={inputRef}
           />
-          <Ionicons name={"search-outline"} size={20} color={"#888"} />
+          <Ionicons
+            name={"search-outline"}
+            size={20}
+            color={"#888"}
+            onPress={() => inputRef.current?.focus()}
+          />
         </View>
 
         <View style={{ gap: 10 }}>

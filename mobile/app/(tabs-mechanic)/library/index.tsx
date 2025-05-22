@@ -1,14 +1,13 @@
 import { View, TextInput, StyleSheet } from "react-native";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import DisplayItems from "@/components/global/DisplayItems";
 import Customer from "@/components/mechanic/items/Customer";
-import SearchIcon from "@/assets/icons/SearchIcon.svg";
-import { Colors } from "@/constants/Colors";
 import { AppStyles } from "@/constants/Styles";
 import { router, useFocusEffect } from "expo-router";
 import { CustomerData } from "@/interfaces/mechanic";
 import PlusButton from "@/components/global/PlusButton";
 import TitleRow from "@/components/shared/TitleRow";
+import { Ionicons } from "@expo/vector-icons";
 
 const fakeCustomers: CustomerData[] = [
   {
@@ -60,6 +59,8 @@ export default function LibraryScreen() {
     useState<Array<CustomerData>>(fakeCustomers);
   const [search, setSearch] = useState<string>("");
 
+  const inputRef = useRef<TextInput>(null);
+
   const filteredCustomers =
     search.trim() === ""
       ? customerList
@@ -84,16 +85,19 @@ export default function LibraryScreen() {
     <View style={styles.container}>
       <View style={styles.header}>
         <TitleRow title={"Knjižnica servisov"} hasBackButton={false} />
-        <View style={styles.textInputContainer}>
-          <SearchIcon color={Colors.light.primaryText} height={20} width={20} />
+        <View style={[AppStyles.inputContainer, { marginHorizontal: 25 }]}>
           <TextInput
-            style={[AppStyles.text, styles.textInput]}
-            placeholder="Išči"
+            style={AppStyles.input}
+            placeholder={"Iskanje"}
             value={search}
-            onChangeText={(text: string) => {
-              setSearch(text);
-            }}
-            numberOfLines={1}
+            onChangeText={setSearch}
+            ref={inputRef}
+          />
+          <Ionicons
+            name={"search-outline"}
+            size={20}
+            color={"#888"}
+            onPress={() => inputRef.current?.focus()}
           />
         </View>
       </View>
@@ -120,20 +124,5 @@ const styles = StyleSheet.create({
   header: {
     paddingBottom: 10,
     gap: 15,
-  },
-  textInputContainer: {
-    display: "flex",
-    flexDirection: "row",
-    borderWidth: 1,
-    borderColor: Colors.light.textInputBorder,
-    alignItems: "center",
-    borderRadius: 12,
-    paddingHorizontal: 12,
-    marginHorizontal: 25,
-    gap: 10,
-  },
-  textInput: {
-    height: 50,
-    width: "100%",
   },
 });
