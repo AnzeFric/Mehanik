@@ -3,6 +3,7 @@ import useUserStore from "@/stores/useUserStore";
 import { API_BASE_URL } from "@/constants/Config";
 import { resetAllStores } from "@/constants/util";
 import useAuthStore from "@/stores/useAuthStore";
+import { Alert } from "react-native";
 
 export function useUser() {
   const {
@@ -38,13 +39,54 @@ export function useUser() {
         setFirstName(firstName);
         setLastName(lastName);
         setAccountType(accountType);
+        console.log("User fetching successfully");
         return true;
       }
 
-      console.log("Failed to get user");
+      console.error("Failed to get user");
       return false;
     } catch (error) {
       console.error("Error fetching user: ", error);
+      return false;
+    }
+  };
+
+  const updateUser = async (firstName?: string, lastName?: string) => {
+    try {
+      if (firstName === undefined && lastName === undefined) {
+        return false;
+      }
+
+      const body = {
+        ...(firstName !== undefined && { firstName }),
+        ...(lastName !== undefined && { lastName }),
+      };
+
+      const response = await fetch(`${API_BASE_URL}/users/`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + jwt,
+        },
+        body: JSON.stringify(body),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        firstName != undefined && setFirstName(firstName);
+        lastName != undefined && setLastName(lastName);
+        Alert.alert("Uspeh!", "Podatki uspešno posodobljeni!");
+        return true;
+      }
+
+      Alert.alert(
+        "Napaka!",
+        "Napaka pri posodabljanju podatkov. Prosimo poskusite kasneje."
+      );
+      return false;
+    } catch (error) {
+      console.error("Error updating user: ", error);
       return false;
     }
   };
@@ -65,7 +107,7 @@ export function useUser() {
         resetAllStores();
         router.replace("/(auth)/login");
       } else {
-        console.log("Failed to delete user");
+        console.error("Failed to delete user");
       }
     } catch (error) {
       console.error("Error deleting user: ", error);
@@ -78,6 +120,7 @@ export function useUser() {
     firstLogin,
     accountType,
     getUser,
+    updateUser,
     deleteUser,
     setFirstLogin,
   };

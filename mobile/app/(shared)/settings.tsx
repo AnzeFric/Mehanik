@@ -17,7 +17,7 @@ import TitleRow from "@/components/shared/TitleRow";
 
 export default function SettingsScreen() {
   const { handleLogout } = useAuth();
-  const { firstName, lastName, deleteUser } = useUser();
+  const { firstName, lastName, updateUser, deleteUser } = useUser();
 
   const [firstNameVal, setFirstNameVal] = useState<string>(firstName);
   const [lastNameVal, setLastNameVal] = useState<string>(lastName);
@@ -36,6 +36,22 @@ export default function SettingsScreen() {
     ]);
   };
 
+  const handleUpdateFirstName = () => {
+    if (firstName === firstNameVal || firstNameVal === "") {
+      Alert.alert("Napaka", "Spremenite ime pred posodabljanjem");
+    } else {
+      updateUser(firstNameVal, undefined);
+    }
+  };
+
+  const handleUpdateLastName = () => {
+    if (lastName === lastNameVal || lastNameVal === "") {
+      Alert.alert("Napaka", "Spremenite priimek pred posodabljanjem");
+    } else {
+      updateUser(undefined, lastNameVal);
+    }
+  };
+
   return (
     <ScrollView>
       <TitleRow title={`Pozdravljen ${firstName}!`} hasBackButton={true} />
@@ -51,7 +67,10 @@ export default function SettingsScreen() {
               onChangeText={setFirstNameVal}
               autoCapitalize="words"
             />
-            <TouchableOpacity style={styles.button} onPress={() => {}}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handleUpdateFirstName}
+            >
               <Text style={styles.buttonText}>Potrdi</Text>
             </TouchableOpacity>
           </View>
@@ -63,7 +82,10 @@ export default function SettingsScreen() {
               onChangeText={setLastNameVal}
               autoCapitalize="words"
             />
-            <TouchableOpacity style={styles.button} onPress={() => {}}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handleUpdateLastName}
+            >
               <Text style={styles.buttonText}>Potrdi</Text>
             </TouchableOpacity>
           </View>
