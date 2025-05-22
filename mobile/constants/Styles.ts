@@ -18,14 +18,25 @@ export const AppStyles = StyleSheet.create({
     fontSize: 16,
     backgroundColor: Colors.light.textInputBackground,
   },
+  buttonText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "white",
+  },
   button: {
+    paddingVertical: 6,
+    backgroundColor: Colors.light.specialBlue,
+    borderRadius: 8,
+    alignItems: "center",
+    paddingHorizontal: 10,
+  },
+  bigButton: {
     backgroundColor: Colors.light.specialBlue,
     padding: 15,
     borderRadius: 8,
     alignItems: "center",
-    marginTop: 20,
   },
-  buttonText: {
+  bigButtonText: {
     color: Colors.light.darkButtonText,
     fontSize: 24,
     fontWeight: "bold",

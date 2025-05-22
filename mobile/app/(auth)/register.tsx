@@ -142,11 +142,11 @@ export default function LoginScreen() {
           </View>
 
           <TouchableHighlight
-            style={AppStyles.button}
+            style={AppStyles.bigButton}
             onPress={handleRegisterPress}
             underlayColor={Colors.light.specialBlueClick}
           >
-            <Text style={AppStyles.buttonText}>Registracija</Text>
+            <Text style={AppStyles.bigButtonText}>Registracija</Text>
           </TouchableHighlight>
 
           <View style={styles.loginContainer}>

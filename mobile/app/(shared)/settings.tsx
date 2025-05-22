@@ -3,7 +3,9 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  ScrollView,
   StyleSheet,
+  Alert,
 } from "react-native";
 import { useState } from "react";
 import { AppStyles } from "@/constants/Styles";
@@ -15,25 +17,50 @@ import TitleRow from "@/components/shared/TitleRow";
 
 export default function SettingsScreen() {
   const { handleLogout } = useAuth();
-  const { firstName, deleteUser } = useUser();
+  const { firstName, lastName, deleteUser } = useUser();
 
-  const [name, setName] = useState<string>("");
+  const [firstNameVal, setFirstNameVal] = useState<string>(firstName);
+  const [lastNameVal, setLastNameVal] = useState<string>(lastName);
   const [isLightTheme, setIsLightTheme] = useState<boolean>(true); // TODO: get this from hook
   const [isNotificationOn, setIsNotificationOn] = useState<boolean>(true);
 
+  const handleDeleteUser = () => {
+    Alert.alert("Brisanje računa", "Ste prepričani?", [
+      {
+        text: "Zavrni",
+      },
+      {
+        text: "Potrdi",
+        onPress: () => deleteUser,
+      },
+    ]);
+  };
+
   return (
-    <View>
+    <ScrollView>
       <TitleRow title={`Pozdravljen ${firstName}!`} hasBackButton={true} />
 
       <View style={[AppStyles.parentPadding, styles.contentContainer]}>
         <View>
-          <Text style={AppStyles.text}>Spremeni Ime</Text>
+          <Text style={AppStyles.text}>Spremeni podatke</Text>
           <View style={styles.nameInput}>
             <TextInput
               style={styles.input}
               placeholder="Ime"
-              value={name}
-              onChangeText={setName}
+              value={firstNameVal}
+              onChangeText={setFirstNameVal}
+              autoCapitalize="words"
+            />
+            <TouchableOpacity style={styles.button} onPress={() => {}}>
+              <Text style={styles.buttonText}>Potrdi</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.nameInput}>
+            <TextInput
+              style={styles.input}
+              placeholder="Priimek"
+              value={lastNameVal}
+              onChangeText={setLastNameVal}
               autoCapitalize="words"
             />
             <TouchableOpacity style={styles.button} onPress={() => {}}>
@@ -43,7 +70,7 @@ export default function SettingsScreen() {
         </View>
 
         <View>
-          <Text style={AppStyles.text}>Spremeni barvno temo aplikacije</Text>
+          <Text style={AppStyles.text}>Barva aplikacije</Text>
           <View style={styles.optionContainer}>
             <TouchableOpacity
               style={[
@@ -67,7 +94,7 @@ export default function SettingsScreen() {
         </View>
 
         <View>
-          <Text style={AppStyles.text}>Vklopi/Izklopi obvestila</Text>
+          <Text style={AppStyles.text}>Obvestila</Text>
           <View style={styles.optionContainer}>
             <TouchableOpacity
               style={[
@@ -108,13 +135,13 @@ export default function SettingsScreen() {
             </TouchableOpacity>
           </View>
           <View>
-            <TouchableOpacity style={styles.button} onPress={deleteUser}>
+            <TouchableOpacity style={styles.button} onPress={handleDeleteUser}>
               <Text style={styles.buttonText}>Odstrani</Text>
             </TouchableOpacity>
           </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 

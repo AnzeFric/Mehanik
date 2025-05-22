@@ -69,11 +69,11 @@ export default function LoginScreen() {
         />
 
         <TouchableHighlight
-          style={AppStyles.button}
+          style={AppStyles.bigButton}
           onPress={handleLoginPress}
           underlayColor={Colors.light.specialBlueClick}
         >
-          <Text style={AppStyles.buttonText}>Prijava</Text>
+          <Text style={AppStyles.bigButtonText}>Prijava</Text>
         </TouchableHighlight>
 
         <View style={styles.registerContainer}>
