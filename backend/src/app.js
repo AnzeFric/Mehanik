@@ -33,6 +33,7 @@ app.get("/api/health", (req, res) => {
 // Route imports
 const authRoutes = require("./routes/auth");
 const userRouter = require("./routes/user");
+const serviceRouter = require("./routes/service");
 
 // Public routes
 app.use("/api/auth", authRoutes);
@@ -42,6 +43,7 @@ app.use(authMiddleware);
 
 // Private/protected routes
 app.use("/api/users", userRouter);
+app.use("/api/services", serviceRouter);
 
 // 404 handler
 app.use("*", (req, res) => {
