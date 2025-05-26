@@ -20,7 +20,10 @@ export default function HomeScreen() {
           const threshold = 4 * 24 * 60 * 60 * 1000; // 4 days
 
           if (timeRemaining < threshold) {
-            handleLogout();
+            // Timeout to ensure router is ready before logout
+            setTimeout(() => {
+              handleLogout();
+            }, 100);
             setLoading(false);
             return;
           }

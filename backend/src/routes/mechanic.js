@@ -1,5 +1,5 @@
 const express = require("express");
-const serviceController = require("../controllers/service");
+const mechanicController = require("../controllers/mechanic");
 const router = express.Router();
 
 module.exports = router;
