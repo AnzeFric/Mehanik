@@ -1,4 +1,5 @@
 const supabase = require("../config/database");
+const mechanicService = require("../services/mechanic");
 
 const userService = {
   async getUserByEmailAndEnabled(email) {
@@ -56,6 +57,7 @@ const userService = {
     if (!data) {
       throw new Error("User not found");
     }
+    await mechanicService.delete(data.uuid);
 
     await this.resetUpdatedAtTimestamp(email);
   },

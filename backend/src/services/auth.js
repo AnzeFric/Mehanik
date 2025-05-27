@@ -2,58 +2,64 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const supabase = require("../config/database");
 const { v4: uuidv4 } = require("uuid");
+const mechanicService = require("../services/mechanic");
 
 const authService = {
   async register(email, password, firstName, lastName, accountType) {
     const { data: existingUser, error: fetchError } = await supabase
       .from("users")
-      .select("email, enabled")
+      .select("email, enabled, uuid")
       .eq("email", email)
       .maybeSingle();
 
     if (fetchError) throw fetchError;
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    let userUuid = uuidv4();
 
-    if (existingUser && existingUser.enabled === true) {
-      throw new Error(`User with this email already exists: ${email}`);
-    } else if (existingUser && existingUser.enabled === false) {
-      // Re-enable and update info
-      const { error: updateError } = await supabase
-        .from("users")
-        .update({
-          password_hash: hashedPassword,
-          first_name: firstName,
-          last_name: lastName,
-          account_type: accountType,
-          updated_at: new Date().toISOString(),
-          enabled: true,
-        })
-        .eq("email", email)
-        .select()
-        .maybeSingle();
+    if (existingUser) {
+      if (existingUser.enabled === true) {
+        throw new Error(`User with this email already exists: ${email}`);
+      } else {
+        // Re-enable and update info
+        userUuid = existingUser.uuid;
 
-      if (updateError) throw updateError;
+        const { error: updateError } = await supabase
+          .from("users")
+          .update({
+            password_hash: hashedPassword,
+            first_name: firstName,
+            last_name: lastName,
+            account_type: accountType,
+            updated_at: new Date().toISOString(),
+            enabled: true,
+          })
+          .eq("email", email);
+
+        if (updateError) throw updateError;
+      }
     } else {
       // Create new user
-      const generatedUuid = uuidv4();
-
-      const { error: saveError } = await supabase
-        .from("users")
-        .insert({
-          uuid: generatedUuid,
-          email,
-          password_hash: hashedPassword,
-          first_name: firstName,
-          last_name: lastName,
-          account_type: accountType,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-          enabled: true,
-        })
-        .select();
+      const { error: saveError } = await supabase.from("users").insert({
+        uuid: userUuid,
+        email,
+        password_hash: hashedPassword,
+        first_name: firstName,
+        last_name: lastName,
+        account_type: accountType,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        enabled: true,
+      });
 
       if (saveError) throw saveError;
+    }
+
+    if (accountType === "mechanic") {
+      const data = await mechanicService.check(userUuid);
+      if (!data) {
+        await mechanicService.create(userUuid);
+      }
     }
 
     return email;

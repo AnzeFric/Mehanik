@@ -5,6 +5,15 @@ const authController = {
     try {
       console.log("User register req: ", req.body);
       const { email, password, firstName, lastName, accountType } = req.body;
+
+      // Validate account type
+      if (!["user", "mechanic"].includes(accountType)) {
+        return res.status(400).send({
+          success: false,
+          message: "Invalid account type",
+        });
+      }
+
       const registeredEmail = await authService.register(
         email,
         password,
@@ -12,7 +21,8 @@ const authController = {
         lastName,
         accountType
       );
-      res.status(200).send({
+
+      res.status(201).send({
         success: true,
         message: `Registration successful`,
         email: registeredEmail,
@@ -30,9 +40,7 @@ const authController = {
       res.status(200).send({
         success: true,
         message: "Login successful",
-        data: {
-          token: token,
-        },
+        token: token,
       });
     } catch (error) {
       next(error);
