@@ -66,7 +66,7 @@ export function useAuth() {
       const data = await response.json();
 
       if (data.success) {
-        const jwt = data.data.token;
+        const jwt = data.token;
         const decodedJwt = decodeJWT(jwt);
 
         setJwt(jwt);

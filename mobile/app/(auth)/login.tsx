@@ -4,8 +4,9 @@ import {
   TextInput,
   TouchableOpacity,
   TouchableHighlight,
-  StyleSheet,
   Alert,
+  ScrollView,
+  StyleSheet,
 } from "react-native";
 import { useState, useCallback } from "react";
 import { Link, useFocusEffect } from "expo-router";
@@ -37,61 +38,62 @@ export default function LoginScreen() {
   };
 
   return (
-    <View style={[AppStyles.parentPadding, styles.container]}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.title}>Mehanik</Text>
-        <Text style={styles.subtitle}>Prijavite se za nadaljevanje</Text>
-      </View>
-
-      <View
-        style={{
-          gap: 20,
-        }}
-      >
-        <TextInput
-          style={AppStyles.textInput}
-          placeholder={"Email"}
-          value={email}
-          onChangeText={setEmail}
-          keyboardType={"email-address"}
-          autoCapitalize={"none"}
-          autoComplete={"off"}
-        />
-
-        <TextInput
-          style={AppStyles.textInput}
-          placeholder={"Geslo"}
-          value={password}
-          onChangeText={setPassword}
-          autoCapitalize={"none"}
-          autoComplete={"off"}
-          secureTextEntry
-        />
-
-        <TouchableHighlight
-          style={AppStyles.bigButton}
-          onPress={handleLoginPress}
-          underlayColor={Colors.light.specialBlueClick}
-        >
-          <Text style={AppStyles.bigButtonText}>Prijava</Text>
-        </TouchableHighlight>
-
-        <View style={styles.registerContainer}>
-          <Text style={styles.registerText}>Nimate računa? </Text>
-          <Link href="/(auth)/register" asChild>
-            <TouchableOpacity>
-              <Text style={styles.registerLink}>Registracija</Text>
-            </TouchableOpacity>
-          </Link>
+    <View style={styles.container}>
+      <ScrollView style={AppStyles.parentPadding}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.title}>Mehanik</Text>
+          <Text style={styles.subtitle}>Prijavite se za nadaljevanje</Text>
         </View>
-      </View>
+
+        <View
+          style={{
+            gap: 20,
+          }}
+        >
+          <TextInput
+            style={AppStyles.textInput}
+            placeholder={"Email"}
+            value={email}
+            onChangeText={setEmail}
+            keyboardType={"email-address"}
+            autoCapitalize={"none"}
+            autoComplete={"off"}
+          />
+
+          <TextInput
+            style={AppStyles.textInput}
+            placeholder={"Geslo"}
+            value={password}
+            onChangeText={setPassword}
+            autoCapitalize={"none"}
+            autoComplete={"off"}
+            secureTextEntry
+          />
+
+          <TouchableHighlight
+            style={AppStyles.bigButton}
+            onPress={handleLoginPress}
+            underlayColor={Colors.light.specialBlueClick}
+          >
+            <Text style={AppStyles.bigButtonText}>Prijava</Text>
+          </TouchableHighlight>
+
+          <View style={styles.registerContainer}>
+            <Text style={styles.registerText}>Nimate računa? </Text>
+            <Link href="/(auth)/register" asChild>
+              <TouchableOpacity>
+                <Text style={styles.registerLink}>Registracija</Text>
+              </TouchableOpacity>
+            </Link>
+          </View>
+        </View>
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    gap: 20,
     paddingTop: 100,
   },
   headerContainer: {
