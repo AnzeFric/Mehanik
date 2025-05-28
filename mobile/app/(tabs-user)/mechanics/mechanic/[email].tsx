@@ -91,10 +91,10 @@ export default function MechanicScreen() {
           <Text style={AppStyles.title}>Cene</Text>
 
           <View style={styles.servicePriceSection}>
-            <Text style={styles.serviceTitle}>Mali servisi</Text>
-            {mechanicData?.prices.smallService &&
-            mechanicData.prices.smallService.length > 0 ? (
-              mechanicData.prices.smallService.map((brand, index) => (
+            <Text style={styles.serviceTitle}>Veliki servis</Text>
+            {mechanicData?.prices.largeService &&
+            mechanicData.prices.largeService.length > 0 ? (
+              mechanicData.prices.largeService.map((brand, index) => (
                 <View style={styles.priceRow} key={index}>
                   <Text style={AppStyles.smallText}>{brand.name}</Text>
                   <Text style={[AppStyles.smallText, styles.priceText]}>
@@ -108,10 +108,10 @@ export default function MechanicScreen() {
           </View>
 
           <View style={styles.servicePriceSection}>
-            <Text style={styles.serviceTitle}>Veliki servis</Text>
-            {mechanicData?.prices.largeService &&
-            mechanicData.prices.largeService.length > 0 ? (
-              mechanicData.prices.largeService.map((brand, index) => (
+            <Text style={styles.serviceTitle}>Mali servisi</Text>
+            {mechanicData?.prices.smallService &&
+            mechanicData.prices.smallService.length > 0 ? (
+              mechanicData.prices.smallService.map((brand, index) => (
                 <View style={styles.priceRow} key={index}>
                   <Text style={AppStyles.smallText}>{brand.name}</Text>
                   <Text style={[AppStyles.smallText, styles.priceText]}>

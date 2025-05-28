@@ -8,8 +8,8 @@ export interface MechanicData {
   email?: string;
   phone?: string;
   prices: {
-    smallService?: BrandPrice[];
     largeService?: BrandPrice[];
+    smallService?: BrandPrice[];
     tireChange?: BrandPrice[];
   };
 }
@@ -19,7 +19,6 @@ export interface BrandPrice {
   price: number;
 }
 
-// TODO: Remove mechanic and get that data by id on backend
 export interface AppointmentData {
   id: number;
   mechanicId: number;
