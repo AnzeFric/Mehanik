@@ -5,39 +5,31 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import { useState, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { AppStyles } from "@/constants/Styles";
 import { Colors } from "@/constants/Colors";
 import BackIcon from "@/assets/icons/BackIcon.svg";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { MechanicData } from "@/interfaces/user";
-
-const fakeMechanicData: MechanicData = {
-  id: 1,
-  firstName: "John",
-  lastName: "Doe",
-  address: "123 Main St",
-  city: "New York",
-  image: "john_doe.jpg",
-  email: "john.doe@example.com",
-  phone: "123-456-7890",
-  smallServicePrice: [
-    { name: "Audi", price: 100 },
-    { name: "BMW", price: 120 },
-    { name: "Mercedes Benz", price: 130 },
-  ],
-  largeServicePrice: [
-    { name: "Audi", price: 200 },
-    { name: "BMW", price: 250 },
-    { name: "Mercedes Benz", price: 270 },
-  ],
-  tireChangePrice: [],
-};
+import { useMechanic } from "@/hooks/useMechanic";
 
 export default function MechanicScreen() {
-  const { id } = useLocalSearchParams();
-  const [mechanicData] = useState<MechanicData>(fakeMechanicData);
+  const { email } = useLocalSearchParams();
+  const { mechanics } = useMechanic();
+  const [mechanicData, setMechanicData] = useState<MechanicData | undefined>(
+    undefined
+  );
   const scrollRef = useRef<ScrollView>(null);
+
+  useEffect(() => {
+    console.log("Mechanics: ", mechanics);
+    const foundMehcanic = mechanics.find(
+      (mechanic) => mechanic.email === email
+    );
+    console.log("email: ", email);
+    console.log("found mechanic: ", foundMehcanic);
+    setMechanicData(foundMehcanic);
+  }, [email]);
 
   useFocusEffect(
     useCallback(() => {
@@ -72,28 +64,37 @@ export default function MechanicScreen() {
       >
         <View style={styles.sectionContainer}>
           <Text style={AppStyles.title}>Lokacija</Text>
-          <Text style={AppStyles.text}>
-            {mechanicData.address}, {mechanicData.city}
-          </Text>
+          <View style={{ flexDirection: "row" }}>
+            {mechanicData?.address && (
+              <Text style={AppStyles.text}>
+                {mechanicData.address}
+                {", "}
+              </Text>
+            )}
+            {mechanicData?.city && (
+              <Text style={AppStyles.text}>{mechanicData.city}</Text>
+            )}
+          </View>
         </View>
 
         <View style={styles.sectionContainer}>
           <Text style={AppStyles.title}>Kontakt</Text>
-          <Text style={AppStyles.text}>{mechanicData.phone}</Text>
-          <Text style={AppStyles.text}>{mechanicData.email}</Text>
+          {mechanicData?.phone && (
+            <Text style={AppStyles.text}>{mechanicData.phone}</Text>
+          )}
+          {mechanicData?.email && (
+            <Text style={AppStyles.text}>{mechanicData.email}</Text>
+          )}
         </View>
 
         <View style={styles.priceContainer}>
           <Text style={AppStyles.title}>Cene</Text>
-          <Text style={[AppStyles.text, styles.priceNote]}>
-            Številke so okvirne in se razlikujejo med modeli
-          </Text>
 
           <View style={styles.servicePriceSection}>
             <Text style={styles.serviceTitle}>Mali servisi</Text>
-            {mechanicData.smallServicePrice &&
-            mechanicData.smallServicePrice.length > 0 ? (
-              mechanicData.smallServicePrice.map((brand, index) => (
+            {mechanicData?.prices.smallService &&
+            mechanicData.prices.smallService.length > 0 ? (
+              mechanicData.prices.smallService.map((brand, index) => (
                 <View style={styles.priceRow} key={index}>
                   <Text style={AppStyles.smallText}>{brand.name}</Text>
                   <Text style={[AppStyles.smallText, styles.priceText]}>
@@ -108,9 +109,9 @@ export default function MechanicScreen() {
 
           <View style={styles.servicePriceSection}>
             <Text style={styles.serviceTitle}>Veliki servis</Text>
-            {mechanicData.largeServicePrice &&
-            mechanicData.largeServicePrice.length > 0 ? (
-              mechanicData.largeServicePrice.map((brand, index) => (
+            {mechanicData?.prices.largeService &&
+            mechanicData.prices.largeService.length > 0 ? (
+              mechanicData.prices.largeService.map((brand, index) => (
                 <View style={styles.priceRow} key={index}>
                   <Text style={AppStyles.smallText}>{brand.name}</Text>
                   <Text style={[AppStyles.smallText, styles.priceText]}>
@@ -125,9 +126,9 @@ export default function MechanicScreen() {
 
           <View style={styles.servicePriceSection}>
             <Text style={styles.serviceTitle}>Menjava gum</Text>
-            {mechanicData.tireChangePrice &&
-            mechanicData.tireChangePrice?.length > 0 ? (
-              mechanicData.tireChangePrice.map((brand, index) => (
+            {mechanicData?.prices.tireChange &&
+            mechanicData.prices.tireChange?.length > 0 ? (
+              mechanicData.prices.tireChange.map((brand, index) => (
                 <View style={styles.priceRow} key={index}>
                   <Text style={AppStyles.smallText}>{brand.name}</Text>
                   <Text style={[AppStyles.smallText, styles.priceText]}>
@@ -143,7 +144,9 @@ export default function MechanicScreen() {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => router.push(`/mechanics/mechanic/appointment/${id}`)}
+          onPress={() =>
+            router.push(`/mechanics/mechanic/appointment/${email}`)
+          }
         >
           <Text style={styles.buttonText}>Preveri proste termine</Text>
         </TouchableOpacity>

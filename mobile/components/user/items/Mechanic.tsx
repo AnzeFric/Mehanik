@@ -9,7 +9,7 @@ interface Props {
 
 export default function Mechanic({ mechanicData }: Props) {
   const handlePress = () => {
-    router.push(`/(tabs-user)/mechanics/mechanic/${mechanicData.id}`);
+    router.push(`/(tabs-user)/mechanics/mechanic/${mechanicData.email}`);
   };
 
   return (

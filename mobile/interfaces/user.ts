@@ -7,9 +7,11 @@ export interface MechanicData {
   image?: string;
   email?: string;
   phone?: string;
-  smallServicePrice?: BrandPrice[];
-  largeServicePrice?: BrandPrice[];
-  tireChangePrice?: BrandPrice[];
+  prices: {
+    smallService?: BrandPrice[];
+    largeService?: BrandPrice[];
+    tireChange?: BrandPrice[];
+  };
 }
 
 export interface BrandPrice {

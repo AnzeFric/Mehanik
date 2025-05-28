@@ -1,8 +1,10 @@
 import useAuthStore from "@/stores/useAuthStore";
 import { API_BASE_URL } from "@/constants/Config";
+import useMechanicStore from "@/stores/useMechanicStore";
 
 export function useMechanic() {
   const { jwt } = useAuthStore();
+  const { mechanics, setMechanics } = useMechanicStore();
 
   const getMechanics = async () => {
     try {
@@ -17,6 +19,7 @@ export function useMechanic() {
       const data = await response.json();
 
       if (data.success) {
+        setMechanics(data.mechanics);
         return data.mechanics;
       }
       console.error("Error fetching mechanics: ", data.message);
@@ -26,6 +29,7 @@ export function useMechanic() {
   };
 
   return {
+    mechanics,
     getMechanics,
   };
 }
