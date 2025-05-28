@@ -25,7 +25,7 @@ const fakeMechanicsData: MechanicData[] = [
     city: "New York",
     image: "https://randomuser.me/api/portraits/men/1.jpg",
     email: "johndoe@example.com",
-    phoneNumber: "+1 555-123-4567",
+    phone: "+1 555-123-4567",
   },
   {
     id: 1,
@@ -35,7 +35,7 @@ const fakeMechanicsData: MechanicData[] = [
     city: "Los Angeles",
     image: "https://randomuser.me/api/portraits/women/2.jpg",
     email: "sarah.connor@example.com",
-    phoneNumber: "+1 555-987-6543",
+    phone: "+1 555-987-6543",
   },
   {
     id: 2,
@@ -45,7 +45,7 @@ const fakeMechanicsData: MechanicData[] = [
     city: "Chicago",
     image: "https://randomuser.me/api/portraits/men/3.jpg",
     email: "mike.johnson@example.com",
-    phoneNumber: "+1 555-456-7890",
+    phone: "+1 555-456-7890",
   },
   {
     id: 3,
@@ -55,7 +55,7 @@ const fakeMechanicsData: MechanicData[] = [
     city: "Houston",
     image: "https://randomuser.me/api/portraits/women/4.jpg",
     email: "emily.smith@example.com",
-    phoneNumber: "+1 555-321-6789",
+    phone: "+1 555-321-6789",
   },
   {
     id: 4,
@@ -65,7 +65,7 @@ const fakeMechanicsData: MechanicData[] = [
     city: "Miami",
     image: "https://randomuser.me/api/portraits/men/5.jpg",
     email: "david.brown@example.com",
-    phoneNumber: "+1 555-654-3210",
+    phone: "+1 555-654-3210",
   },
 ];
 
@@ -82,7 +82,7 @@ export default function MechanicsScreen() {
             mechanic.firstName.toLowerCase().includes(search.toLowerCase()) ||
             mechanic.lastName.toLowerCase().includes(search.toLowerCase()) ||
             mechanic.address?.toLowerCase().includes(search.toLowerCase()) ||
-            mechanic.phoneNumber?.includes(search.toLowerCase()) ||
+            mechanic.phone?.includes(search.toLowerCase()) ||
             mechanic.email?.toLowerCase().includes(search.toLowerCase())
         );
 

@@ -20,7 +20,7 @@ const fakeMechanicData: MechanicData = {
   city: "New York",
   image: "john_doe.jpg",
   email: "john.doe@example.com",
-  phoneNumber: "123-456-7890",
+  phone: "123-456-7890",
   smallServicePrice: [
     { name: "Audi", price: 100 },
     { name: "BMW", price: 120 },
@@ -79,7 +79,7 @@ export default function MechanicScreen() {
 
         <View style={styles.sectionContainer}>
           <Text style={AppStyles.title}>Kontakt</Text>
-          <Text style={AppStyles.text}>{mechanicData.phoneNumber}</Text>
+          <Text style={AppStyles.text}>{mechanicData.phone}</Text>
           <Text style={AppStyles.text}>{mechanicData.email}</Text>
         </View>
 

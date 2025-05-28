@@ -35,8 +35,8 @@ export default function Mechanic({ mechanicData }: Props) {
             {mechanicData.address}, {mechanicData.city}
           </Text>
         )}
-        {mechanicData.phoneNumber && (
-          <Text style={styles.contact}>{mechanicData.phoneNumber}</Text>
+        {mechanicData.phone && (
+          <Text style={styles.contact}>{mechanicData.phone}</Text>
         )}
         {mechanicData.email && (
           <Text style={styles.contact}>{mechanicData.email}</Text>

@@ -6,7 +6,7 @@ export interface MechanicData {
   city?: string;
   image?: string;
   email?: string;
-  phoneNumber?: string;
+  phone?: string;
   smallServicePrice?: BrandPrice[];
   largeServicePrice?: BrandPrice[];
   tireChangePrice?: BrandPrice[];
