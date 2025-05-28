@@ -51,6 +51,7 @@ const mechanicService = {
       last_name: user.last_name,
       phone: user.mechanics[0]?.phone,
       address: user.mechanics[0]?.address,
+      city: user.mechanics[0]?.city,
       prices: user.mechanics[0]?.prices,
     }));
     return flattenedMechanics;

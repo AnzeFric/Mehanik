@@ -24,7 +24,9 @@ const userService = {
   async getEnabledMechanics() {
     const { data, error } = await supabase
       .from("users")
-      .select("email, first_name, last_name, mechanics(phone, address, prices)")
+      .select(
+        "email, first_name, last_name, mechanics(phone, address, city, prices)"
+      )
       .eq("account_type", "mechanic")
       .eq("enabled", true);
 
