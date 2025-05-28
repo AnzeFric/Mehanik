@@ -14,6 +14,7 @@ import { MechanicData } from "@/interfaces/user";
 import Mechanic from "@/components/user/items/Mechanic";
 import DisplayItems from "@/components/global/DisplayItems";
 import TitleRow from "@/components/shared/TitleRow";
+import { useMechanic } from "@/hooks/useMechanic";
 
 const fakeMechanicsData: MechanicData[] = [
   {
@@ -69,8 +70,8 @@ const fakeMechanicsData: MechanicData[] = [
 ];
 
 export default function MechanicsScreen() {
-  const [mechanicList, setMechanicList] =
-    useState<Array<MechanicData>>(fakeMechanicsData);
+  const [mechanicList, setMechanicList] = useState<Array<MechanicData>>([]);
+  const { getMechanics } = useMechanic();
   const [search, setSearch] = useState<string>("");
 
   const filteredMechanics =
@@ -81,13 +82,18 @@ export default function MechanicsScreen() {
             mechanic.firstName.toLowerCase().includes(search.toLowerCase()) ||
             mechanic.lastName.toLowerCase().includes(search.toLowerCase()) ||
             mechanic.address?.toLowerCase().includes(search.toLowerCase()) ||
-            mechanic.city?.toLowerCase().includes(search.toLowerCase()) ||
             mechanic.phoneNumber?.includes(search.toLowerCase()) ||
             mechanic.email?.toLowerCase().includes(search.toLowerCase())
         );
 
   useFocusEffect(
     useCallback(() => {
+      const populateMechanicList = async () => {
+        const mechanics = await getMechanics();
+        setMechanicList(mechanics);
+      };
+
+      populateMechanicList();
       return () => {
         setTimeout(() => {
           setSearch("");

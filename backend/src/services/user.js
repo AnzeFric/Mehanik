@@ -21,6 +21,24 @@ const userService = {
     return data;
   },
 
+  async getEnabledMechanics() {
+    const { data, error } = await supabase
+      .from("users")
+      .select("email, first_name, last_name, mechanics(phone, address, prices)")
+      .eq("account_type", "mechanic")
+      .eq("enabled", true);
+
+    if (error) {
+      throw new Error(`Failed to fetch mechanics: ${error.message}`);
+    }
+
+    if (!data) {
+      throw new Error("Mechanics not found");
+    }
+
+    return data;
+  },
+
   async updateByEmailAndEnabled(email, updateData) {
     const { data, error } = await supabase
       .from("users")

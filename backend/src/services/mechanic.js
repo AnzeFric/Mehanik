@@ -1,4 +1,5 @@
 const supabase = require("../config/database");
+const userService = require("./user");
 
 const mechanicService = {
   async create(userUuid) {
@@ -35,6 +36,24 @@ const mechanicService = {
 
     if (error) throw error;
     return data;
+  },
+
+  async getAll() {
+    // First fetch users with mechanic account type and enabled
+    const enabledMechanics = await userService.getEnabledMechanics();
+    console.log("Mechanics service get all:");
+    console.log(enabledMechanics, { depth: null });
+    // Flatten the nested mechanics data
+    const flattenedMechanics = enabledMechanics.map((user) => ({
+      uuid: user.uuid,
+      email: user.email,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      phone: user.mechanics[0]?.phone,
+      address: user.mechanics[0]?.address,
+      prices: user.mechanics[0]?.prices,
+    }));
+    return flattenedMechanics;
   },
 };
 

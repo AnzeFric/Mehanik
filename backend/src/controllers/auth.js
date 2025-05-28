@@ -24,7 +24,7 @@ const authController = {
 
       res.status(201).send({
         success: true,
-        message: `Registration successful`,
+        message: "Registration successful",
         email: registeredEmail,
       });
     } catch (error) {
