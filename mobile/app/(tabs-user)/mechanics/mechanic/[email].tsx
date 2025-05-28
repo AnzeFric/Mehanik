@@ -22,12 +22,9 @@ export default function MechanicScreen() {
   const scrollRef = useRef<ScrollView>(null);
 
   useEffect(() => {
-    console.log("Mechanics: ", mechanics);
     const foundMehcanic = mechanics.find(
       (mechanic) => mechanic.email === email
     );
-    console.log("email: ", email);
-    console.log("found mechanic: ", foundMehcanic);
     setMechanicData(foundMehcanic);
   }, [email]);
 
