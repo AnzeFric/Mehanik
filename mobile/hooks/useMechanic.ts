@@ -6,6 +6,7 @@ export function useMechanic() {
 
   const getMechanics = async () => {
     try {
+      console.log("getMechanics req");
       const response = await fetch(`${API_BASE_URL}/mechanics/`, {
         method: "GET",
         headers: {

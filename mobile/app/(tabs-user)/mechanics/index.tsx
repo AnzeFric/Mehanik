@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import { useState, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import SearchIcon from "@/assets/icons/SearchIcon.svg";
 import { Colors } from "@/constants/Colors";
 import { AppStyles } from "@/constants/Styles";
@@ -15,59 +15,6 @@ import Mechanic from "@/components/user/items/Mechanic";
 import DisplayItems from "@/components/global/DisplayItems";
 import TitleRow from "@/components/shared/TitleRow";
 import { useMechanic } from "@/hooks/useMechanic";
-
-const fakeMechanicsData: MechanicData[] = [
-  {
-    id: 0,
-    firstName: "John",
-    lastName: "Doe",
-    address: "123 Main Street",
-    city: "New York",
-    image: "https://randomuser.me/api/portraits/men/1.jpg",
-    email: "johndoe@example.com",
-    phone: "+1 555-123-4567",
-  },
-  {
-    id: 1,
-    firstName: "Sarah",
-    lastName: "Connor",
-    address: "456 Elm Avenue",
-    city: "Los Angeles",
-    image: "https://randomuser.me/api/portraits/women/2.jpg",
-    email: "sarah.connor@example.com",
-    phone: "+1 555-987-6543",
-  },
-  {
-    id: 2,
-    firstName: "Mike",
-    lastName: "Johnson",
-    address: "789 Oak Drive",
-    city: "Chicago",
-    image: "https://randomuser.me/api/portraits/men/3.jpg",
-    email: "mike.johnson@example.com",
-    phone: "+1 555-456-7890",
-  },
-  {
-    id: 3,
-    firstName: "Emily",
-    lastName: "Smith",
-    address: "101 Pine Street",
-    city: "Houston",
-    image: "https://randomuser.me/api/portraits/women/4.jpg",
-    email: "emily.smith@example.com",
-    phone: "+1 555-321-6789",
-  },
-  {
-    id: 4,
-    firstName: "David",
-    lastName: "Brown",
-    address: "202 Maple Road",
-    city: "Miami",
-    image: "https://randomuser.me/api/portraits/men/5.jpg",
-    email: "david.brown@example.com",
-    phone: "+1 555-654-3210",
-  },
-];
 
 export default function MechanicsScreen() {
   const [mechanicList, setMechanicList] = useState<Array<MechanicData>>([]);
@@ -82,18 +29,21 @@ export default function MechanicsScreen() {
             mechanic.firstName.toLowerCase().includes(search.toLowerCase()) ||
             mechanic.lastName.toLowerCase().includes(search.toLowerCase()) ||
             mechanic.address?.toLowerCase().includes(search.toLowerCase()) ||
+            mechanic.city?.toLowerCase().includes(search.toLowerCase()) ||
             mechanic.phone?.includes(search.toLowerCase()) ||
             mechanic.email?.toLowerCase().includes(search.toLowerCase())
         );
 
+  useEffect(() => {
+    const populateMechanicList = async () => {
+      const mechanics = await getMechanics();
+      setMechanicList(mechanics);
+    };
+    populateMechanicList();
+  }, []);
+
   useFocusEffect(
     useCallback(() => {
-      const populateMechanicList = async () => {
-        const mechanics = await getMechanics();
-        setMechanicList(mechanics);
-      };
-
-      populateMechanicList();
       return () => {
         setTimeout(() => {
           setSearch("");
@@ -132,7 +82,7 @@ export default function MechanicsScreen() {
         renderItem={(mechanic, index) => (
           <Mechanic mechanicData={mechanic} key={index} />
         )}
-        emptyMessage="Nimate novih terminov."
+        emptyMessage="Mehaniki ne obstajajo."
       />
     </View>
   );
