@@ -46,8 +46,8 @@ app.use(authMiddleware);
 
 // Private/protected routes
 app.use("/api/users", userRouter);
-app.use("/api/repair", repairRouter);
-app.use("/api/vehicle", vehicleRouter);
+app.use("/api/repairs", repairRouter);
+app.use("/api/vehicles", vehicleRouter);
 app.use("/api/mechanics", mechanicRouter);
 app.use("/api/appointments", appointmentRouter);
 

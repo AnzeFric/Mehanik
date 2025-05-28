@@ -41,8 +41,7 @@ const mechanicService = {
   async getAll() {
     // First fetch users with mechanic account type and enabled
     const enabledMechanics = await userService.getEnabledMechanics();
-    console.log("Mechanics service get all:");
-    console.log(enabledMechanics, { depth: null });
+
     // Flatten the nested mechanics data
     const flattenedMechanics = enabledMechanics.map((user) => ({
       email: user.email,
