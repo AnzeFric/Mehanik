@@ -8,8 +8,8 @@ import {
 } from "react-native";
 import DatePicker from "react-native-date-picker";
 import { Ionicons } from "@expo/vector-icons";
+import { useAppointment } from "@/hooks/useAppointment";
 
-const dayNames = ["Pon", "Tor", "Sre", "Čet", "Pet", "Sob", "Ned"];
 const monthNames = [
   "Januar",
   "Februar",
@@ -27,7 +27,7 @@ const monthNames = [
 
 interface DaySelectorProps {
   selectedDay: string;
-  onDaySelect: (day: string) => void;
+  onDaySelect: (dayIndex: number, date: Date) => void;
 }
 
 interface DateInfo {
@@ -42,6 +42,7 @@ export default function DaySelector({
   selectedDay,
   onDaySelect,
 }: DaySelectorProps) {
+  const { days } = useAppointment();
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
   const [dateRange, setDateRange] = useState<DateInfo[]>([]);
@@ -84,7 +85,7 @@ export default function DaySelector({
       }
 
       dates.push({
-        dayName: dayNames[dayIndex],
+        dayName: days[dayIndex],
         dayNumber: currentDate.getDate(),
         month: monthNames[currentDate.getMonth()],
         year: currentDate.getFullYear(),
@@ -111,7 +112,7 @@ export default function DaySelector({
       dayIndex = date.getDay() - 1;
     }
 
-    onDaySelect(dayNames[dayIndex]);
+    onDaySelect(dayIndex, date);
 
     setTimeout(() => {
       if (scrollRef.current) {
@@ -122,8 +123,11 @@ export default function DaySelector({
   };
 
   const handleDaySelect = (dateInfo: DateInfo) => {
-    setSelectedDate(dateInfo.fullDate);
-    onDaySelect(dateInfo.dayName);
+    const date = dateInfo.fullDate;
+    const dayIndex = days.findIndex((day) => day === dateInfo.dayName);
+
+    setSelectedDate(date);
+    onDaySelect(dayIndex, date);
   };
 
   const isToday = (date: Date) => {

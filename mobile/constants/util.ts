@@ -25,6 +25,15 @@ export function formatDateTime(dateTime: Date): string {
   return `${date}, ${paddedHour}:${paddedMinute}`;
 }
 
+// (HH:MM)
+export function formatTime(date: Date) {
+  return (
+    date.getHours().toString().padStart(2, "0") +
+    ":" +
+    date.getMinutes().toString().padStart(2, "0")
+  );
+}
+
 export function formatServiceType(type: string): string {
   switch (type) {
     case "small":

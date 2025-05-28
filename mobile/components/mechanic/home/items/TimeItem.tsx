@@ -1,21 +1,13 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Colors } from "@/constants/Colors";
-import { GroupedAppointmentData } from "../TimeList";
+import { GroupedAppointmentData } from "@/interfaces/appointment";
+import { formatTime } from "@/constants/util";
 
 interface Props {
   appointment: GroupedAppointmentData;
 }
 
 export default function TimeItem({ appointment }: Props) {
-  // Format time for display (HH:MM)
-  const formatTime = (date: Date) => {
-    return (
-      date.getHours().toString().padStart(2, "0") +
-      ":" +
-      date.getMinutes().toString().padStart(2, "0")
-    );
-  };
-
   // Calculate appointment duration for display
   const getDurationText = () => {
     const startTime = formatTime(appointment.startDateTime);
@@ -27,7 +19,7 @@ export default function TimeItem({ appointment }: Props) {
     <TouchableOpacity
       style={[styles.container, { height: appointment.numAppointments * 80 }]}
     >
-      <View style={styles.timeInfo}>
+      <View>
         <Text style={styles.durationText}>{getDurationText()}</Text>
       </View>
       <View style={styles.customerInfo}>
@@ -67,14 +59,10 @@ const styles = StyleSheet.create({
     padding: 12,
     backgroundColor: "#FFFFFF",
     justifyContent: "space-between",
+    borderWidth: 0.5,
     borderLeftWidth: 6,
     borderLeftColor: Colors.light.specialBlue,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 3,
   },
-  timeInfo: {},
   durationText: {
     fontSize: 16,
     fontWeight: "600",
