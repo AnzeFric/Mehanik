@@ -9,21 +9,28 @@ const repairService = {
     const { data, error } = await supabase
       .from("repairs")
       .select(
-        `fk_vehicle, vehicles!inner(id, brand, model, build_year, vin, image, fk_user, users!inner(uuid, email, first_name, last_name))`
+        `fk_vehicle, vehicles!inner(uuid, brand, model, build_year, vin, image, fk_user, users!inner(uuid, email, first_name, last_name))`
       )
       .eq("fk_mechanic", mechanicId);
 
     if (error) throw error;
 
     const uniqueVehicles = data.reduce((acc, repair) => {
+      const tempVehicle = repair.vehicles;
+      const tempUser = repair.vehicles.users;
+
       const vehicle = {
-        id: repair.vehicles.id,
-        brand: repair.vehicles.brand,
-        model: repair.vehicles.model,
-        buildYear: repair.vehicles.build_year,
-        vin: repair.vehicles.vin,
-        image: repair.vehicles.image,
-        owner: repair.vehicles.users,
+        uuid: tempVehicle.uuid,
+        brand: tempVehicle.brand,
+        model: tempVehicle.model,
+        buildYear: tempVehicle.build_year,
+        vin: tempVehicle.vin,
+        image: tempVehicle.image,
+        owner: {
+          email: tempUser.email,
+          firstName: tempUser.first_name,
+          lastName: tempUser.last_name,
+        },
       };
 
       if (!acc.find((v) => v.id === vehicle.id)) {

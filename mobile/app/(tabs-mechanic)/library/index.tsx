@@ -1,5 +1,5 @@
 import { View, TextInput, StyleSheet } from "react-native";
-import { useState, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import DisplayItems from "@/components/global/DisplayItems";
 import Customer from "@/components/mechanic/items/Customer";
 import { AppStyles } from "@/constants/Styles";
@@ -8,68 +8,29 @@ import { CustomerData } from "@/interfaces/mechanic";
 import PlusButton from "@/components/global/PlusButton";
 import TitleRow from "@/components/shared/TitleRow";
 import { Ionicons } from "@expo/vector-icons";
-
-const fakeCustomers: CustomerData[] = [
-  {
-    id: 0,
-    name: "Anže Fric",
-    image: "https://randomuser.me/api/portraits/men/1.jpg",
-    vehicle: "BMW 320i",
-    year: 2020,
-    vin: "WBAAL31029PZ12345",
-  },
-  {
-    id: 1,
-    name: "Dana Fric",
-    image: "https://randomuser.me/api/portraits/women/1.jpg",
-    vehicle: "Audi A4",
-    year: 2019,
-    vin: "WAUZZZ8K9LA123456",
-  },
-  {
-    id: 2,
-    name: "Saguaro Miyazaki",
-    image: "https://randomuser.me/api/portraits/men/2.jpg",
-    vehicle: "Toyota Camry",
-    year: 2018,
-    vin: "4T1BF1FK5GU654321",
-  },
-  {
-    id: 3,
-    name: "Ime Priimek",
-    image: "",
-    vehicle: "Mercedes C300",
-    year: 2021,
-    vin: "WDDWF4KB2LR987654",
-  },
-  {
-    id: 4,
-    name: "Mitja Pavlekovič",
-    image: "https://randomuser.me/api/portraits/men/4.jpg",
-    vehicle: "Tesla Model 3",
-    year: 2022,
-    vin: "5YJ3E1EA8MF765432",
-  },
-];
-
-/* TODO: Get items from database*/
+import { useRepair } from "@/hooks/useRepair";
 
 export default function LibraryScreen() {
-  const [customerList, setCustomerList] =
-    useState<Array<CustomerData>>(fakeCustomers);
   const [search, setSearch] = useState<string>("");
+  const { customers, repairs, updateStoredRepairData } = useRepair();
 
   const inputRef = useRef<TextInput>(null);
 
   const filteredCustomers =
     search.trim() === ""
-      ? customerList
-      : customerList.filter(
+      ? customers
+      : customers.filter(
           (customer) =>
-            customer.name.toLowerCase().includes(search.toLowerCase()) ||
-            customer.vehicle.toLowerCase().includes(search.toLowerCase()) ||
+            customer.firstName.toLowerCase().includes(search.toLowerCase()) ||
+            customer.lastName.toLowerCase().includes(search.toLowerCase()) ||
+            customer.brand.toLowerCase().includes(search.toLowerCase()) ||
+            customer.model.toLowerCase().includes(search.toLowerCase()) ||
             customer.vin.toLowerCase().includes(search.toLowerCase())
         );
+
+  useEffect(() => {
+    updateStoredRepairData();
+  }, []);
 
   useFocusEffect(
     useCallback(() => {

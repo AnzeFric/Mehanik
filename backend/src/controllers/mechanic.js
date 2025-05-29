@@ -3,7 +3,7 @@ const mechanicService = require("../services/mechanic");
 const mechanicController = {
   async getAll(req, res, next) {
     try {
-      console.log("All mechanics fetch");
+      console.log("All mechanics fetch: ", req.user);
       const mechanics = await mechanicService.getAll();
       res.status(200).send({
         success: true,

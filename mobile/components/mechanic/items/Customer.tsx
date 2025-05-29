@@ -11,7 +11,8 @@ interface Props {
 export default function Customer({ customerData, setSearch }: Props) {
   const handlePress = () => {
     setSearch("");
-    router.push(`/library/${customerData.id}`);
+    // TODO: Change to email
+    router.push(`/library/${customerData}`);
   };
 
   return (
@@ -29,8 +30,16 @@ export default function Customer({ customerData, setSearch }: Props) {
         />
       )}
       <View style={styles.infoContainer}>
-        <Text style={styles.name}>{customerData.name}</Text>
-        <Text style={styles.address}>{customerData.vehicle}</Text>
+        <Text style={styles.name}>
+          {customerData.firstName}
+          {", "}
+          {customerData.lastName}
+        </Text>
+        <Text style={styles.address}>
+          {customerData.brand}
+          {", "}
+          {customerData.model}
+        </Text>
         <Text style={styles.contact}>{customerData.vin}</Text>
       </View>
     </TouchableOpacity>

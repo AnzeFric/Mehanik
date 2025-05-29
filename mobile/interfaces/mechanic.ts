@@ -41,11 +41,13 @@ export interface ServiceFormData {
 }
 
 export interface CustomerData {
-  id: number;
-  name: string;
+  email: string;
+  firstName: string;
+  lastName: string;
   image: string;
-  vehicle: string;
-  year: number;
+  brand: string;
+  model: string;
+  buidYear: number;
   vin: string;
 }
 
