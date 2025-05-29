@@ -31,14 +31,12 @@ export default function Customer({ customerData, setSearch }: Props) {
       )}
       <View style={styles.infoContainer}>
         <Text style={styles.name}>
-          {customerData.firstName}
-          {", "}
-          {customerData.lastName}
+          {customerData.firstName} {customerData.lastName}
         </Text>
         <Text style={styles.address}>
-          {customerData.brand}
+          {customerData.brand} {customerData.model}
           {", "}
-          {customerData.model}
+          {customerData.buildYear}
         </Text>
         <Text style={styles.contact}>{customerData.vin}</Text>
       </View>

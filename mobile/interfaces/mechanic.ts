@@ -47,7 +47,7 @@ export interface CustomerData {
   image: string;
   brand: string;
   model: string;
-  buidYear: number;
+  buildYear: number;
   vin: string;
 }
 

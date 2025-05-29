@@ -42,7 +42,7 @@ export function useRepair() {
         image: item.image,
         brand: item.brand,
         model: item.model,
-        buidYear: item.buidYear,
+        buildYear: item.buildYear,
         vin: item.vin,
       };
       tempCustomers.push(customer);
