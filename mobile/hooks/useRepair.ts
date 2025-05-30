@@ -7,7 +7,7 @@ export function useRepair() {
   const { jwt } = useAuthStore();
   const { customers, repairs, setCustomers, setRepairs } = useRepairStore();
 
-  const getMechanicRelatedRepairs = async () => {
+  const getMechanicRepairedVehicles = async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/repairs/vehicles`, {
         method: "GET",
@@ -28,13 +28,36 @@ export function useRepair() {
     }
   };
 
+  const getMechanicVehicleRepairs = async (vehicleVin: string) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/repairs/repairs`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + jwt,
+        },
+        body: JSON.stringify({ vin: vehicleVin }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        return data.repairs;
+      }
+      console.log("Error fetching mechanic vehicle repairs: ", data.message);
+      return [];
+    } catch (error) {
+      console.error("Error while fetching mechanic vehicle repairs: ", error);
+    }
+  };
+
   const updateStoredRepairData = async () => {
-    const dataArr = await getMechanicRelatedRepairs();
-    if (dataArr.length <= 0) return;
+    const customerVehicles = await getMechanicRepairedVehicles();
+    if (customerVehicles.length <= 0) return;
 
     let tempCustomers: Array<CustomerData> = [];
     // Get customers from data
-    dataArr.forEach((item: any) => {
+    customerVehicles.forEach((item: any) => {
       let customer: CustomerData = {
         email: item.owner.email,
         firstName: item.owner.firstName,
