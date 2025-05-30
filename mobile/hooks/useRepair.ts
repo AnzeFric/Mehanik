@@ -9,7 +9,7 @@ export function useRepair() {
 
   const getMechanicRelatedRepairs = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/repairs/`, {
+      const response = await fetch(`${API_BASE_URL}/repairs/vehicles`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -19,7 +19,7 @@ export function useRepair() {
 
       const data = await response.json();
       if (data.success) {
-        return data.repairs;
+        return data.vehicles;
       }
       console.log("Error fetching mechanic repairs: ", data.message);
       return [];
