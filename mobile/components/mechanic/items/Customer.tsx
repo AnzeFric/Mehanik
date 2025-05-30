@@ -11,8 +11,7 @@ interface Props {
 export default function Customer({ customerData, setSearch }: Props) {
   const handlePress = () => {
     setSearch("");
-    // TODO: Change to email
-    router.push(`/library/${customerData}`);
+    router.push(`/library/${customerData.email}`);
   };
 
   return (

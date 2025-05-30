@@ -4,7 +4,6 @@ import DisplayItems from "@/components/global/DisplayItems";
 import Customer from "@/components/mechanic/items/Customer";
 import { AppStyles } from "@/constants/Styles";
 import { router, useFocusEffect } from "expo-router";
-import { CustomerData } from "@/interfaces/mechanic";
 import PlusButton from "@/components/global/PlusButton";
 import TitleRow from "@/components/shared/TitleRow";
 import { Ionicons } from "@expo/vector-icons";
@@ -12,7 +11,7 @@ import { useRepair } from "@/hooks/useRepair";
 
 export default function LibraryScreen() {
   const [search, setSearch] = useState<string>("");
-  const { customers, repairs, updateStoredRepairData } = useRepair();
+  const { customers, updateStoredRepairData } = useRepair();
 
   const inputRef = useRef<TextInput>(null);
 

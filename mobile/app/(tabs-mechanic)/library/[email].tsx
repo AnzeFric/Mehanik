@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useLocalSearchParams, router, useFocusEffect } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import MenuIcon from "@/assets/icons/MenuIcon.svg";
@@ -163,11 +163,12 @@ const fakeServiceData: ServiceData[] = [
 ];
 
 export default function DetailServiceScreen() {
-  const { id } = useLocalSearchParams();
+  const { email } = useLocalSearchParams();
   const [serviceList, setServiceList] = useState<Array<ServiceData>>([]);
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  // TODO: Get user data from database using id
+
+  useEffect(() => {}, [email]);
 
   // CallBack for screen closing
   useFocusEffect(
@@ -177,7 +178,7 @@ export default function DetailServiceScreen() {
   );
 
   const handlePress = () => {
-    router.push(`/(tabs-mechanic)/library/service-add/${id}`);
+    router.push(`/(tabs-mechanic)/library/service-add/${email}`);
   };
 
   const menuIcon: React.ReactNode = (
@@ -197,7 +198,7 @@ export default function DetailServiceScreen() {
         <Text style={[styles.menuItem, styles.menuItemTop]}>PROMETNA</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => router.push(`/library/customer-edit/${id}`)}
+        onPress={() => router.push(`/library/customer-edit/${email}`)}
       >
         <Text style={[styles.menuItem, styles.menuItemTop]}>UREDI</Text>
       </TouchableOpacity>
@@ -214,7 +215,7 @@ export default function DetailServiceScreen() {
   return (
     <>
       <TemplateView
-        title={`Oseba ${id}`}
+        title={`Oseba ${email}`}
         isMenuVisible={isMenuVisible}
         menu={menu}
         menuIcon={menuIcon}

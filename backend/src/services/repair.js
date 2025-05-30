@@ -2,7 +2,7 @@ const supabase = require("../config/database");
 const userService = require("../services/user");
 
 const repairService = {
-  async getRepairedVehiclesByEmail(email) {
+  async getMechanicRepairedVehiclesByEmail(email) {
     const mechanic = await userService.getEnabledMechanicByEmail(email);
     const mechanicId = mechanic.mechanics[0].id;
 

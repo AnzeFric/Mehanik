@@ -1,7 +1,7 @@
 const repairService = require("../services/repair");
 
 const repairController = {
-  async getRepairedVehiclesByMechanic(req, res, next) {
+  async getMechanicRepairedVehicles(req, res, next) {
     try {
       console.log("Repaired vehicles fetch: ", req.user);
       const userEmail = req.user.email;
