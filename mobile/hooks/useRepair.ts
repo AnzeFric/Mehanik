@@ -5,7 +5,8 @@ import { CustomerData } from "@/interfaces/mechanic";
 
 export function useRepair() {
   const { jwt } = useAuthStore();
-  const { customers, setCustomers } = useRepairStore();
+  const { customers, currentRepairFocus, setCustomers, setCurrentRepairFocus } =
+    useRepairStore();
 
   const getMechanicRepairedVehicles = async () => {
     try {
@@ -74,5 +75,11 @@ export function useRepair() {
     setCustomers(tempCustomers);
   };
 
-  return { customers, updateStoredRepairData, getMechanicVehicleRepairs };
+  return {
+    customers,
+    currentRepairFocus,
+    setCurrentRepairFocus,
+    updateStoredRepairData,
+    getMechanicVehicleRepairs,
+  };
 }

@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { useState, useCallback } from "react";
 import BackIcon from "@/assets/icons/BackIcon.svg";
-import { router, useLocalSearchParams, useFocusEffect } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import {
   formatDate,
@@ -16,37 +16,14 @@ import {
   formatServiceItems,
   formatCurrency,
 } from "@/constants/util";
-import { ServiceData } from "@/interfaces/mechanic";
 import ModalPrompt from "@/components/mechanic/modals/ModalPrompt";
 import MenuIcon from "@/assets/icons/MenuIcon.svg";
 import { Ionicons } from "@expo/vector-icons";
-
-const fakeData: ServiceData = {
-  id: 4,
-  date: new Date(2024, 7, 30),
-  type: "large",
-  options: {
-    oilChange: true,
-    filterChange: true,
-    brakeCheck: true,
-    tireRotation: true,
-    fluidCheck: true,
-    batteryCheck: true,
-    sparkPlugs: false,
-    airFilter: true,
-    cabinFilter: true,
-    suspension: true,
-    timing: true,
-    coolant: true,
-  },
-  message:
-    "Annual comprehensive service completed. Timing belt replaced as scheduled maintenance. All systems functioning properly.",
-  images: ["timing_belt_30072024.jpg", "coolant_flush_30072024.jpg"],
-  price: 495.25,
-};
+import { useRepair } from "@/hooks/useRepair";
+import LoadingScreen from "@/components/global/LoadingScreen";
 
 export default function ServiceDetailScreen() {
-  const { id } = useLocalSearchParams();
+  const { currentRepairFocus, setCurrentRepairFocus } = useRepair();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
 
@@ -54,6 +31,7 @@ export default function ServiceDetailScreen() {
     useCallback(() => {
       return () => {
         setIsMenuVisible(false);
+        setCurrentRepairFocus(null);
       };
     }, [])
   );
@@ -70,7 +48,11 @@ export default function ServiceDetailScreen() {
         </TouchableOpacity>
 
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>{formatServiceType(fakeData.type)}</Text>
+          <Text style={styles.title}>
+            {currentRepairFocus
+              ? formatServiceType(currentRepairFocus.type)
+              : "Servis ne obstaja"}
+          </Text>
         </View>
 
         <TouchableOpacity
@@ -80,11 +62,11 @@ export default function ServiceDetailScreen() {
           <MenuIcon height={26} width={26} />
         </TouchableOpacity>
 
-        {isMenuVisible && (
+        {isMenuVisible && currentRepairFocus && (
           <View style={styles.menuContainer}>
             <TouchableOpacity
               style={styles.menuItemContainer}
-              onPress={() => router.push(`/library/service-edit/${id}`)}
+              onPress={() => router.push(`/library/service-edit/`)}
             >
               <Ionicons
                 name="create-outline"
@@ -106,93 +88,108 @@ export default function ServiceDetailScreen() {
           </View>
         )}
       </View>
-
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        <View style={styles.scrollViewContent}>
-          <View style={styles.infoCard}>
-            <View style={styles.infoRow}>
-              <View style={styles.infoSection}>
-                <Text style={styles.sectionTitle}>Cena popravila</Text>
-                <View style={styles.dateContainer}>
-                  <Ionicons
-                    name={"cash-outline"}
-                    size={16}
-                    color={Colors.light.secondaryText}
-                  />
-                  <Text style={styles.dateText}>
-                    {formatCurrency(fakeData.price)}
-                  </Text>
-                </View>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.infoCard}>
-            <View style={styles.infoRow}>
-              <View style={styles.infoSection}>
-                <Text style={styles.sectionTitle}>Datum izvedbe</Text>
-                <View style={styles.dateContainer}>
-                  <Ionicons
-                    name="calendar-outline"
-                    size={16}
-                    color={Colors.light.secondaryText}
-                  />
-                  <Text style={styles.dateText}>
-                    {formatDate(fakeData.date)}
-                  </Text>
-                </View>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.infoCard}>
-            <Text style={styles.sectionTitle}>Izvedena popravila</Text>
-            <View style={styles.repairsList}>
-              {fakeData.options &&
-                Object.entries(fakeData.options)
-                  .filter(([_, value]) => value)
-                  .map(([key], index) => (
-                    <View key={key} style={styles.repairItem}>
-                      <View style={styles.checkmarkCircle}>
-                        <Ionicons name="checkmark" size={14} color="#FFFFFF" />
-                      </View>
-                      <Text style={styles.repairText}>
-                        {formatServiceItems(key)}
+      {currentRepairFocus ? (
+        <>
+          <ScrollView
+            style={styles.container}
+            showsVerticalScrollIndicator={false}
+          >
+            <View style={styles.scrollViewContent}>
+              <View style={styles.infoCard}>
+                <View style={styles.infoRow}>
+                  <View style={styles.infoSection}>
+                    <Text style={styles.sectionTitle}>Cena popravila</Text>
+                    <View style={styles.dateContainer}>
+                      <Ionicons
+                        name={"cash-outline"}
+                        size={16}
+                        color={Colors.light.secondaryText}
+                      />
+                      <Text style={styles.dateText}>
+                        {formatCurrency(currentRepairFocus.price)}
                       </Text>
                     </View>
-                  ))}
-              {fakeData.customServiceDescription && (
-                <Text style={styles.customServiceText}>
-                  {fakeData.customServiceDescription}
-                </Text>
-              )}
-            </View>
-          </View>
-
-          {fakeData.message && (
-            <View style={styles.infoCard}>
-              <Text style={styles.sectionTitle}>Dodatne opombe</Text>
-              <Text style={styles.notesText}>{fakeData.message}</Text>
-            </View>
-          )}
-
-          {fakeData.images && fakeData.images.length > 0 && (
-            <View style={styles.infoCard}>
-              <Text style={styles.sectionTitle}>Slike servisa</Text>
-              <View style={styles.imagesPlaceholder}>
-                <Ionicons
-                  name="images-outline"
-                  size={24}
-                  color={Colors.light.secondaryText}
-                />
-                <Text style={styles.imagesText}>
-                  {fakeData.images.length} slik
-                </Text>
+                  </View>
+                </View>
               </View>
+
+              <View style={styles.infoCard}>
+                <View style={styles.infoRow}>
+                  <View style={styles.infoSection}>
+                    <Text style={styles.sectionTitle}>Datum izvedbe</Text>
+                    <View style={styles.dateContainer}>
+                      <Ionicons
+                        name="calendar-outline"
+                        size={16}
+                        color={Colors.light.secondaryText}
+                      />
+                      <Text style={styles.dateText}>
+                        {formatDate(new Date(currentRepairFocus.date))}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              </View>
+
+              <View style={styles.infoCard}>
+                <Text style={styles.sectionTitle}>Izvedena popravila</Text>
+                <View style={styles.repairsList}>
+                  {currentRepairFocus.options &&
+                    Object.entries(currentRepairFocus.options)
+                      .filter(([_, value]) => value)
+                      .map(([key], index) => (
+                        <View key={key} style={styles.repairItem}>
+                          <View style={styles.checkmarkCircle}>
+                            <Ionicons
+                              name="checkmark"
+                              size={14}
+                              color="#FFFFFF"
+                            />
+                          </View>
+                          <Text style={styles.repairText}>
+                            {formatServiceItems(key)}
+                          </Text>
+                        </View>
+                      ))}
+                  {currentRepairFocus.customServiceDescription && (
+                    <Text style={styles.customServiceText}>
+                      {currentRepairFocus.customServiceDescription}
+                    </Text>
+                  )}
+                </View>
+              </View>
+
+              {currentRepairFocus.message && (
+                <View style={styles.infoCard}>
+                  <Text style={styles.sectionTitle}>Dodatne opombe</Text>
+                  <Text style={styles.notesText}>
+                    {currentRepairFocus.message}
+                  </Text>
+                </View>
+              )}
+
+              {currentRepairFocus.images &&
+                currentRepairFocus.images.length > 0 && (
+                  <View style={styles.infoCard}>
+                    <Text style={styles.sectionTitle}>Slike servisa</Text>
+                    <View style={styles.imagesPlaceholder}>
+                      <Ionicons
+                        name="images-outline"
+                        size={24}
+                        color={Colors.light.secondaryText}
+                      />
+                      <Text style={styles.imagesText}>
+                        {currentRepairFocus.images.length} slik
+                      </Text>
+                    </View>
+                  </View>
+                )}
             </View>
-          )}
-        </View>
-      </ScrollView>
+          </ScrollView>
+        </>
+      ) : (
+        <LoadingScreen />
+      )}
 
       <ModalPrompt
         isVisible={isModalOpen}

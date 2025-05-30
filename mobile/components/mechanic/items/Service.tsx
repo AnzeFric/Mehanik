@@ -6,24 +6,27 @@ import {
   formatServiceType,
   formatCurrency,
 } from "@/constants/util";
-import { AppStyles } from "@/constants/Styles";
 import { ServiceData } from "@/interfaces/mechanic";
 import { Ionicons } from "@expo/vector-icons";
+import { useRepair } from "@/hooks/useRepair";
 
 interface Props {
   serviceData: ServiceData;
 }
 
 export default function Service({ serviceData }: Props) {
+  const { setCurrentRepairFocus } = useRepair();
+
+  const handleRedirect = () => {
+    setCurrentRepairFocus(serviceData);
+    router.push(`/(tabs-mechanic)/library/service/detail`);
+  };
+
   return (
     <TouchableOpacity
       style={styles.container}
       activeOpacity={0.7}
-      onPress={() => {
-        router.push(
-          `/(tabs-mechanic)/library/service-detail/${serviceData.id}`
-        );
-      }}
+      onPress={handleRedirect}
     >
       <View style={styles.contentContainer}>
         <View style={styles.header}>
