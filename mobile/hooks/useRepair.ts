@@ -5,11 +5,11 @@ import { CustomerData } from "@/interfaces/mechanic";
 
 export function useRepair() {
   const { jwt } = useAuthStore();
-  const { customers, repairs, setCustomers, setRepairs } = useRepairStore();
+  const { customers, setCustomers } = useRepairStore();
 
   const getMechanicRepairedVehicles = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/repairs/vehicles`, {
+      const response = await fetch(`${API_BASE_URL}/repairs/`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -30,8 +30,8 @@ export function useRepair() {
 
   const getMechanicVehicleRepairs = async (vehicleVin: string) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/repairs/repairs`, {
-        method: "GET",
+      const response = await fetch(`${API_BASE_URL}/repairs/`, {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + jwt,
@@ -73,5 +73,5 @@ export function useRepair() {
     setCustomers(tempCustomers);
   };
 
-  return { customers, repairs, updateStoredRepairData };
+  return { customers, updateStoredRepairData, getMechanicVehicleRepairs };
 }

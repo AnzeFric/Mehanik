@@ -84,7 +84,7 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="library/[id]"
+          name="library/[vin]"
           options={{
             href: null,
           }}
