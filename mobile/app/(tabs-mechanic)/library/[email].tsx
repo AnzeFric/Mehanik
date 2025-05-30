@@ -14,23 +14,23 @@ const fakeServiceData: ServiceData[] = [
   {
     id: 0,
     date: new Date(2024, 10, 15),
-    serviceType: "small",
-    serviceItems: {
+    type: "small",
+    options: {
       oilChange: true,
       filterChange: true,
       brakeCheck: true,
       fluidCheck: true,
       batteryCheck: true,
     },
-    serviceNotes:
+    message:
       "Regular maintenance completed. Recommended timing belt check in next service.",
-    servicePrice: 89.99,
+    price: 89.99,
   },
   {
     id: 1,
     date: new Date(2024, 10, 22),
-    serviceType: "large",
-    serviceItems: {
+    type: "large",
+    options: {
       oilChange: true,
       filterChange: true,
       brakeCheck: true,
@@ -42,39 +42,39 @@ const fakeServiceData: ServiceData[] = [
       cabinFilter: true,
       suspension: true,
     },
-    serviceNotes:
+    message:
       "Complete service performed. Noticed slight wear on rear brake pads - will need replacement in approximately 5000km.",
-    serviceImages: ["brake_check_22102024.jpg", "suspension_22102024.jpg"],
-    servicePrice: 329.5,
+    images: ["brake_check_22102024.jpg", "suspension_22102024.jpg"],
+    price: 329.5,
   },
   {
     id: 2,
     date: new Date(2024, 9, 5),
-    serviceType: "small",
-    serviceItems: {
+    type: "small",
+    options: {
       oilChange: true,
       filterChange: true,
       fluidCheck: true,
     },
-    serviceNotes:
+    message:
       "Quick service performed. Customer requested minimal work due to budget constraints.",
-    servicePrice: 65.75,
+    price: 65.75,
   },
   {
     id: 3,
     date: new Date(2024, 8, 17),
-    serviceType: "other",
+    type: "other",
     customServiceDescription: "Emergency brake system repair",
-    serviceNotes:
+    message:
       "Replaced brake master cylinder and bled entire system. Tested functionality - all working properly now.",
-    serviceImages: ["brake_repair_before.jpg", "brake_repair_after.jpg"],
-    servicePrice: 245.0,
+    images: ["brake_repair_before.jpg", "brake_repair_after.jpg"],
+    price: 245.0,
   },
   {
     id: 4,
     date: new Date(2024, 7, 30),
-    serviceType: "large",
-    serviceItems: {
+    type: "large",
+    options: {
       oilChange: true,
       filterChange: true,
       brakeCheck: true,
@@ -88,38 +88,38 @@ const fakeServiceData: ServiceData[] = [
       timing: true,
       coolant: true,
     },
-    serviceNotes:
+    message:
       "Annual comprehensive service completed. Timing belt replaced as scheduled maintenance. All systems functioning properly.",
-    serviceImages: ["timing_belt_30072024.jpg", "coolant_flush_30072024.jpg"],
-    servicePrice: 495.25,
+    images: ["timing_belt_30072024.jpg", "coolant_flush_30072024.jpg"],
+    price: 495.25,
   },
   {
     id: 5,
     date: new Date(2024, 6, 12),
-    serviceType: "other",
+    type: "other",
     customServiceDescription: "Air conditioning system repair",
-    serviceNotes:
+    message:
       "Recharged AC system and replaced faulty compressor. System now cooling properly.",
-    servicePrice: 385.0,
+    price: 385.0,
   },
   {
     id: 6,
     date: new Date(2024, 5, 28),
-    serviceType: "small",
-    serviceItems: {
+    type: "small",
+    options: {
       oilChange: true,
       filterChange: true,
       brakeCheck: true,
       fluidCheck: true,
     },
-    serviceNotes: "Standard service performed. All fluids topped up.",
-    servicePrice: 79.99,
+    message: "Standard service performed. All fluids topped up.",
+    price: 79.99,
   },
   {
     id: 7,
     date: new Date(2024, 4, 3),
-    serviceType: "large",
-    serviceItems: {
+    type: "large",
+    options: {
       oilChange: true,
       filterChange: true,
       brakeCheck: true,
@@ -131,34 +131,34 @@ const fakeServiceData: ServiceData[] = [
       cabinFilter: true,
       coolant: true,
     },
-    serviceNotes:
+    message:
       "Major service completed. Replaced all spark plugs and performed coolant flush.",
-    serviceImages: ["sparkplugs_03042024.jpg"],
-    servicePrice: 375.5,
+    images: ["sparkplugs_03042024.jpg"],
+    price: 375.5,
   },
   {
     id: 8,
     date: new Date(2024, 3, 19),
-    serviceType: "other",
+    type: "other",
     customServiceDescription: "Engine diagnostic and tune-up",
-    serviceNotes:
+    message:
       "Performed complete engine diagnostic after customer reported rough idling. Adjusted fuel mixture and cleaned injectors. Engine now running smoothly.",
-    serviceImages: ["engine_diagnostic_19032024.jpg"],
-    servicePrice: 195.0,
+    images: ["engine_diagnostic_19032024.jpg"],
+    price: 195.0,
   },
   {
     id: 9,
     date: new Date(2024, 2, 5),
-    serviceType: "small",
-    serviceItems: {
+    type: "small",
+    options: {
       oilChange: true,
       filterChange: true,
       tireRotation: true,
       batteryCheck: true,
     },
-    serviceNotes:
+    message:
       "Winter service check completed. Battery tested and showing good health for cold weather.",
-    servicePrice: 95.5,
+    price: 95.5,
   },
 ];
 

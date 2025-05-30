@@ -29,11 +29,11 @@ export default function Service({ serviceData }: Props) {
         <View style={styles.header}>
           <View style={styles.serviceTypeBadge}>
             <Text style={styles.serviceTypeText}>
-              {formatServiceType(serviceData.serviceType)}
+              {formatServiceType(serviceData.type)}
             </Text>
           </View>
           <Text style={styles.priceText}>
-            {formatCurrency(serviceData.servicePrice)}
+            {formatCurrency(serviceData.price)}
           </Text>
         </View>
 
@@ -48,7 +48,7 @@ export default function Service({ serviceData }: Props) {
           </Text>
         </View>
 
-        {serviceData.serviceType === "other" && (
+        {serviceData.type === "other" && (
           <View style={styles.descriptionContainer}>
             <Text style={styles.descriptionText}>
               {serviceData.customServiceDescription}

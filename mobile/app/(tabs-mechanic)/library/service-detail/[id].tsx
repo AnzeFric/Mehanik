@@ -24,8 +24,8 @@ import { Ionicons } from "@expo/vector-icons";
 const fakeData: ServiceData = {
   id: 4,
   date: new Date(2024, 7, 30),
-  serviceType: "large",
-  serviceItems: {
+  type: "large",
+  options: {
     oilChange: true,
     filterChange: true,
     brakeCheck: true,
@@ -39,10 +39,10 @@ const fakeData: ServiceData = {
     timing: true,
     coolant: true,
   },
-  serviceNotes:
+  message:
     "Annual comprehensive service completed. Timing belt replaced as scheduled maintenance. All systems functioning properly.",
-  serviceImages: ["timing_belt_30072024.jpg", "coolant_flush_30072024.jpg"],
-  servicePrice: 495.25,
+  images: ["timing_belt_30072024.jpg", "coolant_flush_30072024.jpg"],
+  price: 495.25,
 };
 
 export default function ServiceDetailScreen() {
@@ -70,9 +70,7 @@ export default function ServiceDetailScreen() {
         </TouchableOpacity>
 
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>
-            {formatServiceType(fakeData.serviceType)}
-          </Text>
+          <Text style={styles.title}>{formatServiceType(fakeData.type)}</Text>
         </View>
 
         <TouchableOpacity
@@ -122,7 +120,7 @@ export default function ServiceDetailScreen() {
                     color={Colors.light.secondaryText}
                   />
                   <Text style={styles.dateText}>
-                    {formatCurrency(fakeData.servicePrice)}
+                    {formatCurrency(fakeData.price)}
                   </Text>
                 </View>
               </View>
@@ -150,8 +148,8 @@ export default function ServiceDetailScreen() {
           <View style={styles.infoCard}>
             <Text style={styles.sectionTitle}>Izvedena popravila</Text>
             <View style={styles.repairsList}>
-              {fakeData.serviceItems &&
-                Object.entries(fakeData.serviceItems)
+              {fakeData.options &&
+                Object.entries(fakeData.options)
                   .filter(([_, value]) => value)
                   .map(([key], index) => (
                     <View key={key} style={styles.repairItem}>
@@ -171,14 +169,14 @@ export default function ServiceDetailScreen() {
             </View>
           </View>
 
-          {fakeData.serviceNotes && (
+          {fakeData.message && (
             <View style={styles.infoCard}>
               <Text style={styles.sectionTitle}>Dodatne opombe</Text>
-              <Text style={styles.notesText}>{fakeData.serviceNotes}</Text>
+              <Text style={styles.notesText}>{fakeData.message}</Text>
             </View>
           )}
 
-          {fakeData.serviceImages && fakeData.serviceImages.length > 0 && (
+          {fakeData.images && fakeData.images.length > 0 && (
             <View style={styles.infoCard}>
               <Text style={styles.sectionTitle}>Slike servisa</Text>
               <View style={styles.imagesPlaceholder}>
@@ -188,7 +186,7 @@ export default function ServiceDetailScreen() {
                   color={Colors.light.secondaryText}
                 />
                 <Text style={styles.imagesText}>
-                  {fakeData.serviceImages.length} slik
+                  {fakeData.images.length} slik
                 </Text>
               </View>
             </View>

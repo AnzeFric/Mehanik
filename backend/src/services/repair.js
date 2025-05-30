@@ -52,7 +52,7 @@ const repairService = {
 
     const { data, error } = await supabase
       .from("repairs")
-      .select("name, price, date, options, message, images")
+      .select("type, price, date, options, message, images")
       .eq("fk_mechanic", mechanicId)
       .eq("fk_vehicle", vehicleId);
 

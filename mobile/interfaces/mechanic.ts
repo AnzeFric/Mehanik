@@ -62,9 +62,9 @@ export interface VehicleData {
 
 export interface ServiceData {
   id: number;
-  serviceType: "small" | "large" | "other";
+  type: "small" | "large" | "other";
   date: Date;
-  serviceItems?: {
+  options?: {
     oilChange?: boolean;
     filterChange?: boolean;
     brakeCheck?: boolean;
@@ -78,9 +78,9 @@ export interface ServiceData {
     timing?: boolean;
     coolant?: boolean;
   };
-  serviceNotes?: string;
-  serviceImages?: string[];
-  servicePrice?: number;
+  message?: string;
+  images?: string[];
+  price?: number;
 
   // Custom service (type is "other")
   customServiceDescription?: string;
