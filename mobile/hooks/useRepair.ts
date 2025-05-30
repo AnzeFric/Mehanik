@@ -67,6 +67,7 @@ export function useRepair() {
         model: item.model,
         buildYear: item.buildYear,
         vin: item.vin,
+        description: item.description,
       };
       tempCustomers.push(customer);
     });

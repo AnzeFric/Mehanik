@@ -11,7 +11,6 @@ interface Props {
 export default function Customer({ customerData, setSearch }: Props) {
   const handlePress = () => {
     setSearch("");
-    console.log(customerData);
     router.push(
       `/library/${customerData.vin}?firstName=${customerData.firstName}`
     );

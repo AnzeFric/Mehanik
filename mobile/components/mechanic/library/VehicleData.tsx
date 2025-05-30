@@ -2,30 +2,43 @@ import { Text, View, Image, StyleSheet } from "react-native";
 import { AppStyles } from "@/constants/Styles";
 
 interface Props {
-  imageUri: string;
-  brandAndSeries: string;
-  year: number;
-  description: string;
-  vin: string;
+  imageUri: string | undefined;
+  brand: string | undefined;
+  model: string | undefined;
+  year: number | undefined;
+  description: string | undefined;
+  vin: string | undefined;
 }
 
 export default function VehicleData({
   imageUri,
-  brandAndSeries,
+  brand,
+  model,
   year,
   description,
   vin,
 }: Props) {
   return (
     <View style={styles.container}>
-      <Image
-        source={require("@/assets/images/logo-main.png")}
-        style={styles.image}
-      />
+      {imageUri === undefined ? (
+        <Image
+          source={require("@/assets/images/logo-main.png")}
+          style={styles.image}
+        />
+      ) : (
+        // TODO: Load image dynamically from backedn
+        <Image
+          source={require("@/assets/images/logo-main.png")}
+          style={styles.image}
+        />
+      )}
+
       <Text style={AppStyles.title}>Podatki o vozilu</Text>
       <View>
         <Text style={AppStyles.text}>
-          {brandAndSeries}, {year}
+          {brand} {model}
+          {", "}
+          {year}
         </Text>
         <Text style={AppStyles.boldText}>{vin}</Text>
       </View>

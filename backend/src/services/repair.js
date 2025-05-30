@@ -10,7 +10,7 @@ const repairService = {
     const { data, error } = await supabase
       .from("repairs")
       .select(
-        `fk_vehicle, vehicles!inner(uuid, brand, model, build_year, vin, image, fk_user, users!inner(uuid, email, first_name, last_name))`
+        `fk_vehicle, vehicles!inner(uuid, brand, model, build_year, vin, description, image, fk_user, users!inner(uuid, email, first_name, last_name))`
       )
       .eq("fk_mechanic", mechanicId);
 

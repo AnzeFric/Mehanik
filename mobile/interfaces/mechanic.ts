@@ -49,6 +49,7 @@ export interface CustomerData {
   model: string;
   buildYear: number;
   vin: string;
+  description: string;
 }
 
 export interface VehicleData {

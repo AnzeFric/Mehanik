@@ -5,7 +5,7 @@ import { Colors } from "@/constants/Colors";
 import MenuIcon from "@/assets/icons/MenuIcon.svg";
 import VehicleData from "@/components/mechanic/library/VehicleData";
 import ServicesMap from "@/components/mechanic/library/ServicesMap";
-import { ServiceData } from "@/interfaces/mechanic";
+import { CustomerData, ServiceData } from "@/interfaces/mechanic";
 import TemplateView from "@/components/mechanic/library/TemplateView";
 import ModalPrompt from "@/components/mechanic/modals/ModalPrompt";
 import PlusButton from "@/components/global/PlusButton";
@@ -13,16 +13,23 @@ import { useRepair } from "@/hooks/useRepair";
 
 export default function DetailServiceScreen() {
   const { vin, firstName } = useLocalSearchParams();
-  const { getMechanicVehicleRepairs } = useRepair();
+  const { customers, getMechanicVehicleRepairs } = useRepair();
   const [serviceList, setServiceList] = useState<Array<ServiceData>>([]);
+  const [customer, setCustomer] = useState<CustomerData | undefined>(undefined);
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
+    const customerInit = () => {
+      const foundCustomer = customers.find((item) => item.vin === vin);
+      setCustomer(foundCustomer);
+    };
     const repairsFetch = async () => {
       const repairData = await getMechanicVehicleRepairs(vin.toString());
       setServiceList(repairData);
     };
+
+    customerInit();
     repairsFetch();
   }, [vin]);
 
@@ -71,18 +78,19 @@ export default function DetailServiceScreen() {
   return (
     <>
       <TemplateView
-        title={`Oseba ${firstName}`}
+        title={`${firstName}`}
         isMenuVisible={isMenuVisible}
         menu={menu}
         menuIcon={menuIcon}
       >
         <View style={styles.container}>
           <VehicleData
-            imageUri={""}
-            brandAndSeries={"Volkswagen Golf"}
-            year={2009}
-            description={"Nek dodaten opis"}
-            vin={"A71239SASFV"}
+            imageUri={customer?.image}
+            brand={customer?.brand}
+            model={customer?.model}
+            year={customer?.buildYear}
+            vin={customer?.vin}
+            description={customer?.description}
           />
           <ServicesMap serviceList={serviceList} />
           {isModalOpen && (
