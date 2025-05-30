@@ -1,5 +1,6 @@
 const supabase = require("../config/database");
 const userService = require("../services/user");
+const vehicleService = require("../services/vehicle");
 
 const repairService = {
   async getMechanicRepairedVehiclesByEmail(mechanicEmail) {
@@ -42,7 +43,23 @@ const repairService = {
     return uniqueVehicles;
   },
 
-  async getUserVehicleRepairs(mechanicEmail, vehicleVin) {},
+  async getUserVehicleRepairs(mechanicEmail, vehicleVin) {
+    const mechanic = await userService.getEnabledMechanicByEmail(mechanicEmail);
+    const mechanicId = mechanic.mechanics[0].id;
+
+    const vehicle = await vehicleService.getVehicleByVin(vehicleVin);
+    const vehicleId = vehicle.id;
+
+    const { data, error } = await supabase
+      .from("repairs")
+      .select("name, price, date, options, message, images")
+      .eq("fk_mechanic", mechanicId)
+      .eq("fk_vehicle", vehicleId);
+
+    if (error) throw error;
+
+    return data;
+  },
 };
 
 module.exports = repairService;
