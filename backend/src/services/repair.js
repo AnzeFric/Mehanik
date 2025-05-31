@@ -1,18 +1,13 @@
 const supabase = require("../config/database");
-const userService = require("../services/user");
-const vehicleService = require("../services/vehicle");
 
 const repairService = {
-  async getMechanicRepairedVehiclesByEmail(mechanicEmail) {
-    const mechanic = await userService.getEnabledMechanicByEmail(mechanicEmail);
-    const mechanicId = mechanic.mechanics[0].id;
-
+  async getMechanicRepairedVehiclesByUuid(mechanicUuid) {
     const { data, error } = await supabase
       .from("repairs")
       .select(
         `fk_vehicle, vehicles!inner(uuid, brand, model, build_year, vin, description, image, fk_user, users!inner(uuid, email, first_name, last_name))`
       )
-      .eq("fk_mechanic", mechanicId);
+      .eq("fk_mechanic", mechanicUuid);
 
     if (error) throw error;
 
@@ -43,18 +38,12 @@ const repairService = {
     return uniqueVehicles;
   },
 
-  async getUserVehicleRepairs(mechanicEmail, vehicleVin) {
-    const mechanic = await userService.getEnabledMechanicByEmail(mechanicEmail);
-    const mechanicId = mechanic.mechanics[0].id;
-
-    const vehicle = await vehicleService.getVehicleByVin(vehicleVin);
-    const vehicleId = vehicle.id;
-
+  async getUserVehicleRepairs(mechanicUuid, vehicleVin) {
     const { data, error } = await supabase
       .from("repairs")
       .select("type, price, date, options, message, images")
-      .eq("fk_mechanic", mechanicId)
-      .eq("fk_vehicle", vehicleId);
+      .eq("fk_mechanic", mechanicUuid)
+      .eq("fk_vehicle", vehicleVin);
 
     if (error) throw error;
 

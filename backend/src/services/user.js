@@ -41,28 +41,6 @@ const userService = {
     return data;
   },
 
-  async getEnabledMechanicByEmail(email) {
-    const { data, error } = await supabase
-      .from("users")
-      .select(
-        "email, first_name, last_name, mechanics(uuid, phone, address, city, prices)"
-      )
-      .eq("account_type", "mechanic")
-      .eq("enabled", true)
-      .eq("email", email)
-      .maybeSingle();
-
-    if (error) {
-      throw new Error(`Failed to fetch mechanic: ${error.message}`);
-    }
-
-    if (!data) {
-      throw new Error("Mechanic not found");
-    }
-
-    return data;
-  },
-
   async updateByEmailAndEnabled(email, updateData) {
     const { data, error } = await supabase
       .from("users")

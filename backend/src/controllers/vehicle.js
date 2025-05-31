@@ -3,11 +3,8 @@ const vehicleService = require("../services/vehicle");
 const vehicleController = {
   async getMechanicCustomers(req, res, next) {
     try {
-      const mechanicEmail = req.user.email;
-      const mechanic =
-        await userService.getEnabledMechanicByEmail(mechanicEmail);
       const customers = await vehicleService.getCustomerVehiclesByMechanicUuid(
-        mechanic.uuid
+        req.user.mechanicUuid
       );
       return res.status(200).send({
         success: true,

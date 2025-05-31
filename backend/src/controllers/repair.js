@@ -4,9 +4,9 @@ const repairController = {
   async getMechanicRepairedVehicles(req, res, next) {
     try {
       console.log("Repaired vehicles fetch: ", req.user);
-      const mechanicEmail = req.user.email;
-      const vehicles =
-        await repairService.getMechanicRepairedVehiclesByEmail(mechanicEmail);
+      const vehicles = await repairService.getMechanicRepairedVehiclesByUuid(
+        req.user.mechanicUuid
+      );
       res.status(200).send({
         success: true,
         message: "Repaired vehicles fetch successfully",
@@ -20,11 +20,9 @@ const repairController = {
   async getCustomerVehicleRepairs(req, res, next) {
     try {
       console.log("Vehicle repairs fetch: ", req.user);
-      const mechanicEmail = req.user.email;
-      const vehicleVin = req.body.vin;
       const repairs = await repairService.getUserVehicleRepairs(
-        mechanicEmail,
-        vehicleVin
+        req.user.mechanicUuid,
+        req.body.vin
       );
       res.status(200).send({
         success: true,
