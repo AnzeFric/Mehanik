@@ -18,6 +18,14 @@ const vehicleController = {
       next(error);
     }
   },
+
+  async saveMechanicCustomer(req, res, next) {
+    try {
+      console.log("post: save mechanic customer ", req.user);
+    } catch (error) {
+      next(error);
+    }
+  },
 };
 
 module.exports = vehicleController;
