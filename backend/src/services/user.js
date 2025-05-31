@@ -45,7 +45,7 @@ const userService = {
     const { data, error } = await supabase
       .from("users")
       .select(
-        "email, first_name, last_name, mechanics(id, phone, address, city, prices)"
+        "email, first_name, last_name, mechanics(uuid, phone, address, city, prices)"
       )
       .eq("account_type", "mechanic")
       .eq("enabled", true)

@@ -84,6 +84,7 @@ export default function DetailServiceScreen() {
         menuIcon={menuIcon}
       >
         <View style={styles.container}>
+          <Text>TODO: Dodaj podatke o uporabniku</Text>
           <VehicleData
             imageUri={customer?.image}
             brand={customer?.brand}

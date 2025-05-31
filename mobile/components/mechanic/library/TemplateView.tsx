@@ -7,8 +7,7 @@ import {
 } from "react-native";
 import { AppStyles } from "@/constants/Styles";
 import { Colors } from "@/constants/Colors";
-import BackIcon from "@/assets/icons/BackIcon.svg";
-import { router, useFocusEffect } from "expo-router";
+import { useFocusEffect } from "expo-router";
 import { useCallback, useRef } from "react";
 import TitleRow from "@/components/shared/TitleRow";
 
@@ -93,7 +92,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   button: {
-    paddingVertical: 0,
     marginHorizontal: 25,
     marginBottom: 25,
   },

@@ -23,7 +23,7 @@ import { useRepair } from "@/hooks/useRepair";
 import LoadingScreen from "@/components/global/LoadingScreen";
 
 export default function ServiceDetailScreen() {
-  const { currentRepairFocus, setCurrentRepairFocus } = useRepair();
+  const { currentRepairFocus } = useRepair();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
 

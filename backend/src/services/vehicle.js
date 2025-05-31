@@ -4,7 +4,7 @@ const vehicleService = {
   async getVehicleByVin(vehicleVin) {
     const { data, error } = await supabase
       .from("vehicles")
-      .select("id, brand, model, build_year, vin, image")
+      .select("brand, model, build_year, vin, image")
       .eq("vin", vehicleVin)
       .maybeSingle();
 
