@@ -31,7 +31,6 @@ export default function ServiceDetailScreen() {
     useCallback(() => {
       return () => {
         setIsMenuVisible(false);
-        setCurrentRepairFocus(null);
       };
     }, [])
   );

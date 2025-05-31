@@ -148,14 +148,15 @@ export default function TimeList({ selectedDate }: Props) {
   return (
     <ScrollView style={styles.scrollContainer}>
       <View style={{ display: "flex", flexDirection: "row" }}>
-        <View
-          style={{
-            display: "flex",
-            alignSelf: "flex-start",
-          }}
-        >
+        <View>
           {times.map((time, index) => (
-            <View style={{ height: 80 }} key={index}>
+            <View
+              style={{
+                height: 80,
+                paddingHorizontal: 10,
+              }}
+              key={index}
+            >
               <Text style={styles.timeText}>{time}</Text>
             </View>
           ))}
@@ -190,7 +191,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    paddingHorizontal: 16,
     display: "flex",
     flex: 1,
     flexDirection: "column",
@@ -211,7 +211,6 @@ const styles = StyleSheet.create({
   },
   appointmentContainer: {
     flex: 1,
-    marginLeft: 10,
   },
   emptySlot: {
     height: 80,
