@@ -80,11 +80,17 @@ const authService = {
     const passwordValid = await bcrypt.compare(password, user.password_hash);
     if (!passwordValid) throw new Error("Invalid password");
 
+    let mechanicUuid = null;
+    if (user.account_type === "mechanic") {
+      const mechanicData = await mechanicService.check(user.uuid);
+      mechanicUuid = mechanicData?.uuid;
+    }
+
     const expiration = 7 * 24 * 60 * 60 * 1000; // 1 week
 
     // Generate JWT token
     const token = jwt.sign(
-      { userUuid: user.uuid, email: user.email },
+      { userUuid: user.uuid, mechanicUuid: mechanicUuid, email: user.email },
       process.env.JWT_SECRET,
       { expiresIn: expiration + "Ms" }
     );

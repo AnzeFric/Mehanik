@@ -22,6 +22,10 @@ const vehicleController = {
   async saveMechanicCustomer(req, res, next) {
     try {
       console.log("post: save mechanic customer ", req.user);
+      return res.status(200).send({
+        success: true,
+        message: "Customer saved successfully",
+      });
     } catch (error) {
       next(error);
     }
