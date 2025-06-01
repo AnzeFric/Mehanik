@@ -1,31 +1,24 @@
 const supabase = require("../config/database");
 
 const vehicleService = {
-  async getCustomerVehiclesByMechanicUuid(mechanicUuid) {
-    const { data, error } = await supabase
-      .from("vehicles")
-      .select(
-        "brand, model, build_year, vin, image, customer:fk_customer(first_name, last_name, phone, email)"
-      )
-      .eq("customer.fk_mechanic", mechanicUuid);
+  // userUuid or customerUuid can be null, depending on the saving data
+  async saveVehicle(userUuid, customerUuid, vehicleData) {
+    if (userUuid === null && customerUuid === null) {
+      throw new Error("Only one uuid can be null at the same time.");
+    }
+
+    const { error } = await supabase.from("vehicles").insert({
+      brand: vehicleData.brand,
+      model: vehicleData.model,
+      build_year: vehicleData.buildYear,
+      vin: vehicleData.vin,
+      image: vehicleData.image,
+      description: vehicleData.description,
+      fk_user: userUuid,
+      fk_customer: customerUuid,
+    });
 
     if (error) throw error;
-
-    const standardizedData = data.map((vehicle) => ({
-      brand: vehicle.brand,
-      model: vehicle.model,
-      buildYear: vehicle.build_year,
-      vin: vehicle.vin,
-      image: vehicle.image,
-      customer: {
-        firstNname: vehicle.customer.first_name,
-        lastName: vehicle.customer.last_name,
-        phone: vehicle.customer.phone,
-        email: vehicle.customer.email,
-      },
-    }));
-
-    return standardizedData || [];
   },
 };
 
