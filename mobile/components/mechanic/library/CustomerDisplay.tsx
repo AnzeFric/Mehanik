@@ -11,10 +11,10 @@ export default function CustomerDisplay({ customer }: Props) {
     <View style={styles.container}>
       <Text style={AppStyles.title}>Podatki o stranki</Text>
       <View>
-        <Text style={AppStyles.text}>{customer.email}</Text>
-        <Text style={AppStyles.text}>
+        <Text style={AppStyles.smallText}>
           {customer.firstName} {customer.lastName}
         </Text>
+        <Text style={AppStyles.smallText}>{customer.email}</Text>
         {customer.phone && <Text style={AppStyles.text}>{customer.phone}</Text>}
       </View>
     </View>
@@ -23,10 +23,6 @@ export default function CustomerDisplay({ customer }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    gap: 10,
-  },
-  image: {
-    width: "100%",
-    height: 250,
+    gap: 5,
   },
 });

@@ -31,14 +31,14 @@ export default function VehicleDisplay({ vehicle }: Props) {
         </Text>
         <Text style={AppStyles.boldText}>{vehicle.vin}</Text>
       </View>
-      <Text style={AppStyles.text}>{vehicle.description}</Text>
+      <Text style={AppStyles.smallText}>{vehicle.description}</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    gap: 10,
+    gap: 5,
   },
   image: {
     width: "100%",

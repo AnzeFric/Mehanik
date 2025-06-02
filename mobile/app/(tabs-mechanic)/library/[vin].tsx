@@ -91,8 +91,10 @@ export default function DetailServiceScreen() {
         <View style={styles.container}>
           {customer ? (
             <>
-              <VehicleDisplay vehicle={customer.vehicle} />
-              <CustomerDisplay customer={customer.customer} />
+              <View style={styles.contentContainer}>
+                <VehicleDisplay vehicle={customer.vehicle} />
+                <CustomerDisplay customer={customer.customer} />
+              </View>
               <ServicesMap serviceList={serviceList} />
               {isModalOpen && (
                 <ModalPrompt
@@ -117,6 +119,10 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 25,
     paddingBottom: 20,
+  },
+  contentContainer: {
+    gap: 15,
+    paddingBottom: 30,
   },
   menuContainer: {
     position: "absolute",
