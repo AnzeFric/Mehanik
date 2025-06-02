@@ -1,7 +1,7 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { router } from "expo-router";
 import { Colors } from "@/constants/Colors";
-import { CustomerVehicleData } from "@/interfaces/mechanic";
+import { CustomerVehicleData } from "@/interfaces/customer";
 
 interface Props {
   customerData: CustomerVehicleData;

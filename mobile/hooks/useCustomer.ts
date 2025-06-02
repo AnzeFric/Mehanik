@@ -1,10 +1,10 @@
 import useAuthStore from "@/stores/useAuthStore";
 import { API_BASE_URL } from "@/constants/Config";
 import {
-  CustomerData2,
+  CustomerData,
+  VehicleData,
   CustomerVehicleData,
-  VehicleData2,
-} from "@/interfaces/mechanic";
+} from "@/interfaces/customer";
 import useCustomerStore from "@/stores/useCustomerStore";
 
 export function useCustomer() {
@@ -38,7 +38,7 @@ export function useCustomer() {
 
     let tempCustomers: Array<CustomerVehicleData> = [];
     customers.forEach((item: any) => {
-      let customer: CustomerData2 = {
+      let customer: CustomerData = {
         email: item.email,
         firstName: item.firstName,
         lastName: item.lastName,
@@ -46,7 +46,7 @@ export function useCustomer() {
       };
 
       item.vehicles.forEach((customerVehicle: any) => {
-        let vehicle: VehicleData2 = {
+        let vehicle: VehicleData = {
           brand: customerVehicle.brand,
           model: customerVehicle.model,
           buildYear: customerVehicle.buildYear,
