@@ -6,7 +6,7 @@ interface Props {
   customer: CustomerData;
 }
 
-export default function CustomerData({ customer }: Props) {
+export default function CustomerDisplay({ customer }: Props) {
   return (
     <View style={styles.container}>
       <Text style={AppStyles.title}>Podatki o stranki</Text>

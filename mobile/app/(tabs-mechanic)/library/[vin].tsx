@@ -3,7 +3,7 @@ import { useState, useCallback, useEffect } from "react";
 import { useLocalSearchParams, router, useFocusEffect } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import MenuIcon from "@/assets/icons/MenuIcon.svg";
-import VehicleData from "@/components/mechanic/library/VehicleData";
+import VehicleDisplay from "@/components/mechanic/library/VehicleDisplay";
 import ServicesMap from "@/components/mechanic/library/ServicesMap";
 import { ServiceData } from "@/interfaces/mechanic";
 import { CustomerVehicleData } from "@/interfaces/customer";
@@ -13,7 +13,7 @@ import PlusButton from "@/components/global/PlusButton";
 import { useCustomer } from "@/hooks/useCustomer";
 import { useRepair } from "@/hooks/useRepair";
 import LoadingScreen from "@/components/global/LoadingScreen";
-import CustomerData from "@/components/mechanic/library/CustomerData";
+import CustomerDisplay from "@/components/mechanic/library/CustomerDisplay";
 
 export default function DetailServiceScreen() {
   const { vin, firstName } = useLocalSearchParams();
@@ -91,8 +91,8 @@ export default function DetailServiceScreen() {
         <View style={styles.container}>
           {customer ? (
             <>
-              <VehicleData vehicle={customer.vehicle} />
-              <CustomerData customer={customer.customer} />
+              <VehicleDisplay vehicle={customer.vehicle} />
+              <CustomerDisplay customer={customer.customer} />
               <ServicesMap serviceList={serviceList} />
               {isModalOpen && (
                 <ModalPrompt

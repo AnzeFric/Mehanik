@@ -6,7 +6,7 @@ interface Props {
   vehicle: VehicleData;
 }
 
-export default function VehicleData({ vehicle }: Props) {
+export default function VehicleDisplay({ vehicle }: Props) {
   return (
     <View style={styles.container}>
       {vehicle.image ? (
