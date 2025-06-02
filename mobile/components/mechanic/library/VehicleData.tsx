@@ -1,32 +1,21 @@
 import { Text, View, Image, StyleSheet } from "react-native";
 import { AppStyles } from "@/constants/Styles";
+import { VehicleData } from "@/interfaces/customer";
 
 interface Props {
-  imageUri: string | undefined | null;
-  brand: string | undefined;
-  model: string | undefined;
-  year: number | undefined;
-  description: string | undefined | null;
-  vin: string | undefined;
+  vehicle: VehicleData;
 }
 
-export default function VehicleData({
-  imageUri,
-  brand,
-  model,
-  year,
-  description,
-  vin,
-}: Props) {
+export default function VehicleData({ vehicle }: Props) {
   return (
     <View style={styles.container}>
-      {imageUri === undefined ? (
+      {vehicle.image ? (
+        // TODO: Load image dynamically from backend
         <Image
           source={require("@/assets/images/logo-main.png")}
           style={styles.image}
         />
       ) : (
-        // TODO: Load image dynamically from backedn
         <Image
           source={require("@/assets/images/logo-main.png")}
           style={styles.image}
@@ -36,13 +25,13 @@ export default function VehicleData({
       <Text style={AppStyles.title}>Podatki o vozilu</Text>
       <View>
         <Text style={AppStyles.text}>
-          {brand} {model}
+          {vehicle.brand} {vehicle.model}
           {", "}
-          {year}
+          {vehicle.buildYear}
         </Text>
-        <Text style={AppStyles.boldText}>{vin}</Text>
+        <Text style={AppStyles.boldText}>{vehicle.vin}</Text>
       </View>
-      <Text style={AppStyles.text}>{description}</Text>
+      <Text style={AppStyles.text}>{vehicle.description}</Text>
     </View>
   );
 }

@@ -12,15 +12,15 @@ import ModalPrompt from "@/components/mechanic/modals/ModalPrompt";
 import PlusButton from "@/components/global/PlusButton";
 import { useCustomer } from "@/hooks/useCustomer";
 import { useRepair } from "@/hooks/useRepair";
+import LoadingScreen from "@/components/global/LoadingScreen";
+import CustomerData from "@/components/mechanic/library/CustomerData";
 
 export default function DetailServiceScreen() {
   const { vin, firstName } = useLocalSearchParams();
   const { getVehicleRepairs } = useRepair();
   const { customers } = useCustomer();
   const [serviceList, setServiceList] = useState<Array<ServiceData>>([]);
-  const [customer, setCustomer] = useState<CustomerVehicleData | undefined>(
-    undefined
-  );
+  const [customer, setCustomer] = useState<CustomerVehicleData>();
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -89,23 +89,22 @@ export default function DetailServiceScreen() {
         menuIcon={menuIcon}
       >
         <View style={styles.container}>
-          <Text>TODO: Dodaj podatke o uporabniku</Text>
-          <VehicleData
-            imageUri={customer?.vehicle.image}
-            brand={customer?.vehicle.brand}
-            model={customer?.vehicle.model}
-            year={customer?.vehicle.buildYear}
-            vin={customer?.vehicle.vin}
-            description={customer?.vehicle.description}
-          />
-          <ServicesMap serviceList={serviceList} />
-          {isModalOpen && (
-            <ModalPrompt
-              isVisible={isModalOpen}
-              message={"Trajno boste izbrisali uporabnika. Ste prepričani?"}
-              onCancel={() => setIsModalOpen(false)}
-              onConfirm={() => {}}
-            />
+          {customer ? (
+            <>
+              <VehicleData vehicle={customer.vehicle} />
+              <CustomerData customer={customer.customer} />
+              <ServicesMap serviceList={serviceList} />
+              {isModalOpen && (
+                <ModalPrompt
+                  isVisible={isModalOpen}
+                  message={"Trajno boste izbrisali uporabnika. Ste prepričani?"}
+                  onCancel={() => setIsModalOpen(false)}
+                  onConfirm={() => {}}
+                />
+              )}
+            </>
+          ) : (
+            <LoadingScreen />
           )}
         </View>
       </TemplateView>

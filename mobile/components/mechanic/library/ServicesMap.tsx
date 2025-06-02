@@ -1,5 +1,4 @@
-import { Text, View, TouchableHighlight, StyleSheet } from "react-native";
-import { Colors } from "@/constants/Colors";
+import { Text, View, StyleSheet } from "react-native";
 import { AppStyles } from "@/constants/Styles";
 import Service from "../items/Service";
 import { ServiceData } from "@/interfaces/mechanic";
@@ -22,22 +21,6 @@ export default function ServicesMap({ serviceList }: Props) {
         >
           Narejeni servisi
         </Text>
-        <View style={styles.buttonsContainer}>
-          <TouchableHighlight
-            style={styles.button}
-            underlayColor={Colors.light.underlayColor}
-            onPress={() => {}}
-          >
-            <Text style={styles.buttonText}>Filter</Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            style={styles.button}
-            underlayColor={Colors.light.underlayColor}
-            onPress={() => {}}
-          >
-            <Text style={styles.buttonText}>Sortiraj</Text>
-          </TouchableHighlight>
-        </View>
       </View>
       <View style={styles.servicesContainer}>
         {serviceList.length > 0 ? (
@@ -59,23 +42,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-  },
-  buttonsContainer: {
-    display: "flex",
-    flexDirection: "row",
-    gap: 10,
-  },
-  button: {
-    backgroundColor: Colors.light.utilityButton,
-    borderRadius: 10,
-    paddingVertical: 4,
-    paddingHorizontal: 16,
-    elevation: 2,
-  },
-  buttonText: {
-    fontSize: 16,
-    color: "white",
-    textAlign: "center",
   },
   servicesContainer: {
     paddingTop: 20,
