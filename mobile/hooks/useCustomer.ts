@@ -6,7 +6,6 @@ import {
   CustomerVehicleData,
 } from "@/interfaces/customer";
 import useCustomerStore from "@/stores/useCustomerStore";
-import { Alert } from "react-native";
 import { RepairData } from "@/interfaces/repair";
 
 export function useCustomer() {
@@ -18,14 +17,20 @@ export function useCustomer() {
     vehicleData: VehicleData,
     repairData: RepairData | null
   ) => {
+    let repairDataCheck = repairData;
+    if (repairData?.type === "other" && repairData.description === "") {
+      repairDataCheck = null;
+    }
+
     let body = {
       customerData,
       vehicleData,
-      ...(repairData && { repairData }),
+      ...(repairDataCheck && { repairData }),
     };
 
     try {
-      const response = await fetch(`${API_BASE_URL}/customers/`, {
+      console.log("Sending data, saveCustomer: ", body);
+      await fetch(`${API_BASE_URL}/customers/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -34,12 +39,7 @@ export function useCustomer() {
         body: JSON.stringify(body),
       });
 
-      const data = await response.json();
-
-      if (data.success) {
-        Alert.alert("Uspeh", "Stranka je bila uspešno shranjena");
-      }
-      Alert.alert("Napaka", "Stranka ni bila shranjena");
+      await updateStoredCustomerData();
     } catch (error) {
       console.error("Error while saving mechanic customer");
     }
@@ -77,6 +77,7 @@ export function useCustomer() {
         firstName: item.firstName,
         lastName: item.lastName,
         phone: item.phone,
+        image: item.image,
       };
 
       item.vehicles.forEach((customerVehicle: any) => {

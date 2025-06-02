@@ -18,6 +18,7 @@ const customerService = {
       last_name: customerData.lastName,
       phone: customerData.phone,
       email: customerData.email,
+      image: customerData.image,
       fk_mechanic: mechanicUuid,
     });
 
@@ -36,7 +37,7 @@ const customerService = {
     const { data, error } = await supabase
       .from("customers")
       .select(
-        "first_name, last_name, phone, email, vehicles(brand, model, build_year, vin, image, description)"
+        "first_name, last_name, phone, email, image, vehicles(brand, model, build_year, vin, image, description)"
       )
       .eq("fk_mechanic", mechanicUuid);
 
@@ -47,6 +48,7 @@ const customerService = {
       lastName: customer.last_name,
       phone: customer.phone,
       email: customer.email,
+      image: customer.image,
       vehicles:
         customer.vehicles?.map((vehicle) => ({
           brand: vehicle.brand,

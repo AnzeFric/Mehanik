@@ -34,7 +34,7 @@ export default function UserForm({ control, errors }: CustomerInfoProps) {
       />
       <CustomController
         control={control}
-        placeholder={"VIN)"}
+        placeholder={"VIN"}
         optional={true}
         name={"vehicle.vin"}
         autoCapitalize={"characters"}

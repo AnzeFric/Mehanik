@@ -1,35 +1,24 @@
 import { Text, View, TouchableHighlight, StyleSheet } from "react-native";
-import { Controller, FieldValues, Control, Path } from "react-hook-form";
 import { Colors } from "@/constants/Colors";
 
-interface Props<T extends FieldValues> {
-  control?: Control<T>;
-  name: Path<T>;
+interface Props {
   text: string;
+  value: boolean;
+  onChange: (value: boolean) => void;
 }
 
-export default function CustomCheckBox<T extends FieldValues>({
-  control,
-  name,
-  text,
-}: Props<T>) {
+export default function CustomCheckBox({ text, value, onChange }: Props) {
   return (
-    <Controller
-      control={control}
-      name={name}
-      render={({ field: { onChange, value } }) => (
-        <View style={styles.checkboxRow}>
-          <TouchableHighlight
-            style={[styles.checkbox, value && styles.checkboxSelected]}
-            underlayColor={Colors.light.underlayColor}
-            onPress={() => onChange(!value)}
-          >
-            <></>
-          </TouchableHighlight>
-          <Text style={styles.checkboxLabel}>{text}</Text>
-        </View>
-      )}
-    />
+    <View style={styles.checkboxRow}>
+      <TouchableHighlight
+        style={[styles.checkbox, value && styles.checkboxSelected]}
+        underlayColor={Colors.light.underlayColor}
+        onPress={() => onChange(!value)}
+      >
+        <View />
+      </TouchableHighlight>
+      <Text style={styles.checkboxLabel}>{text}</Text>
+    </View>
   );
 }
 

@@ -5,6 +5,7 @@ export interface CustomerData {
   firstName: string;
   lastName: string;
   phone: string | null;
+  image: string | null;
 }
 
 export interface VehicleData {
