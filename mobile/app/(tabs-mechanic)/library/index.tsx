@@ -7,11 +7,11 @@ import { router, useFocusEffect } from "expo-router";
 import PlusButton from "@/components/global/PlusButton";
 import TitleRow from "@/components/shared/TitleRow";
 import { Ionicons } from "@expo/vector-icons";
-import { useRepair } from "@/hooks/useRepair";
+import { useCustomer } from "@/hooks/useCustomer";
 
 export default function LibraryScreen() {
   const [search, setSearch] = useState<string>("");
-  const { customers, updateStoredRepairData } = useRepair();
+  const { customers, updateStoredCustomerData } = useCustomer();
 
   const inputRef = useRef<TextInput>(null);
 
@@ -28,7 +28,7 @@ export default function LibraryScreen() {
         );
 
   useEffect(() => {
-    updateStoredRepairData();
+    updateStoredCustomerData();
   }, []);
 
   useFocusEffect(

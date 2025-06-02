@@ -9,11 +9,13 @@ import { CustomerData, ServiceData } from "@/interfaces/mechanic";
 import TemplateView from "@/components/mechanic/library/TemplateView";
 import ModalPrompt from "@/components/mechanic/modals/ModalPrompt";
 import PlusButton from "@/components/global/PlusButton";
+import { useCustomer } from "@/hooks/useCustomer";
 import { useRepair } from "@/hooks/useRepair";
 
 export default function DetailServiceScreen() {
   const { vin, firstName } = useLocalSearchParams();
-  const { customers, getMechanicVehicleRepairs } = useRepair();
+  const { getVehicleRepairs } = useRepair();
+  const { customers } = useCustomer();
   const [serviceList, setServiceList] = useState<Array<ServiceData>>([]);
   const [customer, setCustomer] = useState<CustomerData | undefined>(undefined);
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
@@ -25,7 +27,7 @@ export default function DetailServiceScreen() {
       setCustomer(foundCustomer);
     };
     const repairsFetch = async () => {
-      const repairData = await getMechanicVehicleRepairs(vin.toString());
+      const repairData = await getVehicleRepairs(vin.toString());
       setServiceList(repairData);
     };
 

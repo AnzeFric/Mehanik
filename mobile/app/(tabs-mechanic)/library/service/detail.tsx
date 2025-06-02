@@ -19,8 +19,8 @@ import {
 import ModalPrompt from "@/components/mechanic/modals/ModalPrompt";
 import MenuIcon from "@/assets/icons/MenuIcon.svg";
 import { Ionicons } from "@expo/vector-icons";
-import { useRepair } from "@/hooks/useRepair";
 import LoadingScreen from "@/components/global/LoadingScreen";
+import { useRepair } from "@/hooks/useRepair";
 
 export default function ServiceDetailScreen() {
   const { currentRepairFocus } = useRepair();
