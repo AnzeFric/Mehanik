@@ -6,10 +6,44 @@ import {
   CustomerVehicleData,
 } from "@/interfaces/customer";
 import useCustomerStore from "@/stores/useCustomerStore";
+import { Alert } from "react-native";
+import { RepairData } from "@/interfaces/repair";
 
 export function useCustomer() {
   const { jwt } = useAuthStore();
   const { customers, setCustomers } = useCustomerStore();
+
+  const saveCustomer = async (
+    customerData: CustomerData,
+    vehicleData: VehicleData,
+    repairData: RepairData | null
+  ) => {
+    let body = {
+      customerData,
+      vehicleData,
+      ...(repairData && { repairData }),
+    };
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/customers/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + jwt,
+        },
+        body: JSON.stringify(body),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        Alert.alert("Uspeh", "Stranka je bila uspešno shranjena");
+      }
+      Alert.alert("Napaka", "Stranka ni bila shranjena");
+    } catch (error) {
+      console.error("Error while saving mechanic customer");
+    }
+  };
 
   const getMehcanicCustomers = async () => {
     try {
@@ -62,6 +96,7 @@ export function useCustomer() {
 
   return {
     customers,
+    saveCustomer,
     updateStoredCustomerData,
   };
 }

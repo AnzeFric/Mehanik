@@ -1,10 +1,10 @@
 import { Text, View, StyleSheet } from "react-native";
 import { AppStyles } from "@/constants/Styles";
 import Service from "../items/Service";
-import { ServiceData } from "@/interfaces/mechanic";
+import { RepairData } from "@/interfaces/repair";
 
 interface Props {
-  serviceList: ServiceData[];
+  serviceList: RepairData[];
 }
 
 export default function ServicesMap({ serviceList }: Props) {

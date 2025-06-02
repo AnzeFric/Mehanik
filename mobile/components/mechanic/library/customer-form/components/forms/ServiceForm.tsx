@@ -5,34 +5,24 @@ import {
   Image,
   View,
 } from "react-native";
-import {
-  Control,
-  Controller,
-  UseFormWatch,
-  FieldErrors,
-} from "react-hook-form";
+import { Control, Controller, UseFormWatch } from "react-hook-form";
 import CameraIcon from "@/assets/icons/CameraIcon.svg";
 import { Colors } from "@/constants/Colors";
 import * as ImagePicker from "expo-image-picker";
-import { ServiceFormData } from "@/interfaces/mechanic";
 import { useState } from "react";
 import CustomRadioButton from "../CustomRadioButton";
 import CustomCheckBox from "../CustomCheckBox";
 import CustomController from "../CustomController";
 import { AppStyles } from "@/constants/Styles";
+import { CustomerFormData } from "@/interfaces/customer";
 
 type CustomerInfoProps = {
-  control: Control<ServiceFormData>;
-  watch: UseFormWatch<ServiceFormData>;
-  errors: FieldErrors<ServiceFormData>;
+  control: Control<CustomerFormData>;
+  watch: UseFormWatch<CustomerFormData>;
 };
 
-export default function UserForm({
-  control,
-  watch,
-  errors,
-}: CustomerInfoProps) {
-  const serviceType = watch("serviceType");
+export default function ServiceForm({ control, watch }: CustomerInfoProps) {
+  const serviceType = watch("repair.type");
   const [serviceImages, setServiceImages] = useState<string[]>([]);
 
   const removeServiceImage = (index: number) => {
@@ -60,7 +50,7 @@ export default function UserForm({
         <View style={styles.radioGroup}>
           <Controller
             control={control}
-            name="serviceType"
+            name="repair.type"
             render={({ field: { onChange, value } }) => (
               <>
                 <CustomRadioButton
@@ -91,34 +81,34 @@ export default function UserForm({
         <View style={styles.serviceItemsContainer}>
           <CustomCheckBox
             control={control}
-            name={"serviceItems.oilChange"}
+            name={"repair.options.oilChange"}
             text={"Olje"}
           />
           <CustomCheckBox
             control={control}
-            name={"serviceItems.filterChange"}
+            name={"repair.options.filterChange"}
             text={"Filter"}
           />
           <CustomCheckBox
             control={control}
-            name={"serviceItems.brakeCheck"}
+            name={"repair.options.brakeCheck"}
             text={"Zavore"}
           />
           {serviceType === "large" && (
             <>
               <CustomCheckBox
                 control={control}
-                name={"serviceItems.sparkPlugs"}
+                name={"repair.options.sparkPlugs"}
                 text={"Svečke"}
               />
               <CustomCheckBox
                 control={control}
-                name={"serviceItems.timing"}
+                name={"repair.options.timing"}
                 text={"Jermen/Veriga"}
               />
               <CustomCheckBox
                 control={control}
-                name={"serviceItems.coolant"}
+                name={"repair.options.coolant"}
                 text={"Hladilna"}
               />
             </>
@@ -129,10 +119,9 @@ export default function UserForm({
       {serviceType === "other" && (
         <CustomController
           control={control}
-          error={errors.customServiceDescription}
           placeholder={"Opišite izveden servis."}
           optional={false}
-          name={"customServiceDescription"}
+          name={"repair.description"}
           textStyle={[styles.textArea, { textAlignVertical: "bottom" }]}
           multiline={true}
           numberOfLines={4}
@@ -142,7 +131,7 @@ export default function UserForm({
         control={control}
         placeholder={"Opombe za servis (ni obvezno)"}
         optional={true}
-        name={"serviceNotes"}
+        name={"repair.note"}
         textStyle={[styles.textArea, { textAlignVertical: "bottom" }]}
         multiline={true}
         numberOfLines={3}
@@ -151,7 +140,7 @@ export default function UserForm({
         control={control}
         placeholder={"Cena (ni obvezno)"}
         optional={true}
-        name={"servicePrice"}
+        name={"repair.price"}
         keyboardType={"numeric"}
       />
 

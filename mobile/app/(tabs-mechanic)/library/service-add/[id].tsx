@@ -3,38 +3,34 @@ import { router, useLocalSearchParams } from "expo-router";
 import TemplateView from "@/components/mechanic/library/TemplateView";
 import ServiceForm from "@/components/mechanic/library/customer-form/components/forms/ServiceForm";
 import { useForm } from "react-hook-form";
-import { ServiceFormData } from "@/interfaces/mechanic";
+import { CustomerFormData } from "@/interfaces/customer";
 
 export default function AddServiceScreen() {
   const { id } = useLocalSearchParams();
-  const {
-    control,
-    formState: { errors },
-    watch,
-  } = useForm<ServiceFormData>({
+  const { control, watch } = useForm<CustomerFormData>({
     defaultValues: {
-      // Service info
-      serviceType: "small",
-      serviceItems: {
-        oilChange: false,
-        filterChange: false,
-        brakeCheck: false,
-        tireRotation: false,
-        fluidCheck: false,
-        batteryCheck: false,
-        sparkPlugs: false,
-        airFilter: false,
-        cabinFilter: false,
-        suspension: false,
-        timing: false,
-        coolant: false,
+      repair: {
+        type: "small",
+        price: null,
+        date: new Date(),
+        options: {
+          oilChange: null,
+          filterChange: null,
+          brakeCheck: null,
+          tireRotation: null,
+          fluidCheck: null,
+          batteryCheck: null,
+          sparkPlugs: null,
+          airFilter: null,
+          cabinFilter: null,
+          suspension: null,
+          timing: null,
+          coolant: null,
+        },
+        description: null,
+        images: null,
+        note: null,
       },
-      serviceNotes: "",
-      serviceImages: [],
-      servicePrice: "",
-
-      // Custom service (type is "other")
-      customServiceDescription: "",
     },
   });
 
@@ -49,7 +45,7 @@ export default function AddServiceScreen() {
       onButtonPress={handlePress}
     >
       <View style={styles.container}>
-        <ServiceForm control={control} errors={errors} watch={watch} />
+        <ServiceForm control={control} watch={watch} />
       </View>
     </TemplateView>
   );

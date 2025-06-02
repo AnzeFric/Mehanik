@@ -2,24 +2,22 @@ import { View, StyleSheet } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 import TemplateView from "@/components/mechanic/library/TemplateView";
 import UserForm from "@/components/mechanic/library/customer-form/components/forms/UserForm";
-import ImageForm from "@/components/mechanic/library/customer-form/components/forms/ImageForm";
 import { useForm } from "react-hook-form";
-import { ServiceFormData } from "@/interfaces/mechanic";
+import { CustomerFormData } from "@/interfaces/customer";
 
 export default function EditCustomerScreen() {
   const { id } = useLocalSearchParams();
   const {
     control,
     formState: { errors },
-    setValue,
-  } = useForm<ServiceFormData>({
+  } = useForm<CustomerFormData>({
     defaultValues: {
-      imageUri: "",
-      firstName: "",
-      lastName: "",
-      address: "",
-      phoneNumber: "",
-      email: "",
+      customer: {
+        email: "",
+        firstName: "",
+        lastName: "",
+        phone: "",
+      },
     },
   });
 
@@ -34,7 +32,6 @@ export default function EditCustomerScreen() {
       onButtonPress={handlePress}
     >
       <View style={styles.container}>
-        <ImageForm control={control} setValue={setValue} />
         <UserForm control={control} errors={errors} />
       </View>
     </TemplateView>

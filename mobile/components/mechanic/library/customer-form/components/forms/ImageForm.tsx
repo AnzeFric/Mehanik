@@ -2,12 +2,12 @@ import { TouchableHighlight, Image, StyleSheet } from "react-native";
 import { Controller, Control, UseFormSetValue } from "react-hook-form";
 import CameraIcon from "@/assets/icons/CameraIcon.svg";
 import { Colors } from "@/constants/Colors";
-import { ServiceFormData } from "@/interfaces/mechanic";
 import * as ImagePicker from "expo-image-picker";
+import { CustomerFormData } from "@/interfaces/customer";
 
 interface Props {
-  control: Control<ServiceFormData>;
-  setValue: UseFormSetValue<ServiceFormData>;
+  control: Control<CustomerFormData>;
+  setValue: UseFormSetValue<CustomerFormData>;
 }
 export default function ImageForm({ control, setValue }: Props) {
   const pickCustomerImage = async () => {
@@ -18,14 +18,14 @@ export default function ImageForm({ control, setValue }: Props) {
     });
 
     if (!result.canceled) {
-      setValue("imageUri", result.assets[0].uri);
+      setValue("vehicle.image", result.assets[0].uri);
     }
   };
 
   return (
     <Controller
       control={control}
-      name="imageUri"
+      name="vehicle.image"
       render={({ field: { value } }) => (
         <TouchableHighlight
           style={styles.cameraContainer}

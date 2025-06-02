@@ -1,3 +1,5 @@
+import { RepairData } from "./repair";
+
 export interface CustomerData {
   email: string;
   firstName: string;
@@ -17,4 +19,10 @@ export interface VehicleData {
 export interface CustomerVehicleData {
   customer: CustomerData;
   vehicle: VehicleData;
+}
+
+export interface CustomerFormData {
+  customer: CustomerData;
+  vehicle: VehicleData;
+  repair: RepairData | null;
 }

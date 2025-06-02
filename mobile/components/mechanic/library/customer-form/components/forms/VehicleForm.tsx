@@ -1,11 +1,11 @@
 import { StyleSheet } from "react-native";
 import { Control, FieldErrors } from "react-hook-form";
-import { ServiceFormData } from "@/interfaces/mechanic";
 import CustomController from "../CustomController";
+import { CustomerFormData } from "@/interfaces/customer";
 
 type CustomerInfoProps = {
-  control: Control<ServiceFormData>;
-  errors: FieldErrors<ServiceFormData>;
+  control: Control<CustomerFormData>;
+  errors: FieldErrors<CustomerFormData>;
 };
 
 export default function UserForm({ control, errors }: CustomerInfoProps) {
@@ -13,37 +13,37 @@ export default function UserForm({ control, errors }: CustomerInfoProps) {
     <>
       <CustomController
         control={control}
-        error={errors.carBrand}
+        error={errors.vehicle?.brand}
         placeholder={"Znamka"}
         optional={false}
-        name={"carBrand"}
+        name={"vehicle.brand"}
       />
       <CustomController
         control={control}
-        error={errors.carModel}
+        error={errors.vehicle?.model}
         placeholder={"Model"}
         optional={false}
-        name={"carModel"}
+        name={"vehicle.model"}
       />
       <CustomController
         control={control}
-        placeholder={"Leto izdelave (ni obvezno)"}
+        placeholder={"Leto izdelave"}
         optional={true}
-        name={"carYear"}
+        name={"vehicle.buildYear"}
         keyboardType={"numeric"}
       />
       <CustomController
         control={control}
-        placeholder={"VIN (ni obvezno)"}
+        placeholder={"VIN)"}
         optional={true}
-        name={"vin"}
+        name={"vehicle.vin"}
         autoCapitalize={"characters"}
       />
       <CustomController
         control={control}
         placeholder={"Dodaten opis vozila (ni obvezno)"}
         optional={true}
-        name={"carDescription"}
+        name={"vehicle.description"}
         textStyle={[styles.textArea, { textAlignVertical: "bottom" }]}
         multiline={true}
         numberOfLines={3}

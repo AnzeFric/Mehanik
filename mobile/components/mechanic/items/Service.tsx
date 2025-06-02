@@ -6,12 +6,12 @@ import {
   formatServiceType,
   formatCurrency,
 } from "@/constants/util";
-import { ServiceData } from "@/interfaces/mechanic";
 import { Ionicons } from "@expo/vector-icons";
 import { useRepair } from "@/hooks/useRepair";
+import { RepairData } from "@/interfaces/repair";
 
 interface Props {
-  serviceData: ServiceData;
+  serviceData: RepairData;
 }
 
 export default function Service({ serviceData }: Props) {
@@ -36,7 +36,7 @@ export default function Service({ serviceData }: Props) {
             </Text>
           </View>
           <Text style={styles.priceText}>
-            {formatCurrency(serviceData.price)}
+            {formatCurrency(serviceData.price || 0)}
           </Text>
         </View>
 
@@ -54,7 +54,7 @@ export default function Service({ serviceData }: Props) {
         {serviceData.type === "other" && (
           <View style={styles.descriptionContainer}>
             <Text style={styles.descriptionText}>
-              {serviceData.customServiceDescription}
+              {serviceData.description}
             </Text>
           </View>
         )}

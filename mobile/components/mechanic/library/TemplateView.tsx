@@ -15,7 +15,7 @@ interface TemplateScreenProps {
   title: string;
   children: React.ReactNode;
   buttonText?: string;
-  onButtonPress?: () => void;
+  onButtonPress?: (...args: any[]) => void;
   isMenuVisible?: boolean;
   menu?: React.ReactNode;
   menuIcon?: React.ReactNode;

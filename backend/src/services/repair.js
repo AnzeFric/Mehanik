@@ -5,7 +5,7 @@ const repairService = {
   async getVehicleRepairs(mechanicUuid, vehicleVin) {
     const { data, error } = await supabase
       .from("repairs")
-      .select("type, price, date, options, message, images")
+      .select("type, price, date, options, description, images, note")
       .eq("fk_mechanic", mechanicUuid)
       .eq("fk_vehicle", vehicleVin);
 
@@ -23,8 +23,9 @@ const repairService = {
       price: repairData.price,
       date: repairData.date,
       options: repairData.options,
-      message: repairData.message,
+      description: repairData.description,
       images: repairData.images,
+      note: repairData.note,
       fk_mechanic: mechanicUuid,
       fk_vehicle: vehicleVin,
     });

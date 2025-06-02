@@ -1,10 +1,10 @@
 import { Control, FieldErrors } from "react-hook-form";
-import { ServiceFormData } from "@/interfaces/mechanic";
 import CustomController from "../CustomController";
+import { CustomerData, CustomerFormData } from "@/interfaces/customer";
 
 type CustomerInfoProps = {
-  control: Control<ServiceFormData>;
-  errors: FieldErrors<ServiceFormData>;
+  control: Control<CustomerFormData>;
+  errors: FieldErrors<CustomerFormData>;
 };
 
 export default function UserForm({ control, errors }: CustomerInfoProps) {
@@ -12,36 +12,30 @@ export default function UserForm({ control, errors }: CustomerInfoProps) {
     <>
       <CustomController
         control={control}
-        error={errors.firstName}
+        error={errors.customer?.firstName}
         placeholder={"Ime"}
         optional={false}
-        name={"firstName"}
+        name={"customer.firstName"}
       />
       <CustomController
         control={control}
-        error={errors.lastName}
+        error={errors.customer?.lastName}
         placeholder={"Priimek"}
         optional={false}
-        name={"lastName"}
-      />
-      <CustomController
-        control={control}
-        placeholder={"Naslov (ni obvezno)"}
-        optional={true}
-        name={"address"}
+        name={"customer.lastName"}
       />
       <CustomController
         control={control}
         placeholder={"Telefonska št. (ni obvezno)"}
         optional={true}
-        name={"phoneNumber"}
+        name={"customer.phone"}
         keyboardType={"phone-pad"}
       />
       <CustomController
         control={control}
         placeholder={"Email  (ni obvezno)"}
         optional={true}
-        name={"email"}
+        name={"customer.email"}
         keyboardType={"email-address"}
         autoCapitalize={"none"}
       />

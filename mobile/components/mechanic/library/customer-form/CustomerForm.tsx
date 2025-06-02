@@ -5,7 +5,7 @@ import VehicleForm from "./components/forms/VehicleForm";
 import ServiceForm from "./components/forms/ServiceForm";
 import { AppStyles } from "@/constants/Styles";
 import ImageForm from "./components/forms/ImageForm";
-import { ServiceFormData } from "@/interfaces/mechanic";
+import { CustomerFormData } from "@/interfaces/customer";
 
 export default function CustomerForm() {
   const {
@@ -13,38 +13,23 @@ export default function CustomerForm() {
     watch,
     formState: { errors },
     setValue,
-  } = useForm<ServiceFormData>({
+  } = useForm<CustomerFormData>({
     defaultValues: {
-      imageUri: "",
-      firstName: "",
-      lastName: "",
-      address: "",
-      phoneNumber: "",
-      email: "",
-      carBrand: "",
-      carModel: "",
-      carYear: "",
-      vin: "",
-      carDescription: "",
-      serviceType: "small",
-      serviceItems: {
-        oilChange: false,
-        filterChange: false,
-        brakeCheck: false,
-        tireRotation: false,
-        fluidCheck: false,
-        batteryCheck: false,
-        sparkPlugs: false,
-        airFilter: false,
-        cabinFilter: false,
-        suspension: false,
-        timing: false,
-        coolant: false,
+      customer: {
+        email: "",
+        firstName: "",
+        lastName: "",
+        phone: null,
       },
-      serviceNotes: "",
-      serviceImages: [],
-      servicePrice: "",
-      customServiceDescription: "",
+      vehicle: {
+        brand: "",
+        model: "",
+        buildYear: 0,
+        vin: "",
+        image: null,
+        description: null,
+      },
+      repair: null,
     },
   });
 
@@ -59,7 +44,7 @@ export default function CustomerForm() {
       <Text style={AppStyles.text}>
         Če servis ni bil izveden izberite "Drugo" in pustite prazno.
       </Text>
-      <ServiceForm control={control} watch={watch} errors={errors} />
+      <ServiceForm control={control} watch={watch} />
     </ScrollView>
   );
 }

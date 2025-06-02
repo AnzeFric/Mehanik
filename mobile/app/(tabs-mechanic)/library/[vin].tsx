@@ -5,7 +5,6 @@ import { Colors } from "@/constants/Colors";
 import MenuIcon from "@/assets/icons/MenuIcon.svg";
 import VehicleDisplay from "@/components/mechanic/library/VehicleDisplay";
 import ServicesMap from "@/components/mechanic/library/ServicesMap";
-import { ServiceData } from "@/interfaces/mechanic";
 import { CustomerVehicleData } from "@/interfaces/customer";
 import TemplateView from "@/components/mechanic/library/TemplateView";
 import ModalPrompt from "@/components/mechanic/modals/ModalPrompt";
@@ -14,12 +13,13 @@ import { useCustomer } from "@/hooks/useCustomer";
 import { useRepair } from "@/hooks/useRepair";
 import LoadingScreen from "@/components/global/LoadingScreen";
 import CustomerDisplay from "@/components/mechanic/library/CustomerDisplay";
+import { RepairData } from "@/interfaces/repair";
 
 export default function DetailServiceScreen() {
   const { vin, firstName } = useLocalSearchParams();
   const { getVehicleRepairs } = useRepair();
   const { customers } = useCustomer();
-  const [serviceList, setServiceList] = useState<Array<ServiceData>>([]);
+  const [serviceList, setServiceList] = useState<Array<RepairData>>([]);
   const [customer, setCustomer] = useState<CustomerVehicleData>();
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
