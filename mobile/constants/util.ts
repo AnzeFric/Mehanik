@@ -76,7 +76,7 @@ export function formatServiceItems(item: string): string {
   }
 }
 
-export function formatCurrency(price: number | undefined): string {
+export function formatCurrency(price: number | undefined | null): string {
   if (price && typeof price === "number") {
     return `${price.toFixed(2)} €`;
   }

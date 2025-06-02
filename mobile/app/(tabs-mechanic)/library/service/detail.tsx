@@ -150,19 +150,19 @@ export default function ServiceDetailScreen() {
                           </Text>
                         </View>
                       ))}
-                  {currentRepairFocus.customServiceDescription && (
+                  {currentRepairFocus.description && (
                     <Text style={styles.customServiceText}>
-                      {currentRepairFocus.customServiceDescription}
+                      {currentRepairFocus.description}
                     </Text>
                   )}
                 </View>
               </View>
 
-              {currentRepairFocus.message && (
+              {currentRepairFocus.note && (
                 <View style={styles.infoCard}>
                   <Text style={styles.sectionTitle}>Dodatne opombe</Text>
                   <Text style={styles.notesText}>
-                    {currentRepairFocus.message}
+                    {currentRepairFocus.note}
                   </Text>
                 </View>
               )}
