@@ -23,7 +23,7 @@ const fakeAppointmentData: AppointmentData[] = [
       city: "New York",
       image: "john_doe.jpg",
       email: "john.doe@example.com",
-      phoneNumber: "123-456-7890",
+      prices: {},
     },
   },
   {
@@ -40,7 +40,7 @@ const fakeAppointmentData: AppointmentData[] = [
       city: "New York",
       image: "john_doe.jpg",
       email: "john.doe@example.com",
-      phoneNumber: "123-456-7890",
+      prices: {},
     },
   },
   {
@@ -58,7 +58,7 @@ const fakeAppointmentData: AppointmentData[] = [
       city: "New York",
       image: "john_doe.jpg",
       email: "john.doe@example.com",
-      phoneNumber: "123-456-7890",
+      prices: {},
     },
   },
   {
@@ -76,7 +76,7 @@ const fakeAppointmentData: AppointmentData[] = [
       city: "New York",
       image: "john_doe.jpg",
       email: "john.doe@example.com",
-      phoneNumber: "123-456-7890",
+      prices: {},
     },
   },
   {
@@ -94,7 +94,7 @@ const fakeAppointmentData: AppointmentData[] = [
       city: "New York",
       image: "john_doe.jpg",
       email: "john.doe@example.com",
-      phoneNumber: "123-456-7890",
+      prices: {},
     },
   },
 ];

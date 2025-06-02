@@ -4,7 +4,7 @@ import { Colors } from "@/constants/Colors";
 import ModalPrompt from "../modals/ModalPrompt";
 import ModalAppointment from "../modals/ModalAppointment";
 import { formatDateTime } from "@/constants/util";
-import { AppointmentData } from "@/interfaces/mechanic";
+import { AppointmentData } from "@/interfaces/appointment";
 import { Ionicons } from "@expo/vector-icons";
 
 interface Props {

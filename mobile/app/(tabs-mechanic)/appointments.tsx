@@ -2,7 +2,7 @@ import { View, StyleSheet } from "react-native";
 import { useState } from "react";
 import DisplayItems from "@/components/global/DisplayItems";
 import Appointment from "@/components/mechanic/items/Appointment";
-import { AppointmentData } from "@/interfaces/mechanic";
+import { AppointmentData } from "@/interfaces/appointment";
 import TitleRow from "@/components/shared/TitleRow";
 
 const fakeAppointments: AppointmentData[] = [

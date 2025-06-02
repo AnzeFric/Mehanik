@@ -17,3 +17,11 @@ export interface Appointment {
   status: Status;
   description: string;
 }
+
+export interface AppointmentData {
+  id: number;
+  name: string;
+  vehicle: string;
+  dateTime: Date;
+  description: string;
+}

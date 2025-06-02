@@ -54,11 +54,6 @@ export default function Appointment({ appointmentData, onPress }: Props) {
             {appointmentData.mechanic.address}, {appointmentData.mechanic.city}
           </Text>
         )}
-        {appointmentData.mechanic.phoneNumber && (
-          <Text style={styles.contact}>
-            {appointmentData.mechanic.phoneNumber}
-          </Text>
-        )}
         {appointmentData.mechanic.email && (
           <Text style={styles.contact}>{appointmentData.mechanic.email}</Text>
         )}
