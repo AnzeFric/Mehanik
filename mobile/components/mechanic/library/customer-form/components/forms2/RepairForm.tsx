@@ -68,7 +68,7 @@ export default function RepairForm({ setRepair }: Props) {
     const updatedRepair: RepairData = {
       type,
       description,
-      price: parseInt(price),
+      price: parseFloat(price),
       note,
       images: serviceImages,
       options,
