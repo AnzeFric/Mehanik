@@ -2,11 +2,11 @@ import { Text, View, Image, StyleSheet } from "react-native";
 import { AppStyles } from "@/constants/Styles";
 
 interface Props {
-  imageUri: string | undefined;
+  imageUri: string | undefined | null;
   brand: string | undefined;
   model: string | undefined;
   year: number | undefined;
-  description: string | undefined;
+  description: string | undefined | null;
   vin: string | undefined;
 }
 

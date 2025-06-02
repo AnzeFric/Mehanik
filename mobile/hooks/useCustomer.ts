@@ -1,6 +1,10 @@
 import useAuthStore from "@/stores/useAuthStore";
 import { API_BASE_URL } from "@/constants/Config";
-import { CustomerData } from "@/interfaces/mechanic";
+import {
+  CustomerData2,
+  CustomerVehicleData,
+  VehicleData2,
+} from "@/interfaces/mechanic";
 import useCustomerStore from "@/stores/useCustomerStore";
 
 export function useCustomer() {
@@ -32,22 +36,26 @@ export function useCustomer() {
     const customers = await getMehcanicCustomers();
     if (customers.length <= 0) return;
 
-    let tempCustomers: Array<CustomerData> = [];
-    // Get customers from data
+    let tempCustomers: Array<CustomerVehicleData> = [];
     customers.forEach((item: any) => {
-      let customer: CustomerData = {
+      let customer: CustomerData2 = {
         email: item.email,
         firstName: item.firstName,
         lastName: item.lastName,
-
-        image: item.image,
-        brand: item.brand,
-        model: item.model,
-        buildYear: item.buildYear,
-        vin: item.vin,
-        description: item.description,
+        phone: item.phone,
       };
-      tempCustomers.push(customer);
+
+      item.vehicles.forEach((customerVehicle: any) => {
+        let vehicle: VehicleData2 = {
+          brand: customerVehicle.brand,
+          model: customerVehicle.model,
+          buildYear: customerVehicle.buildYear,
+          vin: customerVehicle.vin,
+          image: customerVehicle.image,
+          description: customerVehicle.description,
+        };
+        tempCustomers.push({ customer, vehicle });
+      });
     });
     setCustomers(tempCustomers);
   };

@@ -5,7 +5,7 @@ import { Colors } from "@/constants/Colors";
 import MenuIcon from "@/assets/icons/MenuIcon.svg";
 import VehicleData from "@/components/mechanic/library/VehicleData";
 import ServicesMap from "@/components/mechanic/library/ServicesMap";
-import { CustomerData, ServiceData } from "@/interfaces/mechanic";
+import { CustomerVehicleData, ServiceData } from "@/interfaces/mechanic";
 import TemplateView from "@/components/mechanic/library/TemplateView";
 import ModalPrompt from "@/components/mechanic/modals/ModalPrompt";
 import PlusButton from "@/components/global/PlusButton";
@@ -17,13 +17,15 @@ export default function DetailServiceScreen() {
   const { getVehicleRepairs } = useRepair();
   const { customers } = useCustomer();
   const [serviceList, setServiceList] = useState<Array<ServiceData>>([]);
-  const [customer, setCustomer] = useState<CustomerData | undefined>(undefined);
+  const [customer, setCustomer] = useState<CustomerVehicleData | undefined>(
+    undefined
+  );
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const customerInit = () => {
-      const foundCustomer = customers.find((item) => item.vin === vin);
+      const foundCustomer = customers.find((item) => item.vehicle.vin === vin);
       setCustomer(foundCustomer);
     };
     const repairsFetch = async () => {
@@ -88,12 +90,12 @@ export default function DetailServiceScreen() {
         <View style={styles.container}>
           <Text>TODO: Dodaj podatke o uporabniku</Text>
           <VehicleData
-            imageUri={customer?.image}
-            brand={customer?.brand}
-            model={customer?.model}
-            year={customer?.buildYear}
-            vin={customer?.vin}
-            description={customer?.description}
+            imageUri={customer?.vehicle.image}
+            brand={customer?.vehicle.brand}
+            model={customer?.vehicle.model}
+            year={customer?.vehicle.buildYear}
+            vin={customer?.vehicle.vin}
+            description={customer?.vehicle.description}
           />
           <ServicesMap serviceList={serviceList} />
           {isModalOpen && (

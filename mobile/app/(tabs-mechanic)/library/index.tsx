@@ -20,11 +20,19 @@ export default function LibraryScreen() {
       ? customers
       : customers.filter(
           (customer) =>
-            customer.firstName.toLowerCase().includes(search.toLowerCase()) ||
-            customer.lastName.toLowerCase().includes(search.toLowerCase()) ||
-            customer.brand.toLowerCase().includes(search.toLowerCase()) ||
-            customer.model.toLowerCase().includes(search.toLowerCase()) ||
-            customer.vin.toLowerCase().includes(search.toLowerCase())
+            customer.customer.firstName
+              .toLowerCase()
+              .includes(search.toLowerCase()) ||
+            customer.customer.lastName
+              .toLowerCase()
+              .includes(search.toLowerCase()) ||
+            customer.vehicle.brand
+              .toLowerCase()
+              .includes(search.toLowerCase()) ||
+            customer.vehicle.model
+              .toLowerCase()
+              .includes(search.toLowerCase()) ||
+            customer.vehicle.vin.toLowerCase().includes(search.toLowerCase())
         );
 
   useEffect(() => {

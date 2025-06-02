@@ -1,11 +1,11 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { CustomerData } from "@/interfaces/mechanic";
+import { CustomerVehicleData } from "@/interfaces/mechanic";
 
 interface CustomerStore {
-  customers: Array<CustomerData>;
-  setCustomers: (customers: Array<CustomerData>) => void;
+  customers: Array<CustomerVehicleData>;
+  setCustomers: (customers: Array<CustomerVehicleData>) => void;
   reset: () => void;
 }
 
@@ -17,7 +17,7 @@ const useCustomerStore = create(
   persist<CustomerStore>(
     (set) => ({
       ...initialState,
-      setCustomers: (customers: Array<CustomerData>) => {
+      setCustomers: (customers: Array<CustomerVehicleData>) => {
         set({ customers: customers });
       },
       reset: async () => {

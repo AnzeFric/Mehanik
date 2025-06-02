@@ -1,10 +1,10 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { router } from "expo-router";
 import { Colors } from "@/constants/Colors";
-import { CustomerData } from "@/interfaces/mechanic";
+import { CustomerVehicleData } from "@/interfaces/mechanic";
 
 interface Props {
-  customerData: CustomerData;
+  customerData: CustomerVehicleData;
   setSearch: (text: string) => void;
 }
 
@@ -12,7 +12,7 @@ export default function Customer({ customerData, setSearch }: Props) {
   const handlePress = () => {
     setSearch("");
     router.push(
-      `/library/${customerData.vin}?firstName=${customerData.firstName}`
+      `/library/${customerData.vehicle.vin}?firstName=${customerData.customer.firstName}`
     );
   };
 
@@ -22,8 +22,11 @@ export default function Customer({ customerData, setSearch }: Props) {
       activeOpacity={0.7}
       onPress={handlePress}
     >
-      {customerData.image ? (
-        <Image source={{ uri: customerData.image }} style={styles.image} />
+      {customerData.vehicle.image ? (
+        <Image
+          source={{ uri: customerData.vehicle.image }}
+          style={styles.image}
+        />
       ) : (
         <Image
           source={require("@/assets/images/logo-main.png")}
@@ -32,14 +35,14 @@ export default function Customer({ customerData, setSearch }: Props) {
       )}
       <View style={styles.infoContainer}>
         <Text style={styles.name}>
-          {customerData.firstName} {customerData.lastName}
+          {customerData.customer.firstName} {customerData.customer.lastName}
         </Text>
         <Text style={styles.address}>
-          {customerData.brand} {customerData.model}
+          {customerData.vehicle.brand} {customerData.vehicle.model}
           {", "}
-          {customerData.buildYear}
+          {customerData.vehicle.buildYear}
         </Text>
-        <Text style={styles.contact}>{customerData.vin}</Text>
+        <Text style={styles.contact}>{customerData.vehicle.vin}</Text>
       </View>
     </TouchableOpacity>
   );
