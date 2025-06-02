@@ -1,9 +1,9 @@
 import { RepairData } from "./repair";
 
 export interface CustomerData {
-  email: string;
   firstName: string;
   lastName: string;
+  email: string | null;
   phone: string | null;
   image: string | null;
 }

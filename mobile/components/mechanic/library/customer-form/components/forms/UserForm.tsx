@@ -33,7 +33,7 @@ export default function UserForm({ control, errors }: CustomerInfoProps) {
       />
       <CustomController
         control={control}
-        placeholder={"Email  (ni obvezno)"}
+        placeholder={"Email (ni obvezno)"}
         optional={true}
         name={"customer.email"}
         keyboardType={"email-address"}

@@ -31,7 +31,9 @@ export default function VehicleDisplay({ vehicle }: Props) {
         </Text>
         <Text style={AppStyles.boldText}>{vehicle.vin}</Text>
       </View>
-      <Text style={AppStyles.smallText}>{vehicle.description}</Text>
+      {vehicle.description && (
+        <Text style={AppStyles.smallText}>{vehicle.description}</Text>
+      )}
     </View>
   );
 }

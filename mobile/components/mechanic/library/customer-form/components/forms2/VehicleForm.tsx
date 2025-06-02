@@ -46,14 +46,14 @@ export default function VehicleForm({ setVehicle }: Props) {
         placeholder={"Znamka"}
         value={brand}
         onChangeText={setBrand}
-        autoCapitalize={"none"}
+        autoCapitalize={"words"}
       />
       <TextInput
         style={styles.input}
         placeholder={"Model"}
         value={model}
         onChangeText={setModel}
-        autoCapitalize={"none"}
+        autoCapitalize={"words"}
       />
       <TextInput
         style={styles.input}

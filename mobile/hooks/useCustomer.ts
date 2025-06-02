@@ -29,7 +29,6 @@ export function useCustomer() {
     };
 
     try {
-      console.log("Sending data, saveCustomer: ", body);
       await fetch(`${API_BASE_URL}/customers/`, {
         method: "POST",
         headers: {

@@ -28,9 +28,9 @@ export default function AddCustomerScreen() {
 
   const handleSaveImage = (image: string) => {
     setCustomerData((prevData) => ({
-      email: "",
       firstName: "",
       lastName: "",
+      email: null,
       phone: null,
       ...prevData,
       image: image,
@@ -38,12 +38,6 @@ export default function AddCustomerScreen() {
   };
 
   const handlePress = () => {
-    console.log("Saving new customer: ", {
-      customerData,
-      vehicleData,
-      repairData,
-    });
-
     if (!customerData || !vehicleData) {
       return;
     }

@@ -75,7 +75,34 @@ export default function RepairForm({ setRepair }: Props) {
       date: new Date(),
     };
     setRepair(updatedRepair);
-  }, [type, description, price, note, serviceImages, options]);
+  }, [description, price, note, serviceImages, options]);
+
+  useEffect(() => {
+    if (type === "small") {
+      setOptions({
+        ...options,
+        sparkPlugs: false,
+        suspension: false,
+        timing: false,
+        tireRotation: false,
+      });
+    } else if (type === "other") {
+      setOptions({
+        oilChange: false,
+        filterChange: false,
+        brakeCheck: false,
+        tireRotation: false,
+        fluidCheck: false,
+        batteryCheck: false,
+        sparkPlugs: false,
+        airFilter: false,
+        cabinFilter: false,
+        suspension: false,
+        timing: false,
+        coolant: false,
+      });
+    }
+  }, [type]);
 
   useFocusEffect(
     useCallback(() => {
@@ -144,28 +171,33 @@ export default function RepairForm({ setRepair }: Props) {
           />
           <CustomCheckBox
             text="Zračni filter"
-            value={options.filterChange}
+            value={options.airFilter}
             onChange={(val) => handleChange("airFilter", val)}
           />
           <CustomCheckBox
             text="Kabinski filter"
-            value={options.filterChange}
+            value={options.cabinFilter}
             onChange={(val) => handleChange("cabinFilter", val)}
           />
           <CustomCheckBox
             text="Preverjanje tekočin"
-            value={options.filterChange}
+            value={options.fluidCheck}
             onChange={(val) => handleChange("fluidCheck", val)}
           />
           <CustomCheckBox
             text="Preverjanje akumulatorja"
-            value={options.filterChange}
+            value={options.batteryCheck}
             onChange={(val) => handleChange("batteryCheck", val)}
           />
           <CustomCheckBox
             text="Zavore"
             value={options.brakeCheck}
             onChange={(val) => handleChange("brakeCheck", val)}
+          />
+          <CustomCheckBox
+            text="Dolitje hladilne tekočine"
+            value={options.coolant}
+            onChange={(val) => handleChange("coolant", val)}
           />
           {type === "large" && (
             <>
@@ -179,19 +211,15 @@ export default function RepairForm({ setRepair }: Props) {
                 value={options.timing}
                 onChange={(val) => handleChange("timing", val)}
               />
-              <CustomCheckBox
-                text="Hladilna tekočina"
-                value={options.coolant}
-                onChange={(val) => handleChange("coolant", val)}
-              />
+
               <CustomCheckBox
                 text="Centriranje gum"
-                value={options.coolant}
+                value={options.tireRotation}
                 onChange={(val) => handleChange("tireRotation", val)}
               />
               <CustomCheckBox
                 text="Vzmetje"
-                value={options.coolant}
+                value={options.suspension}
                 onChange={(val) => handleChange("suspension", val)}
               />
             </>

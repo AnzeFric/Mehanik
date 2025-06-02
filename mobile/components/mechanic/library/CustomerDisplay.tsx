@@ -14,7 +14,9 @@ export default function CustomerDisplay({ customer }: Props) {
         <Text style={AppStyles.smallText}>
           {customer.firstName} {customer.lastName}
         </Text>
-        <Text style={AppStyles.smallText}>{customer.email}</Text>
+        {customer.email && (
+          <Text style={AppStyles.smallText}>{customer.email}</Text>
+        )}
         {customer.phone && <Text style={AppStyles.text}>{customer.phone}</Text>}
       </View>
     </View>

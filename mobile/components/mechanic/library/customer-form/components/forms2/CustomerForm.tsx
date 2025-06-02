@@ -44,7 +44,7 @@ export default function CustomerForm({ customerImage, setCustomer }: Props) {
         placeholder={"Ime"}
         value={firstName}
         onChangeText={setFirstName}
-        autoCapitalize={"none"}
+        autoCapitalize={"words"}
       />
 
       <TextInput
@@ -52,7 +52,7 @@ export default function CustomerForm({ customerImage, setCustomer }: Props) {
         placeholder={"Priimek"}
         value={lastName}
         onChangeText={setLastName}
-        autoCapitalize={"none"}
+        autoCapitalize={"words"}
       />
 
       <TextInput

@@ -19,7 +19,7 @@ const repairService = {
 
     const { error } = await supabase.from("repairs").insert({
       uuid: repairUuid,
-      type: repairData.tpye,
+      type: repairData.type,
       price: repairData.price,
       date: repairData.date,
       options: repairData.options,
