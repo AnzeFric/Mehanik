@@ -42,7 +42,22 @@ const customerService = {
 
     if (error) throw error;
 
-    return data || [];
+    const transformedData = (data || []).map((customer) => ({
+      firstName: customer.first_name,
+      lastName: customer.last_name,
+      phone: customer.phone,
+      email: customer.email,
+      vehicles:
+        customer.vehicles?.map((vehicle) => ({
+          brand: vehicle.brand,
+          model: vehicle.model,
+          buildYear: vehicle.build_year,
+          vin: vehicle.vin,
+          image: vehicle.image,
+        })) || [],
+    }));
+
+    return transformedData;
   },
 };
 
