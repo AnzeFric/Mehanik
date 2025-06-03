@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { useState, useCallback } from "react";
 import BackIcon from "@/assets/icons/BackIcon.svg";
-import { router, useFocusEffect } from "expo-router";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import {
   formatDate,
@@ -22,7 +22,8 @@ import { Ionicons } from "@expo/vector-icons";
 import LoadingScreen from "@/components/global/LoadingScreen";
 import { useRepair } from "@/hooks/useRepair";
 
-export default function ServiceDetailScreen() {
+export default function DetailRepairScreen() {
+  const { vehicleVin } = useLocalSearchParams();
   const { currentRepairFocus } = useRepair();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
@@ -65,7 +66,7 @@ export default function ServiceDetailScreen() {
           <View style={styles.menuContainer}>
             <TouchableOpacity
               style={styles.menuItemContainer}
-              onPress={() => router.push(`/library/service-edit/`)}
+              onPress={() => router.push(`/library/repair/edit/${vehicleVin}`)}
             >
               <Ionicons
                 name="create-outline"

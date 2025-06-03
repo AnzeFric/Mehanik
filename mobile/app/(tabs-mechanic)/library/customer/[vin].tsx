@@ -15,7 +15,7 @@ import LoadingScreen from "@/components/global/LoadingScreen";
 import CustomerDisplay from "@/components/mechanic/library/CustomerDisplay";
 import { RepairData } from "@/interfaces/repair";
 
-export default function DetailServiceScreen() {
+export default function DetailCustomerScreen() {
   const { vin, firstName } = useLocalSearchParams();
   const { getVehicleRepairs } = useRepair();
   const { customers, deleteCustomer } = useCustomer();
@@ -55,7 +55,7 @@ export default function DetailServiceScreen() {
 
   const handleAddService = () => {
     shouldRefetch.current = true;
-    router.push(`/(tabs-mechanic)/library/service/${vin}`);
+    router.push(`/(tabs-mechanic)/library/repair/add/${vin}`);
   };
 
   const handleDeleteCustomer = async () => {
@@ -89,7 +89,7 @@ export default function DetailServiceScreen() {
         <Text style={[styles.menuItem, styles.menuItemTop]}>PROMETNA</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => router.push(`/library/customer-edit/${vin}`)}
+        onPress={() => router.push(`/library/customer/edit/${vin}`)}
       >
         <Text style={[styles.menuItem, styles.menuItemTop]}>UREDI</Text>
       </TouchableOpacity>

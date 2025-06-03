@@ -78,7 +78,7 @@ export default function LibraryScreen() {
       />
       <PlusButton
         onPress={() => {
-          router.push("/library/add-customer");
+          router.push("/library/customer/add");
         }}
       />
     </View>

@@ -84,43 +84,37 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="library/[vin]"
+          name="library/customer/[vin]"
           options={{
             href: null,
           }}
         />
         <Tabs.Screen
-          name="library/add-customer"
+          name="library/customer/add"
           options={{
             href: null,
           }}
         />
         <Tabs.Screen
-          name="library/customer-edit/[id]"
+          name="library/customer/edit/[vin]"
           options={{
             href: null,
           }}
         />
         <Tabs.Screen
-          name="library/service-add/[id]"
+          name="library/repair/[vin]"
           options={{
             href: null,
           }}
         />
         <Tabs.Screen
-          name="library/service-edit/[id]"
+          name="library/repair/add/[vin]"
           options={{
             href: null,
           }}
         />
         <Tabs.Screen
-          name="library/service/detail"
-          options={{
-            href: null,
-          }}
-        />
-        <Tabs.Screen
-          name="library/service/[vin]"
+          name="library/repair/edit/[vin]"
           options={{
             href: null,
           }}
