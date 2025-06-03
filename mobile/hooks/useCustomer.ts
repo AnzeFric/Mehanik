@@ -85,6 +85,7 @@ export function useCustomer() {
     let tempCustomers: Array<CustomerVehicleData> = [];
     customers.forEach((item: any) => {
       let customer: CustomerData = {
+        uuid: item.uuid,
         email: item.email,
         firstName: item.firstName,
         lastName: item.lastName,

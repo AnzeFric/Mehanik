@@ -8,4 +8,6 @@ router.get("/", customerController.getCustomers);
 // Save new customer of the authorized mechanic
 router.post("/", customerController.saveCustomer);
 
+router.delete("/", customerController.deleteCustomer);
+
 module.exports = router;

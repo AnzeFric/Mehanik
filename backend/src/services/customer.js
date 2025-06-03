@@ -36,13 +36,14 @@ const customerService = {
     const { data, error } = await supabase
       .from("customers")
       .select(
-        "first_name, last_name, phone, email, vehicles(brand, model, build_year, vin, image, description)"
+        "uuid, first_name, last_name, phone, email, vehicles(brand, model, build_year, vin, image, description)"
       )
       .eq("fk_mechanic", mechanicUuid);
 
     if (error) throw error;
 
     const transformedData = (data || []).map((customer) => ({
+      uuid: customer.uuid,
       firstName: customer.first_name,
       lastName: customer.last_name,
       phone: customer.phone,
@@ -59,6 +60,17 @@ const customerService = {
     }));
 
     return transformedData;
+  },
+
+  async deleteByCustomerUuid(customerUuid) {
+    const { error } = await supabase
+      .from("customers")
+      .delete()
+      .eq("uuid", customerUuid);
+
+    if (error) throw error;
+
+    return true;
   },
 };
 

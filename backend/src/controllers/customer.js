@@ -38,6 +38,22 @@ const customerController = {
       next(error);
     }
   },
+
+  async deleteCustomer(req, res, next) {
+    try {
+      console.log("Delete customer: ", req.user);
+      if (!req.body.customerUuid)
+        throw new Error("Customer UUID is not provided");
+
+      await customerService.deleteByCustomerUuid(req.body.customerUuid);
+      return res.status(200).send({
+        success: true,
+        message: "Customer deleted successfully",
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
 };
 
 module.exports = customerController;

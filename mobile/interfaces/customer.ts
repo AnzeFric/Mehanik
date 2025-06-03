@@ -1,6 +1,7 @@
 import { RepairData } from "./repair";
 
 export interface CustomerData {
+  uuid: string;
   firstName: string;
   lastName: string;
   email: string | null;

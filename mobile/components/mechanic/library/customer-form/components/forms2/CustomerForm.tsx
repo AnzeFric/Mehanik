@@ -5,10 +5,11 @@ import { useFocusEffect } from "expo-router";
 import { Colors } from "@/constants/Colors";
 
 interface Props {
+  customerUuid: string | undefined;
   setCustomer: (customer: CustomerData) => void;
 }
 
-export default function CustomerForm({ setCustomer }: Props) {
+export default function CustomerForm({ customerUuid, setCustomer }: Props) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
@@ -16,6 +17,7 @@ export default function CustomerForm({ setCustomer }: Props) {
 
   useEffect(() => {
     const updatedCustomer: CustomerData = {
+      uuid: customerUuid || "",
       firstName,
       lastName,
       phone: phone || null,
