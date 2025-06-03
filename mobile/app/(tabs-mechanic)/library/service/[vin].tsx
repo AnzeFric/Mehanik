@@ -1,18 +1,19 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useState } from "react";
 import RepairForm from "@/components/mechanic/library/customer-form/components/forms2/RepairForm";
 import { RepairData } from "@/interfaces/repair";
 import { useRepair } from "@/hooks/useRepair";
 import TemplateView from "@/components/mechanic/library/TemplateView";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 
 export default function AddServiceScreen() {
+  const { vin } = useLocalSearchParams();
   const [repairData, setRepairData] = useState<RepairData | null>(null);
-  const { currentRepairFocus, saveVehicleRepairs } = useRepair();
+  const { saveVehicleRepairs } = useRepair();
 
   const handleSaveRepair = () => {
-    if (repairData && currentRepairFocus) {
-      saveVehicleRepairs(currentRepairFocus?.vehicleVin, repairData);
+    if (repairData) {
+      saveVehicleRepairs(vin.toString(), repairData);
       router.back();
     }
   };
@@ -23,9 +24,15 @@ export default function AddServiceScreen() {
       buttonText={"Shrani"}
       onButtonPress={handleSaveRepair}
     >
-      <RepairForm setRepair={setRepairData} />
+      <View style={styles.container}>
+        <RepairForm setRepair={setRepairData} />
+      </View>
     </TemplateView>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 25,
+  },
+});

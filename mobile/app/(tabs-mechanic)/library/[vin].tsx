@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { useLocalSearchParams, router, useFocusEffect } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import MenuIcon from "@/assets/icons/MenuIcon.svg";
@@ -24,29 +24,37 @@ export default function DetailServiceScreen() {
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
+  const shouldRefetch = useRef<Boolean>(false);
+
+  const repairsFetch = async () => {
+    const repairData = await getVehicleRepairs(vin.toString());
+    setServiceList(repairData);
+  };
+
   useEffect(() => {
     const customerInit = () => {
       const foundCustomer = customers.find((item) => item.vehicle.vin === vin);
       setCustomer(foundCustomer);
-    };
-    const repairsFetch = async () => {
-      const repairData = await getVehicleRepairs(vin.toString());
-      setServiceList(repairData);
     };
 
     customerInit();
     repairsFetch();
   }, [vin]);
 
-  // CallBack for screen closing
   useFocusEffect(
     useCallback(() => {
       setIsMenuVisible(false);
+
+      if (shouldRefetch.current) {
+        repairsFetch();
+        shouldRefetch.current = false;
+      }
     }, [])
   );
 
   const handleAddService = () => {
-    router.push(`/(tabs-mechanic)/library/service/add`);
+    shouldRefetch.current = true;
+    router.push(`/(tabs-mechanic)/library/service/${vin}`);
   };
 
   const menuIcon: React.ReactNode = (

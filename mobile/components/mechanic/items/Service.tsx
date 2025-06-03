@@ -19,10 +19,7 @@ export default function Service({ serviceData, vehicleVin }: Props) {
   const { setCurrentRepairFocus } = useRepair();
 
   const handleRedirect = () => {
-    setCurrentRepairFocus({
-      repairData: serviceData,
-      vehicleVin: vehicleVin,
-    });
+    setCurrentRepairFocus(serviceData);
     router.push(`/(tabs-mechanic)/library/service/detail`);
   };
 
