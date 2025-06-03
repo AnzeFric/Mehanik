@@ -18,7 +18,6 @@ const customerService = {
       last_name: customerData.lastName,
       phone: customerData.phone,
       email: customerData.email,
-      image: customerData.image,
       fk_mechanic: mechanicUuid,
     });
 
@@ -48,7 +47,6 @@ const customerService = {
       lastName: customer.last_name,
       phone: customer.phone,
       email: customer.email,
-      image: customer.image,
       vehicles:
         customer.vehicles?.map((vehicle) => ({
           brand: vehicle.brand,

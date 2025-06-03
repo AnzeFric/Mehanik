@@ -17,6 +17,7 @@ export function useCustomer() {
     vehicleData: VehicleData,
     repairData: RepairData | null
   ) => {
+    console.log("Savinf customer: ", vehicleData);
     let repairDataCheck = repairData;
     if (repairData?.type === "other" && repairData.description === "") {
       repairDataCheck = null;
@@ -87,7 +88,6 @@ export function useCustomer() {
         firstName: item.firstName,
         lastName: item.lastName,
         phone: item.phone,
-        image: item.image,
       };
 
       item.vehicles.forEach((customerVehicle: any) => {

@@ -5,10 +5,11 @@ import { Colors } from "@/constants/Colors";
 import { useFocusEffect } from "expo-router";
 
 interface Props {
+  vehicleImage: string | null | undefined;
   setVehicle: (vehicle: VehicleData | undefined) => void;
 }
 
-export default function VehicleForm({ setVehicle }: Props) {
+export default function VehicleForm({ vehicleImage, setVehicle }: Props) {
   const [brand, setBrand] = useState("");
   const [model, setModel] = useState("");
   const [buildYear, setBuildYear] = useState("");
@@ -22,7 +23,7 @@ export default function VehicleForm({ setVehicle }: Props) {
       buildYear: buildYear ? parseInt(buildYear) : 0,
       vin,
       description,
-      image: null,
+      image: vehicleImage || null, // Perserve the image
     };
     setVehicle(updatedVehicle);
   }, [brand, model, buildYear, vin, description]);

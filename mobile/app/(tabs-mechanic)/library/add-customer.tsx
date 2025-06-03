@@ -70,14 +70,14 @@ export default function AddCustomerScreen() {
     <View style={styles.container}>
       <TitleRow title={"Dodaj stranko"} hasBackButton={true} />
       <ScrollView style={styles.childrenContainer} ref={scrollRef}>
-        <ImageForm image={customerData?.image} setImage={handleSaveImage} />
+        <ImageForm image={vehicleData?.image} setImage={handleSaveImage} />
         <Text style={styles.sectionTitle}>Informacije o stranki</Text>
-        <CustomerForm
-          customerImage={customerData?.image}
-          setCustomer={setCustomerData}
-        />
+        <CustomerForm setCustomer={setCustomerData} />
         <Text style={styles.sectionTitle}>Informacije o vozilu</Text>
-        <VehicleForm setVehicle={setVehicleData} />
+        <VehicleForm
+          vehicleImage={vehicleData?.image}
+          setVehicle={setVehicleData}
+        />
         <Text style={styles.sectionTitle}>Informacije o servisu.</Text>
         <Text style={[AppStyles.smallText, { paddingBottom: 15 }]}>
           Če servis ni bil izveden izberite "Drugo" in pustite prazno.
