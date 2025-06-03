@@ -26,6 +26,10 @@ const repairController = {
         req.body.vin,
         req.body.repairs
       );
+      res.status(200).send({
+        success: true,
+        message: "Vehicle repairs saved successfully",
+      });
     } catch (error) {
       next(error);
     }
