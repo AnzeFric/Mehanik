@@ -81,7 +81,6 @@ export function useCustomer() {
 
   const updateStoredCustomerData = async () => {
     const customers = await getMehcanicCustomers();
-    if (customers.length <= 0) return;
 
     let tempCustomers: Array<CustomerVehicleData> = [];
     customers.forEach((item: any) => {
