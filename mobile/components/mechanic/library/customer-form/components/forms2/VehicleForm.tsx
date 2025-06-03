@@ -23,8 +23,10 @@ export default function VehicleForm({ vehicleImage, setVehicle }: Props) {
       buildYear: buildYear ? parseInt(buildYear) : 0,
       vin,
       description,
-      image: vehicleImage || null, // Perserve the image
+      image: vehicleImage ? vehicleImage : null, // Perserve the image
     };
+    console.log("Updating vehicle: ", updatedVehicle);
+
     setVehicle(updatedVehicle);
   }, [brand, model, buildYear, vin, description]);
 

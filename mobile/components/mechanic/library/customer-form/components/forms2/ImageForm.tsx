@@ -2,13 +2,16 @@ import { TouchableHighlight, Image, StyleSheet } from "react-native";
 import CameraIcon from "@/assets/icons/CameraIcon.svg";
 import { Colors } from "@/constants/Colors";
 import * as ImagePicker from "expo-image-picker";
+import * as FileSystem from "expo-file-system";
+import { useState } from "react";
 
 interface Props {
-  image: string | null | undefined;
   setImage: (image: string) => void;
 }
 
-export default function ImageForm({ image, setImage }: Props) {
+export default function ImageForm({ setImage }: Props) {
+  const [imageLocal, setImageLocal] = useState<string | null>(null);
+
   const pickCustomerImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
@@ -17,7 +20,20 @@ export default function ImageForm({ image, setImage }: Props) {
     });
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      const uri = result.assets[0].uri;
+
+      // Convert to base64 for database storage
+      try {
+        const base64 = await FileSystem.readAsStringAsync(uri, {
+          encoding: FileSystem.EncodingType.Base64,
+        });
+
+        // Add data URL prefix for proper format
+        const base64WithPrefix = `data:image/jpeg;base64,${base64}`;
+        setImage(base64WithPrefix);
+      } catch (error) {
+        console.error("Error converting image to base64:", error);
+      }
     }
   };
 
@@ -27,8 +43,8 @@ export default function ImageForm({ image, setImage }: Props) {
       underlayColor={Colors.light.underlayColor}
       onPress={pickCustomerImage}
     >
-      {image ? (
-        <Image source={{ uri: image }} style={styles.image} />
+      {imageLocal ? (
+        <Image source={{ uri: imageLocal }} style={styles.image} />
       ) : (
         <CameraIcon height={30} width={30} />
       )}

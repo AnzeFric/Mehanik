@@ -27,11 +27,12 @@ export default function AddCustomerScreen() {
   const scrollRef = useRef<ScrollView>(null);
 
   const handleSaveImage = (image: string) => {
-    setCustomerData((prevData) => ({
-      firstName: "",
-      lastName: "",
-      email: null,
-      phone: null,
+    setVehicleData((prevData) => ({
+      brand: "",
+      model: "",
+      buildYear: 0,
+      vin: "",
+      description: "",
       ...prevData,
       image: image,
     }));
@@ -70,7 +71,7 @@ export default function AddCustomerScreen() {
     <View style={styles.container}>
       <TitleRow title={"Dodaj stranko"} hasBackButton={true} />
       <ScrollView style={styles.childrenContainer} ref={scrollRef}>
-        <ImageForm image={vehicleData?.image} setImage={handleSaveImage} />
+        <ImageForm setImage={handleSaveImage} />
         <Text style={styles.sectionTitle}>Informacije o stranki</Text>
         <CustomerForm setCustomer={setCustomerData} />
         <Text style={styles.sectionTitle}>Informacije o vozilu</Text>

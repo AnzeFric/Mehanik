@@ -10,11 +10,7 @@ export default function VehicleDisplay({ vehicle }: Props) {
   return (
     <View style={styles.container}>
       {vehicle.image ? (
-        // TODO: Load image dynamically from backend
-        <Image
-          source={require("@/assets/images/logo-main.png")}
-          style={styles.image}
-        />
+        <Image source={{ uri: vehicle.image }} style={styles.image} />
       ) : (
         <Image
           source={require("@/assets/images/logo-main.png")}

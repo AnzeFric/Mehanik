@@ -17,7 +17,7 @@ export function useCustomer() {
     vehicleData: VehicleData,
     repairData: RepairData | null
   ) => {
-    console.log("Savinf customer: ", vehicleData);
+    console.log("Saving customer: ", vehicleData);
     let repairDataCheck = repairData;
     if (repairData?.type === "other" && repairData.description === "") {
       repairDataCheck = null;
@@ -48,8 +48,10 @@ export function useCustomer() {
           vehicle: vehicleData,
         };
         setCustomers([...customers, newCustomerVehicle]);
+        return true;
       }
       console.log("Error saving customer");
+      return false;
     } catch (error) {
       console.error("Error while saving mechanic customer");
     }
