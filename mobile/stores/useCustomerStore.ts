@@ -5,12 +5,15 @@ import { CustomerVehicleData } from "@/interfaces/customer";
 
 interface CustomerStore {
   customers: Array<CustomerVehicleData>;
+  shouldRefetch: Boolean;
   setCustomers: (customers: Array<CustomerVehicleData>) => void;
+  setShouldRefetch: (shouldRefresh: Boolean) => void;
   reset: () => void;
 }
 
 const initialState = {
   customers: [],
+  shouldRefetch: false,
 };
 
 const useCustomerStore = create(
@@ -19,6 +22,9 @@ const useCustomerStore = create(
       ...initialState,
       setCustomers: (customers: Array<CustomerVehicleData>) => {
         set({ customers: customers });
+      },
+      setShouldRefetch: (shouldRefetch: Boolean) => {
+        set({ shouldRefetch: shouldRefetch });
       },
       reset: async () => {
         set(() => ({ ...initialState }));

@@ -21,9 +21,11 @@ import { Ionicons } from "@expo/vector-icons";
 import LoadingScreen from "@/components/global/LoadingScreen";
 import { useRepair } from "@/hooks/useRepair";
 import TitleRow from "@/components/shared/TitleRow";
+import useCustomerStore from "@/stores/useCustomerStore";
 
 export default function DetailRepairScreen() {
   const { vehicleVin } = useLocalSearchParams();
+  const { setShouldRefetch } = useCustomerStore();
   const { currentRepairFocus, deleteVehicleRepair } = useRepair();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
@@ -43,6 +45,7 @@ export default function DetailRepairScreen() {
       setIsModalOpen(false);
 
       if (success) {
+        setShouldRefetch(true);
         router.back();
       }
     } else {

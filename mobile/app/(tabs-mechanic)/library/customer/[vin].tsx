@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useLocalSearchParams, router, useFocusEffect } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import MenuIcon from "@/assets/icons/MenuIcon.svg";
@@ -14,17 +14,17 @@ import { useRepair } from "@/hooks/useRepair";
 import LoadingScreen from "@/components/global/LoadingScreen";
 import CustomerDisplay from "@/components/mechanic/library/displays/Customer";
 import { RepairData } from "@/interfaces/repair";
+import useCustomerStore from "@/stores/useCustomerStore";
 
 export default function DetailCustomerScreen() {
   const { vin, firstName } = useLocalSearchParams();
   const { getVehicleRepairs } = useRepair();
+  const { shouldRefetch, setShouldRefetch } = useCustomerStore();
   const { customers, deleteCustomer } = useCustomer();
   const [repairList, setRepairList] = useState<Array<RepairData>>([]);
   const [customer, setCustomer] = useState<CustomerVehicleData>();
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
-  const shouldRefetch = useRef<Boolean>(false);
 
   const repairsFetch = async () => {
     const repairData = await getVehicleRepairs(vin.toString());
@@ -46,15 +46,15 @@ export default function DetailCustomerScreen() {
       setIsMenuVisible(false);
       setIsModalOpen(false);
 
-      if (shouldRefetch.current) {
+      if (shouldRefetch) {
         repairsFetch();
-        shouldRefetch.current = false;
+        setShouldRefetch(false);
       }
-    }, [])
+    }, [shouldRefetch])
   );
 
   const handleAddService = () => {
-    shouldRefetch.current = true;
+    setShouldRefetch(true);
     router.push(`/(tabs-mechanic)/library/repair/add/${vin}`);
   };
 
