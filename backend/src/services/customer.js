@@ -36,7 +36,7 @@ const customerService = {
     const { data, error } = await supabase
       .from("customers")
       .select(
-        "first_name, last_name, phone, email, image, vehicles(brand, model, build_year, vin, image, description)"
+        "first_name, last_name, phone, email, vehicles(brand, model, build_year, vin, image, description)"
       )
       .eq("fk_mechanic", mechanicUuid);
 
