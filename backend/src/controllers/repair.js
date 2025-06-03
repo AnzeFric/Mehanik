@@ -8,7 +8,7 @@ const repairController = {
         req.user.mechanicUuid,
         req.body.vin
       );
-      res.status(200).send({
+      return res.status(200).send({
         success: true,
         message: "Vehicle repairs fetch successfully",
         repairs: repairs,
@@ -26,9 +26,25 @@ const repairController = {
         req.body.vin,
         req.body.repairs
       );
-      res.status(200).send({
+      return res.status(200).send({
         success: true,
         message: "Vehicle repairs saved successfully",
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async deleteCustomerVehicleRepair(req, res, next) {
+    try {
+      console.log("Vehicle repair delete: ", req.user);
+      await repairService.deleteRepair(
+        req.user.mechanicUuid,
+        req.body.repairUuid
+      );
+      return res.status(200).send({
+        success: true,
+        message: "Vehicle repair deleted successfully",
       });
     } catch (error) {
       next(error);

@@ -5,7 +5,7 @@ const mechanicController = {
     try {
       console.log("All mechanics fetch: ", req.user);
       const mechanics = await mechanicService.getMechanics();
-      res.status(200).send({
+      return res.status(200).send({
         success: true,
         message: "Mechanics fetch successful",
         mechanics: mechanics,

@@ -22,7 +22,7 @@ const authController = {
         accountType
       );
 
-      res.status(201).send({
+      return res.status(201).send({
         success: true,
         message: "Registration successful",
         email: registeredEmail,
@@ -37,7 +37,7 @@ const authController = {
       console.log("User login req: ", req.body);
       const { email, password } = req.body;
       const token = await authService.login(email, password);
-      res.status(200).send({
+      return res.status(200).send({
         success: true,
         message: "Login successful",
         token: token,

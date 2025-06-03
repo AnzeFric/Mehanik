@@ -34,6 +34,18 @@ const repairService = {
 
     return repairUuid;
   },
+
+  async deleteRepair(mechanicUuid, repairUuid) {
+    const { error } = await supabase
+      .from("repairs")
+      .delete()
+      .eq("uuid", repairUuid)
+      .eq("fk_mechanic", mechanicUuid);
+
+    if (error) throw error;
+
+    return true;
+  },
 };
 
 module.exports = repairService;

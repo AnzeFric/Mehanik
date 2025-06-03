@@ -5,7 +5,7 @@ const userController = {
     try {
       console.log("User self fetch req: ", req.user);
       const user = await userService.getUserByEmailAndEnabled(req.user.email);
-      res.status(200).json({
+      return res.status(200).json({
         success: true,
         user,
       });
@@ -49,7 +49,7 @@ const userController = {
       });
 
       await userService.updateByEmailAndEnabled(req.user.email, updateData);
-      res.status(200).json({
+      return res.status(200).json({
         success: true,
         message: "User updated successfully",
       });
@@ -62,7 +62,7 @@ const userController = {
     try {
       console.log("User disable req: ", req.user);
       await userService.disableByEmailAndEnabled(req.user.email);
-      res.status(200).json({
+      return res.status(200).json({
         success: true,
         message: "User deleted successfully",
       });

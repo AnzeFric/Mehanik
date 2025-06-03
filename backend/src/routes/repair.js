@@ -6,4 +6,7 @@ const router = express.Router();
 router.post("/get", repairController.getCustomerVehicleRepairs);
 
 router.post("/save", repairController.saveCustomerVehicleRepair);
+
+router.delete("/", repairController.deleteCustomerVehicleRepair);
+
 module.exports = router;
