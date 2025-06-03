@@ -4,6 +4,7 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from "react-native";
 import { useState, useCallback } from "react";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
@@ -23,7 +24,7 @@ import TitleRow from "@/components/shared/TitleRow";
 
 export default function DetailRepairScreen() {
   const { vehicleVin } = useLocalSearchParams();
-  const { currentRepairFocus } = useRepair();
+  const { currentRepairFocus, deleteVehicleRepair } = useRepair();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
 
@@ -34,6 +35,23 @@ export default function DetailRepairScreen() {
       };
     }, [])
   );
+
+  const handleDeleteRepairPress = async () => {
+    if (currentRepairFocus) {
+      const success = await deleteVehicleRepair(currentRepairFocus?.uuid);
+      setIsMenuVisible(false);
+      setIsModalOpen(false);
+
+      if (success) {
+        router.back();
+      }
+    } else {
+      Alert.alert(
+        "Napaka",
+        "Trenutno ni možno izbrisati servisa. Poskusite ponovno kasneje."
+      );
+    }
+  };
 
   const menuIcon: React.ReactNode = (
     <MenuIcon
@@ -192,7 +210,7 @@ export default function DetailRepairScreen() {
         isVisible={isModalOpen}
         message={"Trajno boste izbrisali servis. Ste prepričani?"}
         onCancel={() => setIsModalOpen(false)}
-        onConfirm={() => {}}
+        onConfirm={handleDeleteRepairPress}
       />
     </View>
   );

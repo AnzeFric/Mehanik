@@ -59,10 +59,35 @@ export function useRepair() {
     }
   };
 
+  const deleteVehicleRepair = async (repairUuid: string) => {
+    try {
+      const reponse = await fetch(`${API_BASE_URL}/repairs/`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + jwt,
+        },
+        body: JSON.stringify({ repairUuid: repairUuid }),
+      });
+
+      const data = await reponse.json();
+
+      if (data.success) {
+        console.log("Successfully deleted vehicle repair");
+        return true;
+      }
+      console.log("Error deleting vehicle repair: ", data.message);
+      return false;
+    } catch (error) {
+      console.error("Error while deleting vehicle repair: ", error);
+    }
+  };
+
   return {
     currentRepairFocus,
     setCurrentRepairFocus,
     getVehicleRepairs,
     saveVehicleRepairs,
+    deleteVehicleRepair,
   };
 }
