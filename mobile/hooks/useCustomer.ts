@@ -29,7 +29,7 @@ export function useCustomer() {
     };
 
     try {
-      await fetch(`${API_BASE_URL}/customers/`, {
+      const response = await fetch(`${API_BASE_URL}/customers/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -38,7 +38,17 @@ export function useCustomer() {
         body: JSON.stringify(body),
       });
 
-      await updateStoredCustomerData();
+      const data = await response.json();
+
+      if (data.success) {
+        console.log("Successfully saved customer");
+        let newCustomerVehicle: CustomerVehicleData = {
+          customer: customerData,
+          vehicle: vehicleData,
+        };
+        setCustomers([...customers, newCustomerVehicle]);
+      }
+      console.log("Error saving customer");
     } catch (error) {
       console.error("Error while saving mechanic customer");
     }
@@ -56,6 +66,7 @@ export function useCustomer() {
 
       const data = await response.json();
       if (data.success) {
+        console.log("Successfully fetched customers");
         return data.customers;
       }
       console.log("Error fetching mechanic customers: ", data.message);
