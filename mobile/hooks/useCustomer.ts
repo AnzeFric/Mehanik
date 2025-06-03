@@ -43,17 +43,43 @@ export function useCustomer() {
 
       if (data.success) {
         console.log("Successfully saved customer");
-        let newCustomerVehicle: CustomerVehicleData = {
-          customer: customerData,
-          vehicle: vehicleData,
-        };
-        setCustomers([...customers, newCustomerVehicle]);
+        await updateStoredCustomerData();
         return true;
       }
       console.log("Error saving customer");
       return false;
     } catch (error) {
       console.error("Error while saving mechanic customer");
+    }
+  };
+
+  const deleteCustomer = async (customerUuid: string | undefined | null) => {
+    try {
+      if (!customerUuid) {
+        console.log("Error deleting customer, bad uuid: ", customerUuid);
+        return false;
+      }
+
+      const response = await fetch(`${API_BASE_URL}/customers/`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + jwt,
+        },
+        body: JSON.stringify({ customerUuid: customerUuid }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        console.log("Successfully deleted customer");
+        await updateStoredCustomerData();
+        return true;
+      }
+      console.log("Error deleting customer");
+      return false;
+    } catch (error) {
+      console.error("Error while deleting mechanic customer");
     }
   };
 
@@ -110,6 +136,7 @@ export function useCustomer() {
   return {
     customers,
     saveCustomer,
+    deleteCustomer,
     updateStoredCustomerData,
   };
 }

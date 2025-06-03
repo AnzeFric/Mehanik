@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { useState, useCallback, useEffect, useRef } from "react";
 import { useLocalSearchParams, router, useFocusEffect } from "expo-router";
 import { Colors } from "@/constants/Colors";
@@ -18,7 +18,7 @@ import { RepairData } from "@/interfaces/repair";
 export default function DetailServiceScreen() {
   const { vin, firstName } = useLocalSearchParams();
   const { getVehicleRepairs } = useRepair();
-  const { customers } = useCustomer();
+  const { customers, deleteCustomer } = useCustomer();
   const [serviceList, setServiceList] = useState<Array<RepairData>>([]);
   const [customer, setCustomer] = useState<CustomerVehicleData>();
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
@@ -44,6 +44,7 @@ export default function DetailServiceScreen() {
   useFocusEffect(
     useCallback(() => {
       setIsMenuVisible(false);
+      setIsModalOpen(false);
 
       if (shouldRefetch.current) {
         repairsFetch();
@@ -55,6 +56,20 @@ export default function DetailServiceScreen() {
   const handleAddService = () => {
     shouldRefetch.current = true;
     router.push(`/(tabs-mechanic)/library/service/${vin}`);
+  };
+
+  const handleDeleteCustomer = async () => {
+    const success = await deleteCustomer(customer?.customer.uuid);
+    setIsModalOpen(false);
+
+    if (success) {
+      router.back();
+    } else {
+      Alert.alert(
+        "Napaka",
+        "Napaka pri brisanju stranke. Poskusite ponovno pozneje."
+      );
+    }
   };
 
   const menuIcon: React.ReactNode = (
@@ -78,11 +93,7 @@ export default function DetailServiceScreen() {
       >
         <Text style={[styles.menuItem, styles.menuItemTop]}>UREDI</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => {
-          setIsModalOpen(true);
-        }}
-      >
+      <TouchableOpacity onPress={() => setIsModalOpen(true)}>
         <Text style={styles.menuItem}>IZBRIŠI</Text>
       </TouchableOpacity>
     </View>
@@ -112,7 +123,7 @@ export default function DetailServiceScreen() {
                   isVisible={isModalOpen}
                   message={"Trajno boste izbrisali uporabnika. Ste prepričani?"}
                   onCancel={() => setIsModalOpen(false)}
-                  onConfirm={() => {}}
+                  onConfirm={handleDeleteCustomer}
                 />
               )}
             </>
