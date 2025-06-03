@@ -30,7 +30,7 @@ export default function AddCustomerScreen() {
     setVehicleData((prevData) => ({
       brand: "",
       model: "",
-      buildYear: 0,
+      buildYear: null,
       vin: "",
       description: "",
       ...prevData,

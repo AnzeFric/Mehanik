@@ -22,8 +22,12 @@ export default function VehicleDisplay({ vehicle }: Props) {
       <View>
         <Text style={AppStyles.text}>
           {vehicle.brand} {vehicle.model}
-          {", "}
-          {vehicle.buildYear}
+          {vehicle.buildYear && (
+            <>
+              {", "}
+              {vehicle.buildYear}
+            </>
+          )}
         </Text>
         <Text style={AppStyles.boldText}>{vehicle.vin}</Text>
       </View>

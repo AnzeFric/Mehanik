@@ -39,8 +39,12 @@ export default function Customer({ customerData, setSearch }: Props) {
         </Text>
         <Text style={styles.address}>
           {customerData.vehicle.brand} {customerData.vehicle.model}
-          {", "}
-          {customerData.vehicle.buildYear}
+          {customerData.vehicle.buildYear && (
+            <>
+              {", "}
+              {customerData.vehicle.buildYear}
+            </>
+          )}
         </Text>
         <Text style={styles.contact}>{customerData.vehicle.vin}</Text>
       </View>

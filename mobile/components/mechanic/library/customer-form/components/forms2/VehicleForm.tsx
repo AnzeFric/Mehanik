@@ -20,7 +20,7 @@ export default function VehicleForm({ vehicleImage, setVehicle }: Props) {
     const updatedVehicle: VehicleData = {
       brand,
       model,
-      buildYear: buildYear ? parseInt(buildYear) : 0,
+      buildYear: buildYear ? parseInt(buildYear) : null,
       vin,
       description,
       image: vehicleImage ? vehicleImage : null, // Perserve the image
@@ -60,7 +60,7 @@ export default function VehicleForm({ vehicleImage, setVehicle }: Props) {
       />
       <TextInput
         style={styles.input}
-        placeholder={"Leto izdelave"}
+        placeholder={"Leto izdelave (ni obvezno)"}
         value={buildYear}
         onChangeText={setBuildYear}
         autoCapitalize={"none"}

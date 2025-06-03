@@ -3,7 +3,8 @@ import CameraIcon from "@/assets/icons/CameraIcon.svg";
 import { Colors } from "@/constants/Colors";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { useFocusEffect } from "expo-router";
 
 interface Props {
   setImage: (image: string) => void;
@@ -21,6 +22,7 @@ export default function ImageForm({ setImage }: Props) {
 
     if (!result.canceled) {
       const uri = result.assets[0].uri;
+      setImageLocal(uri);
 
       // Convert to base64 for database storage
       try {
@@ -36,6 +38,14 @@ export default function ImageForm({ setImage }: Props) {
       }
     }
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        setImageLocal(null);
+      };
+    }, [])
+  );
 
   return (
     <TouchableHighlight

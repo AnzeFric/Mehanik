@@ -10,7 +10,7 @@ export interface CustomerData {
 export interface VehicleData {
   brand: string;
   model: string;
-  buildYear: number;
+  buildYear: number | null;
   vin: string;
   image: string | null;
   description: string | null;
