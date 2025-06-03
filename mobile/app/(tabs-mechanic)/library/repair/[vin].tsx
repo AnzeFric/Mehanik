@@ -4,10 +4,8 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
-  StatusBar,
 } from "react-native";
 import { useState, useCallback } from "react";
-import BackIcon from "@/assets/icons/BackIcon.svg";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import {
@@ -21,6 +19,7 @@ import MenuIcon from "@/assets/icons/MenuIcon.svg";
 import { Ionicons } from "@expo/vector-icons";
 import LoadingScreen from "@/components/global/LoadingScreen";
 import { useRepair } from "@/hooks/useRepair";
+import TitleRow from "@/components/shared/TitleRow";
 
 export default function DetailRepairScreen() {
   const { vehicleVin } = useLocalSearchParams();
@@ -36,31 +35,29 @@ export default function DetailRepairScreen() {
     }, [])
   );
 
+  const menuIcon: React.ReactNode = (
+    <MenuIcon
+      height={30}
+      width={30}
+      style={{ alignSelf: "flex-start" }}
+      onPress={() => {
+        setIsMenuVisible(!isMenuVisible);
+      }}
+    />
+  );
+
   return (
     <View style={styles.mainContainer}>
-      <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
-      <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => router.back()}
-        >
-          <BackIcon height={26} width={26} />
-        </TouchableOpacity>
-
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>
-            {currentRepairFocus
+      <View>
+        <TitleRow
+          title={
+            currentRepairFocus
               ? formatServiceType(currentRepairFocus.type)
-              : "Servis ne obstaja"}
-          </Text>
-        </View>
-
-        <TouchableOpacity
-          style={styles.menuButton}
-          onPress={() => setIsMenuVisible(!isMenuVisible)}
-        >
-          <MenuIcon height={26} width={26} />
-        </TouchableOpacity>
+              : "Servis ne obstaja"
+          }
+          hasBackButton={true}
+          menuButton={menuIcon}
+        />
 
         {isMenuVisible && currentRepairFocus && (
           <View style={styles.menuContainer}>
@@ -328,7 +325,7 @@ const styles = StyleSheet.create({
   menuContainer: {
     position: "absolute",
     right: 16,
-    top: 60,
+    top: 70,
     backgroundColor: "#FFFFFF",
     width: 180,
     borderRadius: 12,
