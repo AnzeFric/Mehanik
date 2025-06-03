@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import { useState } from "react";
-import CustomerForm from "@/components/mechanic/library/customer-form/components/forms2/CustomerForm";
+import CustomerForm from "@/components/mechanic/library/forms/CustomerForm";
 import TemplateView from "@/components/mechanic/library/TemplateView";
 import { CustomerData } from "@/interfaces/customer";
 

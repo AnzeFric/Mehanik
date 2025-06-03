@@ -1,14 +1,14 @@
 import { Text, View, StyleSheet } from "react-native";
 import { AppStyles } from "@/constants/Styles";
-import Service from "../items/Service";
+import Repair from "@/components/mechanic/items/Repair";
 import { RepairData } from "@/interfaces/repair";
 
 interface Props {
-  serviceList: RepairData[];
+  repairList: RepairData[];
   vehicleVin: string;
 }
 
-export default function ServicesMap({ serviceList, vehicleVin }: Props) {
+export default function RepairsDisplay({ repairList, vehicleVin }: Props) {
   return (
     <>
       <View style={styles.container}>
@@ -24,13 +24,9 @@ export default function ServicesMap({ serviceList, vehicleVin }: Props) {
         </Text>
       </View>
       <View style={styles.servicesContainer}>
-        {serviceList.length > 0 ? (
-          serviceList.map((service, index) => (
-            <Service
-              serviceData={service}
-              vehicleVin={vehicleVin}
-              key={index}
-            />
+        {repairList.length > 0 ? (
+          repairList.map((repair, index) => (
+            <Repair repairData={repair} vehicleVin={vehicleVin} key={index} />
           ))
         ) : (
           <Text style={[AppStyles.smallText, styles.listEmptyText]}>

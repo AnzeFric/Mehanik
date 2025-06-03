@@ -11,15 +11,15 @@ import { useRepair } from "@/hooks/useRepair";
 import { RepairData } from "@/interfaces/repair";
 
 interface Props {
-  serviceData: RepairData;
+  repairData: RepairData;
   vehicleVin: string;
 }
 
-export default function Service({ serviceData, vehicleVin }: Props) {
+export default function Repair({ repairData, vehicleVin }: Props) {
   const { setCurrentRepairFocus } = useRepair();
 
   const handleRedirect = () => {
-    setCurrentRepairFocus(serviceData);
+    setCurrentRepairFocus(repairData);
     router.push(`/(tabs-mechanic)/library/repair/${vehicleVin}`);
   };
 
@@ -33,11 +33,11 @@ export default function Service({ serviceData, vehicleVin }: Props) {
         <View style={styles.header}>
           <View style={styles.serviceTypeBadge}>
             <Text style={styles.serviceTypeText}>
-              {formatServiceType(serviceData.type)}
+              {formatServiceType(repairData.type)}
             </Text>
           </View>
           <Text style={styles.priceText}>
-            {formatCurrency(serviceData.price || 0)}
+            {formatCurrency(repairData.price || 0)}
           </Text>
         </View>
 
@@ -48,15 +48,13 @@ export default function Service({ serviceData, vehicleVin }: Props) {
             color={Colors.light.secondaryText}
           />
           <Text style={styles.dateText}>
-            {formatDate(new Date(serviceData.date))}
+            {formatDate(new Date(repairData.date))}
           </Text>
         </View>
 
-        {serviceData.type === "other" && (
+        {repairData.type === "other" && (
           <View style={styles.descriptionContainer}>
-            <Text style={styles.descriptionText}>
-              {serviceData.description}
-            </Text>
+            <Text style={styles.descriptionText}>{repairData.description}</Text>
           </View>
         )}
       </View>

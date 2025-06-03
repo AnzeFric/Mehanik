@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import TemplateView from "@/components/mechanic/library/TemplateView";
-import RepairForm from "@/components/mechanic/library/customer-form/components/forms2/RepairForm";
+import RepairForm from "@/components/mechanic/library/forms/RepairForm";
 import { useState } from "react";
 import { RepairData } from "@/interfaces/repair";
 

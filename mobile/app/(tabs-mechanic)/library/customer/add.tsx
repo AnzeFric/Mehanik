@@ -12,10 +12,10 @@ import { CustomerData, VehicleData } from "@/interfaces/customer";
 import { RepairData } from "@/interfaces/repair";
 import TitleRow from "@/components/shared/TitleRow";
 import { AppStyles } from "@/constants/Styles";
-import ImageForm from "@/components/mechanic/library/customer-form/components/forms2/ImageForm";
-import RepairForm from "@/components/mechanic/library/customer-form/components/forms2/RepairForm";
-import CustomerForm from "@/components/mechanic/library/customer-form/components/forms2/CustomerForm";
-import VehicleForm from "@/components/mechanic/library/customer-form/components/forms2/VehicleForm";
+import ImageForm from "@/components/mechanic/library/forms/ImageForm";
+import RepairForm from "@/components/mechanic/library/forms/RepairForm";
+import CustomerForm from "@/components/mechanic/library/forms/CustomerForm";
+import VehicleForm from "@/components/mechanic/library/forms/VehicleForm";
 
 export default function AddCustomerScreen() {
   const { saveCustomer } = useCustomer();

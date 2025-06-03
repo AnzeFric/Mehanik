@@ -3,8 +3,8 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { useLocalSearchParams, router, useFocusEffect } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import MenuIcon from "@/assets/icons/MenuIcon.svg";
-import VehicleDisplay from "@/components/mechanic/library/VehicleDisplay";
-import ServicesMap from "@/components/mechanic/library/ServicesMap";
+import VehicleDisplay from "@/components/mechanic/library/displays/Vehicle";
+import RepairsDisplay from "@/components/mechanic/library/displays/Repairs";
 import { CustomerVehicleData } from "@/interfaces/customer";
 import TemplateView from "@/components/mechanic/library/TemplateView";
 import ModalPrompt from "@/components/mechanic/modals/ModalPrompt";
@@ -12,14 +12,14 @@ import PlusButton from "@/components/global/PlusButton";
 import { useCustomer } from "@/hooks/useCustomer";
 import { useRepair } from "@/hooks/useRepair";
 import LoadingScreen from "@/components/global/LoadingScreen";
-import CustomerDisplay from "@/components/mechanic/library/CustomerDisplay";
+import CustomerDisplay from "@/components/mechanic/library/displays/Customer";
 import { RepairData } from "@/interfaces/repair";
 
 export default function DetailCustomerScreen() {
   const { vin, firstName } = useLocalSearchParams();
   const { getVehicleRepairs } = useRepair();
   const { customers, deleteCustomer } = useCustomer();
-  const [serviceList, setServiceList] = useState<Array<RepairData>>([]);
+  const [repairList, setRepairList] = useState<Array<RepairData>>([]);
   const [customer, setCustomer] = useState<CustomerVehicleData>();
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -28,7 +28,7 @@ export default function DetailCustomerScreen() {
 
   const repairsFetch = async () => {
     const repairData = await getVehicleRepairs(vin.toString());
-    setServiceList(repairData);
+    setRepairList(repairData);
   };
 
   useEffect(() => {
@@ -114,8 +114,8 @@ export default function DetailCustomerScreen() {
                 <VehicleDisplay vehicle={customer.vehicle} />
                 <CustomerDisplay customer={customer.customer} />
               </View>
-              <ServicesMap
-                serviceList={serviceList}
+              <RepairsDisplay
+                repairList={repairList}
                 vehicleVin={customer.vehicle.vin}
               />
               {isModalOpen && (
