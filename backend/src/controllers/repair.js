@@ -21,7 +21,7 @@ const repairController = {
   async saveCustomerVehicleRepair(req, res, next) {
     try {
       console.log("Vehicle repairs save: ", req.user);
-      await repairService.saveVehicleRepairs(
+      await repairService.saveRepair(
         req.user.mechanicUuid,
         req.body.vin,
         req.body.repairs

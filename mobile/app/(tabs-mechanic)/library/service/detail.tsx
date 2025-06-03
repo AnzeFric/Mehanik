@@ -49,7 +49,7 @@ export default function ServiceDetailScreen() {
         <View style={styles.titleContainer}>
           <Text style={styles.title}>
             {currentRepairFocus
-              ? formatServiceType(currentRepairFocus.type)
+              ? formatServiceType(currentRepairFocus.repairData.type)
               : "Servis ne obstaja"}
           </Text>
         </View>
@@ -105,7 +105,7 @@ export default function ServiceDetailScreen() {
                         color={Colors.light.secondaryText}
                       />
                       <Text style={styles.dateText}>
-                        {formatCurrency(currentRepairFocus.price)}
+                        {formatCurrency(currentRepairFocus.repairData.price)}
                       </Text>
                     </View>
                   </View>
@@ -123,7 +123,9 @@ export default function ServiceDetailScreen() {
                         color={Colors.light.secondaryText}
                       />
                       <Text style={styles.dateText}>
-                        {formatDate(new Date(currentRepairFocus.date))}
+                        {formatDate(
+                          new Date(currentRepairFocus.repairData.date)
+                        )}
                       </Text>
                     </View>
                   </View>
@@ -133,8 +135,8 @@ export default function ServiceDetailScreen() {
               <View style={styles.infoCard}>
                 <Text style={styles.sectionTitle}>Izvedena popravila</Text>
                 <View style={styles.repairsList}>
-                  {currentRepairFocus.options &&
-                    Object.entries(currentRepairFocus.options)
+                  {currentRepairFocus.repairData.options &&
+                    Object.entries(currentRepairFocus.repairData.options)
                       .filter(([_, value]) => value)
                       .map(([key], index) => (
                         <View key={key} style={styles.repairItem}>
@@ -150,25 +152,25 @@ export default function ServiceDetailScreen() {
                           </Text>
                         </View>
                       ))}
-                  {currentRepairFocus.description && (
+                  {currentRepairFocus.repairData.description && (
                     <Text style={styles.customServiceText}>
-                      {currentRepairFocus.description}
+                      {currentRepairFocus.repairData.description}
                     </Text>
                   )}
                 </View>
               </View>
 
-              {currentRepairFocus.note && (
+              {currentRepairFocus.repairData.note && (
                 <View style={styles.infoCard}>
                   <Text style={styles.sectionTitle}>Dodatne opombe</Text>
                   <Text style={styles.notesText}>
-                    {currentRepairFocus.note}
+                    {currentRepairFocus.repairData.note}
                   </Text>
                 </View>
               )}
 
-              {currentRepairFocus.images &&
-                currentRepairFocus.images.length > 0 && (
+              {currentRepairFocus.repairData.images &&
+                currentRepairFocus.repairData.images.length > 0 && (
                   <View style={styles.infoCard}>
                     <Text style={styles.sectionTitle}>Slike servisa</Text>
                     <View style={styles.imagesPlaceholder}>
@@ -178,7 +180,7 @@ export default function ServiceDetailScreen() {
                         color={Colors.light.secondaryText}
                       />
                       <Text style={styles.imagesText}>
-                        {currentRepairFocus.images.length} slik
+                        {currentRepairFocus.repairData.images.length} slik
                       </Text>
                     </View>
                   </View>

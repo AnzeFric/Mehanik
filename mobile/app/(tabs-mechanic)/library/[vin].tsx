@@ -45,8 +45,8 @@ export default function DetailServiceScreen() {
     }, [])
   );
 
-  const handlePress = () => {
-    router.push(`/(tabs-mechanic)/library/service-add/${vin}`);
+  const handleAddService = () => {
+    router.push(`/(tabs-mechanic)/library/service/add`);
   };
 
   const menuIcon: React.ReactNode = (
@@ -95,7 +95,10 @@ export default function DetailServiceScreen() {
                 <VehicleDisplay vehicle={customer.vehicle} />
                 <CustomerDisplay customer={customer.customer} />
               </View>
-              <ServicesMap serviceList={serviceList} />
+              <ServicesMap
+                serviceList={serviceList}
+                vehicleVin={customer.vehicle.vin}
+              />
               {isModalOpen && (
                 <ModalPrompt
                   isVisible={isModalOpen}
@@ -110,7 +113,7 @@ export default function DetailServiceScreen() {
           )}
         </View>
       </TemplateView>
-      <PlusButton onPress={handlePress} />
+      <PlusButton onPress={handleAddService} />
     </>
   );
 }

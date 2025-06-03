@@ -1,11 +1,11 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { RepairData } from "@/interfaces/repair";
+import { RepairFocus } from "@/interfaces/repair";
 
 interface RepairStore {
-  currentRepairFocus: RepairData | null;
-  setCurrentRepairFocus: (currentRepairFocus: RepairData | null) => void;
+  currentRepairFocus: RepairFocus | null;
+  setCurrentRepairFocus: (currentRepairFocus: RepairFocus | null) => void;
   reset: () => void;
 }
 
@@ -17,7 +17,7 @@ const useRepairStore = create(
   persist<RepairStore>(
     (set) => ({
       ...initialState,
-      setCurrentRepairFocus: (currentRepairFocus: RepairData | null) => {
+      setCurrentRepairFocus: (currentRepairFocus: RepairFocus | null) => {
         set({ currentRepairFocus: currentRepairFocus });
       },
       reset: async () => {

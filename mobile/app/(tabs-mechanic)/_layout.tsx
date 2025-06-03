@@ -119,6 +119,12 @@ export default function TabLayout() {
             href: null,
           }}
         />
+        <Tabs.Screen
+          name="library/service/add"
+          options={{
+            href: null,
+          }}
+        />
       </Tabs>
     </SafeAreaView>
   );

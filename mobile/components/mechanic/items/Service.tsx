@@ -12,13 +12,17 @@ import { RepairData } from "@/interfaces/repair";
 
 interface Props {
   serviceData: RepairData;
+  vehicleVin: string;
 }
 
-export default function Service({ serviceData }: Props) {
+export default function Service({ serviceData, vehicleVin }: Props) {
   const { setCurrentRepairFocus } = useRepair();
 
   const handleRedirect = () => {
-    setCurrentRepairFocus(serviceData);
+    setCurrentRepairFocus({
+      repairData: serviceData,
+      vehicleVin: vehicleVin,
+    });
     router.push(`/(tabs-mechanic)/library/service/detail`);
   };
 

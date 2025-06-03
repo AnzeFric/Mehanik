@@ -22,3 +22,8 @@ export interface RepairOptions {
   timing: boolean;
   coolant: boolean;
 }
+
+export interface RepairFocus {
+  repairData: RepairData;
+  vehicleVin: string;
+}
