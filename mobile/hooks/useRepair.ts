@@ -1,6 +1,7 @@
 import useAuthStore from "@/stores/useAuthStore";
 import { API_BASE_URL } from "@/constants/Config";
 import useRepairStore from "@/stores/useRepairStore";
+import { RepairData } from "@/interfaces/repair";
 
 export function useRepair() {
   const { jwt } = useAuthStore();
@@ -8,7 +9,7 @@ export function useRepair() {
 
   const getVehicleRepairs = async (vehicleVin: string) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/repairs/`, {
+      const response = await fetch(`${API_BASE_URL}/repairs/get`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -29,9 +30,28 @@ export function useRepair() {
     }
   };
 
+  const saveVehicleRepairs = async (
+    vehicleVin: string,
+    repairData: RepairData
+  ) => {
+    try {
+      await fetch(`${API_BASE_URL}/repairs/save`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + jwt,
+        },
+        body: JSON.stringify({ vin: vehicleVin, repairs: repairData }),
+      });
+    } catch (error) {
+      console.error("Error while saving vehicle repairs: ", error);
+    }
+  };
+
   return {
     currentRepairFocus,
     setCurrentRepairFocus,
     getVehicleRepairs,
+    saveVehicleRepairs,
   };
 }

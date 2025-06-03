@@ -17,6 +17,19 @@ const repairController = {
       next(error);
     }
   },
+
+  async saveCustomerVehicleRepair(req, res, next) {
+    try {
+      console.log("Vehicle repairs save: ", req.user);
+      await repairService.saveVehicleRepairs(
+        req.user.mechanicUuid,
+        req.body.vin,
+        req.body.repairs
+      );
+    } catch (error) {
+      next(error);
+    }
+  },
 };
 
 module.exports = repairController;
