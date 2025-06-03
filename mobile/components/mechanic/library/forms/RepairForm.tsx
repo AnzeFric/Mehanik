@@ -66,6 +66,7 @@ export default function RepairForm({ setRepair }: Props) {
 
   useEffect(() => {
     const updatedRepair: RepairData = {
+      uuid: "",
       type,
       description,
       price: parseFloat(price),
