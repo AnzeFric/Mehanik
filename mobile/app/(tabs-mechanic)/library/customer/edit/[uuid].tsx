@@ -8,12 +8,10 @@ import VehicleForm from "@/components/mechanic/library/forms/VehicleForm";
 import ImageForm from "@/components/mechanic/library/forms/ImageForm";
 import { router, useLocalSearchParams } from "expo-router";
 import { useCustomer } from "@/hooks/useCustomer";
-import { useVehicle } from "@/hooks/useVehicle";
 
 export default function EditCustomerScreen() {
   const { uuid } = useLocalSearchParams(); // Vehicle uuid
-  const { updateVehicle } = useVehicle();
-  const { customers, updateCustomer } = useCustomer();
+  const { customers, updateCustomerVehicle } = useCustomer();
 
   const [originalCustomer, setOriginalCustomer] = useState<CustomerData>();
   const [originalVehicle, setOriginalVehicle] = useState<VehicleData>();
@@ -46,23 +44,21 @@ export default function EditCustomerScreen() {
   };
 
   const handleSaveEdit = async () => {
-    if (hasCustomerChanges()) {
-      if (currentCustomer) {
-        var customerRes = await updateCustomer(currentCustomer);
+    if (hasCustomerChanges() || hasVehicleChanges()) {
+      if (currentCustomer && currentVehicle) {
+        var result = await updateCustomerVehicle(
+          currentCustomer,
+          currentVehicle
+        );
       }
     }
-    if (hasVehicleChanges()) {
-      if (currentVehicle) {
-        var vehicleRes = await updateVehicle(currentVehicle);
-      }
-    }
-    if (!vehicleRes || !customerRes) {
+    if (!result) {
       Alert.alert(
         "Napaka",
         "Prišlo je do napake pri posodabljanju podatkov. Poskusite ponovno kasneje"
       );
     }
-    router.back();
+    router.replace("/(tabs-mechanic)/library");
   };
 
   const handleSaveImage = (image: string) => {

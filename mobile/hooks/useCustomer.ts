@@ -39,14 +39,47 @@ export function useCustomer() {
       const data = await response.json();
 
       if (data.success) {
-        console.log("Successfully saved customer");
+        console.log("Successfully saved customer, vehicle and optional repair");
         await updateStoredCustomerData();
         return data.customerUuid;
       }
-      console.log("Error saving customer");
+      console.log("Error saving customer, vehicle and optional repair");
       return false;
     } catch (error) {
-      console.error("Error while saving mechanic customer");
+      console.error(
+        "Error while saving mechanic customer, vehicle and optional repair"
+      );
+    }
+  };
+
+  const updateCustomerVehicle = async (
+    customerData: CustomerData,
+    vehicleData: VehicleData
+  ) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/customers/`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + jwt,
+        },
+        body: JSON.stringify({
+          customerData,
+          vehicleData,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        console.log("Successfully updated customer and vehicle");
+        await updateStoredCustomerData();
+        return true;
+      }
+      console.log("Error updating customer and vehicle");
+      return false;
+    } catch (error) {
+      console.error("Error while updating mechanic customer and vehicle");
     }
   };
 
@@ -77,33 +110,6 @@ export function useCustomer() {
       return false;
     } catch (error) {
       console.error("Error while deleting mechanic customer");
-    }
-  };
-
-  const updateCustomer = async (customerData: CustomerData) => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/customers/`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + jwt,
-        },
-        body: JSON.stringify({
-          customerData: customerData,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        console.log("Successfully updated customer");
-        await updateStoredCustomerData();
-        return true;
-      }
-      console.log("Error updating customer");
-      return false;
-    } catch (error) {
-      console.error("Error while updating mechanic customer");
     }
   };
 
@@ -161,8 +167,8 @@ export function useCustomer() {
   return {
     customers,
     saveCustomerVehicleRepair,
+    updateCustomerVehicle,
     deleteCustomer,
-    updateCustomer,
     updateStoredCustomerData,
   };
 }

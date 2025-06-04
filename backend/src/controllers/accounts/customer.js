@@ -41,20 +41,24 @@ const customerController = {
     }
   },
 
-  async patchCustomer(req, res, next) {
+  async patchCustomerVehicle(req, res, next) {
     try {
-      console.log("Patch customer. Req from: ", req.user);
+      console.log("Patch customer, vehicle. Req from: ", req.user);
       console.log("Body: ", req.body);
 
-      const customerData = req.body.customerData;
+      const { customerData, vehicleData } = req.body;
       if (!customerData) throw new Error("Customer data is not provided");
+      if (!vehicleData) throw new Error("Vehicle data is not provided");
 
       await checkInput(customerData, "uuid");
       await customerService.patchByCustomerData(customerData);
 
+      await vehicleController.checkInput(vehicleData, "uuid");
+      await vehicleService.patchByVehicleData(vehicleData);
+
       return res.status(200).json({
         success: true,
-        message: "Customer patched successfully",
+        message: "Customer and vehicle patched successfully",
       });
     } catch (error) {
       next(error);

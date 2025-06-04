@@ -17,13 +17,9 @@ import ImageForm from "@/components/mechanic/library/forms/ImageForm";
 import RepairForm from "@/components/mechanic/library/forms/RepairForm";
 import CustomerForm from "@/components/mechanic/library/forms/CustomerForm";
 import VehicleForm from "@/components/mechanic/library/forms/VehicleForm";
-import { useVehicle } from "@/hooks/useVehicle";
-import { useRepair } from "@/hooks/useRepair";
 
 export default function AddCustomerScreen() {
   const { saveCustomerVehicleRepair } = useCustomer();
-  const { saveVehicle } = useVehicle();
-  const { saveVehicleRepairs } = useRepair();
 
   const [customerData, setCustomerData] = useState<CustomerData>({
     uuid: "",

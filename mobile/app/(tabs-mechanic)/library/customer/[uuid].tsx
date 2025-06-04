@@ -90,7 +90,7 @@ export default function DetailCustomerScreen() {
     <View style={styles.menuContainer}>
       <TouchableOpacity
         style={styles.menuItemContainer}
-        onPress={() => router.push(`/library/repair/edit/${uuid}`)}
+        onPress={() => router.push(`/library/customer/edit/${uuid}`)}
       >
         <Ionicons name="create-outline" size={18} color={Colors.light.text} />
         <Text style={styles.menuItem}>UREDI</Text>
