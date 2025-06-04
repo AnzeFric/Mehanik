@@ -46,6 +46,18 @@ const repairService = {
 
     return true;
   },
+
+  async patchRepairByUuid(mechanicUuid, repairUuid, repairData) {
+    const { error } = await supabase
+      .from("repairs")
+      .update(repairData)
+      .eq("uuid", repairUuid)
+      .eq("fk_mechanic", mechanicUuid);
+
+    if (error) throw error;
+
+    return true;
+  },
 };
 
 module.exports = repairService;

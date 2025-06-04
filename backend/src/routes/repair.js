@@ -9,4 +9,6 @@ router.post("/save", repairController.saveRepair);
 
 router.delete("/", repairController.deleteRepair);
 
+router.patch("/", repairController.patchRepair);
+
 module.exports = router;

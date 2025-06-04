@@ -30,7 +30,8 @@ const repairController = {
 
       const repairData = req.body.repairData;
       const vehicleUuid = req.body.vehicleUuid;
-      if (!repairData) throw new Error("Repair data is not provided");
+      if (!repairData && !repairData.type)
+        throw new Error("Repair data is not provided");
       if (!vehicleUuid) throw new Error("Vehicle uuid is not provided");
 
       const uuid = await repairService.saveRepair(
@@ -60,6 +61,31 @@ const repairController = {
       return res.status(200).json({
         success: true,
         message: "Vehicle repair deleted successfully",
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async patchRepair(req, res, next) {
+    try {
+      console.log("Patch repair. Req from: ", req.user);
+      console.log("Body: ", req.body);
+
+      const repairUuid = req.body.repairUuid;
+      const repairData = req.body.repairData;
+      if (!repairUuid) throw new Error("Repair uuid is not provided");
+      if (!repairData && !repairData.type)
+        throw new Error("Repair data is not provided");
+
+      await repairService.patchRepairByUuid(
+        req.user.mechanicUuid,
+        repairUuid,
+        repairData
+      );
+      return res.status(200).json({
+        success: true,
+        message: "Vehicle repair updated successfully",
       });
     } catch (error) {
       next(error);
