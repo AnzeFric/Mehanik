@@ -3,28 +3,13 @@ import { API_BASE_URL } from "@/constants/Config";
 import { CustomerData, CustomerVehicleData } from "@/interfaces/customer";
 import { VehicleData } from "@/interfaces/vehicle";
 import useCustomerStore from "@/stores/useCustomerStore";
-import { RepairData } from "@/interfaces/repair";
 
 export function useCustomer() {
   const { jwt } = useAuthStore();
   const { customers, setCustomers } = useCustomerStore();
 
-  const saveCustomer = async (
-    customerData: CustomerData,
-    vehicleData: VehicleData,
-    repairData: RepairData | null
-  ) => {
-    console.log("Saving customer: ", vehicleData);
-    let repairDataCheck = repairData;
-    if (repairData?.type === "other" && repairData.description === "") {
-      repairDataCheck = null;
-    }
-
-    let body = {
-      customerData,
-      vehicleData,
-      ...(repairDataCheck && { repairData }),
-    };
+  const saveCustomer = async (customerData: CustomerData) => {
+    console.log("Saving customer: ", customerData);
 
     try {
       const response = await fetch(`${API_BASE_URL}/customers/`, {
@@ -33,7 +18,9 @@ export function useCustomer() {
           "Content-Type": "application/json",
           Authorization: "Bearer " + jwt,
         },
-        body: JSON.stringify(body),
+        body: JSON.stringify({
+          customerData: customerData,
+        }),
       });
 
       const data = await response.json();

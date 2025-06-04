@@ -17,12 +17,30 @@ import ImageForm from "@/components/mechanic/library/forms/ImageForm";
 import RepairForm from "@/components/mechanic/library/forms/RepairForm";
 import CustomerForm from "@/components/mechanic/library/forms/CustomerForm";
 import VehicleForm from "@/components/mechanic/library/forms/VehicleForm";
+import { useVehicle } from "@/hooks/useVehicle";
+import { useRepair } from "@/hooks/useRepair";
 
 export default function AddCustomerScreen() {
   const { saveCustomer } = useCustomer();
+  const { saveVehicle } = useVehicle();
+  const { saveVehicleRepairs } = useRepair();
 
-  const [customerData, setCustomerData] = useState<CustomerData>();
-  const [vehicleData, setVehicleData] = useState<VehicleData>();
+  const [customerData, setCustomerData] = useState<CustomerData>({
+    uuid: "",
+    firstName: "",
+    lastName: "",
+    email: null,
+    phone: null,
+  });
+  const [vehicleData, setVehicleData] = useState<VehicleData>({
+    uuid: "",
+    brand: "",
+    model: "",
+    vin: "",
+    image: null,
+    buildYear: null,
+    description: null,
+  });
   const [repairData, setRepairData] = useState<RepairData | null>(null);
   const [vehicleImage, setVehicleImage] = useState<string>("");
 
@@ -31,12 +49,6 @@ export default function AddCustomerScreen() {
   const handleSaveImage = (image: string) => {
     setVehicleImage(image);
     setVehicleData((prevData) => ({
-      uuid: "",
-      brand: "",
-      model: "",
-      buildYear: null,
-      vin: "",
-      description: null,
       ...prevData,
       image: image,
     }));
@@ -54,17 +66,27 @@ export default function AddCustomerScreen() {
     );
   };
 
-  const handlePress = () => {
+  const handlePress = async () => {
     if (!canSave()) {
       return;
     }
 
     const finalVehicleData = {
-      ...vehicleData!,
+      ...vehicleData,
       image: vehicleImage || null,
     };
 
-    saveCustomer(customerData!, finalVehicleData, repairData);
+    const promises = [
+      saveCustomer(customerData),
+      saveVehicle(customerData.uuid, finalVehicleData),
+    ];
+    if (repairData) {
+      promises.push(saveVehicleRepairs(finalVehicleData.uuid, repairData));
+    }
+
+    const results = await Promise.allSettled(promises);
+    const [customerRes, vehicleRes, repairRes] = results;
+
     router.push(`/(tabs-mechanic)/library`);
   };
 
@@ -72,8 +94,22 @@ export default function AddCustomerScreen() {
   useFocusEffect(
     useCallback(() => {
       return () => {
-        setCustomerData(undefined);
-        setVehicleData(undefined);
+        setCustomerData({
+          uuid: "",
+          firstName: "",
+          lastName: "",
+          email: null,
+          phone: null,
+        });
+        setVehicleData({
+          uuid: "",
+          brand: "",
+          model: "",
+          vin: "",
+          image: null,
+          buildYear: null,
+          description: null,
+        });
         setRepairData(null);
         setVehicleImage("");
 

@@ -39,6 +39,7 @@ export function useRepair() {
         ...repairData,
         date: repairData.date.toISOString(),
       };
+
       const response = await fetch(`${API_BASE_URL}/repairs/save`, {
         method: "POST",
         headers: {
@@ -54,9 +55,10 @@ export function useRepair() {
       const data = await response.json();
       if (data.success) {
         console.log("Successfully saved vehicle repair");
-        return;
+        return true;
       }
       console.log("Error saving vehicle repair: ", data.message);
+      return false;
     } catch (error) {
       console.error("Error while saving vehicle repairs: ", error);
     }

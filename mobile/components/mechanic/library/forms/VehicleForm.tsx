@@ -6,23 +6,23 @@ import { useFocusEffect } from "expo-router";
 
 interface Props {
   vehicle?: VehicleData;
-  setVehicle: (vehicle: VehicleData | undefined) => void;
+  setVehicle: (vehicle: VehicleData) => void;
 }
 
 export default function VehicleForm({ vehicle, setVehicle }: Props) {
   const [brand, setBrand] = useState("");
   const [model, setModel] = useState("");
-  const [buildYear, setBuildYear] = useState("");
   const [vin, setVin] = useState("");
-  const [description, setDescription] = useState("");
+  const [buildYear, setBuildYear] = useState<string | null>("");
+  const [description, setDescription] = useState<string | null>("");
 
   useEffect(() => {
     if (vehicle) {
-      setBrand(vehicle.brand || "");
-      setModel(vehicle.model || "");
-      setBuildYear(vehicle.buildYear?.toString() || "");
-      setVin(vehicle.vin || "");
-      setDescription(vehicle.description || "");
+      setBrand(vehicle.brand);
+      setModel(vehicle.model);
+      setVin(vehicle.vin);
+      setBuildYear(vehicle.buildYear ? vehicle.buildYear.toString() : null);
+      setDescription(vehicle.description);
     }
   }, [vehicle]);
 
@@ -73,7 +73,7 @@ export default function VehicleForm({ vehicle, setVehicle }: Props) {
       <TextInput
         style={styles.input}
         placeholder={"Leto izdelave (ni obvezno)"}
-        value={buildYear}
+        value={buildYear || ""}
         onChangeText={setBuildYear}
         autoCapitalize={"none"}
         keyboardType={"numeric"}
@@ -88,7 +88,7 @@ export default function VehicleForm({ vehicle, setVehicle }: Props) {
       <TextInput
         style={[styles.input, { textAlignVertical: "top" }]}
         placeholder={"Dodaten opis vozila (ni obvezno)"}
-        value={description}
+        value={description || ""}
         onChangeText={setDescription}
         autoCapitalize={"sentences"}
         multiline={true}
