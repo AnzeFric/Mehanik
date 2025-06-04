@@ -70,7 +70,7 @@ const customerController = {
       if (!req.body.customerData)
         throw new Error("Customer data is not provided");
 
-      await checkInput(customerData);
+      await checkInput(customerData, "uuid");
       await customerService.patchByCustomerData(customerData);
 
       return res.status(200).json({
@@ -85,7 +85,7 @@ const customerController = {
 
 async function checkInput(customerData, customField) {
   const allowedFields = ["uuid", "firstName", "lastName", "phone", "email"];
-  const mandatoryFields = ["uuid", "firstName", "lastName"];
+  const mandatoryFields = ["firstName", "lastName"];
   if (customField) {
     mandatoryFields.push(customField);
   }
