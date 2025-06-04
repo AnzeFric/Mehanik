@@ -1,6 +1,6 @@
 import { TextInput, StyleSheet } from "react-native";
 import { useCallback, useEffect, useState } from "react";
-import { VehicleData } from "@/interfaces/customer";
+import { VehicleData } from "@/interfaces/vehicle";
 import { Colors } from "@/constants/Colors";
 import { useFocusEffect } from "expo-router";
 

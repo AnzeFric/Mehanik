@@ -1,6 +1,6 @@
 import { Text, View, Image, StyleSheet } from "react-native";
 import { AppStyles } from "@/constants/Styles";
-import { VehicleData } from "@/interfaces/customer";
+import { VehicleData } from "@/interfaces/vehicle";
 
 interface Props {
   vehicle: VehicleData;

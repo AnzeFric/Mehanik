@@ -1,5 +1,5 @@
 import { API_BASE_URL } from "@/constants/Config";
-import { VehicleData } from "@/interfaces/customer";
+import { VehicleData } from "@/interfaces/vehicle";
 import useAuthStore from "@/stores/useAuthStore";
 
 export function useVehicle() {

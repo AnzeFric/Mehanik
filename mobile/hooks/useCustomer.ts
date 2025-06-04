@@ -1,10 +1,7 @@
 import useAuthStore from "@/stores/useAuthStore";
 import { API_BASE_URL } from "@/constants/Config";
-import {
-  CustomerData,
-  VehicleData,
-  CustomerVehicleData,
-} from "@/interfaces/customer";
+import { CustomerData, CustomerVehicleData } from "@/interfaces/customer";
+import { VehicleData } from "@/interfaces/vehicle";
 import useCustomerStore from "@/stores/useCustomerStore";
 import { RepairData } from "@/interfaces/repair";
 

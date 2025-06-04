@@ -8,7 +8,8 @@ import {
 import { useState, useCallback, useRef } from "react";
 import { router, useFocusEffect } from "expo-router";
 import { useCustomer } from "@/hooks/useCustomer";
-import { CustomerData, VehicleData } from "@/interfaces/customer";
+import { CustomerData } from "@/interfaces/customer";
+import { VehicleData } from "@/interfaces/vehicle";
 import { RepairData } from "@/interfaces/repair";
 import TitleRow from "@/components/shared/TitleRow";
 import { AppStyles } from "@/constants/Styles";
