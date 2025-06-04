@@ -62,10 +62,10 @@ const customerController = {
       if (!req.body.customerUuid)
         throw new Error("Customer UUID is not provided");
 
-      if (!req.body.customer)
+      if (!req.body.customerData)
         throw new Error("New customer data is not provided");
 
-      const newCustomerData = req.body.customer;
+      const newCustomerData = req.body.customerData;
       const allowedFields = ["firstName", "lastName", "phone", "email"];
       const mandatoryFields = ["firstName", "lastName"];
 

@@ -34,6 +34,7 @@ app.get("/api/health", (req, res) => {
 const authRoutes = require("./routes/auth");
 const userRouter = require("./routes/user");
 const repairRouter = require("./routes/repair");
+const vehicleRouter = require("./routes/vehicle");
 const customerRouter = require("./routes/customer");
 const mechanicRouter = require("./routes/mechanic");
 
@@ -46,6 +47,7 @@ app.use(authMiddleware);
 // Private/protected routes
 app.use("/api/users", userRouter);
 app.use("/api/repairs", repairRouter);
+app.use("/api/vehicles", vehicleRouter);
 app.use("/api/customers", customerRouter);
 app.use("/api/mechanics", mechanicRouter);
 

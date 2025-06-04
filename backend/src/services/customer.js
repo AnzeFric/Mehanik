@@ -72,10 +72,15 @@ const customerService = {
     return true;
   },
 
-  async patchByCustomerUuid(customerUuid, newCustomerData) {
+  async patchByCustomerUuid(customerUuid, customerData) {
     const { data, error } = await supabase
       .from("customers")
-      .update(newCustomerData)
+      .update({
+        first_name: customerData.firstName,
+        last_name: customerData.lastName,
+        phone: customerData.phone,
+        email: customerData.email,
+      })
       .eq("uuid", customerUuid)
       .select()
       .maybeSingle();
@@ -84,7 +89,6 @@ const customerService = {
       throw new Error(
         `Failed to update user ${customerUuid}: ${error.message}`
       );
-
     if (!data) throw new Error("Customer not found");
 
     return true;

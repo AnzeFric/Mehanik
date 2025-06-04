@@ -18,6 +18,28 @@ const vehicleService = {
 
     return true;
   },
+
+  async patchByVehicleVin(vehicleVin, vehicleData) {
+    const { data, error } = await supabase
+      .from("vehicles")
+      .update({
+        brand: vehicleData.brand,
+        model: vehicleData.model,
+        vin: vehicleData.vin,
+        build_year: vehicleData.buildYear,
+        image: vehicleData.image,
+        description: vehicleData.description,
+      })
+      .eq("vin", vehicleVin)
+      .select()
+      .maybeSingle();
+
+    if (error)
+      throw new Error(`Failed to update vehicle ${email}: ${error.message}`);
+    if (!data) throw new Error("Vehicle not found");
+
+    return true;
+  },
 };
 
 module.exports = vehicleService;
