@@ -45,11 +45,13 @@ const customerController = {
 
   async deleteCustomer(req, res, next) {
     try {
-      console.log(`Delete customer. Req from: ${req.user}, data: ${req.body}`);
-      if (!req.body.customerUuid)
-        throw new Error("Customer UUID is not provided");
+      console.log("Delete customer. Req from: ", req.user);
+      console.log("Body: ", req.body);
 
-      await customerService.deleteByCustomerUuid(req.body.customerUuid);
+      const customerUuid = req.body.customerUuid;
+      if (!customerUuid) throw new Error("Customer UUID is not provided");
+
+      await customerService.deleteByCustomerUuid(customerUuid);
       return res.status(200).json({
         success: true,
         message: "Customer deleted successfully",
