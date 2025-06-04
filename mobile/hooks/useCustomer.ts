@@ -40,8 +40,8 @@ export function useCustomer() {
 
       if (data.success) {
         console.log("Successfully saved customer, vehicle and optional repair");
-        await updateStoredCustomerData();
-        return data.customerUuid;
+        await updateStoredCustomerData(data.customers);
+        return true;
       }
       console.log("Error saving customer, vehicle and optional repair");
       return false;
@@ -73,7 +73,7 @@ export function useCustomer() {
 
       if (data.success) {
         console.log("Successfully updated customer and vehicle");
-        await updateStoredCustomerData();
+        await updateStoredCustomerData(data.customers);
         return true;
       }
       console.log("Error updating customer and vehicle");
@@ -103,7 +103,7 @@ export function useCustomer() {
 
       if (data.success) {
         console.log("Successfully deleted customer");
-        await updateStoredCustomerData();
+        await updateStoredCustomerData(data.customers);
         return true;
       }
       console.log("Error deleting customer");
@@ -113,7 +113,7 @@ export function useCustomer() {
     }
   };
 
-  const getMehcanicCustomers = async () => {
+  const getMechanicCustomers = async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/customers/`, {
         method: "GET",
@@ -135,11 +135,13 @@ export function useCustomer() {
     }
   };
 
-  const updateStoredCustomerData = async () => {
-    const customers = await getMehcanicCustomers();
+  const updateStoredCustomerData = async (
+    customers?: Array<CustomerVehicleData>
+  ) => {
+    if (!customers) customers = await getMechanicCustomers();
 
     let tempCustomers: Array<CustomerVehicleData> = [];
-    customers.forEach((item: any) => {
+    customers?.forEach((item: any) => {
       let customer: CustomerData = {
         uuid: item.uuid,
         email: item.email,

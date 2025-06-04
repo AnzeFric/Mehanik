@@ -32,9 +32,15 @@ const customerController = {
       if (!customerUuid) throw new Error("Customer UUID is not provided");
 
       await customerService.deleteByCustomerUuid(customerUuid);
+
+      const customers = await customerService.getCustomersByMechanicUuid(
+        req.user.mechanicUuid
+      );
+
       return res.status(200).json({
         success: true,
         message: "Customer deleted successfully",
+        customers: customers,
       });
     } catch (error) {
       next(error);
@@ -56,9 +62,14 @@ const customerController = {
       await vehicleController.checkInput(vehicleData, "uuid");
       await vehicleService.patchByVehicleData(vehicleData);
 
+      const customers = await customerService.getCustomersByMechanicUuid(
+        req.user.mechanicUuid
+      );
+
       return res.status(200).json({
         success: true,
         message: "Customer and vehicle patched successfully",
+        customers: customers,
       });
     } catch (error) {
       next(error);
@@ -92,9 +103,14 @@ const customerController = {
         await repairService.saveRepair(mechanicUuid, vehicleUuid, repairData);
       }
 
+      const customers = await customerService.getCustomersByMechanicUuid(
+        req.user.mechanicUuid
+      );
+
       return res.status(200).json({
         success: true,
         message: "Customer, vehicle and optional repair saved successfully",
+        customers: customers,
       });
     } catch (error) {
       next(error);
