@@ -5,10 +5,7 @@ import useAuthStore from "@/stores/useAuthStore";
 export function useVehicle() {
   const { jwt } = useAuthStore();
 
-  const updateVehicle = async (
-    vehicleVin: string,
-    vehicleData: VehicleData
-  ) => {
+  const updateVehicle = async (vehicleData: VehicleData) => {
     try {
       const response = await fetch(`${API_BASE_URL}/vehicles/`, {
         method: "PATCH",
@@ -17,7 +14,6 @@ export function useVehicle() {
           Authorization: "Bearer " + jwt,
         },
         body: JSON.stringify({
-          vehicleVin: vehicleVin,
           vehicleData: vehicleData,
         }),
       });

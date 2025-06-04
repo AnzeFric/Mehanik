@@ -3,7 +3,9 @@ const authService = require("../services/auth");
 const authController = {
   async register(req, res, next) {
     try {
-      console.log(`Register. Req from: ${req.user}, data: ${req.body}`);
+      console.log(`Register. Req from: ${req.user}, data: ${req.body}`, {
+        depth: null,
+      });
       const { email, password, firstName, lastName, accountType } = req.body;
 
       // Validate account type

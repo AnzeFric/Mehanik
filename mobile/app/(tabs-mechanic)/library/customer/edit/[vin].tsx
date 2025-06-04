@@ -48,18 +48,12 @@ export default function EditCustomerScreen() {
   const handleSaveEdit = async () => {
     if (hasCustomerChanges()) {
       if (currentCustomer) {
-        var customerRes = await updateCustomer(
-          currentCustomer.uuid,
-          currentCustomer
-        );
+        var customerRes = await updateCustomer(currentCustomer);
       }
     }
     if (hasVehicleChanges()) {
       if (currentVehicle) {
-        var vehicleRes = await updateVehicle(
-          currentVehicle.vin,
-          currentVehicle
-        );
+        var vehicleRes = await updateVehicle(currentVehicle);
       }
     }
     if (!vehicleRes || !customerRes) {

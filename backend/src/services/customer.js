@@ -72,7 +72,7 @@ const customerService = {
     return true;
   },
 
-  async patchByCustomerUuid(customerUuid, customerData) {
+  async patchByCustomerData(customerData) {
     const { data, error } = await supabase
       .from("customers")
       .update({
@@ -81,7 +81,7 @@ const customerService = {
         phone: customerData.phone,
         email: customerData.email,
       })
-      .eq("uuid", customerUuid)
+      .eq("uuid", customerData.uuid)
       .select()
       .maybeSingle();
 

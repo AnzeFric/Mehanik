@@ -3,8 +3,8 @@ const vehicleService = require("../services/vehicle");
 const vehicleController = {
   async patchVehicle(req, res, next) {
     try {
-      console.log(`Patch vehicle. Req from: ${req.user}, data: ${req.body}`);
-      if (!req.body.vehicleVin) throw new Error("Vehicle VIN is not provided");
+      console.log("Patch vehicle. Req from: ", req.user);
+      console.log("Body: ", req.body);
 
       if (!req.body.vehicleData)
         throw new Error("New vehicle data is not provided");
@@ -40,10 +40,7 @@ const vehicleController = {
         });
       }
 
-      await vehicleService.patchByVehicleVin(
-        req.body.vehicleVin,
-        newVehicleData
-      );
+      await vehicleService.patchByVehicleData(newVehicleData);
       return res.status(200).send({
         success: true,
         message: "Vehicle patched successfully",

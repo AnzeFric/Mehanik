@@ -80,10 +80,7 @@ export function useCustomer() {
     }
   };
 
-  const updateCustomer = async (
-    customerUuid: string,
-    customerData: CustomerData
-  ) => {
+  const updateCustomer = async (customerData: CustomerData) => {
     try {
       const response = await fetch(`${API_BASE_URL}/customers/`, {
         method: "PATCH",
@@ -92,7 +89,6 @@ export function useCustomer() {
           Authorization: "Bearer " + jwt,
         },
         body: JSON.stringify({
-          customerUuid: customerUuid,
           customerData: customerData,
         }),
       });

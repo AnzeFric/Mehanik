@@ -58,16 +58,15 @@ const customerController = {
 
   async patchCustomer(req, res, next) {
     try {
-      console.log(`Patch customer. Req from: ${req.user}, data: ${req.body}`);
-      if (!req.body.customerUuid)
-        throw new Error("Customer UUID is not provided");
+      console.log("Patch customer. Req from: ", req.user);
+      console.log("Body: ", req.body);
 
       if (!req.body.customerData)
         throw new Error("New customer data is not provided");
 
       const newCustomerData = req.body.customerData;
-      const allowedFields = ["firstName", "lastName", "phone", "email"];
-      const mandatoryFields = ["firstName", "lastName"];
+      const allowedFields = ["uuid, firstName", "lastName", "phone", "email"];
+      const mandatoryFields = ["uuid, firstName", "lastName"];
 
       const forbiddenField = Object.keys(newCustomerData).find(
         (field) => !allowedFields.includes(field)
@@ -89,10 +88,7 @@ const customerController = {
         });
       }
 
-      await customerService.patchByCustomerUuid(
-        req.body.customerUuid,
-        newCustomerData
-      );
+      await customerService.patchByCustomerData(newCustomerData);
       return res.status(200).send({
         success: true,
         message: "Customer patched successfully",

@@ -19,7 +19,7 @@ const vehicleService = {
     return true;
   },
 
-  async patchByVehicleVin(vehicleVin, vehicleData) {
+  async patchByVehicleData(vehicleData) {
     const { data, error } = await supabase
       .from("vehicles")
       .update({
@@ -30,7 +30,7 @@ const vehicleService = {
         image: vehicleData.image,
         description: vehicleData.description,
       })
-      .eq("vin", vehicleVin)
+      .eq("vin", vehicleData.vin)
       .select()
       .maybeSingle();
 
