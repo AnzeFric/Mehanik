@@ -15,6 +15,7 @@ import LoadingScreen from "@/components/global/LoadingScreen";
 import CustomerDisplay from "@/components/mechanic/library/displays/Customer";
 import { RepairData } from "@/interfaces/repair";
 import useCustomerStore from "@/stores/useCustomerStore";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function DetailCustomerScreen() {
   const { uuid, firstName } = useLocalSearchParams(); // Vehicle uuid
@@ -87,16 +88,22 @@ export default function DetailCustomerScreen() {
 
   const menu: React.ReactNode = (
     <View style={styles.menuContainer}>
-      <TouchableOpacity onPress={() => {}}>
-        <Text style={[styles.menuItem, styles.menuItemTop]}>PROMETNA</Text>
-      </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => router.push(`/library/customer/edit/${uuid}`)}
+        style={styles.menuItemContainer}
+        onPress={() => router.push(`/library/repair/edit/${uuid}`)}
       >
-        <Text style={[styles.menuItem, styles.menuItemTop]}>UREDI</Text>
+        <Ionicons name="create-outline" size={18} color={Colors.light.text} />
+        <Text style={styles.menuItem}>UREDI</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => setIsModalOpen(true)}>
-        <Text style={styles.menuItem}>IZBRIŠI</Text>
+
+      <TouchableOpacity
+        style={[styles.menuItemContainer, styles.menuItemDelete]}
+        onPress={() => setIsModalOpen(true)}
+      >
+        <Ionicons name="trash-outline" size={18} color="#E53935" />
+        <Text style={[styles.menuItem, styles.menuItemTextDelete]}>
+          IZBRIŠI
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -148,31 +155,44 @@ const styles = StyleSheet.create({
     gap: 15,
     paddingBottom: 30,
   },
+
   menuContainer: {
     position: "absolute",
     right: 20,
     top: -10,
-    backgroundColor: Colors.light.background,
-    width: 200,
-    borderRadius: 8,
-    shadowColor: Colors.light.shadowColor,
+    backgroundColor: "#FFFFFF",
+    width: 180,
+    borderRadius: 12,
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
     elevation: 5,
     zIndex: 5,
+    padding: 6,
+    overflow: "hidden",
+  },
+  menuItemContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    marginVertical: 2,
+    borderRadius: 8,
   },
   menuItem: {
-    textAlign: "center",
-    paddingVertical: 12,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
+    marginLeft: 12,
+    color: Colors.light.text,
   },
-  menuItemTop: {
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.light.inactiveBorder,
+  menuItemDelete: {
+    backgroundColor: "rgba(229, 57, 53, 0.08)",
+  },
+  menuItemTextDelete: {
+    color: "#E53935",
   },
 });
