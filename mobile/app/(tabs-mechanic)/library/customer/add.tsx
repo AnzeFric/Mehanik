@@ -31,6 +31,7 @@ export default function AddCustomerScreen() {
   const handleSaveImage = (image: string) => {
     setVehicleImage(image);
     setVehicleData((prevData) => ({
+      uuid: "",
       brand: "",
       model: "",
       buildYear: null,

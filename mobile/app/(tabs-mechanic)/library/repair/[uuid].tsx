@@ -24,7 +24,7 @@ import TitleRow from "@/components/shared/TitleRow";
 import useCustomerStore from "@/stores/useCustomerStore";
 
 export default function DetailRepairScreen() {
-  const { vehicleVin } = useLocalSearchParams();
+  const { uuid } = useLocalSearchParams(); // Vehicle uuid
   const { setShouldRefetch } = useCustomerStore();
   const { currentRepairFocus, deleteVehicleRepair } = useRepair();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -84,7 +84,7 @@ export default function DetailRepairScreen() {
           <View style={styles.menuContainer}>
             <TouchableOpacity
               style={styles.menuItemContainer}
-              onPress={() => router.push(`/library/repair/edit/${vehicleVin}`)}
+              onPress={() => router.push(`/library/repair/edit/${uuid}`)}
             >
               <Ionicons
                 name="create-outline"

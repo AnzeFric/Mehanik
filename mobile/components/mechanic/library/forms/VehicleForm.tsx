@@ -30,6 +30,7 @@ export default function VehicleForm({ vehicle, setVehicle }: Props) {
   useEffect(() => {
     if (brand || model || vin) {
       const vehicleData: VehicleData = {
+        uuid: vehicle?.uuid || "",
         brand,
         model,
         buildYear: buildYear ? parseInt(buildYear, 10) : null,

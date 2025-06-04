@@ -7,7 +7,7 @@ export function useRepair() {
   const { jwt } = useAuthStore();
   const { currentRepairFocus, setCurrentRepairFocus } = useRepairStore();
 
-  const getVehicleRepairs = async (vehicleVin: string) => {
+  const getVehicleRepairs = async (vehicleUuid: string) => {
     try {
       const response = await fetch(`${API_BASE_URL}/repairs/get`, {
         method: "POST",
@@ -15,7 +15,7 @@ export function useRepair() {
           "Content-Type": "application/json",
           Authorization: "Bearer " + jwt,
         },
-        body: JSON.stringify({ vin: vehicleVin }),
+        body: JSON.stringify({ vehicleUuid: vehicleUuid }),
       });
 
       const data = await response.json();
@@ -31,7 +31,7 @@ export function useRepair() {
   };
 
   const saveVehicleRepairs = async (
-    vehicleVin: string,
+    vehicleUuid: string,
     repairData: RepairData
   ) => {
     try {
@@ -45,7 +45,10 @@ export function useRepair() {
           "Content-Type": "application/json",
           Authorization: "Bearer " + jwt,
         },
-        body: JSON.stringify({ vin: vehicleVin, repairs: formattedData }),
+        body: JSON.stringify({
+          vehicleUuid: vehicleUuid,
+          repairs: formattedData,
+        }),
       });
 
       const data = await response.json();

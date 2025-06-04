@@ -12,7 +12,7 @@ export default function Customer({ customerData, setSearch }: Props) {
   const handlePress = () => {
     setSearch("");
     router.push(
-      `/library/customer/${customerData.vehicle.vin}?firstName=${customerData.customer.firstName}`
+      `/library/customer/${customerData.vehicle.uuid}?firstName=${customerData.customer.firstName}`
     );
   };
 

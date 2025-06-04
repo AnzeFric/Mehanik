@@ -11,7 +11,7 @@ import { useCustomer } from "@/hooks/useCustomer";
 import { useVehicle } from "@/hooks/useVehicle";
 
 export default function EditCustomerScreen() {
-  const { vin } = useLocalSearchParams();
+  const { uuid } = useLocalSearchParams(); // Vehicle uuid
   const { updateVehicle } = useVehicle();
   const { customers, updateCustomer } = useCustomer();
 
@@ -23,7 +23,7 @@ export default function EditCustomerScreen() {
 
   useEffect(() => {
     const foundCustomerVehicle = customers.find(
-      (item) => item.vehicle.vin === vin
+      (item) => item.vehicle.uuid === uuid
     );
 
     if (foundCustomerVehicle) {
@@ -33,7 +33,7 @@ export default function EditCustomerScreen() {
       setCurrentCustomer(foundCustomerVehicle.customer);
       setCurrentVehicle(foundCustomerVehicle.vehicle);
     }
-  }, [customers, vin]);
+  }, [customers]);
 
   const hasCustomerChanges = () => {
     if (!originalCustomer || !currentCustomer) return false;
@@ -67,6 +67,7 @@ export default function EditCustomerScreen() {
 
   const handleSaveImage = (image: string) => {
     setCurrentVehicle((prevData) => ({
+      uuid: "",
       brand: "",
       model: "",
       buildYear: null,

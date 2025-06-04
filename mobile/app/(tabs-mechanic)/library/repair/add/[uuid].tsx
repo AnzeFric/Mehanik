@@ -7,13 +7,13 @@ import TemplateView from "@/components/mechanic/library/TemplateView";
 import { router, useLocalSearchParams } from "expo-router";
 
 export default function AddRepairScreen() {
-  const { vin } = useLocalSearchParams();
+  const { uuid } = useLocalSearchParams(); // Vehicle uuid
   const [repairData, setRepairData] = useState<RepairData | null>(null);
   const { saveVehicleRepairs } = useRepair();
 
   const handleSaveRepair = () => {
     if (repairData) {
-      saveVehicleRepairs(vin.toString(), repairData);
+      saveVehicleRepairs(uuid.toString(), repairData);
       router.back();
     }
   };

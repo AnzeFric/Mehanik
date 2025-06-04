@@ -17,7 +17,7 @@ import { RepairData } from "@/interfaces/repair";
 import useCustomerStore from "@/stores/useCustomerStore";
 
 export default function DetailCustomerScreen() {
-  const { vin, firstName } = useLocalSearchParams();
+  const { uuid, firstName } = useLocalSearchParams(); // Vehicle uuid
   const { getVehicleRepairs } = useRepair();
   const { shouldRefetch, setShouldRefetch } = useCustomerStore();
   const { customers, deleteCustomer } = useCustomer();
@@ -27,19 +27,21 @@ export default function DetailCustomerScreen() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const repairsFetch = async () => {
-    const repairData = await getVehicleRepairs(vin.toString());
+    const repairData = await getVehicleRepairs(uuid.toString());
     setRepairList(repairData);
   };
 
   useEffect(() => {
     const customerInit = () => {
-      const foundCustomer = customers.find((item) => item.vehicle.vin === vin);
+      const foundCustomer = customers.find(
+        (item) => item.vehicle.uuid === uuid
+      );
       setCustomer(foundCustomer);
     };
 
     customerInit();
     repairsFetch();
-  }, [vin]);
+  }, [uuid]);
 
   useFocusEffect(
     useCallback(() => {
@@ -55,7 +57,7 @@ export default function DetailCustomerScreen() {
 
   const handleAddService = () => {
     setShouldRefetch(true);
-    router.push(`/(tabs-mechanic)/library/repair/add/${vin}`);
+    router.push(`/(tabs-mechanic)/library/repair/add/${uuid}`);
   };
 
   const handleDeleteCustomer = async () => {
@@ -89,7 +91,7 @@ export default function DetailCustomerScreen() {
         <Text style={[styles.menuItem, styles.menuItemTop]}>PROMETNA</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => router.push(`/library/customer/edit/${vin}`)}
+        onPress={() => router.push(`/library/customer/edit/${uuid}`)}
       >
         <Text style={[styles.menuItem, styles.menuItemTop]}>UREDI</Text>
       </TouchableOpacity>
@@ -116,7 +118,7 @@ export default function DetailCustomerScreen() {
               </View>
               <RepairsDisplay
                 repairList={repairList}
-                vehicleVin={customer.vehicle.vin}
+                vehicleUuid={customer.vehicle.uuid}
               />
               {isModalOpen && (
                 <ModalPrompt

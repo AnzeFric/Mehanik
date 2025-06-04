@@ -144,6 +144,7 @@ export function useCustomer() {
 
       item.vehicles.forEach((customerVehicle: any) => {
         let vehicle: VehicleData = {
+          uuid: customerVehicle.uuid,
           brand: customerVehicle.brand,
           model: customerVehicle.model,
           buildYear: customerVehicle.buildYear,

@@ -3,8 +3,10 @@ import TemplateView from "@/components/mechanic/library/TemplateView";
 import RepairForm from "@/components/mechanic/library/forms/RepairForm";
 import { useState } from "react";
 import { RepairData } from "@/interfaces/repair";
+import { useLocalSearchParams } from "expo-router";
 
 export default function EditRepairScreen() {
+  const { uuid } = useLocalSearchParams(); // Vehicle uuid
   const [repairData, setRepairData] = useState<RepairData | null>();
 
   const handleEditRepair = () => {};

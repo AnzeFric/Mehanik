@@ -5,10 +5,10 @@ import { RepairData } from "@/interfaces/repair";
 
 interface Props {
   repairList: RepairData[];
-  vehicleVin: string;
+  vehicleUuid: string;
 }
 
-export default function RepairsDisplay({ repairList, vehicleVin }: Props) {
+export default function RepairsDisplay({ repairList, vehicleUuid }: Props) {
   return (
     <>
       <View style={styles.container}>
@@ -26,7 +26,7 @@ export default function RepairsDisplay({ repairList, vehicleVin }: Props) {
       <View style={styles.servicesContainer}>
         {repairList.length > 0 ? (
           repairList.map((repair, index) => (
-            <Repair repairData={repair} vehicleVin={vehicleVin} key={index} />
+            <Repair repairData={repair} vehicleUuid={vehicleUuid} key={index} />
           ))
         ) : (
           <Text style={[AppStyles.smallText, styles.listEmptyText]}>

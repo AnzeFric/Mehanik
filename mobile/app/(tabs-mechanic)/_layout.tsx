@@ -84,7 +84,7 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="library/customer/[vin]"
+          name="library/customer/[uuid]"
           options={{
             href: null,
           }}
@@ -96,25 +96,25 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="library/customer/edit/[vin]"
+          name="library/customer/edit/[uuid]"
           options={{
             href: null,
           }}
         />
         <Tabs.Screen
-          name="library/repair/[vin]"
+          name="library/repair/[uuid]"
           options={{
             href: null,
           }}
         />
         <Tabs.Screen
-          name="library/repair/add/[vin]"
+          name="library/repair/add/[uuid]"
           options={{
             href: null,
           }}
         />
         <Tabs.Screen
-          name="library/repair/edit/[vin]"
+          name="library/repair/edit/[uuid]"
           options={{
             href: null,
           }}

@@ -12,15 +12,15 @@ import { RepairData } from "@/interfaces/repair";
 
 interface Props {
   repairData: RepairData;
-  vehicleVin: string;
+  vehicleUuid: string;
 }
 
-export default function Repair({ repairData, vehicleVin }: Props) {
+export default function Repair({ repairData, vehicleUuid }: Props) {
   const { setCurrentRepairFocus } = useRepair();
 
   const handleRedirect = () => {
     setCurrentRepairFocus(repairData);
-    router.push(`/(tabs-mechanic)/library/repair/${vehicleVin}`);
+    router.push(`/(tabs-mechanic)/library/repair/${vehicleUuid}`);
   };
 
   return (
