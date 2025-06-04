@@ -10,10 +10,10 @@ const customerService = {
     vehicleData,
     repairData
   ) {
-    let customerUuid = uuidv4();
+    let uuid = uuidv4();
 
     const { error } = await supabase.from("customers").insert({
-      uuid: customerUuid,
+      uuid: uuid,
       first_name: customerData.firstName,
       last_name: customerData.lastName,
       phone: customerData.phone,
@@ -23,19 +23,23 @@ const customerService = {
 
     if (error) throw error;
 
-    await vehicleService.saveVehicle(null, customerUuid, vehicleData);
+    await vehicleService.saveVehicle(null, uuid, vehicleData);
 
     if (repairData)
-      await repairService.saveRepair(mechanicUuid, vehicleData.vin, repairData);
+      await repairService.saveRepair(
+        mechanicUuid,
+        vehicleData.uuid,
+        repairData
+      );
 
-    return customerUuid;
+    return uuid;
   },
 
   async getCustomersByMechanicUuid(mechanicUuid) {
     const { data, error } = await supabase
       .from("customers")
       .select(
-        "uuid, first_name, last_name, phone, email, vehicles(brand, model, build_year, vin, image, description)"
+        "uuid, first_name, last_name, phone, email, vehicles(uuid, brand, model, build_year, vin, image, description)"
       )
       .eq("fk_mechanic", mechanicUuid);
 
@@ -49,6 +53,7 @@ const customerService = {
       email: customer.email,
       vehicles:
         customer.vehicles?.map((vehicle) => ({
+          uuid: vehicle.uuid,
           brand: vehicle.brand,
           model: vehicle.model,
           buildYear: vehicle.build_year,

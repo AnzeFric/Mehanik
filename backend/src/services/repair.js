@@ -2,23 +2,23 @@ const supabase = require("../config/database");
 const { v4: uuidv4 } = require("uuid");
 
 const repairService = {
-  async getVehicleRepairs(mechanicUuid, vehicleVin) {
+  async getVehicleRepairs(mechanicUuid, vehicleUuid) {
     const { data, error } = await supabase
       .from("repairs")
       .select("uuid, type, price, date, options, description, images, note")
       .eq("fk_mechanic", mechanicUuid)
-      .eq("fk_vehicle", vehicleVin);
+      .eq("fk_vehicle", vehicleUuid);
 
     if (error) throw error;
 
     return data;
   },
 
-  async saveRepair(mechanicUuid, vehicleVin, repairData) {
-    let repairUuid = uuidv4();
+  async saveRepair(mechanicUuid, vehicleUuid, repairData) {
+    let uuid = uuidv4();
 
     const { error } = await supabase.from("repairs").insert({
-      uuid: repairUuid,
+      uuid: uuid,
       type: repairData.type,
       price: repairData.price,
       date: repairData.date,
@@ -27,12 +27,12 @@ const repairService = {
       images: repairData.images,
       note: repairData.note,
       fk_mechanic: mechanicUuid,
-      fk_vehicle: vehicleVin,
+      fk_vehicle: vehicleUuid,
     });
 
     if (error) throw error;
 
-    return repairUuid;
+    return uuid;
   },
 
   async deleteRepair(mechanicUuid, repairUuid) {

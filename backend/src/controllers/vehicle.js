@@ -11,6 +11,7 @@ const vehicleController = {
 
       const newVehicleData = req.body.vehicleData;
       const allowedFields = [
+        "uuid",
         "brand",
         "model",
         "vin",
@@ -18,7 +19,7 @@ const vehicleController = {
         "image",
         "description",
       ];
-      const mandatoryFields = ["brand", "model", "vin"];
+      const mandatoryFields = ["uuid", "brand", "model", "vin"];
 
       const forbiddenField = Object.keys(newVehicleData).find(
         (field) => !allowedFields.includes(field)

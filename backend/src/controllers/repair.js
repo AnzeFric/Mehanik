@@ -8,7 +8,7 @@ const repairController = {
 
       const repairs = await repairService.getVehicleRepairs(
         req.user.mechanicUuid,
-        req.body.vin
+        req.body.vehicleUuid
       );
       return res.status(200).send({
         success: true,
@@ -27,7 +27,7 @@ const repairController = {
 
       await repairService.saveRepair(
         req.user.mechanicUuid,
-        req.body.vin,
+        req.body.vehicleUuid,
         req.body.repairs
       );
       return res.status(200).send({
