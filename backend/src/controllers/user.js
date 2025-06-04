@@ -21,38 +21,20 @@ const userController = {
       console.log("Patch user. Req from: ", req.user);
       console.log("Body: ", req.body);
 
-      const allowedFields = [
-        "firstName",
-        "lastName",
-        "first_name",
-        "last_name",
-      ];
-
-      const forbiddenField = Object.keys(req.body).find(
-        (field) => !allowedFields.includes(field)
-      );
-      if (forbiddenField) {
-        return res.status(403).json({
-          success: false,
-          message: `Field '${forbiddenField}' is not allowed`,
-        });
-      }
-
-      const fieldMappings = {
-        firstName: "first_name",
-        first_name: "first_name",
-        lastName: "last_name",
-        last_name: "last_name",
-      };
+      const userData = req.body.userData;
+      if (!userData) throw new Error("User data is not provided");
 
       const updateData = {};
-      allowedFields.forEach((field) => {
-        if (req.body[field] !== undefined && req.body[field] !== null) {
-          updateData[fieldMappings[field]] = req.body[field];
-        }
-      });
+      if (userData.firstName !== undefined) {
+        updateData.first_name = userData.firstName;
+      }
+      if (userData.lastName !== undefined) {
+        updateData.last_name = userData.lastName;
+      }
 
+      await checkInput(userData);
       await userService.updateByEmailAndEnabled(req.user.email, updateData);
+
       return res.status(200).json({
         success: true,
         message: "User updated successfully",
@@ -77,5 +59,18 @@ const userController = {
     }
   },
 };
+
+async function checkInput(userData) {
+  const allowedFields = ["firstName", "lastName"];
+
+  const forbiddenField = Object.keys(userData).find(
+    (field) => !allowedFields.includes(field)
+  );
+  if (forbiddenField) {
+    const error = new Error(`Field '${forbiddenField}' is not allowed`);
+    error.status = 403;
+    throw error;
+  }
+}
 
 module.exports = userController;

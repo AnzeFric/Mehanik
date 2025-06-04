@@ -32,10 +32,10 @@ const userService = {
     return data;
   },
 
-  async updateByEmailAndEnabled(email, updateData) {
+  async updateByEmailAndEnabled(email, userData) {
     const { data, error } = await supabase
       .from("users")
-      .update(updateData)
+      .update(userData)
       .eq("email", email)
       .eq("enabled", true)
       .select()
