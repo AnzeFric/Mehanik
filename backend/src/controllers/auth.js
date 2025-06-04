@@ -7,6 +7,12 @@ const authController = {
       console.log("Body: ", req.body);
 
       const { email, password, firstName, lastName, accountType } = req.body;
+      if (!email || !password || !firstName || !lastName || !accountType) {
+        return res.status(400).json({
+          success: false,
+          message: "Bad input",
+        });
+      }
 
       // Validate account type
       if (!["user", "mechanic"].includes(accountType)) {
@@ -40,6 +46,13 @@ const authController = {
       console.log("Body: ", req.body);
 
       const { email, password } = req.body;
+      if (!email || !password) {
+        return res.status(400).json({
+          success: false,
+          message: "Bad input",
+        });
+      }
+
       const token = await authService.login(email, password);
       return res.status(200).json({
         success: true,
