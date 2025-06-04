@@ -6,7 +6,7 @@ export function useVehicle() {
   const { jwt } = useAuthStore();
 
   const updateVehicle = async (
-    vehicleUuid: string,
+    vehicleVin: string,
     vehicleData: VehicleData
   ) => {
     try {
@@ -17,7 +17,7 @@ export function useVehicle() {
           Authorization: "Bearer " + jwt,
         },
         body: JSON.stringify({
-          vehicleUuid: vehicleUuid,
+          vehicleVin: vehicleVin,
           vehicleData: vehicleData,
         }),
       });

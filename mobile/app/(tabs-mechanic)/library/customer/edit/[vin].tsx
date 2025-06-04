@@ -50,7 +50,7 @@ export default function EditCustomerScreen() {
       if (currentCustomer && currentVehicle) {
         const [customerRes, vehicleRes] = await Promise.allSettled([
           updateCustomer(currentCustomer.uuid, currentCustomer),
-          updateVehicle(currentVehicle.uuid, currentVehicle),
+          updateVehicle(currentVehicle.vin, currentVehicle),
         ]);
         if (!customerRes || !vehicleRes) {
           Alert.alert(
