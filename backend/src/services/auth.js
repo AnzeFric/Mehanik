@@ -57,9 +57,7 @@ const authService = {
 
     if (accountType === "mechanic") {
       const data = await mechanicService.check(userUuid);
-      if (!data) {
-        await mechanicService.create(userUuid);
-      }
+      if (!data) await mechanicService.create(userUuid);
     }
 
     return email;

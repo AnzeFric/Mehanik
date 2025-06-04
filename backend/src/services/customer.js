@@ -25,9 +25,8 @@ const customerService = {
 
     await vehicleService.saveVehicle(null, customerUuid, vehicleData);
 
-    if (repairData) {
+    if (repairData)
       await repairService.saveRepair(mechanicUuid, vehicleData.vin, repairData);
-    }
 
     return customerUuid;
   },
@@ -69,6 +68,24 @@ const customerService = {
       .eq("uuid", customerUuid);
 
     if (error) throw error;
+
+    return true;
+  },
+
+  async patchByCustomerUuid(customerUuid, newCustomerData) {
+    const { data, error } = await supabase
+      .from("customers")
+      .update(newCustomerData)
+      .eq("uuid", customerUuid)
+      .select()
+      .maybeSingle();
+
+    if (error)
+      throw new Error(
+        `Failed to update user ${customerUuid}: ${error.message}`
+      );
+
+    if (!data) throw new Error("Customer not found");
 
     return true;
   },

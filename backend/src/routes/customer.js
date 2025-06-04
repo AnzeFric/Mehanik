@@ -10,4 +10,6 @@ router.post("/", customerController.saveCustomer);
 
 router.delete("/", customerController.deleteCustomer);
 
+router.patch("/", customerController.patchCustomer);
+
 module.exports = router;

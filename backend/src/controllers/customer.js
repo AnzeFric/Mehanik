@@ -3,6 +3,7 @@ const customerService = require("../services/customer");
 const customerController = {
   async getCustomers(req, res, next) {
     try {
+      console.log(`Get customer. Req from: ${req.user}, data: ${req.body}`);
       const customers = await customerService.getCustomersByMechanicUuid(
         req.user.mechanicUuid
       );
@@ -18,7 +19,7 @@ const customerController = {
 
   async saveCustomer(req, res, next) {
     try {
-      console.log("Save customer: ", req.user);
+      console.log(`Save customer. Req from: ${req.user}, data: ${req.body}`);
       const mechanicUuid = req.user.mechanicUuid;
       const customerData = req.body.customerData;
       const vehicleData = req.body.vehicleData;
@@ -41,7 +42,7 @@ const customerController = {
 
   async deleteCustomer(req, res, next) {
     try {
-      console.log("Delete customer: ", req.user);
+      console.log(`Delete customer. Req from: ${req.user}, data: ${req.body}`);
       if (!req.body.customerUuid)
         throw new Error("Customer UUID is not provided");
 
@@ -49,6 +50,52 @@ const customerController = {
       return res.status(200).send({
         success: true,
         message: "Customer deleted successfully",
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async patchCustomer(req, res, next) {
+    try {
+      console.log(`Patch customer. Req from: ${req.user}, data: ${req.body}`);
+      if (!req.body.customerUuid)
+        throw new Error("Customer UUID is not provided");
+
+      if (!req.body.customer)
+        throw new Error("New customer data is not provided");
+
+      const newCustomerData = req.body.customer;
+      const allowedFields = ["firstName", "lastName", "phone", "email"];
+      const mandatoryFields = ["firstName", "lastName"];
+
+      const forbiddenField = Object.keys(newCustomerData).find(
+        (field) => !allowedFields.includes(field)
+      );
+      if (forbiddenField) {
+        return res.status(403).json({
+          success: false,
+          message: `Field '${forbiddenField}' is not allowed`,
+        });
+      }
+
+      const missingField = mandatoryFields.find(
+        (field) => !newCustomerData[field]
+      );
+      if (missingField) {
+        return res.status(403).json({
+          success: false,
+          message: `Field '${missingField}' is missing`,
+        });
+      }
+
+      await customerService.patchByCustomerUuid(
+        req.body.customerUuid,
+        newCustomerData
+      );
+      return res.status(200).send({
+        success: true,
+        message: "Customer patched successfully",
       });
     } catch (error) {
       next(error);
