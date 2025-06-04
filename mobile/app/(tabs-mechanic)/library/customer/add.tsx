@@ -21,7 +21,7 @@ import { useVehicle } from "@/hooks/useVehicle";
 import { useRepair } from "@/hooks/useRepair";
 
 export default function AddCustomerScreen() {
-  const { saveCustomer } = useCustomer();
+  const { saveCustomerVehicleRepair } = useCustomer();
   const { saveVehicle } = useVehicle();
   const { saveVehicleRepairs } = useRepair();
 
@@ -76,20 +76,7 @@ export default function AddCustomerScreen() {
       image: vehicleImage || null,
     };
 
-    const promises = [
-      saveCustomer(customerData),
-      saveVehicle(customerData.uuid, finalVehicleData),
-    ];
-    // Repair data exists and is not other with no description(Mechanic chose not to save)
-    if (
-      repairData &&
-      !(repairData.type === "other" && repairData.description === "")
-    ) {
-      promises.push(saveVehicleRepairs(finalVehicleData.uuid, repairData));
-    }
-
-    const results = await Promise.allSettled(promises);
-    const [customerRes, vehicleRes, repairRes] = results;
+    await saveCustomerVehicleRepair(customerData, finalVehicleData, repairData);
 
     router.push(`/(tabs-mechanic)/library`);
   };

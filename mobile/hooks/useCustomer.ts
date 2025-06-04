@@ -3,24 +3,37 @@ import { API_BASE_URL } from "@/constants/Config";
 import { CustomerData, CustomerVehicleData } from "@/interfaces/customer";
 import { VehicleData } from "@/interfaces/vehicle";
 import useCustomerStore from "@/stores/useCustomerStore";
+import { RepairData } from "@/interfaces/repair";
 
 export function useCustomer() {
   const { jwt } = useAuthStore();
   const { customers, setCustomers } = useCustomerStore();
 
-  const saveCustomer = async (customerData: CustomerData) => {
-    console.log("Saving customer: ", customerData);
-
+  const saveCustomerVehicleRepair = async (
+    customerData: CustomerData,
+    vehicleData: VehicleData,
+    repairData: RepairData | null
+  ) => {
     try {
+      console.log("Saving customer: ", vehicleData);
+      let repairDataCheck = repairData;
+      if (repairData?.type === "other" && repairData.description === "") {
+        repairDataCheck = null;
+      }
+
+      let body = {
+        customerData,
+        vehicleData,
+        ...(repairDataCheck && { repairData }),
+      };
+
       const response = await fetch(`${API_BASE_URL}/customers/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + jwt,
         },
-        body: JSON.stringify({
-          customerData: customerData,
-        }),
+        body: JSON.stringify(body),
       });
 
       const data = await response.json();
@@ -28,7 +41,7 @@ export function useCustomer() {
       if (data.success) {
         console.log("Successfully saved customer");
         await updateStoredCustomerData();
-        return true;
+        return data.customerUuid;
       }
       console.log("Error saving customer");
       return false;
@@ -147,7 +160,7 @@ export function useCustomer() {
 
   return {
     customers,
-    saveCustomer,
+    saveCustomerVehicleRepair,
     deleteCustomer,
     updateCustomer,
     updateStoredCustomerData,

@@ -92,4 +92,7 @@ async function checkInput(vehicleData, customField) {
   }
 }
 
-module.exports = vehicleController;
+module.exports = {
+  ...vehicleController,
+  checkInput, // <-- add this line
+};

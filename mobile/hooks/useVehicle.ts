@@ -28,7 +28,7 @@ export function useVehicle() {
 
       if (data.success) {
         console.log("Successfully saved vehicle");
-        return true;
+        return data.vehicleUuid;
       }
       console.log("Error saving vehicle");
       return false;

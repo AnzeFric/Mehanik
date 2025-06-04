@@ -1,4 +1,8 @@
 const customerService = require("../../services/accounts/customer");
+const vehicleService = require("../../services/vehicle");
+const repairService = require("../../services/repair");
+
+const vehicleController = require("../../controllers/vehicle");
 
 const customerController = {
   async getCustomers(req, res, next) {
@@ -13,30 +17,6 @@ const customerController = {
         success: true,
         message: "Customers fetch successful",
         customers: customers,
-      });
-    } catch (error) {
-      next(error);
-    }
-  },
-
-  async saveCustomer(req, res, next) {
-    try {
-      console.log("Save customer. Req from: ", req.user);
-      console.log("Body: ", req.body);
-
-      const mechanicUuid = req.user.mechanicUuid;
-      const customerData = req.body.customerData;
-      if (!customerData) throw new Error("Customer data is not provided");
-
-      await checkInput(customerData);
-      const customerUuid = await customerService.saveCustomerByMechanicUuid(
-        mechanicUuid,
-        customerData
-      );
-      return res.status(200).json({
-        success: true,
-        message: "Customer saved successfully",
-        customerUuid: customerUuid,
       });
     } catch (error) {
       next(error);
@@ -67,8 +47,7 @@ const customerController = {
       console.log("Body: ", req.body);
 
       const customerData = req.body.customerData;
-      if (!req.body.customerData)
-        throw new Error("Customer data is not provided");
+      if (!customerData) throw new Error("Customer data is not provided");
 
       await checkInput(customerData, "uuid");
       await customerService.patchByCustomerData(customerData);
@@ -76,6 +55,42 @@ const customerController = {
       return res.status(200).json({
         success: true,
         message: "Customer patched successfully",
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async saveCustomerVehicleRepair(req, res, next) {
+    try {
+      console.log("Save customer, vehicle, repair. Req from: ", req.user);
+      console.log("Body: ", req.body);
+
+      const mechanicUuid = req.user.mechanicUuid;
+      const { customerData, vehicleData, repairData } = req.body;
+      if (!customerData) throw new Error("Customer data is not provided");
+      if (!vehicleData) throw new Error("Customer data is not provided");
+
+      await checkInput(customerData);
+      const customerUuid = await customerService.saveCustomerByMechanicUuid(
+        mechanicUuid,
+        customerData
+      );
+
+      await vehicleController.checkInput(vehicleData);
+      const vehicleUuid = await vehicleService.saveVehicleByUserOrCustomerUuid(
+        null,
+        customerUuid,
+        vehicleData
+      );
+
+      if (repairData) {
+        await repairService.saveRepair(mechanicUuid, vehicleUuid, repairData);
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: "Customer, vehicle and optional repair saved successfully",
       });
     } catch (error) {
       next(error);
