@@ -29,7 +29,7 @@ const vehicleController = {
         );
       }
 
-      return res.status(200).send({
+      return res.status(200).json({
         success: true,
         message: "Vehicle saved successfully",
         vehicleUuid: vehicleUuid,
@@ -50,7 +50,7 @@ const vehicleController = {
       await checkInput(vehicleData, "uuid");
       await vehicleService.patchByVehicleData(vehicleData);
 
-      return res.status(200).send({
+      return res.status(200).json({
         success: true,
         message: "Vehicle patched successfully",
       });

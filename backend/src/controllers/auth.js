@@ -10,7 +10,7 @@ const authController = {
 
       // Validate account type
       if (!["user", "mechanic"].includes(accountType)) {
-        return res.status(400).send({
+        return res.status(400).json({
           success: false,
           message: "Invalid account type",
         });
@@ -24,7 +24,7 @@ const authController = {
         accountType
       );
 
-      return res.status(201).send({
+      return res.status(201).json({
         success: true,
         message: "Registration successful",
         email: registeredEmail,
@@ -41,7 +41,7 @@ const authController = {
 
       const { email, password } = req.body;
       const token = await authService.login(email, password);
-      return res.status(200).send({
+      return res.status(200).json({
         success: true,
         message: "Login successful",
         token: token,

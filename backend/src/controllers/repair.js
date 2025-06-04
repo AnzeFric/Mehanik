@@ -13,7 +13,7 @@ const repairController = {
         req.user.mechanicUuid,
         vehicleUuid
       );
-      return res.status(200).send({
+      return res.status(200).json({
         success: true,
         message: "Vehicle repairs fetch successfully",
         repairs: repairs,
@@ -38,7 +38,7 @@ const repairController = {
         vehicleUuid,
         repairData
       );
-      return res.status(200).send({
+      return res.status(200).json({
         success: true,
         message: "Vehicle repairs saved successfully",
         repairUuid: uuid,
@@ -57,7 +57,7 @@ const repairController = {
       if (!repairUuid) throw new Error("Repair uuid is not provided");
 
       await repairService.deleteRepair(req.user.mechanicUuid, repairUuid);
-      return res.status(200).send({
+      return res.status(200).json({
         success: true,
         message: "Vehicle repair deleted successfully",
       });

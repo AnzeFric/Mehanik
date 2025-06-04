@@ -9,7 +9,7 @@ const customerController = {
       const customers = await customerService.getCustomersByMechanicUuid(
         req.user.mechanicUuid
       );
-      return res.status(200).send({
+      return res.status(200).json({
         success: true,
         message: "Customers fetch successful",
         customers: customers,
@@ -33,7 +33,7 @@ const customerController = {
         mechanicUuid,
         customerData
       );
-      return res.status(200).send({
+      return res.status(200).json({
         success: true,
         message: "Customer saved successfully",
         customerUuid: customerUuid,
@@ -50,7 +50,7 @@ const customerController = {
         throw new Error("Customer UUID is not provided");
 
       await customerService.deleteByCustomerUuid(req.body.customerUuid);
-      return res.status(200).send({
+      return res.status(200).json({
         success: true,
         message: "Customer deleted successfully",
       });
@@ -71,7 +71,7 @@ const customerController = {
       await checkInput(customerData);
       await customerService.patchByCustomerData(customerData);
 
-      return res.status(200).send({
+      return res.status(200).json({
         success: true,
         message: "Customer patched successfully",
       });
