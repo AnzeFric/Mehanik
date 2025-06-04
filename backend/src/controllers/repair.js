@@ -6,9 +6,12 @@ const repairController = {
       console.log("Get repairs. Req from: ", req.user);
       console.log("Body: ", req.body);
 
+      const vehicleUuid = req.body.vehicleUuid;
+      if (!vehicleUuid) throw new Error("Vehicle uuid is not provided");
+
       const repairs = await repairService.getVehicleRepairs(
         req.user.mechanicUuid,
-        req.body.vehicleUuid
+        vehicleUuid
       );
       return res.status(200).send({
         success: true,
@@ -25,14 +28,20 @@ const repairController = {
       console.log("Save repair. Req from: ", req.user);
       console.log("Body: ", req.body);
 
-      await repairService.saveRepair(
+      const repairData = req.body.repairData;
+      const vehicleUuid = req.body.vehicleUuid;
+      if (!repairData) throw new Error("Repair data is not provided");
+      if (!vehicleUuid) throw new Error("Vehicle uuid is not provided");
+
+      const uuid = await repairService.saveRepair(
         req.user.mechanicUuid,
-        req.body.vehicleUuid,
-        req.body.repairs
+        vehicleUuid,
+        repairData
       );
       return res.status(200).send({
         success: true,
         message: "Vehicle repairs saved successfully",
+        repairUuid: uuid,
       });
     } catch (error) {
       next(error);
@@ -44,10 +53,10 @@ const repairController = {
       console.log("Delete repair. Req from: ", req.user);
       console.log("Body: ", req.body);
 
-      await repairService.deleteRepair(
-        req.user.mechanicUuid,
-        req.body.repairUuid
-      );
+      const repairUuid = req.body.repairUuid;
+      if (!repairUuid) throw new Error("Repair uuid is not provided");
+
+      await repairService.deleteRepair(req.user.mechanicUuid, repairUuid);
       return res.status(200).send({
         success: true,
         message: "Vehicle repair deleted successfully",

@@ -48,7 +48,7 @@ export function useRepair() {
         },
         body: JSON.stringify({
           vehicleUuid: vehicleUuid,
-          repairs: formattedData,
+          repairData: formattedData,
         }),
       });
 
