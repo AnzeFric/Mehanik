@@ -8,10 +8,13 @@ import VehicleForm from "@/components/mechanic/library/forms/VehicleForm";
 import ImageForm from "@/components/mechanic/library/forms/ImageForm";
 import { router, useLocalSearchParams } from "expo-router";
 import { useCustomer } from "@/hooks/useCustomer";
+import useCustomerStore from "@/stores/useCustomerStore";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function EditCustomerScreen() {
   const { uuid } = useLocalSearchParams(); // Vehicle uuid
-  const { customers, updateCustomerVehicle } = useCustomer();
+  const { updateCustomerVehicle } = useCustomer();
+  const { customers } = useCustomerStore();
 
   const [originalCustomer, setOriginalCustomer] = useState<CustomerData>();
   const [originalVehicle, setOriginalVehicle] = useState<VehicleData>();
@@ -31,26 +34,11 @@ export default function EditCustomerScreen() {
       setCurrentCustomer(foundCustomerVehicle.customer);
       setCurrentVehicle(foundCustomerVehicle.vehicle);
     }
-  }, [customers]);
-
-  const hasCustomerChanges = () => {
-    if (!originalCustomer || !currentCustomer) return false;
-    return JSON.stringify(originalCustomer) !== JSON.stringify(currentCustomer);
-  };
-
-  const hasVehicleChanges = () => {
-    if (!originalVehicle || !currentVehicle) return false;
-    return JSON.stringify(originalVehicle) !== JSON.stringify(currentVehicle);
-  };
+  }, [customers, uuid]);
 
   const handleSaveEdit = async () => {
-    if (hasCustomerChanges() || hasVehicleChanges()) {
-      if (currentCustomer && currentVehicle) {
-        var result = await updateCustomerVehicle(
-          currentCustomer,
-          currentVehicle
-        );
-      }
+    if (currentCustomer && currentVehicle) {
+      var result = await updateCustomerVehicle(currentCustomer, currentVehicle);
     }
     if (!result) {
       Alert.alert(
@@ -74,19 +62,25 @@ export default function EditCustomerScreen() {
     }));
   };
 
+  const resfreshData = () => {
+    setCurrentCustomer(originalCustomer);
+    setCurrentVehicle(originalVehicle);
+  };
+
   return (
     <TemplateView
       title={"Uredi stranko"}
       buttonText={"Uredi"}
       onButtonPress={handleSaveEdit}
+      menuIcon={<Ionicons name={"refresh"} size={30} onPress={resfreshData} />}
     >
       <View style={styles.container}>
-        <ImageForm image={originalVehicle?.image} setImage={handleSaveImage} />
+        <ImageForm image={currentVehicle?.image} setImage={handleSaveImage} />
         <CustomerForm
-          customer={originalCustomer}
+          customer={currentCustomer}
           setCustomer={setCurrentCustomer}
         />
-        <VehicleForm vehicle={originalVehicle} setVehicle={setCurrentVehicle} />
+        <VehicleForm vehicle={currentVehicle} setVehicle={setCurrentVehicle} />
       </View>
     </TemplateView>
   );

@@ -20,8 +20,8 @@ import { Ionicons } from "@expo/vector-icons";
 export default function DetailCustomerScreen() {
   const { uuid, firstName } = useLocalSearchParams(); // Vehicle uuid
   const { getVehicleRepairs } = useRepair();
-  const { shouldRefetch, setShouldRefetch } = useCustomerStore();
-  const { customers, deleteCustomer } = useCustomer();
+  const { customers, shouldRefetch, setShouldRefetch } = useCustomerStore();
+  const { deleteCustomer } = useCustomer();
   const [repairList, setRepairList] = useState<Array<RepairData>>([]);
   const [customer, setCustomer] = useState<CustomerVehicleData>();
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
@@ -42,7 +42,7 @@ export default function DetailCustomerScreen() {
 
     customerInit();
     repairsFetch();
-  }, [uuid]);
+  }, [uuid, customers]);
 
   useFocusEffect(
     useCallback(() => {

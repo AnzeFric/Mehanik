@@ -1,8 +1,7 @@
 import { TextInput, StyleSheet } from "react-native";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { VehicleData } from "@/interfaces/vehicle";
 import { Colors } from "@/constants/Colors";
-import { useFocusEffect } from "expo-router";
 
 interface Props {
   vehicle?: VehicleData;
@@ -23,36 +22,30 @@ export default function VehicleForm({ vehicle, setVehicle }: Props) {
       setVin(vehicle.vin);
       setBuildYear(vehicle.buildYear ? vehicle.buildYear.toString() : null);
       setDescription(vehicle.description);
+    } else {
+      setBrand("");
+      setModel("");
+      setVin("");
+      setBuildYear("");
+      setDescription("");
     }
   }, [vehicle]);
 
   // Update parent whenever form data changes
   useEffect(() => {
-    if (brand || model || vin) {
+    if (brand || model || vin || buildYear || description) {
       const vehicleData: VehicleData = {
         uuid: vehicle?.uuid || "",
-        brand,
-        model,
+        brand: brand,
+        model: model,
         buildYear: buildYear ? parseInt(buildYear, 10) : null,
-        vin,
-        description: description || null,
-        image: vehicle?.image || null, // Preserve existing image
+        vin: vin,
+        description: description,
+        image: vehicle?.image || null,
       };
       setVehicle(vehicleData);
     }
   }, [brand, model, buildYear, vin, description]);
-
-  useFocusEffect(
-    useCallback(() => {
-      return () => {
-        setBrand(vehicle?.brand || "");
-        setModel(vehicle?.model || "");
-        setBuildYear(vehicle?.buildYear?.toString() || "");
-        setVin(vehicle?.vin || "");
-        setDescription(vehicle?.description || "");
-      };
-    }, [])
-  );
 
   return (
     <>
