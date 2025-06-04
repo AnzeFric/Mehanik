@@ -46,21 +46,29 @@ export default function EditCustomerScreen() {
   };
 
   const handleSaveEdit = async () => {
-    if (hasCustomerChanges() && hasVehicleChanges()) {
-      if (currentCustomer && currentVehicle) {
-        const [customerRes, vehicleRes] = await Promise.allSettled([
-          updateCustomer(currentCustomer.uuid, currentCustomer),
-          updateVehicle(currentVehicle.vin, currentVehicle),
-        ]);
-        if (!customerRes || !vehicleRes) {
-          Alert.alert(
-            "Napaka",
-            "Prišlo je do napake pri posodabljanju podatkov. Poskusite ponovno kasneje"
-          );
-        }
-        router.back();
+    if (hasCustomerChanges()) {
+      if (currentCustomer) {
+        var customerRes = await updateCustomer(
+          currentCustomer.uuid,
+          currentCustomer
+        );
       }
     }
+    if (hasVehicleChanges()) {
+      if (currentVehicle) {
+        var vehicleRes = await updateVehicle(
+          currentVehicle.vin,
+          currentVehicle
+        );
+      }
+    }
+    if (!vehicleRes || !customerRes) {
+      Alert.alert(
+        "Napaka",
+        "Prišlo je do napake pri posodabljanju podatkov. Poskusite ponovno kasneje"
+      );
+    }
+    router.back();
   };
 
   const handleSaveImage = (image: string) => {
