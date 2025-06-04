@@ -83,6 +83,37 @@ export function useCustomer() {
     }
   };
 
+  const updateCustomer = async (
+    customerUuid: string,
+    customerData: CustomerData
+  ) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/customers/`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + jwt,
+        },
+        body: JSON.stringify({
+          customerUuid: customerUuid,
+          customerData: customerData,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        console.log("Successfully updated customer");
+        await updateStoredCustomerData();
+        return true;
+      }
+      console.log("Error updating customer");
+      return false;
+    } catch (error) {
+      console.error("Error while updating mechanic customer");
+    }
+  };
+
   const getMehcanicCustomers = async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/customers/`, {
@@ -137,6 +168,7 @@ export function useCustomer() {
     customers,
     saveCustomer,
     deleteCustomer,
+    updateCustomer,
     updateStoredCustomerData,
   };
 }

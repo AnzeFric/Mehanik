@@ -1,0 +1,41 @@
+import { API_BASE_URL } from "@/constants/Config";
+import { VehicleData } from "@/interfaces/customer";
+import useAuthStore from "@/stores/useAuthStore";
+
+export function useVehicle() {
+  const { jwt } = useAuthStore();
+
+  const updateVehicle = async (
+    vehicleUuid: string,
+    vehicleData: VehicleData
+  ) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/vehicles/`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + jwt,
+        },
+        body: JSON.stringify({
+          vehicleUuid: vehicleUuid,
+          vehicleData: vehicleData,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        console.log("Vehicle data updated successfully");
+        return true;
+      }
+      console.log("Error updating vehicle data");
+      return false;
+    } catch (error) {
+      console.error("Error while updating vehicle data: ", error);
+    }
+  };
+
+  return {
+    updateVehicle,
+  };
+}

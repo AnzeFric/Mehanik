@@ -1,16 +1,18 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import { useEffect, useState } from "react";
 import CustomerForm from "@/components/mechanic/library/forms/CustomerForm";
 import TemplateView from "@/components/mechanic/library/TemplateView";
 import { CustomerData, VehicleData } from "@/interfaces/customer";
 import VehicleForm from "@/components/mechanic/library/forms/VehicleForm";
 import ImageForm from "@/components/mechanic/library/forms/ImageForm";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useCustomer } from "@/hooks/useCustomer";
+import { useVehicle } from "@/hooks/useVehicle";
 
 export default function EditCustomerScreen() {
   const { vin } = useLocalSearchParams();
-  const { customers } = useCustomer();
+  const { updateVehicle } = useVehicle();
+  const { customers, updateCustomer } = useCustomer();
 
   const [originalCustomer, setOriginalCustomer] = useState<CustomerData>();
   const [originalVehicle, setOriginalVehicle] = useState<VehicleData>();
@@ -29,12 +31,6 @@ export default function EditCustomerScreen() {
 
       setCurrentCustomer(foundCustomerVehicle.customer);
       setCurrentVehicle(foundCustomerVehicle.vehicle);
-    } else {
-      // Customer not found
-      setOriginalCustomer(undefined);
-      setOriginalVehicle(undefined);
-      setCurrentCustomer(undefined);
-      setCurrentVehicle(undefined);
     }
   }, [customers, vin]);
 
@@ -48,17 +44,21 @@ export default function EditCustomerScreen() {
     return JSON.stringify(originalVehicle) !== JSON.stringify(currentVehicle);
   };
 
-  const handleSaveEdit = () => {
-    console.log("Saving edit");
-
-    if (hasCustomerChanges()) {
-      console.log("Customer data changed:", currentCustomer);
-      // Update customer
-    }
-
-    if (hasVehicleChanges()) {
-      console.log("Vehicle data changed:", currentVehicle);
-      // Update vehicle
+  const handleSaveEdit = async () => {
+    if (hasCustomerChanges() && hasVehicleChanges()) {
+      if (currentCustomer && currentVehicle) {
+        const [customerRes, vehicleRes] = await Promise.allSettled([
+          updateCustomer(currentCustomer.uuid, currentCustomer),
+          updateVehicle(currentVehicle.uuid, currentVehicle),
+        ]);
+        if (!customerRes || !vehicleRes) {
+          Alert.alert(
+            "Napaka",
+            "Prišlo je do napake pri posodabljanju podatkov. Poskusite ponovno kasneje"
+          );
+        }
+        router.back();
+      }
     }
   };
 
