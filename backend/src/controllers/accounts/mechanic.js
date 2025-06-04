@@ -1,4 +1,4 @@
-const mechanicService = require("../services/mechanic");
+const mechanicService = require("../../services/accounts/mechanic");
 
 const mechanicController = {
   async getMechanics(req, res, next) {

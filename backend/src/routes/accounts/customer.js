@@ -1,5 +1,5 @@
+const customerController = require("../../controllers/accounts/customer");
 const express = require("express");
-const customerController = require("../controllers/customer");
 const router = express.Router();
 
 // Return all customers of the authorized mechanic

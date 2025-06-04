@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const supabase = require("../config/database");
 const { v4: uuidv4 } = require("uuid");
-const mechanicService = require("../services/mechanic");
+const mechanicService = require("./accounts/mechanic");
 
 const authService = {
   async register(email, password, firstName, lastName, accountType) {

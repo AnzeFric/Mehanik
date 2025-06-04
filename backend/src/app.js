@@ -32,11 +32,11 @@ app.get("/api/health", (req, res) => {
 
 // Route imports
 const authRoutes = require("./routes/auth");
-const userRouter = require("./routes/user");
 const repairRouter = require("./routes/repair");
 const vehicleRouter = require("./routes/vehicle");
-const customerRouter = require("./routes/customer");
-const mechanicRouter = require("./routes/mechanic");
+const userRouter = require("./routes/accounts/user");
+const mechanicRouter = require("./routes/accounts/mechanic");
+const customerRouter = require("./routes/accounts/customer");
 
 // Public routes
 app.use("/api/auth", authRoutes);

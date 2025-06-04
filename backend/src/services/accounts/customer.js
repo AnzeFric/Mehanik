@@ -1,4 +1,4 @@
-const supabase = require("../config/database");
+const supabase = require("../../config/database");
 const { v4: uuidv4 } = require("uuid");
 
 const customerService = {

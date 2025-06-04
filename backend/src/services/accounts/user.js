@@ -1,5 +1,5 @@
-const supabase = require("../config/database");
-const mechanicService = require("../services/mechanic");
+const supabase = require("../../config/database");
+const mechanicService = require("./mechanic");
 
 const userService = {
   async getUserByEmailAndEnabled(email) {
