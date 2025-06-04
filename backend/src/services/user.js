@@ -10,13 +10,9 @@ const userService = {
       .eq("enabled", true)
       .maybeSingle();
 
-    if (error) {
+    if (error)
       throw new Error(`Failed to fetch user ${email}: ${error.message}`);
-    }
-
-    if (!data) {
-      throw new Error("User not found");
-    }
+    if (!data) throw new Error("User not found");
 
     return data;
   },
@@ -30,13 +26,8 @@ const userService = {
       .eq("account_type", "mechanic")
       .eq("enabled", true);
 
-    if (error) {
-      throw new Error(`Failed to fetch mechanics: ${error.message}`);
-    }
-
-    if (!data) {
-      throw new Error("Mechanics not found");
-    }
+    if (error) throw new Error(`Failed to fetch mechanics: ${error.message}`);
+    if (!data) throw new Error("Mechanics not found");
 
     return data;
   },
@@ -50,15 +41,13 @@ const userService = {
       .select()
       .maybeSingle();
 
-    if (error) {
+    if (error)
       throw new Error(`Failed to update user ${email}: ${error.message}`);
-    }
-
-    if (!data) {
-      throw new Error("User not found");
-    }
+    if (!data) throw new Error("User not found");
 
     await this.resetUpdatedAtTimestamp(email);
+
+    return true;
   },
 
   async disableByEmailAndEnabled(email) {
@@ -70,16 +59,15 @@ const userService = {
       .select()
       .maybeSingle();
 
-    if (error) {
+    if (error)
       throw new Error(`Failed to disable user ${email}: ${error.message}`);
-    }
+    if (!data) throw new Error("User not found");
 
-    if (!data) {
-      throw new Error("User not found");
-    }
     await mechanicService.delete(data.uuid);
 
     await this.resetUpdatedAtTimestamp(email);
+
+    return true;
   },
 
   async resetUpdatedAtTimestamp(email) {
@@ -88,11 +76,10 @@ const userService = {
       .update({ updated_at: new Date().toISOString() })
       .eq("email", email);
 
-    if (error) {
+    if (error)
       throw new Error(
         `Failed to reset updated_at timestamp for user ${email}: ${error.message}`
       );
-    }
   },
 };
 

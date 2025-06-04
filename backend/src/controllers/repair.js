@@ -1,9 +1,9 @@
 const repairService = require("../services/repair");
 
 const repairController = {
-  async getCustomerVehicleRepairs(req, res, next) {
+  async getRepairs(req, res, next) {
     try {
-      console.log("Vehicle repairs fetch: ", req.user);
+      console.log(`Get repairs. Req from: ${req.user}, data: ${req.body}`);
       const repairs = await repairService.getVehicleRepairs(
         req.user.mechanicUuid,
         req.body.vin
@@ -18,9 +18,9 @@ const repairController = {
     }
   },
 
-  async saveCustomerVehicleRepair(req, res, next) {
+  async saveRepair(req, res, next) {
     try {
-      console.log("Vehicle repairs save: ", req.user);
+      console.log(`Save repair. Req from: ${req.user}, data: ${req.body}`);
       await repairService.saveRepair(
         req.user.mechanicUuid,
         req.body.vin,
@@ -35,9 +35,9 @@ const repairController = {
     }
   },
 
-  async deleteCustomerVehicleRepair(req, res, next) {
+  async deleteRepair(req, res, next) {
     try {
-      console.log("Vehicle repair delete: ", req.user);
+      console.log(`Delete repair. Req from: ${req.user}, data: ${req.body}`);
       await repairService.deleteRepair(
         req.user.mechanicUuid,
         req.body.repairUuid

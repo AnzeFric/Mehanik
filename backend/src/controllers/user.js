@@ -1,9 +1,9 @@
 const userService = require("../services/user");
 
 const userController = {
-  async me(req, res, next) {
+  async getUser(req, res, next) {
     try {
-      console.log("User self fetch req: ", req.user);
+      console.log(`Get user. Req from: ${req.user}, data: ${req.body}`);
       const user = await userService.getUserByEmailAndEnabled(req.user.email);
       return res.status(200).json({
         success: true,
@@ -14,9 +14,9 @@ const userController = {
     }
   },
 
-  async update(req, res, next) {
+  async patchUser(req, res, next) {
     try {
-      console.log("User update req: ", req.user);
+      console.log(`Patch user. Req from: ${req.user}, data: ${req.body}`);
       const allowedFields = [
         "firstName",
         "lastName",
@@ -58,9 +58,9 @@ const userController = {
     }
   },
 
-  async disable(req, res, next) {
+  async disableUser(req, res, next) {
     try {
-      console.log("User disable req: ", req.user);
+      console.log(`Disable user. Req from: ${req.user}, data: ${req.body}`);
       await userService.disableByEmailAndEnabled(req.user.email);
       return res.status(200).json({
         success: true,

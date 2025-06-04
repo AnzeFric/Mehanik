@@ -3,7 +3,7 @@ const customerService = require("../services/customer");
 const customerController = {
   async getCustomers(req, res, next) {
     try {
-      console.log(`Get customer. Req from: ${req.user}, data: ${req.body}`);
+      console.log(`Get customers. Req from: ${req.user}, data: ${req.body}`);
       const customers = await customerService.getCustomersByMechanicUuid(
         req.user.mechanicUuid
       );

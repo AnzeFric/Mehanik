@@ -3,7 +3,7 @@ const authService = require("../services/auth");
 const authController = {
   async register(req, res, next) {
     try {
-      console.log("User register req: ", req.body);
+      console.log(`Register. Req from: ${req.user}, data: ${req.body}`);
       const { email, password, firstName, lastName, accountType } = req.body;
 
       // Validate account type
@@ -34,7 +34,7 @@ const authController = {
 
   async login(req, res, next) {
     try {
-      console.log("User login req: ", req.body);
+      console.log(`Login. Req from: ${req.user}, data: ${req.body}`);
       const { email, password } = req.body;
       const token = await authService.login(email, password);
       return res.status(200).send({

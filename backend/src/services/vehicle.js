@@ -1,12 +1,8 @@
 const supabase = require("../config/database");
 
 const vehicleService = {
-  // userUuid or customerUuid can be null, depending on the saving data
+  // Accepts user or customer uuid and vehicleData to save. Both uuid's cannot be null
   async saveVehicle(userUuid, customerUuid, vehicleData) {
-    if (userUuid === null && customerUuid === null) {
-      throw new Error("Only one uuid can be null at the same time.");
-    }
-
     const { error } = await supabase.from("vehicles").insert({
       brand: vehicleData.brand,
       model: vehicleData.model,
@@ -19,6 +15,8 @@ const vehicleService = {
     });
 
     if (error) throw error;
+
+    return true;
   },
 };
 

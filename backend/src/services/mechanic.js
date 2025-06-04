@@ -14,6 +14,8 @@ const mechanicService = {
     });
 
     if (error) throw error;
+
+    return true;
   },
 
   async delete(userUuid) {
@@ -23,6 +25,8 @@ const mechanicService = {
       .eq("fk_user", userUuid);
 
     if (error) throw error;
+
+    return true;
   },
 
   // Function is used to check if the user has an existing mechanic profile
@@ -34,6 +38,7 @@ const mechanicService = {
       .maybeSingle();
 
     if (error) throw error;
+
     return data;
   },
 };
