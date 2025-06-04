@@ -1,15 +1,8 @@
 const supabase = require("../config/database");
 const { v4: uuidv4 } = require("uuid");
-const vehicleService = require("./vehicle");
-const repairService = require("./repair");
 
 const customerService = {
-  async saveCustomerVehicleByMechanicUuid(
-    mechanicUuid,
-    customerData,
-    vehicleData,
-    repairData
-  ) {
+  async saveCustomerByMechanicUuid(mechanicUuid, customerData) {
     let uuid = uuidv4();
 
     const { error } = await supabase.from("customers").insert({
@@ -22,15 +15,6 @@ const customerService = {
     });
 
     if (error) throw error;
-
-    await vehicleService.saveVehicle(null, uuid, vehicleData);
-
-    if (repairData)
-      await repairService.saveRepair(
-        mechanicUuid,
-        vehicleData.uuid,
-        repairData
-      );
 
     return uuid;
   },

@@ -80,7 +80,11 @@ export default function AddCustomerScreen() {
       saveCustomer(customerData),
       saveVehicle(customerData.uuid, finalVehicleData),
     ];
-    if (repairData) {
+    // Repair data exists and is not other with no description(Mechanic chose not to save)
+    if (
+      repairData &&
+      !(repairData.type === "other" && repairData.description === "")
+    ) {
       promises.push(saveVehicleRepairs(finalVehicleData.uuid, repairData));
     }
 

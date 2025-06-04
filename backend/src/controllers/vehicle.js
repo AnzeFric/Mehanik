@@ -1,47 +1,55 @@
 const vehicleService = require("../services/vehicle");
 
 const vehicleController = {
+  async saveVehicle(req, res, next) {
+    try {
+      console.log("Save vehicle. Req from: ", req.user);
+      console.log("Body: ", req.body);
+
+      const vehicleData = req.body.vehicleData;
+      const userUuid = req.body.userUuid;
+      const customerUuid = req.body.customerUuid;
+
+      if (!vehicleData) throw new Error("Vehicle data is not provided");
+      if (!userUuid && !customerUuid)
+        throw new Error("No user or customer uuid provided");
+
+      await checkInput(vehicleData);
+      if (userUuid) {
+        var vehicleUuid = await vehicleService.saveVehicleByUserOrCustomerUuid(
+          userUuid,
+          null,
+          vehicleData
+        );
+      } else {
+        var vehicleUuid = await vehicleService.saveVehicleByUserOrCustomerUuid(
+          null,
+          customerUuid,
+          vehicleData
+        );
+      }
+
+      return res.status(200).send({
+        success: true,
+        message: "Vehicle saved successfully",
+        vehicleUuid: vehicleUuid,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
   async patchVehicle(req, res, next) {
     try {
       console.log("Patch vehicle. Req from: ", req.user);
       console.log("Body: ", req.body);
 
-      if (!req.body.vehicleData)
-        throw new Error("New vehicle data is not provided");
+      const vehicleData = req.body.vehicleData;
+      if (!vehicleData) throw new Error("Vehicle data is not provided");
 
-      const newVehicleData = req.body.vehicleData;
-      const allowedFields = [
-        "uuid",
-        "brand",
-        "model",
-        "vin",
-        "buildYear",
-        "image",
-        "description",
-      ];
-      const mandatoryFields = ["uuid", "brand", "model", "vin"];
+      await checkInput(vehicleData, "uuid");
+      await vehicleService.patchByVehicleData(vehicleData);
 
-      const forbiddenField = Object.keys(newVehicleData).find(
-        (field) => !allowedFields.includes(field)
-      );
-      if (forbiddenField) {
-        return res.status(403).json({
-          success: false,
-          message: `Field '${forbiddenField}' is not allowed`,
-        });
-      }
-
-      const missingField = mandatoryFields.find(
-        (field) => !newVehicleData[field]
-      );
-      if (missingField) {
-        return res.status(403).json({
-          success: false,
-          message: `Field '${missingField}' is missing`,
-        });
-      }
-
-      await vehicleService.patchByVehicleData(newVehicleData);
       return res.status(200).send({
         success: true,
         message: "Vehicle patched successfully",
@@ -51,5 +59,37 @@ const vehicleController = {
     }
   },
 };
+
+async function checkInput(vehicleData, customField) {
+  const allowedFields = [
+    "uuid",
+    "brand",
+    "model",
+    "vin",
+    "buildYear",
+    "image",
+    "description",
+  ];
+  const mandatoryFields = ["brand", "model", "vin"];
+  if (customField) {
+    mandatoryFields.push(customField);
+  }
+
+  const forbiddenField = Object.keys(vehicleData).find(
+    (field) => !allowedFields.includes(field)
+  );
+  if (forbiddenField) {
+    const error = new Error(`Field '${forbiddenField}' is not allowed`);
+    error.status = 403;
+    throw error;
+  }
+
+  const missingField = mandatoryFields.find((field) => !vehicleData[field]);
+  if (missingField) {
+    const error = new Error(`Field '${missingField}' is missing`);
+    error.status = 403;
+    throw error;
+  }
+}
 
 module.exports = vehicleController;

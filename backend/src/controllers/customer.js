@@ -26,18 +26,17 @@ const customerController = {
 
       const mechanicUuid = req.user.mechanicUuid;
       const customerData = req.body.customerData;
-      const vehicleData = req.body.vehicleData;
-      const repairData = req.body.repairData;
+      if (!customerData) throw new Error("Customer data is not provided");
 
-      await customerService.saveCustomerVehicleByMechanicUuid(
+      await checkInput(customerData);
+      const customerUuid = await customerService.saveCustomerByMechanicUuid(
         mechanicUuid,
-        customerData,
-        vehicleData,
-        repairData
+        customerData
       );
       return res.status(200).send({
         success: true,
         message: "Customer saved successfully",
+        customerUuid: customerUuid,
       });
     } catch (error) {
       next(error);
@@ -65,34 +64,13 @@ const customerController = {
       console.log("Patch customer. Req from: ", req.user);
       console.log("Body: ", req.body);
 
+      const customerData = req.body.customerData;
       if (!req.body.customerData)
-        throw new Error("New customer data is not provided");
+        throw new Error("Customer data is not provided");
 
-      const newCustomerData = req.body.customerData;
-      const allowedFields = ["uuid, firstName", "lastName", "phone", "email"];
-      const mandatoryFields = ["uuid, firstName", "lastName"];
+      await checkInput(customerData);
+      await customerService.patchByCustomerData(customerData);
 
-      const forbiddenField = Object.keys(newCustomerData).find(
-        (field) => !allowedFields.includes(field)
-      );
-      if (forbiddenField) {
-        return res.status(403).json({
-          success: false,
-          message: `Field '${forbiddenField}' is not allowed`,
-        });
-      }
-
-      const missingField = mandatoryFields.find(
-        (field) => !newCustomerData[field]
-      );
-      if (missingField) {
-        return res.status(403).json({
-          success: false,
-          message: `Field '${missingField}' is missing`,
-        });
-      }
-
-      await customerService.patchByCustomerData(newCustomerData);
       return res.status(200).send({
         success: true,
         message: "Customer patched successfully",
@@ -102,5 +80,29 @@ const customerController = {
     }
   },
 };
+
+async function checkInput(customerData, customField) {
+  const allowedFields = ["uuid", "firstName", "lastName", "phone", "email"];
+  const mandatoryFields = ["uuid", "firstName", "lastName"];
+  if (customField) {
+    mandatoryFields.push(customField);
+  }
+
+  const forbiddenField = Object.keys(customerData).find(
+    (field) => !allowedFields.includes(field)
+  );
+  if (forbiddenField) {
+    const error = new Error(`Field '${forbiddenField}' is not allowed`);
+    error.status = 403;
+    throw error;
+  }
+
+  const missingField = mandatoryFields.find((field) => !customerData[field]);
+  if (missingField) {
+    const error = new Error(`Field '${missingField}' is missing`);
+    error.status = 403;
+    throw error;
+  }
+}
 
 module.exports = customerController;

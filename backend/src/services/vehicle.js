@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require("uuid");
 
 const vehicleService = {
   // Accepts user or customer uuid and vehicleData to save. Both uuid's cannot be null
-  async saveVehicle(userUuid, customerUuid, vehicleData) {
+  async saveVehicleByUserOrCustomerUuid(userUuid, customerUuid, vehicleData) {
     let uuid = uuidv4();
 
     const { error } = await supabase.from("vehicles").insert({
@@ -20,7 +20,7 @@ const vehicleService = {
 
     if (error) throw error;
 
-    return true;
+    return uuid;
   },
 
   async patchByVehicleData(vehicleData) {
