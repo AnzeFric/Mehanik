@@ -3,7 +3,9 @@ const customerService = require("../services/customer");
 const customerController = {
   async getCustomers(req, res, next) {
     try {
-      console.log(`Get customers. Req from: ${req.user}, data: ${req.body}`);
+      console.log("Get customers. Req from: ", req.user);
+      console.log("Body: ", req.body);
+
       const customers = await customerService.getCustomersByMechanicUuid(
         req.user.mechanicUuid
       );
@@ -19,7 +21,9 @@ const customerController = {
 
   async saveCustomer(req, res, next) {
     try {
-      console.log(`Save customer. Req from: ${req.user}, data: ${req.body}`);
+      console.log("Save customer. Req from: ", req.user);
+      console.log("Body: ", req.body);
+
       const mechanicUuid = req.user.mechanicUuid;
       const customerData = req.body.customerData;
       const vehicleData = req.body.vehicleData;
