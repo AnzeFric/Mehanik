@@ -1,37 +1,50 @@
 import { TextInput, StyleSheet } from "react-native";
 import { useCallback, useEffect, useState } from "react";
 import { CustomerData } from "@/interfaces/customer";
-import { useFocusEffect } from "expo-router";
 import { Colors } from "@/constants/Colors";
+import { useFocusEffect } from "expo-router";
 
 interface Props {
+  customer?: CustomerData;
   setCustomer: (customer: CustomerData) => void;
 }
 
-export default function CustomerForm({ setCustomer }: Props) {
+export default function CustomerForm({ customer, setCustomer }: Props) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState<string | null>("");
+  const [email, setEmail] = useState<string | null>("");
 
   useEffect(() => {
-    const updatedCustomer: CustomerData = {
-      uuid: "",
-      firstName,
-      lastName,
-      phone: phone || null,
-      email,
-    };
-    setCustomer(updatedCustomer);
+    if (customer) {
+      setFirstName(customer.firstName || "");
+      setLastName(customer.lastName || "");
+      setPhone(customer.phone || "");
+      setEmail(customer.email || "");
+    }
+  }, [customer]);
+
+  // Update parent whenever form data changes
+  useEffect(() => {
+    if (firstName || lastName) {
+      const customerData: CustomerData = {
+        uuid: customer?.uuid || "",
+        firstName,
+        lastName,
+        phone: phone || null,
+        email: email || null,
+      };
+      setCustomer(customerData);
+    }
   }, [firstName, lastName, phone, email]);
 
   useFocusEffect(
     useCallback(() => {
       return () => {
-        setFirstName("");
-        setLastName("");
-        setPhone("");
-        setEmail("");
+        setFirstName(customer?.firstName || "");
+        setLastName(customer?.lastName || "");
+        setPhone(customer?.phone || "");
+        setEmail(customer?.email || "");
       };
     }, [])
   );
@@ -57,7 +70,7 @@ export default function CustomerForm({ setCustomer }: Props) {
       <TextInput
         style={styles.input}
         placeholder={"Telefonska št. (ni obvezno)"}
-        value={phone}
+        value={phone || ""}
         onChangeText={setPhone}
         autoCapitalize={"none"}
         keyboardType={"phone-pad"}
@@ -66,7 +79,7 @@ export default function CustomerForm({ setCustomer }: Props) {
       <TextInput
         style={styles.input}
         placeholder={"Email (ni obvezno)"}
-        value={email}
+        value={email || ""}
         onChangeText={setEmail}
         autoCapitalize={"none"}
         keyboardType={"email-address"}

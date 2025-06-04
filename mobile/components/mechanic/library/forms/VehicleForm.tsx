@@ -5,11 +5,11 @@ import { Colors } from "@/constants/Colors";
 import { useFocusEffect } from "expo-router";
 
 interface Props {
-  vehicleImage: string | null | undefined;
+  vehicle?: VehicleData;
   setVehicle: (vehicle: VehicleData | undefined) => void;
 }
 
-export default function VehicleForm({ vehicleImage, setVehicle }: Props) {
+export default function VehicleForm({ vehicle, setVehicle }: Props) {
   const [brand, setBrand] = useState("");
   const [model, setModel] = useState("");
   const [buildYear, setBuildYear] = useState("");
@@ -17,27 +17,38 @@ export default function VehicleForm({ vehicleImage, setVehicle }: Props) {
   const [description, setDescription] = useState("");
 
   useEffect(() => {
-    const updatedVehicle: VehicleData = {
-      brand,
-      model,
-      buildYear: buildYear ? parseInt(buildYear) : null,
-      vin,
-      description,
-      image: vehicleImage ? vehicleImage : null, // Perserve the image
-    };
-    console.log("Updating vehicle: ", updatedVehicle);
+    if (vehicle) {
+      setBrand(vehicle.brand || "");
+      setModel(vehicle.model || "");
+      setBuildYear(vehicle.buildYear?.toString() || "");
+      setVin(vehicle.vin || "");
+      setDescription(vehicle.description || "");
+    }
+  }, [vehicle]);
 
-    setVehicle(updatedVehicle);
+  // Update parent whenever form data changes
+  useEffect(() => {
+    if (brand || model || vin) {
+      const vehicleData: VehicleData = {
+        brand,
+        model,
+        buildYear: buildYear ? parseInt(buildYear, 10) : null,
+        vin,
+        description: description || null,
+        image: vehicle?.image || null, // Preserve existing image
+      };
+      setVehicle(vehicleData);
+    }
   }, [brand, model, buildYear, vin, description]);
 
   useFocusEffect(
     useCallback(() => {
       return () => {
-        setBrand("");
-        setModel("");
-        setBuildYear("");
-        setVin("");
-        setDescription("");
+        setBrand(vehicle?.brand || "");
+        setModel(vehicle?.model || "");
+        setBuildYear(vehicle?.buildYear?.toString() || "");
+        setVin(vehicle?.vin || "");
+        setDescription(vehicle?.description || "");
       };
     }, [])
   );
@@ -74,11 +85,11 @@ export default function VehicleForm({ vehicleImage, setVehicle }: Props) {
         autoCapitalize={"characters"}
       />
       <TextInput
-        style={[styles.input, { textAlignVertical: "bottom" }]}
+        style={[styles.input, { textAlignVertical: "top" }]}
         placeholder={"Dodaten opis vozila (ni obvezno)"}
         value={description}
         onChangeText={setDescription}
-        autoCapitalize={"characters"}
+        autoCapitalize={"sentences"}
         multiline={true}
         numberOfLines={3}
       />

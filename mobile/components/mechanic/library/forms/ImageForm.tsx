@@ -3,15 +3,22 @@ import CameraIcon from "@/assets/icons/CameraIcon.svg";
 import { Colors } from "@/constants/Colors";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { useFocusEffect } from "expo-router";
 
 interface Props {
+  image?: string | null;
   setImage: (image: string) => void;
 }
 
-export default function ImageForm({ setImage }: Props) {
+export default function ImageForm({ image, setImage }: Props) {
   const [imageLocal, setImageLocal] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (image) {
+      setImageLocal(image);
+    }
+  }, [image]);
 
   const pickCustomerImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -42,7 +49,7 @@ export default function ImageForm({ setImage }: Props) {
   useFocusEffect(
     useCallback(() => {
       return () => {
-        setImageLocal(null);
+        setImageLocal(image || null);
       };
     }, [])
   );
