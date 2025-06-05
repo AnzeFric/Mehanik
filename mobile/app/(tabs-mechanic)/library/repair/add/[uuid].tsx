@@ -20,7 +20,7 @@ export default function AddRepairScreen() {
 
   return (
     <TemplateView
-      title={"Pregled terminov"}
+      title={"Shrani servis"}
       buttonText={"Shrani"}
       onButtonPress={handleSaveRepair}
     >

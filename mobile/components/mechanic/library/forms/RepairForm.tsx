@@ -15,6 +15,8 @@ import CustomCheckBox from "./components/CustomCheckBox";
 import { AppStyles } from "@/constants/Styles";
 import { RepairData, RepairOptions } from "@/interfaces/repair";
 import { useFocusEffect } from "expo-router";
+import DatePicker from "react-native-date-picker";
+import { formatDate } from "@/constants/util";
 
 interface Props {
   setRepair: (repairData: RepairData | null) => void;
@@ -26,6 +28,8 @@ export default function RepairForm({ setRepair }: Props) {
   const [price, setPrice] = useState("");
   const [note, setNote] = useState("");
   const [serviceImages, setServiceImages] = useState<string[]>([]);
+  const [date, setDate] = useState<Date>(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
   const [options, setOptions] = useState<RepairOptions>({
     oilChange: false,
     filterChange: false,
@@ -64,6 +68,11 @@ export default function RepairForm({ setRepair }: Props) {
     }
   };
 
+  const handleDateSelected = (selectedDate: Date) => {
+    setDate(selectedDate);
+    setShowDatePicker(false);
+  };
+
   useEffect(() => {
     const updatedRepair: RepairData = {
       uuid: "",
@@ -73,10 +82,10 @@ export default function RepairForm({ setRepair }: Props) {
       note,
       images: serviceImages,
       options,
-      date: new Date(),
+      date: date,
     };
     setRepair(updatedRepair);
-  }, [description, price, note, serviceImages, options]);
+  }, [description, price, note, serviceImages, options, date]);
 
   useEffect(() => {
     if (type === "small") {
@@ -113,6 +122,7 @@ export default function RepairForm({ setRepair }: Props) {
         setPrice("");
         setNote("");
         setServiceImages([]);
+        setDate(new Date());
         setOptions({
           oilChange: false,
           filterChange: false,
@@ -256,6 +266,17 @@ export default function RepairForm({ setRepair }: Props) {
         keyboardType={"numeric"}
       />
 
+      <View style={styles.dateContainer}>
+        <Text style={AppStyles.text}>Datum servisa:</Text>
+        <TouchableHighlight
+          style={styles.dateButton}
+          underlayColor={Colors.light.underlayColor}
+          onPress={() => setShowDatePicker(true)}
+        >
+          <Text style={styles.dateButtonText}>{formatDate(date)}</Text>
+        </TouchableHighlight>
+      </View>
+
       <Text style={AppStyles.text}>Slike servisa (ni obvezno):</Text>
       <View style={styles.serviceImagesContainer}>
         {serviceImages.map((uri, index) => (
@@ -278,6 +299,19 @@ export default function RepairForm({ setRepair }: Props) {
           <CameraIcon height={20} width={20} />
         </TouchableHighlight>
       </View>
+
+      <DatePicker
+        modal
+        open={showDatePicker}
+        date={date}
+        onConfirm={handleDateSelected}
+        onCancel={() => setShowDatePicker(false)}
+        mode="date"
+        locale="sl" // Slovenian locale
+        title="Izberi datum"
+        confirmText="Potrdi"
+        cancelText="Prekliči"
+      />
     </>
   );
 }
@@ -305,6 +339,21 @@ const styles = StyleSheet.create({
   },
   serviceItemsContainer: {
     marginBottom: 15,
+  },
+  dateContainer: {
+    marginBottom: 15,
+  },
+  dateButton: {
+    height: 45,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.light.inactiveBorder,
+    justifyContent: "center",
+    paddingVertical: 8,
+    marginTop: 5,
+  },
+  dateButtonText: {
+    fontSize: 16,
+    color: Colors.light.text || "#000",
   },
   serviceImagesContainer: {
     flexDirection: "row",
