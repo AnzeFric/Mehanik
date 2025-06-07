@@ -47,11 +47,11 @@ const repairService = {
     return true;
   },
 
-  async patchRepairByUuid(mechanicUuid, repairUuid, repairData) {
+  async patchRepairByUuid(mechanicUuid, repairData) {
     const { error } = await supabase
       .from("repairs")
       .update(repairData)
-      .eq("uuid", repairUuid)
+      .eq("uuid", repairData.uuid)
       .eq("fk_mechanic", mechanicUuid);
 
     if (error) throw error;

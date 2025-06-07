@@ -9,20 +9,35 @@ import {
 import CameraIcon from "@/assets/icons/CameraIcon.svg";
 import { Colors } from "@/constants/Colors";
 import * as ImagePicker from "expo-image-picker";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import CustomRadioButton from "./components/CustomRadioButton";
 import CustomCheckBox from "./components/CustomCheckBox";
 import { AppStyles } from "@/constants/Styles";
 import { RepairData, RepairOptions } from "@/interfaces/repair";
-import { useFocusEffect } from "expo-router";
 import DatePicker from "react-native-date-picker";
 import { formatDate } from "@/constants/util";
 
 interface Props {
+  repair?: RepairData | null;
   setRepair: (repairData: RepairData | null) => void;
 }
 
-export default function RepairForm({ setRepair }: Props) {
+const defaultOptions = {
+  oilChange: false,
+  filterChange: false,
+  brakeCheck: false,
+  tireRotation: false,
+  fluidCheck: false,
+  batteryCheck: false,
+  sparkPlugs: false,
+  airFilter: false,
+  cabinFilter: false,
+  suspension: false,
+  timing: false,
+  coolant: false,
+};
+
+export default function RepairForm({ repair, setRepair }: Props) {
   const [type, setType] = useState<"small" | "large" | "other">("small");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -30,20 +45,7 @@ export default function RepairForm({ setRepair }: Props) {
   const [serviceImages, setServiceImages] = useState<string[]>([]);
   const [date, setDate] = useState<Date>(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [options, setOptions] = useState<RepairOptions>({
-    oilChange: false,
-    filterChange: false,
-    brakeCheck: false,
-    tireRotation: false,
-    fluidCheck: false,
-    batteryCheck: false,
-    sparkPlugs: false,
-    airFilter: false,
-    cabinFilter: false,
-    suspension: false,
-    timing: false,
-    coolant: false,
-  });
+  const [options, setOptions] = useState<RepairOptions>(defaultOptions);
 
   const handleChange = (key: keyof typeof options, value: boolean) => {
     setOptions((prev) => ({ ...prev, [key]: value }));
@@ -74,72 +76,52 @@ export default function RepairForm({ setRepair }: Props) {
   };
 
   useEffect(() => {
-    const updatedRepair: RepairData = {
-      uuid: "",
-      type,
-      description,
-      price: parseFloat(price),
-      note,
-      images: serviceImages,
-      options,
-      date: date,
-    };
-    setRepair(updatedRepair);
-  }, [description, price, note, serviceImages, options, date]);
-
-  useEffect(() => {
-    if (type === "small") {
-      setOptions({
-        ...options,
-        sparkPlugs: false,
-        suspension: false,
-        timing: false,
-        tireRotation: false,
-      });
-    } else if (type === "other") {
-      setOptions({
-        oilChange: false,
-        filterChange: false,
-        brakeCheck: false,
-        tireRotation: false,
-        fluidCheck: false,
-        batteryCheck: false,
-        sparkPlugs: false,
-        airFilter: false,
-        cabinFilter: false,
-        suspension: false,
-        timing: false,
-        coolant: false,
-      });
+    if (repair) {
+      setType(repair.type);
+      setDescription(repair.description || "");
+      setPrice(repair.price?.toString() || "");
+      setNote(repair.note || "");
+      setDate(repair.date || new Date());
+      setServiceImages(repair.images || []);
+      setOptions(repair.options || defaultOptions);
+    } else {
+      setType("small");
+      setDescription("");
+      setPrice("");
+      setNote("");
+      setDate(new Date());
+      setServiceImages([]);
+      setOptions(defaultOptions);
     }
-  }, [type]);
+  }, [repair]);
 
-  useFocusEffect(
-    useCallback(() => {
-      return () => {
-        setType("small");
-        setDescription("");
-        setPrice("");
-        setNote("");
-        setServiceImages([]);
-        setDate(new Date());
-        setOptions({
-          oilChange: false,
-          filterChange: false,
-          brakeCheck: false,
-          tireRotation: false,
-          fluidCheck: false,
-          batteryCheck: false,
-          sparkPlugs: false,
-          airFilter: false,
-          cabinFilter: false,
-          suspension: false,
-          timing: false,
-          coolant: false,
-        });
+  // Update parent whenever form data changes
+  useEffect(() => {
+    if (type === "other") {
+      var repairData: RepairData = {
+        uuid: repair?.uuid || "",
+        type: type,
+        options: defaultOptions,
+        description: description,
+        price: parseFloat(price),
+        note: note,
+        date: date,
+        images: serviceImages,
       };
-    }, [])
-  );
+    } else {
+      var repairData: RepairData = {
+        uuid: repair?.uuid || "",
+        type: type,
+        options: options,
+        description: "",
+        price: parseFloat(price),
+        note: note,
+        date: date,
+        images: serviceImages,
+      };
+    }
+    setRepair(repairData);
+  }, [type, description, note, price, date, serviceImages, options]);
 
   return (
     <>

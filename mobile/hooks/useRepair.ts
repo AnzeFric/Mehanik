@@ -21,7 +21,12 @@ export function useRepair() {
       const data = await response.json();
 
       if (data.success) {
-        return data.repairs;
+        const repairsWithDates = data.repairs.map((repair: any) => ({
+          ...repair,
+          date: new Date(repair.date),
+        }));
+
+        return repairsWithDates;
       }
       console.log("Error fetching mechanic vehicle repairs: ", data.message);
       return [];
@@ -88,11 +93,38 @@ export function useRepair() {
     }
   };
 
+  const updateVehicleRepair = async (repairData: RepairData) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/repairs/`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + jwt,
+        },
+        body: JSON.stringify({
+          repairData: repairData,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        console.log("Successfully updated vehicle repair");
+        return true;
+      }
+      console.log("Error updating vehicle repair: ", data.message);
+      return false;
+    } catch (error) {
+      console.error("Error while updating vehicle repair: ", error);
+    }
+  };
+
   return {
     currentRepairFocus,
     setCurrentRepairFocus,
     getVehicleRepairs,
     saveVehicleRepairs,
     deleteVehicleRepair,
+    updateVehicleRepair,
   };
 }

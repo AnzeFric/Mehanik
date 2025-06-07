@@ -72,17 +72,11 @@ const repairController = {
       console.log("Patch repair. Req from: ", req.user);
       console.log("Body: ", req.body);
 
-      const repairUuid = req.body.repairUuid;
       const repairData = req.body.repairData;
-      if (!repairUuid) throw new Error("Repair uuid is not provided");
       if (!repairData && !repairData.type)
         throw new Error("Repair data is not provided");
 
-      await repairService.patchRepairByUuid(
-        req.user.mechanicUuid,
-        repairUuid,
-        repairData
-      );
+      await repairService.patchRepairByUuid(req.user.mechanicUuid, repairData);
       return res.status(200).json({
         success: true,
         message: "Vehicle repair updated successfully",
