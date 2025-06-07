@@ -3,7 +3,7 @@ import CameraIcon from "@/assets/icons/CameraIcon.svg";
 import { Colors } from "@/constants/Colors";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
-import { useCallback, useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useFocusEffect } from "expo-router";
 
 interface Props {
@@ -49,7 +49,9 @@ export default function ImageForm({ image, setImage }: Props) {
   useFocusEffect(
     useCallback(() => {
       return () => {
-        setImageLocal(image || null);
+        if (!image) {
+          setImageLocal(null);
+        }
       };
     }, [])
   );

@@ -9,13 +9,14 @@ import {
 import CameraIcon from "@/assets/icons/CameraIcon.svg";
 import { Colors } from "@/constants/Colors";
 import * as ImagePicker from "expo-image-picker";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import CustomRadioButton from "./components/CustomRadioButton";
 import CustomCheckBox from "./components/CustomCheckBox";
 import { AppStyles } from "@/constants/Styles";
 import { RepairData, RepairOptions } from "@/interfaces/repair";
 import DatePicker from "react-native-date-picker";
 import { formatDate } from "@/constants/util";
+import { useFocusEffect } from "expo-router";
 
 interface Props {
   repair?: RepairData | null;
@@ -84,14 +85,6 @@ export default function RepairForm({ repair, setRepair }: Props) {
       setDate(repair.date || new Date());
       setServiceImages(repair.images || []);
       setOptions(repair.options || defaultOptions);
-    } else {
-      setType("small");
-      setDescription("");
-      setPrice("");
-      setNote("");
-      setDate(new Date());
-      setServiceImages([]);
-      setOptions(defaultOptions);
     }
   }, [repair]);
 
@@ -122,6 +115,22 @@ export default function RepairForm({ repair, setRepair }: Props) {
     }
     setRepair(repairData);
   }, [type, description, note, price, date, serviceImages, options]);
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        if (!repair) {
+          setType("small");
+          setDescription("");
+          setPrice("");
+          setNote("");
+          setDate(new Date());
+          setServiceImages([]);
+          setOptions(defaultOptions);
+        }
+      };
+    }, [])
+  );
 
   return (
     <>

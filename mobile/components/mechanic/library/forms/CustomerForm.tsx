@@ -1,7 +1,8 @@
 import { TextInput, StyleSheet } from "react-native";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { CustomerData } from "@/interfaces/customer";
 import { Colors } from "@/constants/Colors";
+import { useFocusEffect } from "expo-router";
 
 interface Props {
   customer?: CustomerData;
@@ -20,11 +21,6 @@ export default function CustomerForm({ customer, setCustomer }: Props) {
       setLastName(customer.lastName || "");
       setPhone(customer.phone || "");
       setEmail(customer.email || "");
-    } else {
-      setFirstName("");
-      setLastName("");
-      setPhone("");
-      setEmail("");
     }
   }, [customer]);
 
@@ -41,6 +37,19 @@ export default function CustomerForm({ customer, setCustomer }: Props) {
       setCustomer(customerData);
     }
   }, [firstName, lastName, phone, email]);
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        if (!customer) {
+          setFirstName("");
+          setLastName("");
+          setPhone("");
+          setEmail("");
+        }
+      };
+    }, [])
+  );
 
   return (
     <>

@@ -1,7 +1,8 @@
 import { TextInput, StyleSheet } from "react-native";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { VehicleData } from "@/interfaces/vehicle";
 import { Colors } from "@/constants/Colors";
+import { useFocusEffect } from "expo-router";
 
 interface Props {
   vehicle?: VehicleData;
@@ -22,12 +23,6 @@ export default function VehicleForm({ vehicle, setVehicle }: Props) {
       setVin(vehicle.vin);
       setBuildYear(vehicle.buildYear ? vehicle.buildYear.toString() : null);
       setDescription(vehicle.description);
-    } else {
-      setBrand("");
-      setModel("");
-      setVin("");
-      setBuildYear("");
-      setDescription("");
     }
   }, [vehicle]);
 
@@ -46,6 +41,20 @@ export default function VehicleForm({ vehicle, setVehicle }: Props) {
       setVehicle(vehicleData);
     }
   }, [brand, model, buildYear, vin, description]);
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        if (!vehicle) {
+          setBrand("");
+          setModel("");
+          setVin("");
+          setBuildYear("");
+          setDescription("");
+        }
+      };
+    }, [])
+  );
 
   return (
     <>

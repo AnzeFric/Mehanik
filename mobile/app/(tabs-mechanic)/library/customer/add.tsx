@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { router, useFocusEffect } from "expo-router";
 import { useCustomer } from "@/hooks/useCustomer";
 import { CustomerData } from "@/interfaces/customer";
@@ -41,14 +41,6 @@ export default function AddCustomerScreen() {
   const [vehicleImage, setVehicleImage] = useState<string>("");
 
   const scrollRef = useRef<ScrollView>(null);
-
-  const handleSaveImage = (image: string) => {
-    setVehicleImage(image);
-    setVehicleData((prevData) => ({
-      ...prevData,
-      image: image,
-    }));
-  };
 
   const canSave = () => {
     return (
@@ -113,7 +105,7 @@ export default function AddCustomerScreen() {
     <View style={styles.container}>
       <TitleRow title={"Dodaj stranko"} hasBackButton={true} />
       <ScrollView style={styles.childrenContainer} ref={scrollRef}>
-        <ImageForm setImage={handleSaveImage} />
+        <ImageForm setImage={setVehicleImage} />
 
         <Text style={styles.sectionTitle}>Informacije o stranki</Text>
         <CustomerForm setCustomer={setCustomerData} />
