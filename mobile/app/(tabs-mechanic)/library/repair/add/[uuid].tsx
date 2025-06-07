@@ -36,7 +36,7 @@ export default function AddRepairScreen() {
       onButtonPress={handleSaveRepair}
     >
       <View style={styles.container}>
-        <RepairForm setRepair={setRepairData} />
+        <RepairForm repair={null} setRepair={setRepairData} />
       </View>
     </TemplateView>
   );
