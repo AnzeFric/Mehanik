@@ -295,13 +295,15 @@ export default function RepairForm({ repair, setRepair }: Props) {
             </TouchableHighlight>
           </View>
         ))}
-        <TouchableHighlight
-          style={styles.addImageButton}
-          underlayColor={Colors.light.underlayColor}
-          onPress={pickServiceImage}
-        >
-          <CameraIcon height={20} width={20} />
-        </TouchableHighlight>
+        {serviceImages.length < 6 && (
+          <TouchableHighlight
+            style={styles.addImageButton}
+            underlayColor={Colors.light.underlayColor}
+            onPress={pickServiceImage}
+          >
+            <CameraIcon height={20} width={20} />
+          </TouchableHighlight>
+        )}
       </View>
 
       <DatePicker
