@@ -26,16 +26,14 @@ export default function CustomerForm({ customer, setCustomer }: Props) {
 
   // Update parent whenever form data changes
   useEffect(() => {
-    if (firstName || lastName || phone || email) {
-      const customerData: CustomerData = {
-        uuid: customer?.uuid || "",
-        firstName: firstName,
-        lastName: lastName,
-        phone: phone || null,
-        email: email || null,
-      };
-      setCustomer(customerData);
-    }
+    const customerData: CustomerData = {
+      uuid: customer?.uuid || "",
+      firstName: firstName,
+      lastName: lastName,
+      phone: phone || null,
+      email: email || null,
+    };
+    setCustomer(customerData);
   }, [firstName, lastName, phone, email]);
 
   useFocusEffect(

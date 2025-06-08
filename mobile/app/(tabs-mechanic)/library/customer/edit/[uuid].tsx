@@ -1,12 +1,12 @@
 import { View, StyleSheet, Alert } from "react-native";
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import CustomerForm from "@/components/mechanic/library/forms/CustomerForm";
 import TemplateView from "@/components/mechanic/library/TemplateView";
 import { CustomerData } from "@/interfaces/customer";
 import { VehicleData } from "@/interfaces/vehicle";
 import VehicleForm from "@/components/mechanic/library/forms/VehicleForm";
 import ImageForm from "@/components/mechanic/library/forms/ImageForm";
-import { router, useLocalSearchParams } from "expo-router";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCustomer } from "@/hooks/useCustomer";
 import useCustomerStore from "@/stores/useCustomerStore";
 import { Ionicons } from "@expo/vector-icons";
@@ -18,27 +18,41 @@ export default function EditCustomerScreen() {
 
   const [originalCustomer, setOriginalCustomer] = useState<CustomerData>();
   const [originalVehicle, setOriginalVehicle] = useState<VehicleData>();
+  const [originalImage, setOriginalImage] = useState<string | null>();
 
   const [currentCustomer, setCurrentCustomer] = useState<CustomerData>();
   const [currentVehicle, setCurrentVehicle] = useState<VehicleData>();
+  const [currentImage, setCurrentImage] = useState<string | null>();
 
-  useEffect(() => {
-    const foundCustomerVehicle = customers.find(
-      (item) => item.vehicle.uuid === uuid
-    );
+  useFocusEffect(
+    useCallback(() => {
+      const foundCustomerVehicle = customers.find(
+        (item) => item.vehicle.uuid === uuid
+      );
 
-    if (foundCustomerVehicle) {
-      setOriginalCustomer(foundCustomerVehicle.customer);
-      setOriginalVehicle(foundCustomerVehicle.vehicle);
+      if (foundCustomerVehicle) {
+        setOriginalCustomer(foundCustomerVehicle.customer);
+        setOriginalVehicle(foundCustomerVehicle.vehicle);
+        setOriginalImage(foundCustomerVehicle.vehicle.image || "");
 
-      setCurrentCustomer(foundCustomerVehicle.customer);
-      setCurrentVehicle(foundCustomerVehicle.vehicle);
-    }
-  }, [customers, uuid]);
+        setCurrentCustomer(foundCustomerVehicle.customer);
+        setCurrentVehicle(foundCustomerVehicle.vehicle);
+        setCurrentImage(foundCustomerVehicle.vehicle.image || "");
+      }
+    }, [customers, uuid])
+  );
 
   const handleSaveEdit = async () => {
     if (currentCustomer && currentVehicle) {
-      var result = await updateCustomerVehicle(currentCustomer, currentVehicle);
+      const finalVehicleData = {
+        ...currentVehicle,
+        image: currentImage || null,
+      };
+
+      var result = await updateCustomerVehicle(
+        currentCustomer,
+        finalVehicleData
+      );
     }
     if (!result) {
       Alert.alert(
@@ -49,22 +63,10 @@ export default function EditCustomerScreen() {
     router.replace("/(tabs-mechanic)/library");
   };
 
-  const handleSaveImage = (image: string) => {
-    setCurrentVehicle((prevData) => ({
-      uuid: "",
-      brand: "",
-      model: "",
-      buildYear: null,
-      vin: "",
-      description: null,
-      ...prevData,
-      image: image,
-    }));
-  };
-
   const resfreshData = () => {
     setCurrentCustomer(originalCustomer);
     setCurrentVehicle(originalVehicle);
+    setCurrentImage(originalImage);
   };
 
   return (
@@ -75,7 +77,7 @@ export default function EditCustomerScreen() {
       menuIcon={<Ionicons name={"refresh"} size={30} onPress={resfreshData} />}
     >
       <View style={styles.container}>
-        <ImageForm image={currentVehicle?.image} setImage={handleSaveImage} />
+        <ImageForm image={currentImage} setImage={setCurrentImage} />
         <CustomerForm
           customer={currentCustomer}
           setCustomer={setCurrentCustomer}

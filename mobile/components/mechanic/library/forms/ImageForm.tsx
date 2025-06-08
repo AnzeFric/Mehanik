@@ -12,7 +12,7 @@ interface Props {
 }
 
 export default function ImageForm({ image, setImage }: Props) {
-  const [imageLocal, setImageLocal] = useState<string | null>(null);
+  const [imageLocal, setImageLocal] = useState<string | null>("");
 
   useEffect(() => {
     if (image) {
@@ -50,7 +50,7 @@ export default function ImageForm({ image, setImage }: Props) {
     useCallback(() => {
       return () => {
         if (!image) {
-          setImageLocal(null);
+          setImageLocal("");
         }
       };
     }, [])

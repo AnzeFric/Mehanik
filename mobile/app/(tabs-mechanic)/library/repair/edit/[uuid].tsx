@@ -6,6 +6,7 @@ import { RepairData } from "@/interfaces/repair";
 import { router, useLocalSearchParams } from "expo-router";
 import { useRepair } from "@/hooks/useRepair";
 import useCustomerStore from "@/stores/useCustomerStore";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function EditRepairScreen() {
   const { uuid } = useLocalSearchParams(); // Vehicle uuid
@@ -33,14 +34,19 @@ export default function EditRepairScreen() {
     router.replace(`/(tabs-mechanic)/library`);
   };
 
+  const resfreshData = () => {
+    setCurrentRepair(currentRepairFocus);
+  };
+
   return (
     <TemplateView
       title={"Uredi servis"}
       buttonText={"Shrani"}
       onButtonPress={handleEditRepair}
+      menuIcon={<Ionicons name={"refresh"} size={30} onPress={resfreshData} />}
     >
       <View style={styles.container}>
-        <RepairForm repair={currentRepairFocus} setRepair={setCurrentRepair} />
+        <RepairForm repair={currentRepair} setRepair={setCurrentRepair} />
       </View>
     </TemplateView>
   );

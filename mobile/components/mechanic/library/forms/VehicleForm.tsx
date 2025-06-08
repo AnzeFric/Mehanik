@@ -28,18 +28,16 @@ export default function VehicleForm({ vehicle, setVehicle }: Props) {
 
   // Update parent whenever form data changes
   useEffect(() => {
-    if (brand || model || vin || buildYear || description) {
-      const vehicleData: VehicleData = {
-        uuid: vehicle?.uuid || "",
-        brand: brand,
-        model: model,
-        buildYear: buildYear ? parseInt(buildYear, 10) : null,
-        vin: vin,
-        description: description,
-        image: vehicle?.image || null,
-      };
-      setVehicle(vehicleData);
-    }
+    const vehicleData: VehicleData = {
+      uuid: vehicle?.uuid || "",
+      brand: brand,
+      model: model,
+      buildYear: buildYear ? parseInt(buildYear, 10) : null,
+      vin: vin,
+      description: description,
+      image: vehicle?.image || null,
+    };
+    setVehicle(vehicleData);
   }, [brand, model, buildYear, vin, description]);
 
   useFocusEffect(
