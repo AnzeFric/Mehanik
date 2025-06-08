@@ -9,6 +9,7 @@ import {
 import CameraIcon from "@/assets/icons/CameraIcon.svg";
 import { Colors } from "@/constants/Colors";
 import * as ImagePicker from "expo-image-picker";
+import * as FileSystem from "expo-file-system";
 import { useCallback, useEffect, useState } from "react";
 import CustomRadioButton from "./components/CustomRadioButton";
 import CustomCheckBox from "./components/CustomCheckBox";
@@ -60,14 +61,26 @@ export default function RepairForm({ repair, setRepair }: Props) {
 
   const pickServiceImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
 
     if (!result.canceled) {
-      setServiceImages([...serviceImages, result.assets[0].uri]);
+      const uri = result.assets[0].uri;
+
+      // Convert to base64 for database storage
+      try {
+        const base64 = await FileSystem.readAsStringAsync(uri, {
+          encoding: FileSystem.EncodingType.Base64,
+        });
+
+        // Add data URL prefix for proper format
+        const base64WithPrefix = `data:image/jpeg;base64,${base64}`;
+        setServiceImages([...serviceImages, base64WithPrefix]);
+      } catch (error) {
+        console.error("Error converting image to base64:", error);
+      }
     }
   };
 

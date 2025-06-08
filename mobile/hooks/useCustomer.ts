@@ -15,7 +15,6 @@ export function useCustomer() {
     repairData: RepairData | null
   ) => {
     try {
-      console.log("Saving customer: ", vehicleData);
       let repairDataCheck = repairData;
       if (repairData?.type === "other" && repairData.description === "") {
         repairDataCheck = null;
