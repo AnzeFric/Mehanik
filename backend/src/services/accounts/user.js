@@ -1,17 +1,18 @@
 const supabase = require("../../config/database");
+const { resetUpdatedAt } = require("../../utils/dbUtil");
 const mechanicService = require("./mechanic");
 
 const userService = {
-  async getUserByEmailAndEnabled(email) {
+  async getUserByUuidAndEnabled(uuid) {
     const { data, error } = await supabase
       .from("users")
       .select("uuid, email, first_name, last_name, account_type")
-      .eq("email", email)
+      .eq("uuid", uuid)
       .eq("enabled", true)
       .maybeSingle();
 
     if (error)
-      throw new Error(`Failed to fetch user ${email}: ${error.message}`);
+      throw new Error(`Failed to fetch user ${uuid}: ${error.message}`);
     if (!data) throw new Error("User not found");
 
     return data;
@@ -32,54 +33,42 @@ const userService = {
     return data;
   },
 
-  async updateByEmailAndEnabled(email, userData) {
+  async updateByUuidAndEnabled(uuid, userData) {
     const { data, error } = await supabase
       .from("users")
       .update(userData)
-      .eq("email", email)
+      .eq("uuid", uuid)
       .eq("enabled", true)
       .select()
       .maybeSingle();
 
     if (error)
-      throw new Error(`Failed to update user ${email}: ${error.message}`);
+      throw new Error(`Failed to update user ${uuid}: ${error.message}`);
     if (!data) throw new Error("User not found");
 
-    await this.resetUpdatedAtTimestamp(email);
+    await resetUpdatedAt(uuid, "users");
 
     return true;
   },
 
-  async disableByEmailAndEnabled(email) {
+  async disableByUuidAndEnabled(uuid) {
     const { data, error } = await supabase
       .from("users")
       .update({ enabled: false })
-      .eq("email", email)
+      .eq("uuid", uuid)
       .eq("enabled", true)
       .select()
       .maybeSingle();
 
     if (error)
-      throw new Error(`Failed to disable user ${email}: ${error.message}`);
+      throw new Error(`Failed to disable user ${uuid}: ${error.message}`);
     if (!data) throw new Error("User not found");
 
-    await mechanicService.delete(data.uuid);
+    await mechanicService.delete(uuid);
 
-    await this.resetUpdatedAtTimestamp(email);
+    await resetUpdatedAt(uuid, "users");
 
     return true;
-  },
-
-  async resetUpdatedAtTimestamp(email) {
-    const { error } = await supabase
-      .from("users")
-      .update({ updated_at: new Date().toISOString() })
-      .eq("email", email);
-
-    if (error)
-      throw new Error(
-        `Failed to reset updated_at timestamp for user ${email}: ${error.message}`
-      );
   },
 };
 

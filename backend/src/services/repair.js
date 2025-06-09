@@ -1,5 +1,6 @@
 const supabase = require("../config/database");
 const { v4: uuidv4 } = require("uuid");
+const { resetUpdatedAt } = require("../utils/dbUtil");
 
 const repairService = {
   async getVehicleRepairs(mechanicUuid, vehicleUuid) {
@@ -55,6 +56,8 @@ const repairService = {
       .eq("fk_mechanic", mechanicUuid);
 
     if (error) throw error;
+
+    await resetUpdatedAt(repairData.uuid, "repairs");
 
     return true;
   },

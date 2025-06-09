@@ -6,7 +6,7 @@ const userController = {
       console.log("Get user. Req from: ", req.user);
       console.log("Body: ", req.body);
 
-      const user = await userService.getUserByEmailAndEnabled(req.user.email);
+      const user = await userService.getUserByUuidAndEnabled(req.user.userUuid);
       return res.status(200).json({
         success: true,
         user,
@@ -33,7 +33,7 @@ const userController = {
       }
 
       await checkInput(userData);
-      await userService.updateByEmailAndEnabled(req.user.email, updateData);
+      await userService.updateByUuidAndEnabled(req.user.userUuid, updateData);
 
       return res.status(200).json({
         success: true,
@@ -49,7 +49,7 @@ const userController = {
       console.log("Disable user. Req from: ", req.user);
       console.log("Body: ", req.body);
 
-      await userService.disableByEmailAndEnabled(req.user.email);
+      await userService.disableByUuidAndEnabled(req.user.userUuid);
       return res.status(200).json({
         success: true,
         message: "User deleted successfully",

@@ -1,5 +1,6 @@
 const supabase = require("../../config/database");
 const { v4: uuidv4 } = require("uuid");
+const { resetUpdatedAt } = require("../../utils/dbUtil");
 
 const customerService = {
   async saveCustomerByMechanicUuid(mechanicUuid, customerData) {
@@ -50,18 +51,19 @@ const customerService = {
     return transformedData;
   },
 
-  async deleteByCustomerUuid(customerUuid) {
+  async deleteByCustomerUuid(customerUuid, mechanicUuid) {
     const { error } = await supabase
       .from("customers")
       .delete()
-      .eq("uuid", customerUuid);
+      .eq("uuid", customerUuid)
+      .eq("fk_mechanic", mechanicUuid);
 
     if (error) throw error;
 
     return true;
   },
 
-  async patchByCustomerData(customerData) {
+  async patchByCustomerData(customerData, mechanicUuid) {
     const { data, error } = await supabase
       .from("customers")
       .update({
@@ -71,6 +73,7 @@ const customerService = {
         email: customerData.email,
       })
       .eq("uuid", customerData.uuid)
+      .eq("fk_mechanic", mechanicUuid)
       .select()
       .maybeSingle();
 
@@ -79,6 +82,8 @@ const customerService = {
         `Failed to update user ${customerUuid}: ${error.message}`
       );
     if (!data) throw new Error("Customer not found");
+
+    await resetUpdatedAt(customerData.uuid, "customers");
 
     return true;
   },

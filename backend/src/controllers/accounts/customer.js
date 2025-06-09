@@ -29,9 +29,10 @@ const customerController = {
       console.log("Body: ", req.body);
 
       const customerUuid = req.body.customerUuid;
+      const mechanicUuid = req.user.mechanicUuid;
       if (!customerUuid) throw new Error("Customer UUID is not provided");
 
-      await customerService.deleteByCustomerUuid(customerUuid);
+      await customerService.deleteByCustomerUuid(customerUuid, mechanicUuid);
 
       const customers = await customerService.getCustomersByMechanicUuid(
         req.user.mechanicUuid
@@ -53,18 +54,18 @@ const customerController = {
       console.log("Body: ", req.body);
 
       const { customerData, vehicleData } = req.body;
+      const mechanicUuid = req.user.mechanicUuid;
       if (!customerData) throw new Error("Customer data is not provided");
       if (!vehicleData) throw new Error("Vehicle data is not provided");
 
       await checkInput(customerData, "uuid");
-      await customerService.patchByCustomerData(customerData);
+      await customerService.patchByCustomerData(customerData, mechanicUuid);
 
       await vehicleController.checkInput(vehicleData, "uuid");
       await vehicleService.patchByVehicleData(vehicleData);
 
-      const customers = await customerService.getCustomersByMechanicUuid(
-        req.user.mechanicUuid
-      );
+      const customers =
+        await customerService.getCustomersByMechanicUuid(mechanicUuid);
 
       return res.status(200).json({
         success: true,

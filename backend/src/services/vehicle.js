@@ -1,5 +1,6 @@
 const supabase = require("../config/database");
 const { v4: uuidv4 } = require("uuid");
+const { resetUpdatedAt } = require("../utils/dbUtil");
 
 const vehicleService = {
   // Accepts user or customer uuid and vehicleData to save. Both uuid's cannot be null
@@ -41,6 +42,8 @@ const vehicleService = {
     if (error)
       throw new Error(`Failed to update vehicle ${email}: ${error.message}`);
     if (!data) throw new Error("Vehicle not found");
+
+    await resetUpdatedAt(vehicleData.uuid, "vehicles");
 
     return true;
   },
