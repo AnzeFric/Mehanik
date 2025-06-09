@@ -114,6 +114,29 @@ export function useUser() {
     }
   };
 
+  const getMechanics = async () => {
+    try {
+      console.log("getMechanics req");
+      const response = await fetch(`${API_BASE_URL}/users/mechanics`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + jwt,
+        },
+      });
+      const data = await response.json();
+
+      if (data.success) {
+        console.log("Returned mechanics data: ");
+        console.log(JSON.stringify(data));
+        return data.mechanics;
+      }
+      console.error("Error fetching mechanics: ", data.message);
+    } catch (error) {
+      console.error("Error while fetching mechanics: ", error);
+    }
+  };
+
   return {
     firstName,
     lastName,
@@ -123,5 +146,6 @@ export function useUser() {
     updateUser,
     deleteUser,
     setFirstLogin,
+    getMechanics,
   };
 }

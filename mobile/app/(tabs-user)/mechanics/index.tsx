@@ -1,43 +1,39 @@
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
+import { View, TextInput, StyleSheet } from "react-native";
 import { useState, useEffect, useCallback } from "react";
 import SearchIcon from "@/assets/icons/SearchIcon.svg";
 import { Colors } from "@/constants/Colors";
 import { AppStyles } from "@/constants/Styles";
 import { useFocusEffect } from "expo-router";
-import { MechanicData } from "@/interfaces/user";
 import Mechanic from "@/components/user/items/Mechanic";
 import DisplayItems from "@/components/global/DisplayItems";
 import TitleRow from "@/components/shared/TitleRow";
-import { useMechanic } from "@/hooks/useMechanic";
+import useMechanicStore from "@/stores/useMechanicStore";
+import { useUser } from "@/hooks/useUser";
 
 export default function MechanicsScreen() {
-  const [mechanicList, setMechanicList] = useState<Array<MechanicData>>([]);
-  const { getMechanics } = useMechanic();
+  const { mechanics, setMechanics } = useMechanicStore();
+  const { getMechanics } = useUser();
   const [search, setSearch] = useState<string>("");
 
   const filteredMechanics =
     search.trim() === ""
-      ? mechanicList
-      : mechanicList.filter(
+      ? mechanics
+      : mechanics.filter(
           (mechanic) =>
             mechanic.firstName.toLowerCase().includes(search.toLowerCase()) ||
             mechanic.lastName.toLowerCase().includes(search.toLowerCase()) ||
-            mechanic.address?.toLowerCase().includes(search.toLowerCase()) ||
-            mechanic.city?.toLowerCase().includes(search.toLowerCase()) ||
-            mechanic.phone?.includes(search.toLowerCase()) ||
+            mechanic.info.address
+              ?.toLowerCase()
+              .includes(search.toLowerCase()) ||
+            mechanic.info.city?.toLowerCase().includes(search.toLowerCase()) ||
+            mechanic.info.phone?.includes(search.toLowerCase()) ||
             mechanic.email?.toLowerCase().includes(search.toLowerCase())
         );
 
   useEffect(() => {
     const populateMechanicList = async () => {
       const mechanics = await getMechanics();
-      setMechanicList(mechanics);
+      setMechanics(mechanics);
     };
     populateMechanicList();
   }, []);
@@ -67,14 +63,6 @@ export default function MechanicsScreen() {
             }}
             numberOfLines={1}
           />
-        </View>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
-            <Text style={styles.buttonText}>Sortiraj</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
-            <Text style={styles.buttonText}>Filtriraj</Text>
-          </TouchableOpacity>
         </View>
       </View>
       <DisplayItems
@@ -114,25 +102,6 @@ const styles = StyleSheet.create({
   textInput: {
     height: 50,
     flex: 1,
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    gap: 10,
-    marginHorizontal: 25,
-  },
-  button: {
-    backgroundColor: Colors.light.specialBlue,
-    borderRadius: 8,
-    paddingVertical: 6,
-    flex: 1,
-    alignItems: "center",
-    elevation: 3,
-  },
-  buttonText: {
-    color: Colors.light.darkButtonText,
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
   },
   card: {
     backgroundColor: "#fff",

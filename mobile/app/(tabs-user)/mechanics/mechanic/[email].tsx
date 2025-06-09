@@ -10,15 +10,13 @@ import { AppStyles } from "@/constants/Styles";
 import { Colors } from "@/constants/Colors";
 import BackIcon from "@/assets/icons/BackIcon.svg";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
-import { MechanicData } from "@/interfaces/user";
-import { useMechanic } from "@/hooks/useMechanic";
+import { MechanicData2 } from "@/interfaces/user";
+import useMechanicStore from "@/stores/useMechanicStore";
 
 export default function MechanicScreen() {
   const { email } = useLocalSearchParams();
-  const { mechanics } = useMechanic();
-  const [mechanicData, setMechanicData] = useState<MechanicData | undefined>(
-    undefined
-  );
+  const { mechanics } = useMechanicStore();
+  const [mechanicData, setMechanicData] = useState<MechanicData2>();
   const scrollRef = useRef<ScrollView>(null);
 
   useEffect(() => {
@@ -62,22 +60,22 @@ export default function MechanicScreen() {
         <View style={styles.sectionContainer}>
           <Text style={AppStyles.title}>Lokacija</Text>
           <View style={{ flexDirection: "row" }}>
-            {mechanicData?.address && (
+            {mechanicData?.info.address && (
               <Text style={AppStyles.text}>
-                {mechanicData.address}
+                {mechanicData.info.address}
                 {", "}
               </Text>
             )}
-            {mechanicData?.city && (
-              <Text style={AppStyles.text}>{mechanicData.city}</Text>
+            {mechanicData?.info.city && (
+              <Text style={AppStyles.text}>{mechanicData.info.city}</Text>
             )}
           </View>
         </View>
 
         <View style={styles.sectionContainer}>
           <Text style={AppStyles.title}>Kontakt</Text>
-          {mechanicData?.phone && (
-            <Text style={AppStyles.text}>{mechanicData.phone}</Text>
+          {mechanicData?.info.phone && (
+            <Text style={AppStyles.text}>{mechanicData.info.phone}</Text>
           )}
           {mechanicData?.email && (
             <Text style={AppStyles.text}>{mechanicData.email}</Text>
@@ -89,9 +87,9 @@ export default function MechanicScreen() {
 
           <View style={styles.servicePriceSection}>
             <Text style={styles.serviceTitle}>Veliki servis</Text>
-            {mechanicData?.prices.largeService &&
-            mechanicData.prices.largeService.length > 0 ? (
-              mechanicData.prices.largeService.map((brand, index) => (
+            {mechanicData?.info.prices.largeService &&
+            mechanicData.info.prices.largeService.length > 0 ? (
+              mechanicData.info.prices.largeService.map((brand, index) => (
                 <View style={styles.priceRow} key={index}>
                   <Text style={AppStyles.smallText}>{brand.name}</Text>
                   <Text style={[AppStyles.smallText, styles.priceText]}>
@@ -106,9 +104,9 @@ export default function MechanicScreen() {
 
           <View style={styles.servicePriceSection}>
             <Text style={styles.serviceTitle}>Mali servisi</Text>
-            {mechanicData?.prices.smallService &&
-            mechanicData.prices.smallService.length > 0 ? (
-              mechanicData.prices.smallService.map((brand, index) => (
+            {mechanicData?.info.prices.smallService &&
+            mechanicData.info.prices.smallService.length > 0 ? (
+              mechanicData.info.prices.smallService.map((brand, index) => (
                 <View style={styles.priceRow} key={index}>
                   <Text style={AppStyles.smallText}>{brand.name}</Text>
                   <Text style={[AppStyles.smallText, styles.priceText]}>
@@ -123,9 +121,9 @@ export default function MechanicScreen() {
 
           <View style={styles.servicePriceSection}>
             <Text style={styles.serviceTitle}>Menjava gum</Text>
-            {mechanicData?.prices.tireChange &&
-            mechanicData.prices.tireChange?.length > 0 ? (
-              mechanicData.prices.tireChange.map((brand, index) => (
+            {mechanicData?.info.prices.tireChange &&
+            mechanicData.info.prices.tireChange?.length > 0 ? (
+              mechanicData.info.prices.tireChange.map((brand, index) => (
                 <View style={styles.priceRow} key={index}>
                   <Text style={AppStyles.smallText}>{brand.name}</Text>
                   <Text style={[AppStyles.smallText, styles.priceText]}>

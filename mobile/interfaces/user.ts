@@ -14,6 +14,23 @@ export interface MechanicData {
   };
 }
 
+export interface MechanicData2 {
+  firstName: string;
+  lastName: string;
+  email: string;
+  info: {
+    address?: string;
+    city?: string;
+    image?: string;
+    phone?: string;
+    prices: {
+      largeService?: BrandPrice[];
+      smallService?: BrandPrice[];
+      tireChange?: BrandPrice[];
+    };
+  };
+}
+
 export interface BrandPrice {
   name: VehicleBrand;
   price: number;

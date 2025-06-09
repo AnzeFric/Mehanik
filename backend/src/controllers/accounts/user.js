@@ -58,6 +58,34 @@ const userController = {
       next(error);
     }
   },
+
+  async getMechanics(req, res, next) {
+    try {
+      console.log("Fetch mechanics. Req from: ", req.user);
+      console.log("Body: ", req.body);
+
+      const mechanics = await userService.getEnabledMechanics();
+      const parsedData = (mechanics || []).map((mechanic) => ({
+        firstName: mechanic.first_name,
+        lastName: mechanic.last_name,
+        email: mechanic.email,
+        info: {
+          phone: mechanic.mechanics[0].phone,
+          address: mechanic.mechanics[0].address,
+          city: mechanic.mechanics[0].city,
+          prices: mechanic.mechanics[0].prices,
+        },
+      }));
+
+      return res.status(200).json({
+        success: true,
+        message: "Mechanics fetched successfully",
+        mechanics: parsedData,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
 };
 
 async function checkInput(userData) {

@@ -1,10 +1,10 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { router } from "expo-router";
 import { Colors } from "@/constants/Colors";
-import { MechanicData } from "@/interfaces/user";
+import { MechanicData2 } from "@/interfaces/user";
 
 interface Props {
-  mechanicData: MechanicData;
+  mechanicData: MechanicData2;
 }
 
 export default function Mechanic({ mechanicData }: Props) {
@@ -18,8 +18,8 @@ export default function Mechanic({ mechanicData }: Props) {
       activeOpacity={0.7}
       onPress={handlePress}
     >
-      {mechanicData.image ? (
-        <Image source={{ uri: mechanicData.image }} style={styles.image} />
+      {mechanicData.info.image ? (
+        <Image source={{ uri: mechanicData.info.image }} style={styles.image} />
       ) : (
         <Image
           source={require("@/assets/images/logo-main.png")}
@@ -30,13 +30,13 @@ export default function Mechanic({ mechanicData }: Props) {
         <Text style={styles.name}>
           {mechanicData.firstName} {mechanicData.lastName}
         </Text>
-        {mechanicData.address && (
+        {mechanicData.info.address && (
           <Text style={styles.address}>
-            {mechanicData.address}, {mechanicData.city}
+            {mechanicData.info.address}, {mechanicData.info.city}
           </Text>
         )}
-        {mechanicData.phone && (
-          <Text style={styles.contact}>{mechanicData.phone}</Text>
+        {mechanicData.info.phone && (
+          <Text style={styles.contact}>{mechanicData.info.phone}</Text>
         )}
         {mechanicData.email && (
           <Text style={styles.contact}>{mechanicData.email}</Text>
