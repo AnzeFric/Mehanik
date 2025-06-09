@@ -87,6 +87,7 @@ export function useAuth() {
 
   const handleLogout = () => {
     useAuthStore.getState().reset();
+    router.dismissAll();
     router.replace("/(auth)/login");
   };
 
