@@ -1,7 +1,5 @@
 import { View, TextInput, StyleSheet } from "react-native";
-import { useState, useEffect, useCallback } from "react";
-import SearchIcon from "@/assets/icons/SearchIcon.svg";
-import { Colors } from "@/constants/Colors";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { AppStyles } from "@/constants/Styles";
 import { useFocusEffect } from "expo-router";
 import Mechanic from "@/components/user/items/Mechanic";
@@ -9,11 +7,14 @@ import DisplayItems from "@/components/global/DisplayItems";
 import TitleRow from "@/components/shared/TitleRow";
 import useMechanicStore from "@/stores/useMechanicStore";
 import { useUser } from "@/hooks/useUser";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function MechanicsScreen() {
   const { mechanics, setMechanics } = useMechanicStore();
   const { getMechanics } = useUser();
   const [search, setSearch] = useState<string>("");
+
+  const inputRef = useRef<TextInput>(null);
 
   const filteredMechanics =
     search.trim() === ""
@@ -50,18 +51,22 @@ export default function MechanicsScreen() {
 
   return (
     <View style={styles.container}>
+      <TitleRow title={"Mehaniki"} hasBackButton={false} />
+
       <View style={styles.header}>
-        <TitleRow title={"Mehaniki"} hasBackButton={false} />
-        <View style={styles.textInputContainer}>
-          <SearchIcon color={Colors.light.primaryText} height={20} width={20} />
+        <View style={AppStyles.inputContainer}>
           <TextInput
-            style={[AppStyles.text, styles.textInput]}
-            placeholder="Išči"
+            style={AppStyles.input}
+            placeholder={"Iskanje"}
             value={search}
-            onChangeText={(text: string) => {
-              setSearch(text);
-            }}
-            numberOfLines={1}
+            onChangeText={setSearch}
+            ref={inputRef}
+          />
+          <Ionicons
+            name={"search-outline"}
+            size={20}
+            color={"#888"}
+            onPress={() => inputRef.current?.focus()}
           />
         </View>
       </View>
@@ -81,37 +86,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    paddingBottom: 20,
-    gap: 15,
-    borderBottomColor: Colors.light.inactiveBorder,
-    borderStyle: "dashed",
-    borderBottomWidth: 1,
-  },
-  textInputContainer: {
-    flexDirection: "row",
-    borderWidth: 1,
-    borderColor: Colors.light.textInputBorder,
-    alignItems: "center",
-    borderRadius: 12,
-    paddingHorizontal: 12,
-    marginHorizontal: 25,
-    gap: 10,
-    backgroundColor: "#fff",
-    elevation: 3,
-  },
-  textInput: {
-    height: 50,
-    flex: 1,
-  },
-  card: {
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    padding: 15,
-    marginHorizontal: 20,
-    marginBottom: 10,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 3,
+    paddingTop: 15,
+    paddingBottom: 10,
+    paddingHorizontal: 20,
   },
 });

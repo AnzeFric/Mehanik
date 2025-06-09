@@ -128,7 +128,6 @@ export function useUser() {
 
       if (data.success) {
         console.log("Returned mechanics data: ");
-        console.log(JSON.stringify(data));
         return data.mechanics;
       }
       console.error("Error fetching mechanics: ", data.message);
