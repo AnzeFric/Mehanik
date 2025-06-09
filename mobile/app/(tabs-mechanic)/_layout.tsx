@@ -3,10 +3,7 @@ import React from "react";
 import { Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "@/constants/Colors";
-import { View } from "react-native";
-import HomeIcon from "@/assets/icons/HomeIcon.svg";
-import AppointmentsIcon from "@/assets/icons/mechanic-tabs/AppointmentIcon.svg";
-import LibraryIcon from "@/assets/icons/mechanic-tabs/LibraryIcon.svg";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function TabLayout() {
   const pathName = usePathname();
@@ -28,6 +25,11 @@ export default function TabLayout() {
           tabBarButton: (props) => (
             <Pressable
               {...props}
+              style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
               android_ripple={{ borderless: false, color: "transparent" }}
             />
           ),
@@ -39,17 +41,15 @@ export default function TabLayout() {
           options={{
             title: "Home",
             tabBarIcon: ({ color }) => (
-              <View style={{ margin: 20, padding: 20 }}>
-                <HomeIcon
-                  color={
-                    pathName.startsWith("/settings") // Color HomeIcon as active if we are on settings page
-                      ? Colors.light.specialBlue
-                      : color
-                  }
-                  width={28}
-                  height={28}
-                />
-              </View>
+              <Ionicons
+                name={"home"}
+                color={
+                  pathName.startsWith("/settings")
+                    ? Colors.light.specialBlue
+                    : color
+                }
+                size={28}
+              />
             ),
           }}
         />
@@ -58,9 +58,7 @@ export default function TabLayout() {
           options={{
             title: "Appointments",
             tabBarIcon: ({ color }) => (
-              <View style={{ margin: 20, padding: 20 }}>
-                <AppointmentsIcon color={color} width={28} height={28} />
-              </View>
+              <Ionicons name={"time"} color={color} size={28} />
             ),
           }}
         />
@@ -69,17 +67,15 @@ export default function TabLayout() {
           options={{
             title: "Library",
             tabBarIcon: ({ color }) => (
-              <View style={{ margin: 20, marginTop: 23, padding: 20 }}>
-                <LibraryIcon
-                  color={
-                    pathName.startsWith("/library") // Color LibraryIcon as active if we are on detail page
-                      ? Colors.light.specialBlue
-                      : color
-                  }
-                  width={28}
-                  height={28}
-                />
-              </View>
+              <Ionicons
+                name={"folder"}
+                color={
+                  pathName.startsWith("/library")
+                    ? Colors.light.specialBlue
+                    : color
+                }
+                size={28}
+              />
             ),
           }}
         />

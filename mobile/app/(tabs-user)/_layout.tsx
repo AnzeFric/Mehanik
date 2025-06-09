@@ -3,9 +3,7 @@ import React from "react";
 import { Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "@/constants/Colors";
-import { View } from "react-native";
-import HomeIcon from "@/assets/icons/HomeIcon.svg";
-import MechanicsIcon from "@/assets/icons/user-tabs/MechanicsIcon.svg";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function TabLayout() {
   const pathName = usePathname();
@@ -27,6 +25,11 @@ export default function TabLayout() {
           tabBarButton: (props) => (
             <Pressable
               {...props}
+              style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
               android_ripple={{ borderless: false, color: "transparent" }}
             />
           ),
@@ -38,17 +41,15 @@ export default function TabLayout() {
           options={{
             title: "Home",
             tabBarIcon: ({ color }) => (
-              <View style={{ margin: 20, padding: 20 }}>
-                <HomeIcon
-                  color={
-                    pathName.startsWith("/settings") // Color HomeIcon as active if we are on settings page
-                      ? Colors.light.specialBlue
-                      : color
-                  }
-                  width={28}
-                  height={28}
-                />
-              </View>
+              <Ionicons
+                name={"home"}
+                color={
+                  pathName.startsWith("/settings")
+                    ? Colors.light.specialBlue
+                    : color
+                }
+                size={28}
+              />
             ),
           }}
         />
@@ -57,17 +58,15 @@ export default function TabLayout() {
           options={{
             title: "Mechanics",
             tabBarIcon: ({ color }) => (
-              <View style={{ margin: 20, padding: 20 }}>
-                <MechanicsIcon
-                  color={
-                    pathName.startsWith("/mechanics") // Color Mechanic as active if we are on [id] page
-                      ? Colors.light.specialBlue
-                      : color
-                  }
-                  width={30}
-                  height={30}
-                />
-              </View>
+              <Ionicons
+                name={"people"}
+                color={
+                  pathName.startsWith("/mechanics")
+                    ? Colors.light.specialBlue
+                    : color
+                }
+                size={28}
+              />
             ),
           }}
         />

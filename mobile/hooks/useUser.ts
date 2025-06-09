@@ -116,7 +116,6 @@ export function useUser() {
 
   const getMechanics = async () => {
     try {
-      console.log("getMechanics req");
       const response = await fetch(`${API_BASE_URL}/users/mechanics`, {
         method: "GET",
         headers: {
@@ -127,7 +126,7 @@ export function useUser() {
       const data = await response.json();
 
       if (data.success) {
-        console.log("Returned mechanics data: ");
+        console.log("Successfully fetched mechanics data");
         return data.mechanics;
       }
       console.error("Error fetching mechanics: ", data.message);
