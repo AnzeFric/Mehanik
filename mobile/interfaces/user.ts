@@ -1,20 +1,4 @@
 export interface MechanicData {
-  id: number;
-  firstName: string;
-  lastName: string;
-  address?: string;
-  city?: string;
-  image?: string;
-  email?: string;
-  phone?: string;
-  prices: {
-    largeService?: BrandPrice[];
-    smallService?: BrandPrice[];
-    tireChange?: BrandPrice[];
-  };
-}
-
-export interface MechanicData2 {
   firstName: string;
   lastName: string;
   email: string;

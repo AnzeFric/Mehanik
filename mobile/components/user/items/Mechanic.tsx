@@ -1,10 +1,10 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { router } from "expo-router";
 import { Colors } from "@/constants/Colors";
-import { MechanicData2 } from "@/interfaces/user";
+import { MechanicData } from "@/interfaces/user";
 
 interface Props {
-  mechanicData: MechanicData2;
+  mechanicData: MechanicData;
 }
 
 export default function Mechanic({ mechanicData }: Props) {

@@ -10,13 +10,13 @@ import { AppStyles } from "@/constants/Styles";
 import { Colors } from "@/constants/Colors";
 import BackIcon from "@/assets/icons/BackIcon.svg";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
-import { MechanicData2 } from "@/interfaces/user";
+import { MechanicData } from "@/interfaces/user";
 import useMechanicStore from "@/stores/useMechanicStore";
 
 export default function MechanicScreen() {
   const { email } = useLocalSearchParams();
   const { mechanics } = useMechanicStore();
-  const [mechanicData, setMechanicData] = useState<MechanicData2>();
+  const [mechanicData, setMechanicData] = useState<MechanicData>();
   const scrollRef = useRef<ScrollView>(null);
 
   useEffect(() => {
