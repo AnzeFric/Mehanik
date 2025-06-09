@@ -14,6 +14,7 @@ import TitleRow from "@/components/shared/TitleRow";
 interface TemplateScreenProps {
   title: string;
   children: React.ReactNode;
+  backButton: boolean;
   buttonText?: string;
   onButtonPress?: (...args: any[]) => void;
   isMenuVisible?: boolean;
@@ -25,6 +26,7 @@ interface TemplateScreenProps {
 export default function TemplateView({
   title,
   children,
+  backButton,
   buttonText,
   onButtonPress = () => {},
   isMenuVisible,
@@ -48,7 +50,11 @@ export default function TemplateView({
 
   return (
     <View style={styles.container}>
-      <TitleRow title={title} hasBackButton={true} menuButton={menuIcon} />
+      <TitleRow
+        title={title}
+        hasBackButton={backButton}
+        menuButton={menuIcon}
+      />
       <View>{isMenuVisible && menu}</View>
       <ScrollView style={styles.childrenContainer} ref={scrollRef}>
         {children}

@@ -57,6 +57,7 @@ export default function EditCustomerScreen() {
   return (
     <TemplateView
       title={"Uredi stranko"}
+      backButton={true}
       buttonText={"Uredi"}
       onButtonPress={handleSaveEdit}
     >

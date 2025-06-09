@@ -41,6 +41,7 @@ export default function EditRepairScreen() {
   return (
     <TemplateView
       title={"Uredi servis"}
+      backButton={true}
       buttonText={"Shrani"}
       onButtonPress={handleEditRepair}
       menuIcon={<Ionicons name={"refresh"} size={30} onPress={resfreshData} />}

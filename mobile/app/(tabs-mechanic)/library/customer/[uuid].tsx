@@ -122,6 +122,7 @@ export default function DetailCustomerScreen() {
     <>
       <TemplateView
         title={`${firstName}`}
+        backButton={true}
         isMenuVisible={isMenuVisible}
         menu={menu}
         menuIcon={menuIcon}

@@ -3,14 +3,14 @@ export interface MechanicData {
   lastName: string;
   email: string;
   info: {
-    address?: string;
-    city?: string;
-    image?: string;
-    phone?: string;
+    address: string | null;
+    city: string | null;
+    image: string | null;
+    phone: string | null;
     prices: {
-      largeRepair?: BrandPrice[];
-      smallRepair?: BrandPrice[];
-      tyreChange?: BrandPrice[];
+      largeRepair: BrandPrice[] | null;
+      smallRepair: BrandPrice[] | null;
+      tyreChange: BrandPrice[] | null;
     };
   };
 }
