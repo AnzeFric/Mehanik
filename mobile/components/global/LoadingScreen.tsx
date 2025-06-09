@@ -5,7 +5,7 @@ export default function LoadingScreen() {
   return (
     <View style={styles.container}>
       <ActivityIndicator size={"large"} color={Colors.light.specialBlue} />
-      <Text style={styles.text}>Loading...</Text>
+      <Text style={styles.text}>Nalaganje...</Text>
     </View>
   );
 }

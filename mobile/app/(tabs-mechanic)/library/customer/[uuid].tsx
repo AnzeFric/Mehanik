@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  ActivityIndicator,
+} from "react-native";
 import { useState, useCallback, useEffect } from "react";
 import { useLocalSearchParams, router, useFocusEffect } from "expo-router";
 import { Colors } from "@/constants/Colors";
@@ -26,10 +33,13 @@ export default function DetailCustomerScreen() {
   const [customer, setCustomer] = useState<CustomerVehicleData>();
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState(true);
 
   const repairsFetch = async () => {
+    setLoading(true);
     const repairData = await getVehicleRepairs(uuid.toString());
     setRepairList(repairData);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -123,10 +133,21 @@ export default function DetailCustomerScreen() {
                 <VehicleDisplay vehicle={customer.vehicle} />
                 <CustomerDisplay customer={customer.customer} />
               </View>
-              <RepairsDisplay
-                repairList={repairList}
-                vehicleUuid={customer.vehicle.uuid}
-              />
+              {loading ? (
+                <View style={styles.loadingContainer}>
+                  <ActivityIndicator
+                    size={"large"}
+                    color={Colors.light.specialBlue}
+                  />
+                  <Text style={styles.loadingText}>Nalaganje servisov...</Text>
+                </View>
+              ) : (
+                <RepairsDisplay
+                  repairList={repairList}
+                  vehicleUuid={customer.vehicle.uuid}
+                />
+              )}
+
               {isModalOpen && (
                 <ModalPrompt
                   isVisible={isModalOpen}
@@ -153,9 +174,11 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     gap: 15,
-    paddingBottom: 30,
+    paddingBottom: 20,
+    marginBottom: 10,
+    borderBottomWidth: 0.8,
+    borderStyle: "dashed",
   },
-
   menuContainer: {
     position: "absolute",
     right: 20,
@@ -194,5 +217,15 @@ const styles = StyleSheet.create({
   },
   menuItemTextDelete: {
     color: "#E53935",
+  },
+  loadingContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 30,
+  },
+  loadingText: {
+    marginTop: 10,
+    color: Colors.light.specialBlue,
+    fontWeight: "bold",
   },
 });
