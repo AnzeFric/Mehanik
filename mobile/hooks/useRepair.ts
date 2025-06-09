@@ -21,6 +21,7 @@ export function useRepair() {
       const data = await response.json();
 
       if (data.success) {
+        console.log("Successfully fetched customer repairs");
         const repairsWithDates = data.repairs.map((repair: any) => ({
           ...repair,
           date: new Date(repair.date),
