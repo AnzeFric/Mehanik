@@ -63,18 +63,11 @@ export default function EditCustomerScreen() {
     router.replace("/(tabs-mechanic)/library");
   };
 
-  const resfreshData = () => {
-    setCurrentCustomer(originalCustomer);
-    setCurrentVehicle(originalVehicle);
-    setCurrentImage(originalImage);
-  };
-
   return (
     <TemplateView
       title={"Uredi stranko"}
       buttonText={"Uredi"}
       onButtonPress={handleSaveEdit}
-      menuIcon={<Ionicons name={"refresh"} size={30} onPress={resfreshData} />}
     >
       <View style={styles.container}>
         <ImageForm image={currentImage} setImage={setCurrentImage} />
