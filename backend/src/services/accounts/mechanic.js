@@ -6,8 +6,8 @@ const mechanicService = {
       phone: null,
       address: null,
       prices: {
-        largeService: null,
-        smallService: null,
+        largeRepair: null,
+        smallRepair: null,
         tyreChange: null,
       },
       fk_user: userUuid,
@@ -33,7 +33,7 @@ const mechanicService = {
   async check(userUuid) {
     const { data, error } = await supabase
       .from("mechanics")
-      .select("*")
+      .select("uuid, phone, address, city, prices")
       .eq("fk_user", userUuid)
       .maybeSingle();
 

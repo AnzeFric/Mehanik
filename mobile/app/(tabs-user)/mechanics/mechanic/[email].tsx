@@ -121,9 +121,9 @@ export default function MechanicScreen() {
 
           <View style={styles.repairPriceSection}>
             <Text style={styles.repairTitle}>Menjava gum</Text>
-            {mechanicData?.info.prices.tireChange &&
-            mechanicData.info.prices.tireChange?.length > 0 ? (
-              mechanicData.info.prices.tireChange.map((brand, index) => (
+            {mechanicData?.info.prices.tyreChange &&
+            mechanicData.info.prices.tyreChange?.length > 0 ? (
+              mechanicData.info.prices.tyreChange.map((brand, index) => (
                 <View style={styles.priceRow} key={index}>
                   <Text style={AppStyles.smallText}>{brand.name}</Text>
                   <Text style={[AppStyles.smallText, styles.priceText]}>

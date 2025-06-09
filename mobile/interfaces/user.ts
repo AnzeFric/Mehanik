@@ -10,7 +10,7 @@ export interface MechanicData {
     prices: {
       largeRepair?: BrandPrice[];
       smallRepair?: BrandPrice[];
-      tireChange?: BrandPrice[];
+      tyreChange?: BrandPrice[];
     };
   };
 }
