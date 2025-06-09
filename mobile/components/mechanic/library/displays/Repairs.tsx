@@ -23,7 +23,7 @@ export default function RepairsDisplay({ repairList, vehicleUuid }: Props) {
           Narejeni servisi
         </Text>
       </View>
-      <View style={styles.servicesContainer}>
+      <View style={styles.repairsContainer}>
         {repairList.length > 0 ? (
           repairList.map((repair, index) => (
             <Repair repairData={repair} vehicleUuid={vehicleUuid} key={index} />
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  servicesContainer: {
+  repairsContainer: {
     paddingTop: 20,
     gap: 10,
   },

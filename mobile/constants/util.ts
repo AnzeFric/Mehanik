@@ -34,7 +34,7 @@ export function formatTime(date: Date) {
   );
 }
 
-export function formatServiceType(type: string): string {
+export function formatRepairType(type: string): string {
   switch (type) {
     case "small":
       return "Mali servis";
@@ -45,7 +45,7 @@ export function formatServiceType(type: string): string {
   }
 }
 
-export function formatServiceItems(item: string): string {
+export function formatRepairItems(item: string): string {
   switch (item) {
     case "oilChange":
       return "Menjava olja";

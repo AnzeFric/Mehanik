@@ -66,7 +66,7 @@ export default function DetailCustomerScreen() {
     }, [shouldRefetch])
   );
 
-  const handleAddService = () => {
+  const handleAddRepair = () => {
     setShouldRefetch(true);
     router.push(`/(tabs-mechanic)/library/repair/add/${uuid}`);
   };
@@ -162,7 +162,7 @@ export default function DetailCustomerScreen() {
           )}
         </View>
       </TemplateView>
-      <PlusButton onPress={handleAddService} />
+      <PlusButton onPress={handleAddRepair} />
     </>
   );
 }

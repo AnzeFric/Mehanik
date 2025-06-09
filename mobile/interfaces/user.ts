@@ -8,8 +8,8 @@ export interface MechanicData {
     image?: string;
     phone?: string;
     prices: {
-      largeService?: BrandPrice[];
-      smallService?: BrandPrice[];
+      largeRepair?: BrandPrice[];
+      smallRepair?: BrandPrice[];
       tireChange?: BrandPrice[];
     };
   };

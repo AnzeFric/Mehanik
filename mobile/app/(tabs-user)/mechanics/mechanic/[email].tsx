@@ -85,11 +85,11 @@ export default function MechanicScreen() {
         <View style={styles.priceContainer}>
           <Text style={AppStyles.title}>Cene</Text>
 
-          <View style={styles.servicePriceSection}>
-            <Text style={styles.serviceTitle}>Veliki servis</Text>
-            {mechanicData?.info.prices.largeService &&
-            mechanicData.info.prices.largeService.length > 0 ? (
-              mechanicData.info.prices.largeService.map((brand, index) => (
+          <View style={styles.repairPriceSection}>
+            <Text style={styles.repairTitle}>Veliki servis</Text>
+            {mechanicData?.info.prices.largeRepair &&
+            mechanicData.info.prices.largeRepair.length > 0 ? (
+              mechanicData.info.prices.largeRepair.map((brand, index) => (
                 <View style={styles.priceRow} key={index}>
                   <Text style={AppStyles.smallText}>{brand.name}</Text>
                   <Text style={[AppStyles.smallText, styles.priceText]}>
@@ -102,11 +102,11 @@ export default function MechanicScreen() {
             )}
           </View>
 
-          <View style={styles.servicePriceSection}>
-            <Text style={styles.serviceTitle}>Mali servisi</Text>
-            {mechanicData?.info.prices.smallService &&
-            mechanicData.info.prices.smallService.length > 0 ? (
-              mechanicData.info.prices.smallService.map((brand, index) => (
+          <View style={styles.repairPriceSection}>
+            <Text style={styles.repairTitle}>Mali servisi</Text>
+            {mechanicData?.info.prices.smallRepair &&
+            mechanicData.info.prices.smallRepair.length > 0 ? (
+              mechanicData.info.prices.smallRepair.map((brand, index) => (
                 <View style={styles.priceRow} key={index}>
                   <Text style={AppStyles.smallText}>{brand.name}</Text>
                   <Text style={[AppStyles.smallText, styles.priceText]}>
@@ -119,8 +119,8 @@ export default function MechanicScreen() {
             )}
           </View>
 
-          <View style={styles.servicePriceSection}>
-            <Text style={styles.serviceTitle}>Menjava gum</Text>
+          <View style={styles.repairPriceSection}>
+            <Text style={styles.repairTitle}>Menjava gum</Text>
             {mechanicData?.info.prices.tireChange &&
             mechanicData.info.prices.tireChange?.length > 0 ? (
               mechanicData.info.prices.tireChange.map((brand, index) => (
@@ -197,13 +197,13 @@ const styles = StyleSheet.create({
     color: Colors.light.secondaryText,
     marginBottom: 5,
   },
-  servicePriceSection: {
+  repairPriceSection: {
     marginTop: 5,
     borderTopWidth: 1,
     borderTopColor: Colors.light.inactiveBorder,
     paddingTop: 8,
   },
-  serviceTitle: {
+  repairTitle: {
     ...AppStyles.text,
     fontWeight: "bold",
     marginBottom: 5,

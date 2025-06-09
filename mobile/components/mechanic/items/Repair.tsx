@@ -1,11 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { router } from "expo-router";
 import { Colors } from "@/constants/Colors";
-import {
-  formatDate,
-  formatServiceType,
-  formatCurrency,
-} from "@/constants/util";
+import { formatDate, formatRepairType, formatCurrency } from "@/constants/util";
 import { Ionicons } from "@expo/vector-icons";
 import { useRepair } from "@/hooks/useRepair";
 import { RepairData } from "@/interfaces/repair";
@@ -31,9 +27,9 @@ export default function Repair({ repairData, vehicleUuid }: Props) {
     >
       <View style={styles.contentContainer}>
         <View style={styles.header}>
-          <View style={styles.serviceTypeBadge}>
-            <Text style={styles.serviceTypeText}>
-              {formatServiceType(repairData.type)}
+          <View style={styles.repairTypeBadge}>
+            <Text style={styles.repairTypeText}>
+              {formatRepairType(repairData.type)}
             </Text>
           </View>
           <Text style={styles.priceText}>
@@ -101,10 +97,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 10,
   },
-  serviceTypeBadge: {
+  repairTypeBadge: {
     paddingVertical: 4,
   },
-  serviceTypeText: {
+  repairTypeText: {
     fontSize: 16,
     fontWeight: "bold",
   },

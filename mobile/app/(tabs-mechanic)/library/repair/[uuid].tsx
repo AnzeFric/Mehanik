@@ -11,8 +11,8 @@ import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import {
   formatDate,
-  formatServiceType,
-  formatServiceItems,
+  formatRepairType,
+  formatRepairItems,
   formatCurrency,
 } from "@/constants/util";
 import ModalPrompt from "@/components/mechanic/modals/ModalPrompt";
@@ -82,7 +82,7 @@ export default function DetailRepairScreen() {
         <TitleRow
           title={
             currentRepairFocus
-              ? formatServiceType(currentRepairFocus.type)
+              ? formatRepairType(currentRepairFocus.type)
               : "Servis ne obstaja"
           }
           hasBackButton={true}
@@ -174,12 +174,12 @@ export default function DetailRepairScreen() {
                             />
                           </View>
                           <Text style={styles.repairText}>
-                            {formatServiceItems(key)}
+                            {formatRepairItems(key)}
                           </Text>
                         </View>
                       ))}
                   {currentRepairFocus.description && (
-                    <Text style={styles.customServiceText}>
+                    <Text style={styles.customRepairText}>
                       {currentRepairFocus.description}
                     </Text>
                   )}
@@ -340,7 +340,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.light.text,
   },
-  customServiceText: {
+  customRepairText: {
     fontSize: 16,
     color: Colors.light.text,
     marginTop: 8,

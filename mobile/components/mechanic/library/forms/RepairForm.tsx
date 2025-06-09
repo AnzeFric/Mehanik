@@ -44,7 +44,7 @@ export default function RepairForm({ repair, setRepair }: Props) {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [note, setNote] = useState("");
-  const [serviceImages, setServiceImages] = useState<string[]>([]);
+  const [repairImages, setRepairImages] = useState<string[]>([]);
   const [date, setDate] = useState<Date>(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [options, setOptions] = useState<RepairOptions>(defaultOptions);
@@ -53,13 +53,13 @@ export default function RepairForm({ repair, setRepair }: Props) {
     setOptions((prev) => ({ ...prev, [key]: value }));
   };
 
-  const removeServiceImage = (index: number) => {
-    const newImages = [...serviceImages];
+  const removeRepairImage = (index: number) => {
+    const newImages = [...repairImages];
     newImages.splice(index, 1);
-    setServiceImages(newImages);
+    setRepairImages(newImages);
   };
 
-  const pickServiceImage = async () => {
+  const pickRepairImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       aspect: [4, 3],
@@ -77,7 +77,7 @@ export default function RepairForm({ repair, setRepair }: Props) {
 
         // Add data URL prefix for proper format
         const base64WithPrefix = `data:image/jpeg;base64,${base64}`;
-        setServiceImages([...serviceImages, base64WithPrefix]);
+        setRepairImages([...repairImages, base64WithPrefix]);
       } catch (error) {
         console.error("Error converting image to base64:", error);
       }
@@ -96,7 +96,7 @@ export default function RepairForm({ repair, setRepair }: Props) {
       setPrice(repair.price?.toString() || "");
       setNote(repair.note || "");
       setDate(repair.date || new Date());
-      setServiceImages(repair.images || []);
+      setRepairImages(repair.images || []);
       setOptions(repair.options || defaultOptions);
     }
   }, [repair]);
@@ -112,7 +112,7 @@ export default function RepairForm({ repair, setRepair }: Props) {
         price: parseFloat(price) || null,
         note: note,
         date: date,
-        images: serviceImages,
+        images: repairImages,
       };
     } else {
       var repairData: RepairData = {
@@ -123,11 +123,11 @@ export default function RepairForm({ repair, setRepair }: Props) {
         price: parseFloat(price) || null,
         note: note,
         date: date,
-        images: serviceImages,
+        images: repairImages,
       };
     }
     setRepair(repairData);
-  }, [type, description, note, price, date, serviceImages, options]);
+  }, [type, description, note, price, date, repairImages, options]);
 
   useFocusEffect(
     useCallback(() => {
@@ -138,7 +138,7 @@ export default function RepairForm({ repair, setRepair }: Props) {
           setPrice("");
           setNote("");
           setDate(new Date());
-          setServiceImages([]);
+          setRepairImages([]);
           setOptions(defaultOptions);
         }
       };
@@ -147,7 +147,7 @@ export default function RepairForm({ repair, setRepair }: Props) {
 
   return (
     <>
-      <View style={styles.serviceTypeContainer}>
+      <View style={styles.repairTypeContainer}>
         <View style={styles.radioGroup}>
           <>
             <CustomRadioButton
@@ -173,7 +173,7 @@ export default function RepairForm({ repair, setRepair }: Props) {
       </View>
 
       {(type === "small" || type === "large") && (
-        <View style={styles.serviceItemsContainer}>
+        <View style={styles.repairItemsContainer}>
           <CustomCheckBox
             text="Olje"
             value={options.oilChange}
@@ -282,24 +282,24 @@ export default function RepairForm({ repair, setRepair }: Props) {
       </View>
 
       <Text style={AppStyles.text}>Slike servisa (ni obvezno):</Text>
-      <View style={styles.serviceImagesContainer}>
-        {serviceImages.map((uri, index) => (
-          <View key={index} style={styles.serviceImageContainer}>
-            <Image source={{ uri }} style={styles.serviceImage} />
+      <View style={styles.repairImagesContainer}>
+        {repairImages.map((uri, index) => (
+          <View key={index} style={styles.repairImageContainer}>
+            <Image source={{ uri }} style={styles.repairImage} />
             <TouchableHighlight
               style={styles.removeImageButton}
               underlayColor={Colors.light.underlayColor}
-              onPress={() => removeServiceImage(index)}
+              onPress={() => removeRepairImage(index)}
             >
               <Text style={styles.removeImageText}>X</Text>
             </TouchableHighlight>
           </View>
         ))}
-        {serviceImages.length < 6 && (
+        {repairImages.length < 6 && (
           <TouchableHighlight
             style={styles.addImageButton}
             underlayColor={Colors.light.underlayColor}
-            onPress={pickServiceImage}
+            onPress={pickRepairImage}
           >
             <CameraIcon height={20} width={20} />
           </TouchableHighlight>
@@ -336,14 +336,14 @@ const styles = StyleSheet.create({
     textAlignVertical: "bottom",
     paddingTop: 8,
   },
-  serviceTypeContainer: {
+  repairTypeContainer: {
     marginBottom: 15,
   },
   radioGroup: {
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  serviceItemsContainer: {
+  repairItemsContainer: {
     marginBottom: 15,
   },
   dateContainer: {
@@ -361,18 +361,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.light.text || "#000",
   },
-  serviceImagesContainer: {
+  repairImagesContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
     marginBottom: 20,
   },
-  serviceImageContainer: {
+  repairImageContainer: {
     width: 100,
     height: 100,
     margin: 5,
     position: "relative",
   },
-  serviceImage: {
+  repairImage: {
     width: "100%",
     height: "100%",
     borderRadius: 5,

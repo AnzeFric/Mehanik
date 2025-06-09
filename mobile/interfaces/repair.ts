@@ -4,7 +4,7 @@ export interface RepairData {
   price: number | null;
   date: Date;
   options: RepairOptions;
-  description: string | null; // For "other" service type
+  description: string | null; // For "other" repair type
   images: string[] | null;
   note: string | null; // Note used in all types
 }
