@@ -142,7 +142,7 @@ export default function RepairForm({ repair, setRepair }: Props) {
           setOptions(defaultOptions);
         }
       };
-    }, [])
+    }, [repair])
   );
 
   return (
