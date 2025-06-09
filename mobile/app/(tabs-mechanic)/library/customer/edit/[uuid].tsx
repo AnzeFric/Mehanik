@@ -9,16 +9,11 @@ import ImageForm from "@/components/mechanic/library/forms/ImageForm";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCustomer } from "@/hooks/useCustomer";
 import useCustomerStore from "@/stores/useCustomerStore";
-import { Ionicons } from "@expo/vector-icons";
 
 export default function EditCustomerScreen() {
   const { uuid } = useLocalSearchParams(); // Vehicle uuid
   const { updateCustomerVehicle } = useCustomer();
   const { customers } = useCustomerStore();
-
-  const [originalCustomer, setOriginalCustomer] = useState<CustomerData>();
-  const [originalVehicle, setOriginalVehicle] = useState<VehicleData>();
-  const [originalImage, setOriginalImage] = useState<string | null>();
 
   const [currentCustomer, setCurrentCustomer] = useState<CustomerData>();
   const [currentVehicle, setCurrentVehicle] = useState<VehicleData>();
@@ -31,10 +26,6 @@ export default function EditCustomerScreen() {
       );
 
       if (foundCustomerVehicle) {
-        setOriginalCustomer(foundCustomerVehicle.customer);
-        setOriginalVehicle(foundCustomerVehicle.vehicle);
-        setOriginalImage(foundCustomerVehicle.vehicle.image || "");
-
         setCurrentCustomer(foundCustomerVehicle.customer);
         setCurrentVehicle(foundCustomerVehicle.vehicle);
         setCurrentImage(foundCustomerVehicle.vehicle.image || "");
