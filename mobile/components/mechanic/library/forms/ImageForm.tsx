@@ -14,8 +14,9 @@ interface Props {
 export default function ImageForm({ image, setImage }: Props) {
   const [imageLocal, setImageLocal] = useState<string | null>("");
 
+  // Only populate local image when image prop changes
   useEffect(() => {
-    if (image) {
+    if (image != undefined) {
       setImageLocal(image);
     }
   }, [image]);
@@ -29,9 +30,11 @@ export default function ImageForm({ image, setImage }: Props) {
 
     if (!result.canceled) {
       const uri = result.assets[0].uri;
+
+      // Update local state immediately for UI responsiveness
       setImageLocal(uri);
 
-      // Convert to base64 for database storage
+      // Convert to base64 for database storage and update parent
       try {
         const base64 = await FileSystem.readAsStringAsync(uri, {
           encoding: FileSystem.EncodingType.Base64,
@@ -39,9 +42,16 @@ export default function ImageForm({ image, setImage }: Props) {
 
         // Add data URL prefix for proper format
         const base64WithPrefix = `data:image/jpeg;base64,${base64}`;
+
+        // Update parent with the base64 version
         setImage(base64WithPrefix);
+
+        // Update local state with base64 version for consistency
+        setImageLocal(base64WithPrefix);
       } catch (error) {
         console.error("Error converting image to base64:", error);
+        // Revert local state on error
+        setImageLocal(image || "");
       }
     }
   };
@@ -53,7 +63,7 @@ export default function ImageForm({ image, setImage }: Props) {
           setImageLocal("");
         }
       };
-    }, [])
+    }, [image])
   );
 
   return (

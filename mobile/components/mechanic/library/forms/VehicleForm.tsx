@@ -16,6 +16,7 @@ export default function VehicleForm({ vehicle, setVehicle }: Props) {
   const [buildYear, setBuildYear] = useState<string | null>("");
   const [description, setDescription] = useState<string | null>("");
 
+  // Only populate form fields when vehicle prop changes
   useEffect(() => {
     if (vehicle) {
       setBrand(vehicle.brand);
@@ -26,19 +27,63 @@ export default function VehicleForm({ vehicle, setVehicle }: Props) {
     }
   }, [vehicle]);
 
-  // Update parent whenever form data changes
-  useEffect(() => {
-    const vehicleData: VehicleData = {
-      uuid: vehicle?.uuid || "",
-      brand: brand,
-      model: model,
-      buildYear: buildYear ? parseInt(buildYear, 10) : null,
-      vin: vin,
-      description: description,
-      image: vehicle?.image || null,
-    };
-    setVehicle(vehicleData);
-  }, [brand, model, buildYear, vin, description]);
+  // Helper function to update parent
+  const updateParent = useCallback(
+    (updates: Partial<VehicleData>) => {
+      const vehicleData: VehicleData = {
+        uuid: vehicle?.uuid || "",
+        brand: brand,
+        model: model,
+        buildYear: buildYear ? parseInt(buildYear, 10) : null,
+        vin: vin,
+        description: description,
+        image: vehicle?.image || null,
+        ...updates, // Apply the specific update
+      };
+      setVehicle(vehicleData);
+    },
+    [vehicle, brand, model, buildYear, vin, description, setVehicle]
+  );
+
+  const handleBrandChange = useCallback(
+    (value: string) => {
+      setBrand(value);
+      updateParent({ brand: value });
+    },
+    [updateParent]
+  );
+
+  const handleModelChange = useCallback(
+    (value: string) => {
+      setModel(value);
+      updateParent({ model: value });
+    },
+    [updateParent]
+  );
+
+  const handleVinChange = useCallback(
+    (value: string) => {
+      setVin(value);
+      updateParent({ vin: value });
+    },
+    [updateParent]
+  );
+
+  const handleBuildYearChange = useCallback(
+    (value: string) => {
+      setBuildYear(value);
+      updateParent({ buildYear: value ? parseInt(value, 10) : null });
+    },
+    [updateParent]
+  );
+
+  const handleDescriptionChange = useCallback(
+    (value: string) => {
+      setDescription(value);
+      updateParent({ description: value });
+    },
+    [updateParent]
+  );
 
   useFocusEffect(
     useCallback(() => {
@@ -51,7 +96,7 @@ export default function VehicleForm({ vehicle, setVehicle }: Props) {
           setDescription("");
         }
       };
-    }, [])
+    }, [vehicle])
   );
 
   return (
@@ -60,21 +105,21 @@ export default function VehicleForm({ vehicle, setVehicle }: Props) {
         style={styles.input}
         placeholder={"Znamka"}
         value={brand}
-        onChangeText={setBrand}
+        onChangeText={handleBrandChange}
         autoCapitalize={"words"}
       />
       <TextInput
         style={styles.input}
         placeholder={"Model"}
         value={model}
-        onChangeText={setModel}
+        onChangeText={handleModelChange}
         autoCapitalize={"words"}
       />
       <TextInput
         style={styles.input}
         placeholder={"Leto izdelave (ni obvezno)"}
         value={buildYear || ""}
-        onChangeText={setBuildYear}
+        onChangeText={handleBuildYearChange}
         autoCapitalize={"none"}
         keyboardType={"numeric"}
       />
@@ -82,14 +127,14 @@ export default function VehicleForm({ vehicle, setVehicle }: Props) {
         style={styles.input}
         placeholder={"VIN"}
         value={vin}
-        onChangeText={setVin}
+        onChangeText={handleVinChange}
         autoCapitalize={"characters"}
       />
       <TextInput
         style={[styles.input, { textAlignVertical: "top" }]}
         placeholder={"Dodaten opis vozila (ni obvezno)"}
         value={description || ""}
-        onChangeText={setDescription}
+        onChangeText={handleDescriptionChange}
         autoCapitalize={"sentences"}
         multiline={true}
         numberOfLines={3}

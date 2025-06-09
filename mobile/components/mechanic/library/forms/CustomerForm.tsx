@@ -15,6 +15,7 @@ export default function CustomerForm({ customer, setCustomer }: Props) {
   const [phone, setPhone] = useState<string | null>("");
   const [email, setEmail] = useState<string | null>("");
 
+  // Only populate form fields when customer prop changes
   useEffect(() => {
     if (customer) {
       setFirstName(customer.firstName || "");
@@ -24,17 +25,54 @@ export default function CustomerForm({ customer, setCustomer }: Props) {
     }
   }, [customer]);
 
-  // Update parent whenever form data changes
-  useEffect(() => {
-    const customerData: CustomerData = {
-      uuid: customer?.uuid || "",
-      firstName: firstName,
-      lastName: lastName,
-      phone: phone || null,
-      email: email || null,
-    };
-    setCustomer(customerData);
-  }, [firstName, lastName, phone, email]);
+  // Helper function to update parent
+  const updateParent = useCallback(
+    (updates: Partial<CustomerData>) => {
+      const customerData: CustomerData = {
+        uuid: customer?.uuid || "",
+        firstName: firstName,
+        lastName: lastName,
+        phone: phone || null,
+        email: email || null,
+        ...updates, // Apply the specific update
+      };
+      setCustomer(customerData);
+    },
+    [customer, firstName, lastName, phone, email, setCustomer]
+  );
+
+  // Individual change handlers
+  const handleFirstNameChange = useCallback(
+    (value: string) => {
+      setFirstName(value);
+      updateParent({ firstName: value });
+    },
+    [updateParent]
+  );
+
+  const handleLastNameChange = useCallback(
+    (value: string) => {
+      setLastName(value);
+      updateParent({ lastName: value });
+    },
+    [updateParent]
+  );
+
+  const handlePhoneChange = useCallback(
+    (value: string) => {
+      setPhone(value);
+      updateParent({ phone: value || null });
+    },
+    [updateParent]
+  );
+
+  const handleEmailChange = useCallback(
+    (value: string) => {
+      setEmail(value);
+      updateParent({ email: value || null });
+    },
+    [updateParent]
+  );
 
   useFocusEffect(
     useCallback(() => {
@@ -46,7 +84,7 @@ export default function CustomerForm({ customer, setCustomer }: Props) {
           setEmail("");
         }
       };
-    }, [])
+    }, [customer])
   );
 
   return (
@@ -55,7 +93,7 @@ export default function CustomerForm({ customer, setCustomer }: Props) {
         style={styles.input}
         placeholder={"Ime"}
         value={firstName}
-        onChangeText={setFirstName}
+        onChangeText={handleFirstNameChange}
         autoCapitalize={"words"}
       />
 
@@ -63,7 +101,7 @@ export default function CustomerForm({ customer, setCustomer }: Props) {
         style={styles.input}
         placeholder={"Priimek"}
         value={lastName}
-        onChangeText={setLastName}
+        onChangeText={handleLastNameChange}
         autoCapitalize={"words"}
       />
 
@@ -71,7 +109,7 @@ export default function CustomerForm({ customer, setCustomer }: Props) {
         style={styles.input}
         placeholder={"Telefonska št. (ni obvezno)"}
         value={phone || ""}
-        onChangeText={setPhone}
+        onChangeText={handlePhoneChange}
         autoCapitalize={"none"}
         keyboardType={"phone-pad"}
       />
@@ -80,7 +118,7 @@ export default function CustomerForm({ customer, setCustomer }: Props) {
         style={styles.input}
         placeholder={"Email (ni obvezno)"}
         value={email || ""}
-        onChangeText={setEmail}
+        onChangeText={handleEmailChange}
         autoCapitalize={"none"}
         keyboardType={"email-address"}
       />
