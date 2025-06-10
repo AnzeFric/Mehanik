@@ -18,13 +18,9 @@ import useUserStore from "@/stores/useUserStore";
 
 export default function SettingsScreen() {
   const { handleLogout } = useAuth();
-  const { updateUser, deleteUser } = useUser();
+  const { deleteUser } = useUser();
   const { currentUser } = useUserStore();
 
-  const [firstNameVal, setFirstNameVal] = useState<string>(
-    currentUser.firstName
-  );
-  const [lastNameVal, setLastNameVal] = useState<string>(currentUser.lastName);
   const [isLightTheme, setIsLightTheme] = useState<boolean>(true); // TODO: get this from hook
   const [isNotificationOn, setIsNotificationOn] = useState<boolean>(true);
 
@@ -40,22 +36,6 @@ export default function SettingsScreen() {
     ]);
   };
 
-  const handleUpdateFirstName = () => {
-    if (currentUser.firstName === firstNameVal || firstNameVal === "") {
-      Alert.alert("Napaka", "Spremenite ime pred posodabljanjem");
-    } else {
-      updateUser(firstNameVal, undefined);
-    }
-  };
-
-  const handleUpdateLastName = () => {
-    if (currentUser.lastName === lastNameVal || lastNameVal === "") {
-      Alert.alert("Napaka", "Spremenite priimek pred posodabljanjem");
-    } else {
-      updateUser(undefined, lastNameVal);
-    }
-  };
-
   return (
     <ScrollView>
       <TitleRow
@@ -64,41 +44,7 @@ export default function SettingsScreen() {
       />
 
       <View style={[AppStyles.parentPadding, styles.contentContainer]}>
-        <View>
-          <Text style={AppStyles.text}>Spremeni podatke</Text>
-          <View style={styles.nameInput}>
-            <TextInput
-              style={styles.input}
-              placeholder="Ime"
-              value={firstNameVal}
-              onChangeText={setFirstNameVal}
-              autoCapitalize="words"
-            />
-            <TouchableOpacity
-              style={styles.button}
-              onPress={handleUpdateFirstName}
-            >
-              <Text style={styles.buttonText}>Potrdi</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.nameInput}>
-            <TextInput
-              style={styles.input}
-              placeholder="Priimek"
-              value={lastNameVal}
-              onChangeText={setLastNameVal}
-              autoCapitalize="words"
-            />
-            <TouchableOpacity
-              style={styles.button}
-              onPress={handleUpdateLastName}
-            >
-              <Text style={styles.buttonText}>Potrdi</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <View>
+        <View style={styles.itemContainer}>
           <Text style={AppStyles.text}>Barva aplikacije</Text>
           <View style={styles.optionContainer}>
             <TouchableOpacity
@@ -108,7 +54,7 @@ export default function SettingsScreen() {
               ]}
               onPress={() => setIsLightTheme(true)}
             >
-              <Text style={styles.buttonText}>Svetla</Text>
+              <Text style={AppStyles.buttonText}>Svetla</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[
@@ -117,12 +63,12 @@ export default function SettingsScreen() {
               ]}
               onPress={() => setIsLightTheme(false)}
             >
-              <Text style={styles.buttonText}>Temna</Text>
+              <Text style={AppStyles.buttonText}>Temna</Text>
             </TouchableOpacity>
           </View>
         </View>
 
-        <View>
+        <View style={styles.itemContainer}>
           <Text style={AppStyles.text}>Obvestila</Text>
           <View style={styles.optionContainer}>
             <TouchableOpacity
@@ -132,7 +78,7 @@ export default function SettingsScreen() {
               ]}
               onPress={() => setIsNotificationOn(true)}
             >
-              <Text style={styles.buttonText}>Vklopljeno</Text>
+              <Text style={AppStyles.buttonText}>Vklopljeno</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[
@@ -141,31 +87,34 @@ export default function SettingsScreen() {
               ]}
               onPress={() => setIsNotificationOn(false)}
             >
-              <Text style={styles.buttonText}>Izklopljeno</Text>
+              <Text style={AppStyles.buttonText}>Izklopljeno</Text>
             </TouchableOpacity>
           </View>
         </View>
 
-        <View>
+        <View style={styles.itemContainer}>
           <Text style={AppStyles.text}>Pogoji uporabe</Text>
           <TouchableOpacity
-            style={styles.button}
+            style={AppStyles.button}
             onPress={() => router.push("../terms")}
           >
-            <Text style={styles.buttonText}>Preberi</Text>
+            <Text style={AppStyles.buttonText}>Preberi</Text>
           </TouchableOpacity>
         </View>
 
-        <View style={{ gap: 15 }}>
-          <View>
+        <View style={styles.itemContainer}>
+          <View style={styles.itemContainer}>
             <Text style={AppStyles.text}>Račun</Text>
-            <TouchableOpacity style={styles.button} onPress={handleLogout}>
-              <Text style={styles.buttonText}>Odjava</Text>
+            <TouchableOpacity style={AppStyles.button} onPress={handleLogout}>
+              <Text style={AppStyles.buttonText}>Odjava</Text>
             </TouchableOpacity>
           </View>
           <View>
-            <TouchableOpacity style={styles.button} onPress={handleDeleteUser}>
-              <Text style={styles.buttonText}>Odstrani</Text>
+            <TouchableOpacity
+              style={AppStyles.button}
+              onPress={handleDeleteUser}
+            >
+              <Text style={AppStyles.buttonText}>Odstrani</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -192,20 +141,8 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     gap: 20,
   },
-  nameInput: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 20,
-  },
-  input: {
-    height: 45,
-    fontSize: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.light.inactiveBorder,
-    marginBottom: 15,
-    paddingVertical: 8,
-    flex: 1,
+  itemContainer: {
+    gap: 10,
   },
   optionContainer: {
     flexDirection: "row",
@@ -221,17 +158,5 @@ const styles = StyleSheet.create({
   },
   selectedButton: {
     backgroundColor: Colors.light.specialBlue,
-  },
-  buttonText: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "white",
-  },
-  button: {
-    paddingVertical: 6,
-    backgroundColor: Colors.light.specialBlue,
-    borderRadius: 8,
-    alignItems: "center",
-    paddingHorizontal: 10,
   },
 });
