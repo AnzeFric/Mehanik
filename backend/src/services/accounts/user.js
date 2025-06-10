@@ -1,5 +1,4 @@
 const supabase = require("../../config/database");
-const { resetUpdatedAt } = require("../../utils/dbUtil");
 const mechanicService = require("./mechanic");
 
 const userService = {
@@ -91,7 +90,7 @@ const userService = {
   async disableByUuidAndEnabled(uuid) {
     const { data, error } = await supabase
       .from("users")
-      .update({ enabled: false })
+      .update({ enabled: false, updated_at: new Date().toISOString() })
       .eq("uuid", uuid)
       .eq("enabled", true)
       .select()
@@ -102,8 +101,6 @@ const userService = {
     if (!data) throw new Error("User not found");
 
     await mechanicService.delete(uuid);
-
-    await resetUpdatedAt(uuid, "users");
 
     return true;
   },

@@ -1,6 +1,5 @@
 const supabase = require("../../config/database");
 const { v4: uuidv4 } = require("uuid");
-const { resetUpdatedAt } = require("../../utils/dbUtil");
 
 const customerService = {
   async saveCustomerByMechanicUuid(mechanicUuid, customerData) {
@@ -71,6 +70,7 @@ const customerService = {
         last_name: customerData.lastName,
         phone: customerData.phone,
         email: customerData.email,
+        updated_at: new Date().toISOString(),
       })
       .eq("uuid", customerData.uuid)
       .eq("fk_mechanic", mechanicUuid)
@@ -82,8 +82,6 @@ const customerService = {
         `Failed to update user ${customerUuid}: ${error.message}`
       );
     if (!data) throw new Error("Customer not found");
-
-    await resetUpdatedAt(customerData.uuid, "customers");
 
     return true;
   },
