@@ -2,24 +2,35 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AccountType } from "@/interfaces/account";
+import { MechanicData } from "@/interfaces/user";
 
 interface UserStore {
-  firstName: string;
-  lastName: string;
-  accountType: AccountType;
+  currentUser: MechanicData;
   firstLogin: boolean;
-  setFirstName: (firstName: string) => void;
-  setLastName: (lastName: string) => void;
-  setAccountType: (accountType: AccountType) => void;
+  setCurrentUser: (currentUser: MechanicData) => void;
   setFirstLogin: (firstLogin: boolean) => void;
   reset: () => void;
 }
 
 const accountType: AccountType = "user";
 const initialState = {
-  firstName: "",
-  lastName: "",
-  accountType,
+  currentUser: {
+    firstName: "",
+    lastName: "",
+    email: "",
+    accountType,
+    info: {
+      address: null,
+      city: null,
+      image: null,
+      phone: null,
+      prices: {
+        largeRepair: null,
+        smallRepair: null,
+        tyreChange: null,
+      },
+    },
+  },
   firstLogin: true,
 };
 
@@ -27,19 +38,9 @@ const useUserStore = create(
   persist<UserStore>(
     (set) => ({
       ...initialState,
-      setFirstName: (firstName: string) => {
+      setCurrentUser: (currentUser: MechanicData) => {
         set({
-          firstName: firstName,
-        });
-      },
-      setLastName: (lastName: string) => {
-        set({
-          lastName: lastName,
-        });
-      },
-      setAccountType: (accountType: AccountType) => {
-        set({
-          accountType: accountType,
+          currentUser: currentUser,
         });
       },
       setFirstLogin: (firstLogin: boolean) => {

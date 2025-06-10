@@ -6,7 +6,24 @@ const userService = {
   async getUserByUuidAndEnabled(uuid) {
     const { data, error } = await supabase
       .from("users")
-      .select("uuid, email, first_name, last_name, account_type")
+      .select("email, first_name, last_name, account_type")
+      .eq("uuid", uuid)
+      .eq("enabled", true)
+      .maybeSingle();
+
+    if (error)
+      throw new Error(`Failed to fetch user ${uuid}: ${error.message}`);
+    if (!data) throw new Error("User not found");
+
+    return data;
+  },
+
+  async getMechanicByUuidAndEnabled(uuid) {
+    const { data, error } = await supabase
+      .from("users")
+      .select(
+        "email, first_name, last_name, account_type, mechanics(phone, address, city, prices)"
+      )
       .eq("uuid", uuid)
       .eq("enabled", true)
       .maybeSingle();

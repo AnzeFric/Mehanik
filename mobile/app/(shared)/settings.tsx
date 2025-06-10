@@ -14,13 +14,17 @@ import { Colors } from "@/constants/Colors";
 import { useAuth } from "@/hooks/useAuth";
 import { useUser } from "@/hooks/useUser";
 import TitleRow from "@/components/shared/TitleRow";
+import useUserStore from "@/stores/useUserStore";
 
 export default function SettingsScreen() {
   const { handleLogout } = useAuth();
-  const { firstName, lastName, updateUser, deleteUser } = useUser();
+  const { updateUser, deleteUser } = useUser();
+  const { currentUser } = useUserStore();
 
-  const [firstNameVal, setFirstNameVal] = useState<string>(firstName);
-  const [lastNameVal, setLastNameVal] = useState<string>(lastName);
+  const [firstNameVal, setFirstNameVal] = useState<string>(
+    currentUser.firstName
+  );
+  const [lastNameVal, setLastNameVal] = useState<string>(currentUser.lastName);
   const [isLightTheme, setIsLightTheme] = useState<boolean>(true); // TODO: get this from hook
   const [isNotificationOn, setIsNotificationOn] = useState<boolean>(true);
 
@@ -37,7 +41,7 @@ export default function SettingsScreen() {
   };
 
   const handleUpdateFirstName = () => {
-    if (firstName === firstNameVal || firstNameVal === "") {
+    if (currentUser.firstName === firstNameVal || firstNameVal === "") {
       Alert.alert("Napaka", "Spremenite ime pred posodabljanjem");
     } else {
       updateUser(firstNameVal, undefined);
@@ -45,7 +49,7 @@ export default function SettingsScreen() {
   };
 
   const handleUpdateLastName = () => {
-    if (lastName === lastNameVal || lastNameVal === "") {
+    if (currentUser.lastName === lastNameVal || lastNameVal === "") {
       Alert.alert("Napaka", "Spremenite priimek pred posodabljanjem");
     } else {
       updateUser(undefined, lastNameVal);
@@ -54,7 +58,10 @@ export default function SettingsScreen() {
 
   return (
     <ScrollView>
-      <TitleRow title={`Pozdravljen ${firstName}!`} hasBackButton={true} />
+      <TitleRow
+        title={`Pozdravljen ${currentUser.firstName}!`}
+        hasBackButton={true}
+      />
 
       <View style={[AppStyles.parentPadding, styles.contentContainer]}>
         <View>

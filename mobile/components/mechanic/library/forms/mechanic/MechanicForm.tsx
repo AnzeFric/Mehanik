@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Colors } from "@/constants/Colors";
 import { AppStyles } from "@/constants/Styles";
 import { BrandPrice, MechanicData } from "@/interfaces/user";
@@ -21,6 +21,16 @@ export default function MechanicForm({ mechanic, setMechanic }: Props) {
   const [tyreBrandPrice, setTyreBrandPrice] = useState<Array<BrandPrice>>([
     { name: "", price: 0 },
   ]);
+
+  useEffect(() => {
+    const largeRepairPrices = mechanic.info.prices.largeRepair;
+    const smallRepairPrices = mechanic.info.prices.smallRepair;
+    const tyreChangePrices = mechanic.info.prices.tyreChange;
+
+    if (largeRepairPrices) setLargeBrandPrice(largeRepairPrices);
+    if (smallRepairPrices) setSmallBrandPrice(smallRepairPrices);
+    if (tyreChangePrices) setTyreBrandPrice(tyreChangePrices);
+  }, [mechanic]);
 
   const handleFirstNameChange = () => {};
   const handleLastNameChange = () => {};

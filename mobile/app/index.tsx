@@ -3,9 +3,11 @@ import { useUser } from "@/hooks/useUser";
 import { useAuth } from "@/hooks/useAuth";
 import { useState, useEffect } from "react";
 import LoadingScreen from "@/components/global/LoadingScreen";
+import useUserStore from "@/stores/useUserStore";
 
 export default function HomeScreen() {
-  const { accountType, getUser } = useUser();
+  const { getUser } = useUser();
+  const { currentUser } = useUserStore();
   const { isLoggined, expiredTimestamp, handleLogout } = useAuth();
 
   const [loading, setLoading] = useState(true);
@@ -45,7 +47,7 @@ export default function HomeScreen() {
   }
 
   return isLoggined ? (
-    accountType === "user" ? (
+    currentUser.accountType === "user" ? (
       <Redirect href="/(tabs-user)" />
     ) : (
       <Redirect href="/(tabs-mechanic)" />

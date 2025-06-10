@@ -1,7 +1,10 @@
+import { AccountType } from "./account";
+
 export interface MechanicData {
   firstName: string;
   lastName: string;
   email: string;
+  accountType: AccountType;
   info: {
     address: string | null;
     city: string | null;

@@ -6,7 +6,35 @@ const userController = {
       console.log("Get user. Req from: ", req.user);
       console.log("Body: ", req.body);
 
-      const user = await userService.getUserByUuidAndEnabled(req.user.userUuid);
+      const mechanicUuid = req.user.mechanicUuid;
+      if (mechanicUuid) {
+        const foundMechanic = await userService.getMechanicByUuidAndEnabled(
+          req.user.userUuid
+        );
+        var user = {
+          firstName: foundMechanic.first_name,
+          lastName: foundMechanic.last_name,
+          email: foundMechanic.email,
+          accountType: foundMechanic.account_type,
+          info: {
+            phone: foundMechanic.mechanics[0].phone,
+            address: foundMechanic.mechanics[0].address,
+            city: foundMechanic.mechanics[0].city,
+            prices: foundMechanic.mechanics[0].prices,
+          },
+        };
+      } else {
+        const foundUser = await userService.getUserByUuidAndEnabled(
+          req.user.userUuid
+        );
+        var user = {
+          firstName: foundUser.first_name,
+          lastName: foundUser.last_name,
+          email: foundUser.email,
+          accountType: foundUser.account_type,
+        };
+      }
+
       return res.status(200).json({
         success: true,
         user,

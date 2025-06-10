@@ -4,18 +4,11 @@ import { API_BASE_URL } from "@/constants/Config";
 import { resetAllStores } from "@/constants/util";
 import useAuthStore from "@/stores/useAuthStore";
 import { Alert } from "react-native";
+import { MechanicData } from "@/interfaces/user";
 
 export function useUser() {
-  const {
-    firstName,
-    lastName,
-    firstLogin,
-    accountType,
-    setFirstName,
-    setLastName,
-    setFirstLogin,
-    setAccountType,
-  } = useUserStore();
+  const { currentUser, firstLogin, setFirstLogin, setCurrentUser } =
+    useUserStore();
 
   const { jwt } = useAuthStore();
 
@@ -32,17 +25,28 @@ export function useUser() {
       const data = await response.json();
 
       if (data.success) {
-        const firstName = data.user.first_name;
-        const lastName = data.user.last_name;
-        const accountType = data.user.account_type;
-
-        setFirstName(firstName);
-        setLastName(lastName);
-        setAccountType(accountType);
+        let user: MechanicData = {
+          firstName: data.user.firstName,
+          lastName: data.user.lastName,
+          email: data.user.email,
+          accountType: data.user.accountType,
+          info: {
+            address: null,
+            city: null,
+            image: null,
+            phone: null,
+            prices: {
+              largeRepair: null,
+              smallRepair: null,
+              tyreChange: null,
+            },
+            ...data.user.info,
+          },
+        };
+        setCurrentUser(user);
         console.log("User fetching successfully");
         return true;
       }
-
       console.error("Failed to get user");
       return false;
     } catch (error) {
@@ -74,8 +78,12 @@ export function useUser() {
       const data = await response.json();
 
       if (data.success) {
-        firstName != undefined && setFirstName(firstName);
-        lastName != undefined && setLastName(lastName);
+        const updatedUser: MechanicData = {
+          ...currentUser,
+          firstName: firstName ?? currentUser.firstName,
+          lastName: lastName ?? currentUser.lastName,
+        };
+        setCurrentUser(updatedUser);
         Alert.alert("Uspeh!", "Podatki uspešno posodobljeni!");
         return true;
       }
@@ -136,10 +144,7 @@ export function useUser() {
   };
 
   return {
-    firstName,
-    lastName,
     firstLogin,
-    accountType,
     getUser,
     updateUser,
     deleteUser,

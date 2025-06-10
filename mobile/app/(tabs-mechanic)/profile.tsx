@@ -3,15 +3,15 @@ import { useEffect, useState } from "react";
 import TemplateView from "@/components/mechanic/library/TemplateView";
 import MechanicForm from "@/components/mechanic/library/forms/mechanic/MechanicForm";
 import { MechanicData } from "@/interfaces/user";
-import useMechanicStore from "@/stores/useMechanicStore";
+import useUserStore from "@/stores/useUserStore";
 
 export default function MechanicProfileScreen() {
-  const { currentMechanic } = useMechanicStore();
+  const { currentUser } = useUserStore();
   const [mechanic, setMechanic] = useState<MechanicData | null>(null);
 
   useEffect(() => {
-    setMechanic(currentMechanic);
-  }, [currentMechanic]);
+    setMechanic(currentUser);
+  }, [currentUser]);
 
   const handleSaveEdit = () => {};
 
@@ -23,7 +23,7 @@ export default function MechanicProfileScreen() {
       onButtonPress={handleSaveEdit}
     >
       <View style={styles.container}>
-        <MechanicForm mechanic={currentMechanic} setMechanic={setMechanic} />
+        <MechanicForm mechanic={currentUser} setMechanic={setMechanic} />
       </View>
     </TemplateView>
   );
