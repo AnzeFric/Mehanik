@@ -55,35 +55,21 @@ export function useUser() {
     }
   };
 
-  const updateUser = async (firstName?: string, lastName?: string) => {
+  const updateUser = async (newUserData: MechanicData) => {
     try {
-      if (firstName === undefined && lastName === undefined) {
-        return false;
-      }
-
-      const body = {
-        ...(firstName !== undefined && { firstName }),
-        ...(lastName !== undefined && { lastName }),
-      };
-
       const response = await fetch(`${API_BASE_URL}/users/`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + jwt,
         },
-        body: JSON.stringify(body),
+        body: JSON.stringify(newUserData),
       });
 
       const data = await response.json();
 
       if (data.success) {
-        const updatedUser: MechanicData = {
-          ...currentUser,
-          firstName: firstName ?? currentUser.firstName,
-          lastName: lastName ?? currentUser.lastName,
-        };
-        setCurrentUser(updatedUser);
+        setCurrentUser(newUserData);
         Alert.alert("Uspeh!", "Podatki uspešno posodobljeni!");
         return true;
       }

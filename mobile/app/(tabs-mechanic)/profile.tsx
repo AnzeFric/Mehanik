@@ -4,21 +4,31 @@ import TemplateView from "@/components/mechanic/library/TemplateView";
 import MechanicForm from "@/components/mechanic/library/forms/mechanic/MechanicForm";
 import { MechanicData } from "@/interfaces/user";
 import useUserStore from "@/stores/useUserStore";
+import { useUser } from "@/hooks/useUser";
 
 export default function MechanicProfileScreen() {
   const { currentUser } = useUserStore();
+  const { updateUser } = useUser();
   const [mechanic, setMechanic] = useState<MechanicData | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setMechanic(currentUser);
   }, [currentUser]);
 
-  const handleSaveEdit = () => {};
+  const handleSaveEdit = async () => {
+    if (!mechanic) {
+      return;
+    }
+    setIsLoading(true);
+    await updateUser(mechanic);
+    setIsLoading(false);
+  };
 
   return (
     <TemplateView
       title={"Uredi profil"}
-      buttonText={"Uredi"}
+      buttonText={isLoading ? "Posodabljam..." : "Uredi"}
       backButton={false}
       onButtonPress={handleSaveEdit}
     >

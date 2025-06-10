@@ -49,19 +49,36 @@ const userController = {
       console.log("Patch user. Req from: ", req.user);
       console.log("Body: ", req.body);
 
-      const userData = req.body.userData;
+      const userData = req.body.newUserData;
       if (!userData) throw new Error("User data is not provided");
 
-      const updateData = {};
-      if (userData.firstName !== undefined) {
-        updateData.first_name = userData.firstName;
-      }
-      if (userData.lastName !== undefined) {
-        updateData.last_name = userData.lastName;
-      }
+      const userFields = {
+        first_name: userData.firstName,
+        last_name: userData.lastName,
+        email: userData.email,
+        account_type: userData.accountType,
+      };
 
       await checkInput(userData);
-      await userService.updateByUuidAndEnabled(req.user.userUuid, updateData);
+      await userService.updateUserByUuidAndEnabled(
+        req.user.userUuid,
+        userFields
+      );
+
+      if (userData.accountType === "mechanic") {
+        const mechanicFields = {
+          address: userData.address,
+          city: userData.city,
+          image: userData.image,
+          phone: userData.phone,
+          prices: userData.prices,
+        };
+
+        await userService.updateMechanicByUuidAndEnabled(
+          req.user.mechanicUuid,
+          mechanicFields
+        );
+      }
 
       return res.status(200).json({
         success: true,
@@ -117,7 +134,21 @@ const userController = {
 };
 
 async function checkInput(userData) {
-  const allowedFields = ["firstName", "lastName"];
+  const allowedFields = [
+    "firstName",
+    "lastName",
+    "email",
+    "accountType",
+    "info",
+    "address",
+    "city",
+    "image",
+    "phone",
+    "prices",
+    "largeRepair",
+    "smallRepair",
+    "tyreChange",
+  ];
 
   const forbiddenField = Object.keys(userData).find(
     (field) => !allowedFields.includes(field)

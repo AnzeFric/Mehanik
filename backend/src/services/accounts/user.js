@@ -50,10 +50,13 @@ const userService = {
     return data;
   },
 
-  async updateByUuidAndEnabled(uuid, userData) {
+  async updateUserByUuidAndEnabled(uuid, userData) {
     const { data, error } = await supabase
       .from("users")
-      .update(userData)
+      .update({
+        ...userData,
+        updated_at: new Date().toISOString(),
+      })
       .eq("uuid", uuid)
       .eq("enabled", true)
       .select()
@@ -63,7 +66,24 @@ const userService = {
       throw new Error(`Failed to update user ${uuid}: ${error.message}`);
     if (!data) throw new Error("User not found");
 
-    await resetUpdatedAt(uuid, "users");
+    return true;
+  },
+
+  async updateMechanicByUuidAndEnabled(uuid, mechanicData) {
+    const { data, error } = await supabase
+      .from("mechanics")
+      .update({
+        ...mechanicData,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("uuid", uuid)
+      .eq("enabled", true)
+      .select()
+      .maybeSingle();
+
+    if (error)
+      throw new Error(`Failed to update mechanic ${uuid}: ${error.message}`);
+    if (!data) throw new Error("Mechanic not found");
 
     return true;
   },
