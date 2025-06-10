@@ -50,7 +50,7 @@ export default function MechanicProfileScreen() {
 
   return (
     <View style={styles.container}>
-      <TitleRow title={"Uredi profil"} hasBackButton={false} />
+      <TitleRow title={"Uredi profil"} hasBackButton={true} />
       <ScrollView
         style={styles.childrenContainer}
         ref={scrollRef}
