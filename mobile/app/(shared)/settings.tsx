@@ -14,13 +14,15 @@ import { useAuth } from "@/hooks/useAuth";
 import { useUser } from "@/hooks/useUser";
 import TitleRow from "@/components/shared/TitleRow";
 import useUserStore from "@/stores/useUserStore";
+import { useTheme } from "@/context/ThemeContext";
 
 export default function SettingsScreen() {
   const { handleLogout } = useAuth();
   const { deleteUser } = useUser();
   const { currentUser } = useUserStore();
 
-  const [isLightTheme, setIsLightTheme] = useState<boolean>(true); // TODO: get this from hook
+  const { selectedTheme, setSelectedTheme } = useTheme();
+
   const [isNotificationOn, setIsNotificationOn] = useState<boolean>(true);
 
   const handleDeleteUser = () => {
@@ -53,18 +55,18 @@ export default function SettingsScreen() {
             <TouchableOpacity
               style={[
                 styles.optionButton,
-                isLightTheme && styles.selectedButton,
+                selectedTheme === "light" && styles.selectedButton,
               ]}
-              onPress={() => setIsLightTheme(true)}
+              onPress={() => setSelectedTheme("light")}
             >
               <Text style={AppStyles.buttonText}>Svetla</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[
                 styles.optionButton,
-                !isLightTheme && styles.selectedButton,
+                selectedTheme === "dark" && styles.selectedButton,
               ]}
-              onPress={() => setIsLightTheme(false)}
+              onPress={() => setSelectedTheme("dark")}
             >
               <Text style={AppStyles.buttonText}>Temna</Text>
             </TouchableOpacity>

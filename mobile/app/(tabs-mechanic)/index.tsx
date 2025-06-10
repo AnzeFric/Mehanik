@@ -1,19 +1,20 @@
 import { View, StyleSheet } from "react-native";
-import MenuIcon from "@/assets/icons/MenuIcon.svg";
 import DaySchedule from "@/components/mechanic/home/DaySchedule";
 import { router } from "expo-router";
 import TitleRow from "@/components/shared/TitleRow";
+import ThemedIcon from "@/components/global/themed/ThemedIcon";
+import ThemedView from "@/components/global/themed/ThemedView";
 
 export default function HomeMechanicScreen() {
   return (
-    <View style={styles.container}>
+    <ThemedView style={styles.container}>
       <TitleRow
         title={"Pregled terminov"}
         hasBackButton={false}
         menuButton={
-          <MenuIcon
-            height={30}
-            width={30}
+          <ThemedIcon
+            name={"menu"}
+            size={30}
             onPress={() => {
               router.push("/(shared)/settings");
             }}
@@ -23,7 +24,7 @@ export default function HomeMechanicScreen() {
       <View style={styles.contentContainer}>
         <DaySchedule />
       </View>
-    </View>
+    </ThemedView>
   );
 }
 

@@ -1,7 +1,9 @@
-import { Text, View, StyleSheet } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { View, StyleSheet } from "react-native";
 import { router } from "expo-router";
 import { AppStyles } from "@/constants/Styles";
+import ThemedView from "../global/themed/ThemedView";
+import ThemedText from "../global/themed/ThemedText";
+import ThemedIcon from "../global/themed/ThemedIcon";
 
 interface Props {
   title: string;
@@ -11,9 +13,9 @@ interface Props {
 
 export default function TitleRow({ title, hasBackButton, menuButton }: Props) {
   return (
-    <View style={styles.container}>
+    <ThemedView style={styles.container}>
       {hasBackButton && (
-        <Ionicons
+        <ThemedIcon
           name={"arrow-back"}
           size={28}
           style={styles.backArrow}
@@ -22,7 +24,7 @@ export default function TitleRow({ title, hasBackButton, menuButton }: Props) {
           }}
         />
       )}
-      <Text
+      <ThemedText
         style={[
           AppStyles.bigTitle,
           styles.titleText,
@@ -30,9 +32,9 @@ export default function TitleRow({ title, hasBackButton, menuButton }: Props) {
         ]}
       >
         {title}
-      </Text>
+      </ThemedText>
       {menuButton && <View style={styles.menuIcon}>{menuButton}</View>}
-    </View>
+    </ThemedView>
   );
 }
 
@@ -46,7 +48,6 @@ const styles = StyleSheet.create({
   },
   backArrow: {
     alignSelf: "center",
-    color: "#000000",
   },
   titleText: {
     flex: 1,

@@ -1,23 +1,25 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ThemeMode } from "@/context/ThemeContext";
 
 interface ColorThemeStore {
-  isLight: Boolean;
-  changeColorTheme: () => void;
+  selectedTheme: ThemeMode;
+  setSelectedTheme: (selectedTheme: ThemeMode) => void;
   reset: () => void;
 }
 
+const initTheme: ThemeMode = "light";
 const initialState = {
-  isLight: true,
+  selectedTheme: initTheme,
 };
 
 const useColorThemeStore = create(
   persist<ColorThemeStore>(
     (set, get) => ({
       ...initialState,
-      changeColorTheme: () => {
-        set({ isLight: !get().isLight });
+      setSelectedTheme: (selectedTheme: ThemeMode) => {
+        set({ selectedTheme: selectedTheme });
       },
       reset: async () => {
         set(() => ({ ...initialState }));
