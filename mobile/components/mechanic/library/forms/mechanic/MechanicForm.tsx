@@ -1,4 +1,10 @@
-import { useEffect, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { Colors } from "@/constants/Colors";
 import { AppStyles } from "@/constants/Styles";
 import { BrandPrice, MechanicData } from "@/interfaces/user";
@@ -7,7 +13,7 @@ import BrandPriceDisplay from "./BrandPriceDisplay";
 
 interface Props {
   mechanic: MechanicData;
-  setMechanic: (mehcanic: MechanicData) => void;
+  setMechanic: Dispatch<SetStateAction<MechanicData>>;
 }
 
 // TODO: Dodaj image?
@@ -32,12 +38,56 @@ export default function MechanicForm({ mechanic, setMechanic }: Props) {
     if (tyreChangePrices) setTyreBrandPrice(tyreChangePrices);
   }, [mechanic]);
 
-  const handleFirstNameChange = () => {};
-  const handleLastNameChange = () => {};
-  const handleEmailChange = () => {};
-  const handleAddressChange = () => {};
-  const handleCityChange = () => {};
-  const handlePhoneChange = () => {};
+  const handleFirstNameChange = useCallback((value: string) => {
+    setMechanic((prev) => ({
+      ...prev,
+      firstName: value,
+    }));
+  }, []);
+
+  const handleLastNameChange = useCallback((value: string) => {
+    setMechanic((prev) => ({
+      ...prev,
+      lastName: value,
+    }));
+  }, []);
+
+  const handleEmailChange = useCallback((value: string) => {
+    setMechanic((prev) => ({
+      ...prev,
+      email: value,
+    }));
+  }, []);
+
+  const handleAddressChange = useCallback((value: string) => {
+    setMechanic((prev) => ({
+      ...prev,
+      info: {
+        ...prev.info,
+        address: value,
+      },
+    }));
+  }, []);
+
+  const handleCityChange = useCallback((value: string) => {
+    setMechanic((prev) => ({
+      ...prev,
+      info: {
+        ...prev.info,
+        city: value,
+      },
+    }));
+  }, []);
+
+  const handlePhoneChange = useCallback((value: string) => {
+    setMechanic((prev) => ({
+      ...prev,
+      info: {
+        ...prev.info,
+        phone: value,
+      },
+    }));
+  }, []);
 
   return (
     <>

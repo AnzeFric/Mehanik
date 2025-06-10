@@ -57,13 +57,28 @@ export function useUser() {
 
   const updateUser = async (newUserData: MechanicData) => {
     try {
+      const userData = {
+        firstName: newUserData.firstName,
+        lastName: newUserData.lastName,
+      };
+      const mechanicData = {
+        address: newUserData.info.address,
+        city: newUserData.info.city,
+        image: newUserData.info.image,
+        phone: newUserData.info.phone,
+        prices: newUserData.info.prices,
+      };
+
       const response = await fetch(`${API_BASE_URL}/users/`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + jwt,
         },
-        body: JSON.stringify(newUserData),
+        body: JSON.stringify({
+          userData: userData,
+          mechanicData: mechanicData,
+        }),
       });
 
       const data = await response.json();

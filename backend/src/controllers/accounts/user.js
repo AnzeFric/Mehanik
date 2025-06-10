@@ -49,8 +49,11 @@ const userController = {
       console.log("Patch user. Req from: ", req.user);
       console.log("Body: ", req.body);
 
-      const userData = req.body.newUserData;
+      const userData = req.body.userData;
+      const mechanicData = req.body.mechanicData;
       if (!userData) throw new Error("User data is not provided");
+      if (userData.accountType === "mechanic")
+        if (!mechanicData) throw new Error("Mechanic data is not provided");
 
       const userFields = {
         first_name: userData.firstName,
@@ -137,17 +140,11 @@ async function checkInput(userData) {
   const allowedFields = [
     "firstName",
     "lastName",
-    "email",
-    "accountType",
-    "info",
     "address",
     "city",
     "image",
     "phone",
     "prices",
-    "largeRepair",
-    "smallRepair",
-    "tyreChange",
   ];
 
   const forbiddenField = Object.keys(userData).find(

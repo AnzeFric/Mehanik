@@ -9,7 +9,7 @@ import { useUser } from "@/hooks/useUser";
 export default function MechanicProfileScreen() {
   const { currentUser } = useUserStore();
   const { updateUser } = useUser();
-  const [mechanic, setMechanic] = useState<MechanicData | null>(null);
+  const [mechanic, setMechanic] = useState<MechanicData>(currentUser);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function MechanicProfileScreen() {
       onButtonPress={handleSaveEdit}
     >
       <View style={styles.container}>
-        <MechanicForm mechanic={currentUser} setMechanic={setMechanic} />
+        <MechanicForm mechanic={mechanic} setMechanic={setMechanic} />
       </View>
     </TemplateView>
   );
