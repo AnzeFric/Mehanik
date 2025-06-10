@@ -158,7 +158,7 @@ export default function DaySelector({
   };
 
   return (
-    <View style={styles.container}>
+    <View>
       <View style={styles.header}>
         <TouchableOpacity
           onPress={() => setShowDatePicker(true)}
@@ -250,9 +250,6 @@ export default function DaySelector({
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "white",
-  },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",

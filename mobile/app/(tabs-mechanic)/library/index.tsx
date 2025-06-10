@@ -8,6 +8,7 @@ import PlusButton from "@/components/global/PlusButton";
 import TitleRow from "@/components/shared/TitleRow";
 import { Ionicons } from "@expo/vector-icons";
 import { useCustomer } from "@/hooks/useCustomer";
+import ThemedView from "@/components/global/themed/ThemedView";
 
 export default function LibraryScreen() {
   const [search, setSearch] = useState<string>("");
@@ -50,7 +51,7 @@ export default function LibraryScreen() {
   );
 
   return (
-    <View style={styles.container}>
+    <ThemedView style={styles.container}>
       <View style={styles.header}>
         <TitleRow title={"Knjižnica servisov"} hasBackButton={false} />
         <View style={[AppStyles.inputContainer, { marginHorizontal: 25 }]}>
@@ -81,7 +82,7 @@ export default function LibraryScreen() {
           router.push("/library/customer/add");
         }}
       />
-    </View>
+    </ThemedView>
   );
 }
 

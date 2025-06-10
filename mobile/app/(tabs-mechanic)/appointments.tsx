@@ -1,9 +1,10 @@
-import { View, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { useState } from "react";
 import DisplayItems from "@/components/global/DisplayItems";
 import Appointment from "@/components/mechanic/items/Appointment";
 import { AppointmentData } from "@/interfaces/appointment";
 import TitleRow from "@/components/shared/TitleRow";
+import ThemedView from "@/components/global/themed/ThemedView";
 
 const fakeAppointments: AppointmentData[] = [
   {
@@ -43,7 +44,7 @@ export default function AppointmentsScreen() {
     useState<Array<AppointmentData>>(fakeAppointments);
 
   return (
-    <View style={styles.container}>
+    <ThemedView style={styles.container}>
       <TitleRow title={"Novi termini"} hasBackButton={false} />
       <DisplayItems
         list={appointmentList}
@@ -52,7 +53,7 @@ export default function AppointmentsScreen() {
         )}
         emptyMessage="Nimate novih terminov."
       />
-    </View>
+    </ThemedView>
   );
 }
 

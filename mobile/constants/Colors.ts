@@ -1,6 +1,3 @@
-const tintColorLight = "#0a7ea4";
-const tintColorDark = "#FFFFFF";
-
 export const Colors = {
   light: {
     background: "#FFFFFF",
@@ -21,20 +18,25 @@ export const Colors = {
     activeIcon: "#000000",
     inactiveIcon: "#C3C3C3",
     destructiveRed: "#E24A4A",
-
-    text: "#11181C",
-    tint: tintColorLight,
-    icon: "#687076",
-    tabIconDefault: "#687076",
-    tabIconSelected: tintColorLight,
   },
   dark: {
-    background: "#000000",
-
-    text: "#ECEDEE",
-    tint: tintColorDark,
-    icon: "#9BA1A6",
-    tabIconDefault: "#9BA1A6",
-    tabIconSelected: tintColorDark,
+    background: "#1A1A1A",
+    primaryText: "#F5F5F5",
+    secondaryText: "#B8B8B8",
+    darkButtonText: "#1A1A1A",
+    specialBlue: "#4A9EFF",
+    specialBlueClick: "#6BB3FF",
+    textInputBackground: "#2A2A2A",
+    textInputBorder: "#404040",
+    inactiveButton: "#4A4A4A",
+    inactiveBorder: "#4A4A4A",
+    confirmButton: "#4A9EFF",
+    cancelButton: "#FF6B47",
+    underlayColor: "#333333",
+    utilityButton: "#B8B8B8",
+    shadowColor: "#000000",
+    activeIcon: "#F5F5F5",
+    inactiveIcon: "#6A6A6A",
+    destructiveRed: "#FF6B6B",
   },
 };
