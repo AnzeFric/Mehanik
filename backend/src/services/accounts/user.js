@@ -68,7 +68,7 @@ const userService = {
     return true;
   },
 
-  async updateMechanicByUuidAndEnabled(uuid, mechanicData) {
+  async updateMechanicByUuid(uuid, mechanicData) {
     const { data, error } = await supabase
       .from("mechanics")
       .update({
@@ -76,7 +76,6 @@ const userService = {
         updated_at: new Date().toISOString(),
       })
       .eq("uuid", uuid)
-      .eq("enabled", true)
       .select()
       .maybeSingle();
 

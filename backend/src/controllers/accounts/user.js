@@ -47,7 +47,7 @@ const userController = {
   async patchUser(req, res, next) {
     try {
       console.log("Patch user. Req from: ", req.user);
-      console.log("Body: ", req.body);
+      console.log("Body: ", JSON.stringify(req.body));
 
       const userData = req.body.userData;
       const mechanicData = req.body.mechanicData;
@@ -68,16 +68,15 @@ const userController = {
         userFields
       );
 
-      if (userData.accountType === "mechanic") {
+      if (mechanicData) {
         const mechanicFields = {
-          address: userData.address,
-          city: userData.city,
-          image: userData.image,
-          phone: userData.phone,
-          prices: userData.prices,
+          address: mechanicData.address,
+          city: mechanicData.city,
+          image: mechanicData.image,
+          phone: mechanicData.phone,
+          prices: mechanicData.prices,
         };
-
-        await userService.updateMechanicByUuidAndEnabled(
+        await userService.updateMechanicByUuid(
           req.user.mechanicUuid,
           mechanicFields
         );

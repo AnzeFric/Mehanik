@@ -38,6 +38,57 @@ export default function MechanicForm({ mechanic, setMechanic }: Props) {
     if (tyreChangePrices) setTyreBrandPrice(tyreChangePrices);
   }, [mechanic]);
 
+  const handleLargeBrandChange = useCallback((newArray: BrandPrice[]) => {
+    setLargeBrandPrice(newArray);
+    setMechanic((prev) => {
+      const prevPrices = prev.info.prices || {};
+      return {
+        ...prev,
+        info: {
+          ...prev.info,
+          prices: {
+            ...prevPrices,
+            largeRepair: newArray,
+          },
+        },
+      };
+    });
+  }, []);
+
+  const handleSmallBrandChange = useCallback((newArray: BrandPrice[]) => {
+    setSmallBrandPrice(newArray);
+    setMechanic((prev) => {
+      const prevPrices = prev.info.prices || {};
+      return {
+        ...prev,
+        info: {
+          ...prev.info,
+          prices: {
+            ...prevPrices,
+            smallRepair: newArray,
+          },
+        },
+      };
+    });
+  }, []);
+
+  const handleTyrePriceChange = useCallback((newArray: BrandPrice[]) => {
+    setTyreBrandPrice(newArray);
+    setMechanic((prev) => {
+      const prevPrices = prev.info.prices || {};
+      return {
+        ...prev,
+        info: {
+          ...prev.info,
+          prices: {
+            ...prevPrices,
+            tyreChange: newArray,
+          },
+        },
+      };
+    });
+  }, []);
+
   const handleFirstNameChange = useCallback((value: string) => {
     setMechanic((prev) => ({
       ...prev,
@@ -49,13 +100,6 @@ export default function MechanicForm({ mechanic, setMechanic }: Props) {
     setMechanic((prev) => ({
       ...prev,
       lastName: value,
-    }));
-  }, []);
-
-  const handleEmailChange = useCallback((value: string) => {
-    setMechanic((prev) => ({
-      ...prev,
-      email: value,
     }));
   }, []);
 
@@ -112,15 +156,6 @@ export default function MechanicForm({ mechanic, setMechanic }: Props) {
 
         <TextInput
           style={styles.input}
-          placeholder={"Email"}
-          value={mechanic.email}
-          onChangeText={handleEmailChange}
-          autoCapitalize={"none"}
-          keyboardType={"email-address"}
-        />
-
-        <TextInput
-          style={styles.input}
           placeholder={"Naslov"}
           value={mechanic.info.address || ""}
           onChangeText={handleAddressChange}
@@ -152,7 +187,7 @@ export default function MechanicForm({ mechanic, setMechanic }: Props) {
             <Text>Veliki servis</Text>
             <BrandPriceDisplay
               brandPriceArray={largeBrandPrice}
-              setBrandPriceArray={setLargeBrandPrice}
+              setBrandPriceArray={handleLargeBrandChange}
             />
           </View>
           <View>
@@ -160,7 +195,7 @@ export default function MechanicForm({ mechanic, setMechanic }: Props) {
               <Text>Mali servis</Text>
               <BrandPriceDisplay
                 brandPriceArray={smallBrandPrice}
-                setBrandPriceArray={setSmallBrandPrice}
+                setBrandPriceArray={handleSmallBrandChange}
               />
             </View>
           </View>
@@ -169,7 +204,7 @@ export default function MechanicForm({ mechanic, setMechanic }: Props) {
               <Text>Menjava gum</Text>
               <BrandPriceDisplay
                 brandPriceArray={tyreBrandPrice}
-                setBrandPriceArray={setTyreBrandPrice}
+                setBrandPriceArray={handleTyrePriceChange}
               />
             </View>
           </View>

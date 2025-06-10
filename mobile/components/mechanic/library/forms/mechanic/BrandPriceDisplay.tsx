@@ -3,11 +3,10 @@ import { BrandPrice } from "@/interfaces/user";
 import BrandPriceItem from "./BrandPriceItem";
 import { AppStyles } from "@/constants/Styles";
 import { Colors } from "@/constants/Colors";
-import { Dispatch, SetStateAction } from "react";
 
 interface Props {
   brandPriceArray: Array<BrandPrice>;
-  setBrandPriceArray: Dispatch<SetStateAction<Array<BrandPrice>>>;
+  setBrandPriceArray: (newArray: Array<BrandPrice>) => void;
 }
 
 export default function BrandPriceDisplay({
@@ -22,13 +21,11 @@ export default function BrandPriceDisplay({
   };
 
   const addNewItem = () => {
-    setBrandPriceArray((prev) => [...prev, { name: "", price: 0 }]);
+    setBrandPriceArray([...brandPriceArray, { name: "", price: 0 }]);
   };
 
   const deleteItem = (deleteIndex: number) => {
-    const newArr = brandPriceArray.filter(
-      (item, index) => index != deleteIndex
-    );
+    const newArr = brandPriceArray.filter((_, index) => index !== deleteIndex);
     setBrandPriceArray(newArr);
   };
 
