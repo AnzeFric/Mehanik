@@ -16,7 +16,7 @@ export interface MechanicData {
 }
 
 export interface BrandPrice {
-  name: VehicleBrand;
+  name: VehicleBrand | string;
   price: number;
 }
 

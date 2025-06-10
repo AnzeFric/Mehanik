@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Colors } from "@/constants/Colors";
 import { AppStyles } from "@/constants/Styles";
-import { MechanicData } from "@/interfaces/user";
+import { BrandPrice, MechanicData } from "@/interfaces/user";
 import { TextInput, StyleSheet, Text, View } from "react-native";
+import BrandPriceDisplay from "./BrandPriceDisplay";
 
 interface Props {
   mechanic: MechanicData;
@@ -10,6 +12,16 @@ interface Props {
 
 // TODO: Dodaj image?
 export default function MechanicForm({ mechanic, setMechanic }: Props) {
+  const [largeBrandPrice, setLargeBrandPrice] = useState<Array<BrandPrice>>([
+    { name: "", price: 0 },
+  ]);
+  const [smallBrandPrice, setSmallBrandPrice] = useState<Array<BrandPrice>>([
+    { name: "", price: 0 },
+  ]);
+  const [tyreBrandPrice, setTyreBrandPrice] = useState<Array<BrandPrice>>([
+    { name: "", price: 0 },
+  ]);
+
   const handleFirstNameChange = () => {};
   const handleLastNameChange = () => {};
   const handleEmailChange = () => {};
@@ -74,6 +86,34 @@ export default function MechanicForm({ mechanic, setMechanic }: Props) {
       </View>
       <View style={styles.container}>
         <Text style={AppStyles.text}>Cene storitev</Text>
+        <Text>Povprečna cena za vsako storitev</Text>
+        <View style={styles.brandPriceContainer}>
+          <View>
+            <Text>Veliki servis</Text>
+            <BrandPriceDisplay
+              brandPriceArray={largeBrandPrice}
+              setBrandPriceArray={setLargeBrandPrice}
+            />
+          </View>
+          <View>
+            <View>
+              <Text>Mali servis</Text>
+              <BrandPriceDisplay
+                brandPriceArray={smallBrandPrice}
+                setBrandPriceArray={setSmallBrandPrice}
+              />
+            </View>
+          </View>
+          <View>
+            <View>
+              <Text>Menjava gum</Text>
+              <BrandPriceDisplay
+                brandPriceArray={tyreBrandPrice}
+                setBrandPriceArray={setTyreBrandPrice}
+              />
+            </View>
+          </View>
+        </View>
       </View>
     </>
   );
@@ -82,6 +122,10 @@ export default function MechanicForm({ mechanic, setMechanic }: Props) {
 const styles = StyleSheet.create({
   container: {
     paddingBottom: 15,
+  },
+  brandPriceContainer: {
+    paddingVertical: 20,
+    gap: 15,
   },
   input: {
     height: 45,

@@ -20,6 +20,7 @@ export const Colors = {
     shadowColor: "#000000",
     activeIcon: "#000000",
     inactiveIcon: "#C3C3C3",
+    destructiveRed: "#E24A4A",
 
     text: "#11181C",
     tint: tintColorLight,
