@@ -5,10 +5,11 @@ import { resetAllStores } from "@/constants/util";
 import useAuthStore from "@/stores/useAuthStore";
 import { Alert } from "react-native";
 import { MechanicData } from "@/interfaces/user";
+import useMechanicStore from "@/stores/useMechanicStore";
 
 export function useUser() {
-  const { currentUser, firstLogin, setFirstLogin, setCurrentUser } =
-    useUserStore();
+  const { firstLogin, setFirstLogin, setCurrentUser } = useUserStore();
+  const { setMechanics } = useMechanicStore();
 
   const { jwt } = useAuthStore();
 
@@ -136,9 +137,11 @@ export function useUser() {
 
       if (data.success) {
         console.log("Successfully fetched mechanics data");
-        return data.mechanics;
+        setMechanics(data.mechanics);
+        return true;
       }
       console.error("Error fetching mechanics: ", data.message);
+      return false;
     } catch (error) {
       console.error("Error while fetching mechanics: ", error);
     }

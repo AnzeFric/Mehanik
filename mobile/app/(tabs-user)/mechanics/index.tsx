@@ -10,7 +10,7 @@ import { useUser } from "@/hooks/useUser";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function MechanicsScreen() {
-  const { mechanics, setMechanics } = useMechanicStore();
+  const { mechanics } = useMechanicStore();
   const { getMechanics } = useUser();
   const [search, setSearch] = useState<string>("");
 
@@ -33,8 +33,7 @@ export default function MechanicsScreen() {
 
   useEffect(() => {
     const populateMechanicList = async () => {
-      const mechanics = await getMechanics();
-      setMechanics(mechanics);
+      await getMechanics();
     };
     populateMechanicList();
   }, []);
