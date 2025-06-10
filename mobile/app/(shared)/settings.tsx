@@ -1,4 +1,11 @@
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+  StatusBar,
+} from "react-native";
 import { useState } from "react";
 import { AppStyles } from "@/constants/Styles";
 import { router } from "expo-router";
