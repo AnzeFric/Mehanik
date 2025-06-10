@@ -66,13 +66,14 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     flexDirection: "row",
-    alignItems: "center",
   },
   deleteButton: {
     paddingHorizontal: 5,
     backgroundColor: Colors.light.destructiveRed,
     borderRadius: 60,
     marginLeft: 20,
+    alignSelf: "flex-start",
+    marginTop: 15,
   },
   deleteButtonText: {
     fontWeight: "bold",
