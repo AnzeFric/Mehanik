@@ -1,4 +1,4 @@
-import { View, TextInput, ScrollView, StyleSheet } from "react-native";
+import { View, TextInput, StyleSheet } from "react-native";
 import { useState, useMemo, useCallback, useRef } from "react";
 import { useFocusEffect } from "expo-router";
 import TitleRow from "@/components/shared/TitleRow";
@@ -7,6 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import TermsItem from "@/components/shared/terms/TermsItem";
 import { items } from "@/data/terms/terms.json";
 import { AppStyles } from "@/constants/Styles";
+import ThemedScrollView from "@/components/global/themed/ThemedScrollView";
 
 export default function TermsScreen() {
   const [value, setValue] = useState("");
@@ -31,7 +32,7 @@ export default function TermsScreen() {
   );
 
   return (
-    <ScrollView>
+    <ThemedScrollView>
       <TitleRow title={"Pogoji in določila"} hasBackButton={true} />
       <View style={styles.contentContainer}>
         <View style={AppStyles.inputContainer}>
@@ -56,7 +57,7 @@ export default function TermsScreen() {
           ))}
         </View>
       </View>
-    </ScrollView>
+    </ThemedScrollView>
   );
 }
 

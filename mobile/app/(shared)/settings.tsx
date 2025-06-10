@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  StyleSheet,
-  Alert,
-} from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import { useState } from "react";
 import { AppStyles } from "@/constants/Styles";
 import { router } from "expo-router";
@@ -15,6 +8,7 @@ import { useUser } from "@/hooks/useUser";
 import TitleRow from "@/components/shared/TitleRow";
 import useUserStore from "@/stores/useUserStore";
 import { useTheme } from "@/context/ThemeContext";
+import ThemedScrollView from "@/components/global/themed/ThemedScrollView";
 
 export default function SettingsScreen() {
   const { handleLogout } = useAuth();
@@ -42,7 +36,7 @@ export default function SettingsScreen() {
   };
 
   return (
-    <ScrollView>
+    <ThemedScrollView>
       <TitleRow
         title={`Pozdravljen ${currentUser.firstName}!`}
         hasBackButton={true}
@@ -142,7 +136,7 @@ export default function SettingsScreen() {
           </View>
         </View>
       </View>
-    </ScrollView>
+    </ThemedScrollView>
   );
 }
 
@@ -161,7 +155,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   contentContainer: {
-    marginVertical: 20,
+    paddingVertical: 20,
     gap: 20,
   },
   itemContainer: {

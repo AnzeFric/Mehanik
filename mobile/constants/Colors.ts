@@ -20,7 +20,7 @@ export const Colors = {
     destructiveRed: "#E24A4A",
   },
   dark: {
-    background: "#1A1A1A",
+    background: "#303030",
     primaryText: "#F5F5F5",
     secondaryText: "#B8B8B8",
     darkButtonText: "#1A1A1A",

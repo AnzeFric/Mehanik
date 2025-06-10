@@ -14,6 +14,7 @@ import { AppStyles } from "@/constants/Styles";
 import TitleRow from "@/components/shared/TitleRow";
 import { Colors } from "@/constants/Colors";
 import { useFocusEffect } from "expo-router";
+import ThemedView from "@/components/global/themed/ThemedView";
 
 export default function MechanicProfileScreen() {
   const { currentUser } = useUserStore();
@@ -49,7 +50,7 @@ export default function MechanicProfileScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <ThemedView style={styles.container}>
       <TitleRow title={"Uredi profil"} hasBackButton={true} />
       <ScrollView
         style={styles.childrenContainer}
@@ -68,7 +69,7 @@ export default function MechanicProfileScreen() {
           </Text>
         </TouchableOpacity>
       </ScrollView>
-    </View>
+    </ThemedView>
   );
 }
 

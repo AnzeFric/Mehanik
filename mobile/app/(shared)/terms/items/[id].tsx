@@ -1,9 +1,12 @@
-import { Text, View, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import TitleRow from "@/components/shared/TitleRow";
 import { useLocalSearchParams } from "expo-router";
 import { useMemo } from "react";
 import { items } from "@/data/terms/terms.json";
 import { Terms } from "@/data/terms/terms";
+import ThemedView from "@/components/global/themed/ThemedView";
+import ThemedText from "@/components/global/themed/ThemedText";
+import { AppStyles } from "@/constants/Styles";
 
 export default function TermsAndConditionsItem() {
   const { id } = useLocalSearchParams();
@@ -14,33 +17,29 @@ export default function TermsAndConditionsItem() {
 
   if (!data) {
     return (
-      <View>
+      <ThemedView style={styles.container}>
         <TitleRow title={"Item not found"} hasBackButton={true} />
-        <View style={styles.contentContainer}>
-          <Text style={styles.text}>
+        <View style={AppStyles.parentPadding}>
+          <ThemedText style={AppStyles.smallText}>
             Return to the previous page and try again.
-          </Text>
+          </ThemedText>
         </View>
-      </View>
+      </ThemedView>
     );
   }
 
   return (
-    <View>
+    <ThemedView style={styles.container}>
       <TitleRow title={data.title} hasBackButton={true} />
-      <View style={styles.contentContainer}>
-        <Text style={styles.text}>{data.description}</Text>
+      <View style={AppStyles.parentPadding}>
+        <ThemedText style={AppStyles.smallText}>{data.description}</ThemedText>
       </View>
-    </View>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  contentContainer: {
-    paddingHorizontal: 20,
-    paddingVertical: 25,
-  },
-  text: {
-    fontSize: 15,
+  container: {
+    flex: 1,
   },
 });
