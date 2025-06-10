@@ -1,18 +1,18 @@
 import { useRef, useEffect } from "react";
 import { Animated } from "react-native";
 import { useTheme } from "../context/ThemeContext";
-import { lightTheme, darkTheme } from "@/constants/Themes";
+import { Colors } from "@/constants/Colors";
 
 export const useAnimatedTheme = () => {
   const { theme } = useTheme();
 
   const animatedValue = useRef(
-    new Animated.Value(theme === darkTheme ? 1 : 0)
+    new Animated.Value(theme === Colors.dark ? 1 : 0)
   ).current;
 
   useEffect(() => {
     Animated.timing(animatedValue, {
-      toValue: theme === darkTheme ? 1 : 0,
+      toValue: theme === Colors.dark ? 1 : 0,
       duration: 300,
       useNativeDriver: false,
     }).start();
@@ -21,40 +21,32 @@ export const useAnimatedTheme = () => {
   const animatedColors = {
     backgroundColor: animatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [lightTheme.colors.background, darkTheme.colors.background],
-    }),
-    textColor: animatedValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: [lightTheme.colors.text, darkTheme.colors.text],
+      outputRange: [Colors.light.background, Colors.dark.background],
     }),
     primaryColor: animatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [lightTheme.colors.primary, darkTheme.colors.primary],
+      outputRange: [Colors.light.primaryText, Colors.dark.primaryText],
     }),
     secondaryTextColor: animatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [
-        lightTheme.colors.textSecondary,
-        darkTheme.colors.textSecondary,
-      ],
+      outputRange: [Colors.light.secondaryText, Colors.dark.secondaryText],
     }),
     borderColor: animatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [lightTheme.colors.border, darkTheme.colors.border],
+      outputRange: [Colors.light.inactiveBorder, Colors.dark.inactiveBorder],
     }),
     iconColor: animatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [lightTheme.colors.icon, darkTheme.colors.icon],
+      outputRange: [Colors.light.activeIcon, Colors.dark.activeIcon],
     }),
   };
 
   const staticColors = {
-    backgroundColor: theme.colors.background,
-    textColor: theme.colors.text,
-    primaryColor: theme.colors.primary,
-    secondaryTextColor: theme.colors.textSecondary,
-    borderColor: theme.colors.border,
-    iconColor: theme.colors.icon,
+    backgroundColor: theme.background,
+    primaryColor: theme.primaryText,
+    secondaryTextColor: theme.secondaryText,
+    borderColor: theme.inactiveBorder,
+    iconColor: theme.activeIcon,
   };
 
   return {
