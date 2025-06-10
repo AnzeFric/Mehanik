@@ -20,7 +20,7 @@ export interface MechanicData {
 
 export interface BrandPrice {
   name: VehicleBrand | string;
-  price: number;
+  price: string; // Using string to enable user decimal input
 }
 
 export interface AppointmentData {

@@ -21,7 +21,7 @@ export default function BrandPriceDisplay({
   };
 
   const addNewItem = () => {
-    setBrandPriceArray([...brandPriceArray, { name: "", price: 0 }]);
+    setBrandPriceArray([...brandPriceArray, { name: "", price: "0" }]);
   };
 
   const deleteItem = (deleteIndex: number) => {

@@ -13,26 +13,25 @@ export default function BrandPriceItem({ brandPrice, setBrandPrice }: Props) {
   };
 
   const handlePriceChange = (text: string) => {
-    const price = text ? parseFloat(text) || 0 : 0;
-    setBrandPrice({ ...brandPrice, price });
+    setBrandPrice({ ...brandPrice, price: text });
   };
 
   return (
     <View style={styles.container}>
       <TextInput
         style={[styles.input, { flex: 1 }]}
-        placeholder={"Ime"}
+        placeholder={"Znamka"}
         value={brandPrice?.name}
         onChangeText={handleNameChange}
         autoCapitalize={"words"}
       />
       <TextInput
         style={[styles.input, styles.inputPhone]}
-        placeholder={"Telefonska št. (ni obvezno)"}
-        value={brandPrice?.price.toString()}
+        placeholder={"Cena"}
+        value={brandPrice?.price}
         onChangeText={handlePriceChange}
         autoCapitalize={"none"}
-        keyboardType={"phone-pad"}
+        keyboardType={"decimal-pad"}
       />
     </View>
   );

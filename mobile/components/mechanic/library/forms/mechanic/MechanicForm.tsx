@@ -19,13 +19,13 @@ interface Props {
 // TODO: Dodaj image?
 export default function MechanicForm({ mechanic, setMechanic }: Props) {
   const [largeBrandPrice, setLargeBrandPrice] = useState<Array<BrandPrice>>([
-    { name: "", price: 0 },
+    { name: "", price: "0" },
   ]);
   const [smallBrandPrice, setSmallBrandPrice] = useState<Array<BrandPrice>>([
-    { name: "", price: 0 },
+    { name: "", price: "0" },
   ]);
   const [tyreBrandPrice, setTyreBrandPrice] = useState<Array<BrandPrice>>([
-    { name: "", price: 0 },
+    { name: "", price: "0" },
   ]);
 
   useEffect(() => {
