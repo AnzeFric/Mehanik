@@ -54,15 +54,6 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="profile"
-          options={{
-            title: "Profile",
-            tabBarIcon: ({ color }) => (
-              <Ionicons name={"person"} color={color} size={28} />
-            ),
-          }}
-        />
-        <Tabs.Screen
           name="appointments"
           options={{
             title: "Appointments",

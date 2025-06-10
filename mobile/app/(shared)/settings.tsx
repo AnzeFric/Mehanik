@@ -35,6 +35,10 @@ export default function SettingsScreen() {
     ]);
   };
 
+  const handleEditMechanic = () => {
+    router.push("/(shared)/profile");
+  };
+
   return (
     <ScrollView>
       <TitleRow
@@ -101,6 +105,24 @@ export default function SettingsScreen() {
           </TouchableOpacity>
         </View>
 
+        {currentUser.accountType === "mechanic" && (
+          <View style={styles.itemContainer}>
+            <View style={styles.itemContainer}>
+              <View>
+                <Text style={AppStyles.text}>Javni profil</Text>
+                <Text style={AppStyles.smallText}>
+                  Podatke vidijo stranke na seznamu mehanikov
+                </Text>
+              </View>
+              <TouchableOpacity
+                style={AppStyles.button}
+                onPress={handleEditMechanic}
+              >
+                <Text style={AppStyles.buttonText}>Uredi</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
         <View style={styles.itemContainer}>
           <View style={styles.itemContainer}>
             <Text style={AppStyles.text}>Račun</Text>

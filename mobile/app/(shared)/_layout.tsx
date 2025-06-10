@@ -9,6 +9,7 @@ export default function SettingsLayout() {
       }}
     >
       <Stack.Screen name="settings" />
+      <Stack.Screen name="profile" />
       <Stack.Screen name="terms/index" />
       <Stack.Screen name="terms/items/[id]" />
     </Stack>
