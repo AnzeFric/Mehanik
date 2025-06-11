@@ -1,5 +1,4 @@
 import { View, Image, StyleSheet } from "react-native";
-import { AppStyles } from "@/constants/Styles";
 import { VehicleData } from "@/interfaces/vehicle";
 import ThemedText from "@/components/global/themed/ThemedText";
 
@@ -19,9 +18,9 @@ export default function VehicleDisplay({ vehicle }: Props) {
         />
       )}
 
-      <ThemedText style={AppStyles.title}>Podatki o vozilu</ThemedText>
+      <ThemedText type={"title"}>Podatki o vozilu</ThemedText>
       <View>
-        <ThemedText style={AppStyles.text}>
+        <ThemedText type={"normal"}>
           {vehicle.brand} {vehicle.model}
           {vehicle.buildYear && (
             <>
@@ -30,12 +29,12 @@ export default function VehicleDisplay({ vehicle }: Props) {
             </>
           )}
         </ThemedText>
-        <ThemedText style={AppStyles.boldText}>{vehicle.vin}</ThemedText>
+        <ThemedText type={"normal"} bold>
+          {vehicle.vin}
+        </ThemedText>
       </View>
       {vehicle.description && (
-        <ThemedText style={AppStyles.smallText}>
-          {vehicle.description}
-        </ThemedText>
+        <ThemedText type={"small"}>{vehicle.description}</ThemedText>
       )}
     </View>
   );

@@ -1,5 +1,4 @@
 import { View, StyleSheet } from "react-native";
-import { AppStyles } from "@/constants/Styles";
 import Repair from "@/components/mechanic/items/Repair";
 import { RepairData } from "@/interfaces/repair";
 import ThemedText from "@/components/global/themed/ThemedText";
@@ -15,12 +14,10 @@ export default function RepairsDisplay({ repairList, vehicleUuid }: Props) {
     <>
       <View style={styles.container}>
         <ThemedText
-          style={[
-            AppStyles.title,
-            {
-              textAlignVertical: "bottom",
-            },
-          ]}
+          type={"title"}
+          style={{
+            textAlignVertical: "bottom",
+          }}
         >
           Narejeni servisi
         </ThemedText>
@@ -31,7 +28,7 @@ export default function RepairsDisplay({ repairList, vehicleUuid }: Props) {
             <Repair repairData={repair} vehicleUuid={vehicleUuid} key={index} />
           ))
         ) : (
-          <ThemedText style={[AppStyles.smallText, styles.listEmptyText]}>
+          <ThemedText type={"small"} style={styles.listEmptyText}>
             Nimate vnešenih servisov.
           </ThemedText>
         )}

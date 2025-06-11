@@ -20,7 +20,7 @@ export default function TermsAndConditionsItem() {
       <ThemedView type={"background"} style={styles.container}>
         <TitleRow title={"Item not found"} hasBackButton={true} />
         <View style={AppStyles.parentPadding}>
-          <ThemedText style={AppStyles.smallText}>
+          <ThemedText type={"small"}>
             Return to the previous page and try again.
           </ThemedText>
         </View>
@@ -32,7 +32,7 @@ export default function TermsAndConditionsItem() {
     <ThemedView type={"background"} style={styles.container}>
       <TitleRow title={data.title} hasBackButton={true} />
       <View style={AppStyles.parentPadding}>
-        <ThemedText style={AppStyles.smallText}>{data.description}</ThemedText>
+        <ThemedText type={"small"}>{data.description}</ThemedText>
       </View>
     </ThemedView>
   );

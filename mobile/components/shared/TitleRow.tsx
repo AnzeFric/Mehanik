@@ -1,6 +1,5 @@
 import { View, StyleSheet } from "react-native";
 import { router } from "expo-router";
-import { AppStyles } from "@/constants/Styles";
 import ThemedView from "../global/themed/ThemedView";
 import ThemedText from "../global/themed/ThemedText";
 import ThemedIcon from "../global/themed/ThemedIcon";
@@ -25,11 +24,8 @@ export default function TitleRow({ title, hasBackButton, menuButton }: Props) {
         />
       )}
       <ThemedText
-        style={[
-          AppStyles.bigTitle,
-          styles.titleText,
-          hasBackButton && { paddingLeft: 40 },
-        ]}
+        type={"bigTitle"}
+        style={[styles.titleText, hasBackButton && { paddingLeft: 40 }]}
         animatedTheme
       >
         {title}

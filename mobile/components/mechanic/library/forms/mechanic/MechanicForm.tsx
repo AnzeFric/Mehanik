@@ -10,6 +10,7 @@ import { AppStyles } from "@/constants/Styles";
 import { BrandPrice, MechanicData } from "@/interfaces/user";
 import { TextInput, StyleSheet, Text, View } from "react-native";
 import BrandPriceDisplay from "./BrandPriceDisplay";
+import ThemedText from "@/components/global/themed/ThemedText";
 
 interface Props {
   mechanic: MechanicData;
@@ -136,7 +137,9 @@ export default function MechanicForm({ mechanic, setMechanic }: Props) {
   return (
     <>
       <View style={styles.container}>
-        <Text style={AppStyles.text}>Osebni podatki</Text>
+        <ThemedText bold type={"normal"} style={AppStyles.text}>
+          Osebni podatki
+        </ThemedText>
 
         <TextInput
           style={styles.input}

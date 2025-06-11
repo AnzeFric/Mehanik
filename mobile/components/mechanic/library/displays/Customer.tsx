@@ -1,5 +1,4 @@
 import { View, StyleSheet } from "react-native";
-import { AppStyles } from "@/constants/Styles";
 import { CustomerData } from "@/interfaces/customer";
 import ThemedText from "@/components/global/themed/ThemedText";
 
@@ -10,16 +9,16 @@ interface Props {
 export default function CustomerDisplay({ customer }: Props) {
   return (
     <View style={styles.container}>
-      <ThemedText style={AppStyles.title}>Podatki o stranki</ThemedText>
+      <ThemedText type={"title"}>Podatki o stranki</ThemedText>
       <View>
-        <ThemedText style={AppStyles.smallText}>
+        <ThemedText type={"small"}>
           {customer.firstName} {customer.lastName}
         </ThemedText>
         {customer.email && (
-          <ThemedText style={AppStyles.smallText}>{customer.email}</ThemedText>
+          <ThemedText type={"small"}>{customer.email}</ThemedText>
         )}
         {customer.phone && (
-          <ThemedText style={AppStyles.text}>{customer.phone}</ThemedText>
+          <ThemedText type={"small"}>{customer.phone}</ThemedText>
         )}
       </View>
     </View>

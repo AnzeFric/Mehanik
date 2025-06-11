@@ -46,7 +46,7 @@ export default function SettingsScreen() {
 
       <View style={[AppStyles.parentPadding, styles.contentContainer]}>
         <View style={styles.itemContainer}>
-          <ThemedText style={AppStyles.text}>Barva aplikacije</ThemedText>
+          <ThemedText type={"normal"}>Barva aplikacije</ThemedText>
           <View style={styles.optionContainer}>
             <ThemedButton
               buttonType={"small"}
@@ -66,7 +66,7 @@ export default function SettingsScreen() {
         </View>
 
         <View style={styles.itemContainer}>
-          <ThemedText style={AppStyles.text}>Obvestila</ThemedText>
+          <ThemedText type={"normal"}>Obvestila</ThemedText>
           <View style={styles.optionContainer}>
             <ThemedButton
               buttonType={"small"}
@@ -86,7 +86,7 @@ export default function SettingsScreen() {
         </View>
 
         <View style={styles.itemContainer}>
-          <ThemedText style={AppStyles.text}>Pogoji uporabe</ThemedText>
+          <ThemedText type={"normal"}>Pogoji uporabe</ThemedText>
           <ThemedButton
             buttonType={"small"}
             buttonText={"Preberi"}
@@ -98,8 +98,8 @@ export default function SettingsScreen() {
           <View style={styles.itemContainer}>
             <View style={styles.itemContainer}>
               <View>
-                <ThemedText style={AppStyles.text}>Javni profil</ThemedText>
-                <ThemedText style={AppStyles.smallText}>
+                <ThemedText type={"normal"}>Javni profil</ThemedText>
+                <ThemedText type={"small"}>
                   Podatke vidijo stranke na seznamu mehanikov
                 </ThemedText>
               </View>
@@ -113,7 +113,7 @@ export default function SettingsScreen() {
         )}
         <View style={styles.itemContainer}>
           <View style={styles.itemContainer}>
-            <ThemedText style={AppStyles.text}>Račun</ThemedText>
+            <ThemedText type={"normal"}>Račun</ThemedText>
             <ThemedButton
               buttonType={"small"}
               buttonText={"Odjava"}
