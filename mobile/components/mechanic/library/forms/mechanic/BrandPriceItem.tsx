@@ -10,6 +10,7 @@ import { Colors } from "@/constants/Colors";
 import { vehicleBrands } from "@/interfaces/vehicle";
 import { useEffect, useMemo, useState } from "react";
 import ThemedTextInput from "@/components/global/themed/ThemedTextInput";
+import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 
 interface Props {
   brandPrice: BrandPrice;
@@ -17,6 +18,8 @@ interface Props {
 }
 
 export default function BrandPriceItem({ brandPrice, setBrandPrice }: Props) {
+  const { staticColors } = useAnimatedTheme();
+
   const [name, setName] = useState(brandPrice.name);
   const [optionsFocus, setOptionsFocus] = useState(false);
 
@@ -70,13 +73,21 @@ export default function BrandPriceItem({ brandPrice, setBrandPrice }: Props) {
         >
           {filteredBrands.map((brand, index) => (
             <TouchableOpacity
-              style={[styles.option, index !== 0 && { paddingTop: 15 }]}
+              style={[
+                styles.option,
+                { backgroundColor: staticColors.primaryBackground },
+                index !== 0 && { paddingTop: 15 },
+              ]}
               onPress={() => {
                 handleNameChange(brand);
               }}
               key={index}
             >
-              <Text style={styles.optionText}>{brand}</Text>
+              <Text
+                style={[styles.optionText, { color: staticColors.primaryText }]}
+              >
+                {brand}
+              </Text>
             </TouchableOpacity>
           ))}
         </ScrollView>
@@ -107,11 +118,11 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderRadius: 8,
     maxHeight: 200,
-    paddingHorizontal: 15,
   },
   option: {
-    borderBottomWidth: 0.5,
+    borderBottomWidth: 0.8,
     paddingVertical: 10,
+    paddingHorizontal: 15,
   },
   optionText: {
     fontSize: 18,

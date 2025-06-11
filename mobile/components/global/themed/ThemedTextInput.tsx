@@ -7,7 +7,7 @@ export default function ThemedTextInput({ style, ...props }: TextInputProps) {
   return (
     <TextInput
       {...props}
-      placeholderTextColor={staticColors.primaryText}
+      placeholderTextColor={staticColors.secondaryText}
       style={[style, { color: staticColors.primaryText }]}
     />
   );
