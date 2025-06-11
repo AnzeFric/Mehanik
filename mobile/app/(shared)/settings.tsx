@@ -16,6 +16,7 @@ import TitleRow from "@/components/shared/TitleRow";
 import useUserStore from "@/stores/useUserStore";
 import { useTheme } from "@/context/ThemeContext";
 import ThemedScrollView from "@/components/global/themed/ThemedScrollView";
+import ThemedText from "@/components/global/themed/ThemedText";
 
 export default function SettingsScreen() {
   const { handleLogout } = useAuth();
@@ -51,7 +52,7 @@ export default function SettingsScreen() {
 
       <View style={[AppStyles.parentPadding, styles.contentContainer]}>
         <View style={styles.itemContainer}>
-          <Text style={AppStyles.text}>Barva aplikacije</Text>
+          <ThemedText style={AppStyles.text}>Barva aplikacije</ThemedText>
           <View style={styles.optionContainer}>
             <TouchableOpacity
               style={[
@@ -75,7 +76,7 @@ export default function SettingsScreen() {
         </View>
 
         <View style={styles.itemContainer}>
-          <Text style={AppStyles.text}>Obvestila</Text>
+          <ThemedText style={AppStyles.text}>Obvestila</ThemedText>
           <View style={styles.optionContainer}>
             <TouchableOpacity
               style={[
@@ -99,7 +100,7 @@ export default function SettingsScreen() {
         </View>
 
         <View style={styles.itemContainer}>
-          <Text style={AppStyles.text}>Pogoji uporabe</Text>
+          <ThemedText style={AppStyles.text}>Pogoji uporabe</ThemedText>
           <TouchableOpacity
             style={AppStyles.button}
             onPress={() => router.push("../terms")}
@@ -112,10 +113,10 @@ export default function SettingsScreen() {
           <View style={styles.itemContainer}>
             <View style={styles.itemContainer}>
               <View>
-                <Text style={AppStyles.text}>Javni profil</Text>
-                <Text style={AppStyles.smallText}>
+                <ThemedText style={AppStyles.text}>Javni profil</ThemedText>
+                <ThemedText style={AppStyles.smallText}>
                   Podatke vidijo stranke na seznamu mehanikov
-                </Text>
+                </ThemedText>
               </View>
               <TouchableOpacity
                 style={AppStyles.button}
@@ -128,7 +129,7 @@ export default function SettingsScreen() {
         )}
         <View style={styles.itemContainer}>
           <View style={styles.itemContainer}>
-            <Text style={AppStyles.text}>Račun</Text>
+            <ThemedText style={AppStyles.text}>Račun</ThemedText>
             <TouchableOpacity style={AppStyles.button} onPress={handleLogout}>
               <Text style={AppStyles.buttonText}>Odjava</Text>
             </TouchableOpacity>

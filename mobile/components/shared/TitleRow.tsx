@@ -30,6 +30,7 @@ export default function TitleRow({ title, hasBackButton, menuButton }: Props) {
           styles.titleText,
           hasBackButton && { paddingLeft: 40 },
         ]}
+        animatedTheme
       >
         {title}
       </ThemedText>
