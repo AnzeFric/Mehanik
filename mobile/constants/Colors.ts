@@ -1,46 +1,70 @@
 export const Colors = {
   light: {
+    /* Backgrounds */
     background: "#FFFFFF",
     primaryBackground: "#FFFFFF",
     secondaryBackground: "#FFFFFF",
+
+    /* Texts */
     primaryText: "#000000",
     secondaryText: "#3C3C3C",
-    darkButtonText: "#FFFFFF",
-    specialBlue: "#003366",
-    specialBlueClick: "#0055A4",
-    textInputBackground: "#F8F8F8",
-    textInputBorder: "#DDDDDD",
+
+    /* Buttons */
+    button: "#003366",
+    buttonText: "#FFFFFF",
+    bigButton: "#003366",
+    bigButtonText: "#FFFFFF",
     inactiveButton: "#C3C3C3",
-    inactiveBorder: "#C3C3C3",
-    confirmButton: "#006db5",
-    cancelButton: "#c63500",
-    underlayColor: "#DDDDDD",
+    confirmButton: "#006DB5",
+    cancelButton: "#C63500",
+    destroyButton: "#E24A4A",
     utilityButton: "#3C3C3C",
-    shadowColor: "#000000",
+
+    /* Icons */
     activeIcon: "#000000",
     inactiveIcon: "#C3C3C3",
+
+    /* Inputs */
+    inputBackground: "#F8F8F8",
+    inputBorder: "#DDDDDD",
+
+    /* Other */
+    specialBlue: "#003366",
+    inactiveBorder: "#C3C3C3",
     destructiveRed: "#E24A4A",
   },
   dark: {
+    /* Backgrounds */
     background: "#303030",
     primaryBackground: "#424242",
     secondaryBackground: "#646464",
+
+    /* Texts */
     primaryText: "#F5F5F5",
     secondaryText: "#B8B8B8",
-    darkButtonText: "#1A1A1A",
-    specialBlue: "#4A9EFF",
-    specialBlueClick: "#6BB3FF",
-    textInputBackground: "#2A2A2A",
-    textInputBorder: "#404040",
+
+    /* Buttons */
+    button: "#4A9EFF",
+    buttonText: "#FFFFFF",
+    bigButton: "#4A9EFF",
+    bigButtonText: "#FFFFFF",
     inactiveButton: "#4A4A4A",
-    inactiveBorder: "#4A4A4A",
     confirmButton: "#4A9EFF",
     cancelButton: "#FF6B47",
-    underlayColor: "#333333",
+    destroyButton: "#FF6B6B",
     utilityButton: "#B8B8B8",
-    shadowColor: "#000000",
+
+    /* Icons */
     activeIcon: "#F5F5F5",
     inactiveIcon: "#6A6A6A",
+
+    /* Inputs */
+    inputBackground: "#2A2A2A",
+    inputBorder: "#404040",
+
+    /* Other */
+    specialBlue: "#4A9EFF",
+    inactiveBorder: "#4A4A4A",
     destructiveRed: "#FF6B6B",
   },
 };
