@@ -1,8 +1,7 @@
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import { useState } from "react";
 import { AppStyles } from "@/constants/Styles";
 import { router } from "expo-router";
-import { Colors } from "@/constants/Colors";
 import { useAuth } from "@/hooks/useAuth";
 import { useUser } from "@/hooks/useUser";
 import TitleRow from "@/components/shared/TitleRow";
@@ -135,19 +134,6 @@ export default function SettingsScreen() {
 }
 
 const styles = StyleSheet.create({
-  header: {
-    borderBottomColor: Colors.light.inactiveBorder,
-    borderBottomWidth: 1,
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    borderStyle: "dashed",
-  },
-  greeting: {
-    fontSize: 32,
-    flex: 1,
-    textAlign: "center",
-  },
   contentContainer: {
     paddingVertical: 20,
     gap: 20,
@@ -165,8 +151,5 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     borderRadius: 8,
     alignItems: "center",
-  },
-  selectedButton: {
-    backgroundColor: Colors.light.specialBlue,
   },
 });
