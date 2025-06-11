@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Alert,
-  StatusBar,
-} from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import { useState } from "react";
 import { AppStyles } from "@/constants/Styles";
 import { router } from "expo-router";
@@ -17,6 +10,7 @@ import useUserStore from "@/stores/useUserStore";
 import { useTheme } from "@/context/ThemeContext";
 import ThemedScrollView from "@/components/global/themed/ThemedScrollView";
 import ThemedText from "@/components/global/themed/ThemedText";
+import ThemedButton from "@/components/global/themed/ThemedButton";
 
 export default function SettingsScreen() {
   const { handleLogout } = useAuth();
@@ -25,7 +19,8 @@ export default function SettingsScreen() {
 
   const { selectedTheme, setSelectedTheme } = useTheme();
 
-  const [isNotificationOn, setIsNotificationOn] = useState<boolean>(true);
+  const [notificationsEnabled, setNotificationsEnabled] =
+    useState<boolean>(true);
 
   const handleDeleteUser = () => {
     Alert.alert("Brisanje računa", "Ste prepričani?", [
@@ -54,59 +49,50 @@ export default function SettingsScreen() {
         <View style={styles.itemContainer}>
           <ThemedText style={AppStyles.text}>Barva aplikacije</ThemedText>
           <View style={styles.optionContainer}>
-            <TouchableOpacity
-              style={[
-                styles.optionButton,
-                selectedTheme === "light" && styles.selectedButton,
-              ]}
+            <ThemedButton
+              buttonType={"small"}
+              buttonText={"Svetla"}
               onPress={() => setSelectedTheme("light")}
-            >
-              <Text style={AppStyles.buttonText}>Svetla</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.optionButton,
-                selectedTheme === "dark" && styles.selectedButton,
-              ]}
+              selected={selectedTheme === "light"}
+              buttonStyle={styles.optionButton}
+            />
+            <ThemedButton
+              buttonType={"small"}
+              buttonText={"Temna"}
               onPress={() => setSelectedTheme("dark")}
-            >
-              <Text style={AppStyles.buttonText}>Temna</Text>
-            </TouchableOpacity>
+              selected={selectedTheme === "dark"}
+              buttonStyle={styles.optionButton}
+            />
           </View>
         </View>
 
         <View style={styles.itemContainer}>
           <ThemedText style={AppStyles.text}>Obvestila</ThemedText>
           <View style={styles.optionContainer}>
-            <TouchableOpacity
-              style={[
-                styles.optionButton,
-                isNotificationOn && styles.selectedButton,
-              ]}
-              onPress={() => setIsNotificationOn(true)}
-            >
-              <Text style={AppStyles.buttonText}>Vklopljeno</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.optionButton,
-                !isNotificationOn && styles.selectedButton,
-              ]}
-              onPress={() => setIsNotificationOn(false)}
-            >
-              <Text style={AppStyles.buttonText}>Izklopljeno</Text>
-            </TouchableOpacity>
+            <ThemedButton
+              buttonType={"small"}
+              buttonText={"Vklopljeno"}
+              onPress={() => setNotificationsEnabled(true)}
+              selected={notificationsEnabled}
+              buttonStyle={styles.optionButton}
+            />
+            <ThemedButton
+              buttonType={"small"}
+              buttonText={"Izklopljeno"}
+              onPress={() => setNotificationsEnabled(false)}
+              selected={!notificationsEnabled}
+              buttonStyle={styles.optionButton}
+            />
           </View>
         </View>
 
         <View style={styles.itemContainer}>
           <ThemedText style={AppStyles.text}>Pogoji uporabe</ThemedText>
-          <TouchableOpacity
-            style={AppStyles.button}
+          <ThemedButton
+            buttonType={"small"}
+            buttonText={"Preberi"}
             onPress={() => router.push("../terms")}
-          >
-            <Text style={AppStyles.buttonText}>Preberi</Text>
-          </TouchableOpacity>
+          />
         </View>
 
         {currentUser.accountType === "mechanic" && (
@@ -118,29 +104,29 @@ export default function SettingsScreen() {
                   Podatke vidijo stranke na seznamu mehanikov
                 </ThemedText>
               </View>
-              <TouchableOpacity
-                style={AppStyles.button}
+              <ThemedButton
+                buttonType={"small"}
+                buttonText={"Uredi"}
                 onPress={handleEditMechanic}
-              >
-                <Text style={AppStyles.buttonText}>Uredi</Text>
-              </TouchableOpacity>
+              />
             </View>
           </View>
         )}
         <View style={styles.itemContainer}>
           <View style={styles.itemContainer}>
             <ThemedText style={AppStyles.text}>Račun</ThemedText>
-            <TouchableOpacity style={AppStyles.button} onPress={handleLogout}>
-              <Text style={AppStyles.buttonText}>Odjava</Text>
-            </TouchableOpacity>
+            <ThemedButton
+              buttonType={"small"}
+              buttonText={"Odjava"}
+              onPress={handleLogout}
+            />
           </View>
           <View>
-            <TouchableOpacity
-              style={AppStyles.button}
+            <ThemedButton
+              buttonType={"small"}
+              buttonText={"Odstrani"}
               onPress={handleDeleteUser}
-            >
-              <Text style={AppStyles.buttonText}>Odstrani</Text>
-            </TouchableOpacity>
+            />
           </View>
         </View>
       </View>
@@ -177,7 +163,6 @@ const styles = StyleSheet.create({
   optionButton: {
     flex: 1,
     paddingVertical: 6,
-    backgroundColor: Colors.light.inactiveButton,
     borderRadius: 8,
     alignItems: "center",
   },

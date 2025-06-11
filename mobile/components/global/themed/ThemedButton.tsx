@@ -14,6 +14,7 @@ type ButtonType = "small" | "large";
 type Props = TouchableOpacityProps & {
   buttonType: ButtonType;
   buttonText: string;
+  selected?: boolean;
   buttonStyle?: StyleProp<ViewStyle>;
   buttonTextStyle?: StyleProp<TextStyle>;
 };
@@ -21,18 +22,43 @@ type Props = TouchableOpacityProps & {
 export default function ThemedButton({
   buttonType,
   buttonText,
+  selected = true,
   buttonStyle = {},
   buttonTextStyle = {},
   ...props
 }: Props) {
   const { staticColors } = useAnimatedTheme();
+  console.log("Button colors:", staticColors.button, staticColors.bigButton);
 
   return buttonType === "small" ? (
-    <TouchableOpacity style={[AppStyles.button, buttonStyle, {}]} {...props}>
-      <Text style={[AppStyles.button, buttonTextStyle]}>{buttonText}</Text>
+    <TouchableOpacity
+      style={[
+        AppStyles.button,
+        {
+          backgroundColor: selected
+            ? staticColors.button
+            : staticColors.inactiveButton,
+        },
+
+        buttonStyle,
+      ]}
+      {...props}
+    >
+      <Text style={[AppStyles.buttonText, buttonTextStyle]}>{buttonText}</Text>
     </TouchableOpacity>
   ) : (
-    <TouchableOpacity style={[AppStyles.bigButton, buttonStyle, {}]} {...props}>
+    <TouchableOpacity
+      style={[
+        AppStyles.bigButton,
+        {
+          backgroundColor: selected
+            ? staticColors.bigButton
+            : staticColors.inactiveButton,
+        },
+        buttonStyle,
+      ]}
+      {...props}
+    >
       <Text style={[AppStyles.bigButtonText, buttonTextStyle]}>
         {buttonText}
       </Text>
