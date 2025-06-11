@@ -1,20 +1,13 @@
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Text,
-  ScrollView,
-} from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
 import { useCallback, useEffect, useRef, useState } from "react";
 import MechanicForm from "@/components/mechanic/library/forms/mechanic/MechanicForm";
 import { MechanicData } from "@/interfaces/user";
 import useUserStore from "@/stores/useUserStore";
 import { useUser } from "@/hooks/useUser";
-import { AppStyles } from "@/constants/Styles";
 import TitleRow from "@/components/shared/TitleRow";
-import { Colors } from "@/constants/Colors";
 import { useFocusEffect } from "expo-router";
 import ThemedView from "@/components/global/themed/ThemedView";
+import ThemedButton from "@/components/global/themed/ThemedButton";
 
 export default function MechanicProfileScreen() {
   const { currentUser } = useUserStore();
@@ -57,17 +50,13 @@ export default function MechanicProfileScreen() {
         ref={scrollRef}
         keyboardShouldPersistTaps={"handled"}
       >
-        <View style={styles.container}>
-          <MechanicForm mechanic={mechanic} setMechanic={setMechanic} />
-        </View>
-        <TouchableOpacity
-          style={[AppStyles.button, styles.button]}
+        <MechanicForm mechanic={mechanic} setMechanic={setMechanic} />
+        <ThemedButton
+          buttonType={"small"}
           onPress={handleSaveEdit}
-        >
-          <Text style={AppStyles.buttonText}>
-            {isLoading ? "Posodabljam..." : "Uredi"}
-          </Text>
-        </TouchableOpacity>
+          buttonText={isLoading ? "Posodabljam..." : "Uredi"}
+          buttonStyle={{ marginBottom: 25 }}
+        />
       </ScrollView>
     </ThemedView>
   );
@@ -76,28 +65,10 @@ export default function MechanicProfileScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    gap: 15,
-  },
-  header: {
-    borderBottomColor: Colors.light.inactiveBorder,
-    borderBottomWidth: 1,
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    borderStyle: "dashed",
-    paddingTop: 20,
-    marginHorizontal: 25,
-  },
-  userName: {
-    fontSize: 32,
-    flex: 1,
-    textAlign: "center",
+    gap: 20,
   },
   childrenContainer: {
     flex: 1,
     paddingHorizontal: 25,
-  },
-  button: {
-    marginBottom: 25,
   },
 });
