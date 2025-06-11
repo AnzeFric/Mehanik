@@ -13,7 +13,7 @@ interface Props {
 
 export default function TitleRow({ title, hasBackButton, menuButton }: Props) {
   return (
-    <ThemedView style={styles.container}>
+    <ThemedView type={"background"} style={styles.container}>
       {hasBackButton && (
         <ThemedIcon
           name={"arrow-back"}

@@ -51,7 +51,7 @@ export default function LibraryScreen() {
   );
 
   return (
-    <ThemedView style={styles.container}>
+    <ThemedView type={"background"} style={styles.container}>
       <View style={styles.header}>
         <TitleRow title={"Knjižnica servisov"} hasBackButton={false} />
         <View style={[AppStyles.inputContainer, { marginHorizontal: 25 }]}>

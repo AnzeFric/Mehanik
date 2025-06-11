@@ -1,12 +1,24 @@
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
-import { ScrollViewProps, Animated } from "react-native";
+import { ScrollViewProps, Animated, ScrollView } from "react-native";
 
-export default function ThemedScrollView({ style, ...props }: ScrollViewProps) {
-  const { animated } = useAnimatedTheme();
+type Props = ScrollViewProps & {
+  animatedTheme?: boolean;
+};
+export default function ThemedScrollView({
+  style,
+  animatedTheme = false,
+  ...props
+}: Props) {
+  const { animated, staticColors } = useAnimatedTheme();
 
-  return (
+  return animatedTheme ? (
     <Animated.ScrollView
       style={[style, { backgroundColor: animated.backgroundColor }]}
+      {...props}
+    />
+  ) : (
+    <ScrollView
+      style={[style, { backgroundColor: staticColors.backgroundColor }]}
       {...props}
     />
   );

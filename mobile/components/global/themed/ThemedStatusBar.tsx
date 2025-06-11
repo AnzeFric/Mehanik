@@ -2,11 +2,18 @@ import { StatusBar, StatusBarProps, Animated } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 
-export default function ThemedStatusBar({ ...props }: StatusBarProps) {
-  const { animated } = useAnimatedTheme();
+type Props = StatusBarProps & {
+  animatedTheme?: boolean;
+};
+
+export default function ThemedStatusBar({
+  animatedTheme = false,
+  ...props
+}: Props) {
+  const { animated, staticColors } = useAnimatedTheme();
   const insets = useSafeAreaInsets();
 
-  return (
+  return animatedTheme ? (
     <>
       {/* Transparent StatusBar */}
       <StatusBar backgroundColor="transparent" translucent {...props} />
@@ -24,5 +31,7 @@ export default function ThemedStatusBar({ ...props }: StatusBarProps) {
         }}
       />
     </>
+  ) : (
+    <StatusBar backgroundColor={staticColors.backgroundColor} {...props} />
   );
 }

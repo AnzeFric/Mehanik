@@ -23,6 +23,20 @@ export const useAnimatedTheme = () => {
       inputRange: [0, 1],
       outputRange: [Colors.light.background, Colors.dark.background],
     }),
+    primaryBackground: animatedValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: [
+        Colors.light.primaryBackground,
+        Colors.dark.primaryBackground,
+      ],
+    }),
+    secondaryBackground: animatedValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: [
+        Colors.light.secondaryBackground,
+        Colors.dark.secondaryBackground,
+      ],
+    }),
     primaryColor: animatedValue.interpolate({
       inputRange: [0, 1],
       outputRange: [Colors.light.primaryText, Colors.dark.primaryText],
@@ -43,6 +57,8 @@ export const useAnimatedTheme = () => {
 
   const staticColors = {
     backgroundColor: theme.background,
+    primaryBackground: theme.primaryBackground,
+    secondaryBackground: theme.secondaryBackground,
     primaryColor: theme.primaryText,
     secondaryTextColor: theme.secondaryText,
     borderColor: theme.inactiveBorder,

@@ -44,7 +44,7 @@ export default function AppointmentsScreen() {
     useState<Array<AppointmentData>>(fakeAppointments);
 
   return (
-    <ThemedView style={styles.container}>
+    <ThemedView type={"background"} style={styles.container}>
       <TitleRow title={"Novi termini"} hasBackButton={false} />
       <DisplayItems
         list={appointmentList}

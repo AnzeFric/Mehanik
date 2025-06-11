@@ -17,7 +17,7 @@ export default function TermsAndConditionsItem() {
 
   if (!data) {
     return (
-      <ThemedView style={styles.container}>
+      <ThemedView type={"background"} style={styles.container}>
         <TitleRow title={"Item not found"} hasBackButton={true} />
         <View style={AppStyles.parentPadding}>
           <ThemedText style={AppStyles.smallText}>
@@ -29,7 +29,7 @@ export default function TermsAndConditionsItem() {
   }
 
   return (
-    <ThemedView style={styles.container}>
+    <ThemedView type={"background"} style={styles.container}>
       <TitleRow title={data.title} hasBackButton={true} />
       <View style={AppStyles.parentPadding}>
         <ThemedText style={AppStyles.smallText}>{data.description}</ThemedText>

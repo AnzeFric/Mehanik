@@ -102,7 +102,11 @@ export default function DetailCustomerScreen() {
         style={styles.menuItemContainer}
         onPress={() => router.push(`/library/customer/edit/${uuid}`)}
       >
-        <Ionicons name="create-outline" size={18} color={Colors.light.text} />
+        <Ionicons
+          name="create-outline"
+          size={18}
+          color={Colors.light.primaryText}
+        />
         <Text style={styles.menuItem}>UREDI</Text>
       </TouchableOpacity>
 
@@ -211,7 +215,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     marginLeft: 12,
-    color: Colors.light.text,
+    color: Colors.light.primaryText,
   },
   menuItemDelete: {
     backgroundColor: "rgba(229, 57, 53, 0.08)",

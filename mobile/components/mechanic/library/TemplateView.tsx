@@ -10,6 +10,7 @@ import { Colors } from "@/constants/Colors";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useRef } from "react";
 import TitleRow from "@/components/shared/TitleRow";
+import ThemedView from "@/components/global/themed/ThemedView";
 
 interface TemplateScreenProps {
   title: string;
@@ -49,7 +50,7 @@ export default function TemplateView({
   );
 
   return (
-    <View style={styles.container}>
+    <ThemedView type={"background"} style={styles.container}>
       <TitleRow
         title={title}
         hasBackButton={backButton}
@@ -70,7 +71,7 @@ export default function TemplateView({
           <View style={styles.button} />
         )}
       </ScrollView>
-    </View>
+    </ThemedView>
   );
 }
 

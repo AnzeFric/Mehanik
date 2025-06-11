@@ -5,6 +5,7 @@ import { formatDate, formatRepairType, formatCurrency } from "@/constants/util";
 import { Ionicons } from "@expo/vector-icons";
 import { useRepair } from "@/hooks/useRepair";
 import { RepairData } from "@/interfaces/repair";
+import ThemedView from "@/components/global/themed/ThemedView";
 
 interface Props {
   repairData: RepairData;
@@ -20,49 +21,53 @@ export default function Repair({ repairData, vehicleUuid }: Props) {
   };
 
   return (
-    <TouchableOpacity
-      style={styles.container}
-      activeOpacity={0.7}
-      onPress={handleRedirect}
-    >
-      <View style={styles.contentContainer}>
-        <View style={styles.header}>
-          <View style={styles.repairTypeBadge}>
-            <Text style={styles.repairTypeText}>
-              {formatRepairType(repairData.type)}
+    <ThemedView type={"secondary"}>
+      <TouchableOpacity
+        style={styles.container}
+        activeOpacity={0.7}
+        onPress={handleRedirect}
+      >
+        <View style={styles.contentContainer}>
+          <View style={styles.header}>
+            <View style={styles.repairTypeBadge}>
+              <Text style={styles.repairTypeText}>
+                {formatRepairType(repairData.type)}
+              </Text>
+            </View>
+            <Text style={styles.priceText}>
+              {formatCurrency(repairData.price || 0)}
             </Text>
           </View>
-          <Text style={styles.priceText}>
-            {formatCurrency(repairData.price || 0)}
-          </Text>
+
+          <View style={styles.dateContainer}>
+            <Ionicons
+              name="calendar-outline"
+              size={16}
+              color={Colors.light.secondaryText}
+            />
+            <Text style={styles.dateText}>
+              {formatDate(new Date(repairData.date))}
+            </Text>
+          </View>
+
+          {repairData.type === "other" && (
+            <View style={styles.descriptionContainer}>
+              <Text style={styles.descriptionText}>
+                {repairData.description}
+              </Text>
+            </View>
+          )}
         </View>
 
-        <View style={styles.dateContainer}>
+        <View style={styles.arrowContainer}>
           <Ionicons
-            name="calendar-outline"
-            size={16}
+            name="chevron-forward"
+            size={20}
             color={Colors.light.secondaryText}
           />
-          <Text style={styles.dateText}>
-            {formatDate(new Date(repairData.date))}
-          </Text>
         </View>
-
-        {repairData.type === "other" && (
-          <View style={styles.descriptionContainer}>
-            <Text style={styles.descriptionText}>{repairData.description}</Text>
-          </View>
-        )}
-      </View>
-
-      <View style={styles.arrowContainer}>
-        <Ionicons
-          name="chevron-forward"
-          size={20}
-          color={Colors.light.secondaryText}
-        />
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </ThemedView>
   );
 }
 
@@ -71,19 +76,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#FFFFFF",
     paddingHorizontal: 16,
     paddingVertical: 14,
-    marginVertical: 8,
-    marginHorizontal: 2,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 3,
+    borderWidth: 0.2,
   },
   contentContainer: {
     flex: 1,
@@ -107,7 +102,6 @@ const styles = StyleSheet.create({
   priceText: {
     fontSize: 18,
     fontWeight: "bold",
-    color: Colors.light.text,
   },
   dateContainer: {
     flexDirection: "row",
@@ -128,7 +122,6 @@ const styles = StyleSheet.create({
   },
   descriptionText: {
     fontSize: 15,
-    color: Colors.light.text,
   },
   arrowContainer: {
     paddingLeft: 8,

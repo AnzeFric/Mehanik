@@ -1,6 +1,8 @@
 export const Colors = {
   light: {
     background: "#FFFFFF",
+    primaryBackground: "#FFFFFF",
+    secondaryBackground: "#FFFFFF",
     primaryText: "#000000",
     secondaryText: "#3C3C3C",
     darkButtonText: "#FFFFFF",
@@ -21,6 +23,8 @@ export const Colors = {
   },
   dark: {
     background: "#303030",
+    primaryBackground: "#424242",
+    secondaryBackground: "#646464",
     primaryText: "#F5F5F5",
     secondaryText: "#B8B8B8",
     darkButtonText: "#1A1A1A",

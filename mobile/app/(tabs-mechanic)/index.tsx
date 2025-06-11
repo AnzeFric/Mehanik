@@ -7,7 +7,7 @@ import ThemedView from "@/components/global/themed/ThemedView";
 
 export default function HomeMechanicScreen() {
   return (
-    <ThemedView style={styles.container}>
+    <ThemedView type={"background"} style={styles.container}>
       <TitleRow
         title={"Pregled terminov"}
         hasBackButton={false}

@@ -1,7 +1,9 @@
-import { Text, View, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { AppStyles } from "@/constants/Styles";
 import Repair from "@/components/mechanic/items/Repair";
 import { RepairData } from "@/interfaces/repair";
+import ThemedText from "@/components/global/themed/ThemedText";
+import ThemedView from "@/components/global/themed/ThemedView";
 
 interface Props {
   repairList: RepairData[];
@@ -12,7 +14,7 @@ export default function RepairsDisplay({ repairList, vehicleUuid }: Props) {
   return (
     <>
       <View style={styles.container}>
-        <Text
+        <ThemedText
           style={[
             AppStyles.title,
             {
@@ -21,19 +23,19 @@ export default function RepairsDisplay({ repairList, vehicleUuid }: Props) {
           ]}
         >
           Narejeni servisi
-        </Text>
+        </ThemedText>
       </View>
-      <View style={styles.repairsContainer}>
+      <ThemedView type={"primary"} style={styles.repairsContainer}>
         {repairList.length > 0 ? (
           repairList.map((repair, index) => (
             <Repair repairData={repair} vehicleUuid={vehicleUuid} key={index} />
           ))
         ) : (
-          <Text style={[AppStyles.smallText, styles.listEmptyText]}>
+          <ThemedText style={[AppStyles.smallText, styles.listEmptyText]}>
             Nimate vnešenih servisov.
-          </Text>
+          </ThemedText>
         )}
-      </View>
+      </ThemedView>
     </>
   );
 }
@@ -45,8 +47,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   repairsContainer: {
-    paddingTop: 20,
-    gap: 10,
+    marginTop: 20,
+    gap: 15,
+    padding: 10,
   },
   listEmptyText: {
     textAlign: "center",

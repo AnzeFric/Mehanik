@@ -50,7 +50,7 @@ export default function MechanicProfileScreen() {
   };
 
   return (
-    <ThemedView style={styles.container}>
+    <ThemedView type={"background"} style={styles.container}>
       <TitleRow title={"Uredi profil"} hasBackButton={true} />
       <ScrollView
         style={styles.childrenContainer}
