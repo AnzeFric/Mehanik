@@ -3,7 +3,6 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  TouchableHighlight,
   Alert,
   ScrollView,
   StyleSheet,
@@ -70,13 +69,12 @@ export default function LoginScreen() {
             secureTextEntry
           />
 
-          <TouchableHighlight
+          <TouchableOpacity
             style={AppStyles.bigButton}
             onPress={handleLoginPress}
-            underlayColor={Colors.light.specialBlueClick}
           >
             <Text style={AppStyles.bigButtonText}>Prijava</Text>
-          </TouchableHighlight>
+          </TouchableOpacity>
 
           <View style={styles.registerContainer}>
             <Text style={styles.registerText}>Nimate računa? </Text>

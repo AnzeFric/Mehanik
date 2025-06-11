@@ -98,7 +98,7 @@ export default function DetailRepairScreen() {
               <Ionicons
                 name="create-outline"
                 size={18}
-                color={Colors.light.text}
+                color={Colors.light.activeIcon}
               />
               <Text style={styles.menuItem}>UREDI</Text>
             </TouchableOpacity>
@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    color: Colors.light.text,
+    color: Colors.light.primaryText,
   },
   scrollViewContent: {
     padding: 16,
@@ -308,7 +308,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    color: Colors.light.text,
+    color: Colors.light.primaryText,
     marginBottom: 8,
   },
   dateContainer: {
@@ -318,7 +318,7 @@ const styles = StyleSheet.create({
   },
   dateText: {
     fontSize: 16,
-    color: Colors.light.text,
+    color: Colors.light.primaryText,
   },
   repairsList: {
     gap: 10,
@@ -338,16 +338,16 @@ const styles = StyleSheet.create({
   },
   repairText: {
     fontSize: 16,
-    color: Colors.light.text,
+    color: Colors.light.primaryText,
   },
   customRepairText: {
     fontSize: 16,
-    color: Colors.light.text,
+    color: Colors.light.primaryText,
     marginTop: 8,
   },
   notesText: {
     fontSize: 16,
-    color: Colors.light.text,
+    color: Colors.light.primaryText,
   },
   imagesPlaceholder: {
     flexDirection: "row",
@@ -393,7 +393,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     marginLeft: 12,
-    color: Colors.light.text,
+    color: Colors.light.primaryText,
   },
   menuItemDelete: {
     backgroundColor: "rgba(229, 57, 53, 0.08)",

@@ -42,7 +42,7 @@ export default function Appointment({ appointmentData }: Props) {
           <Ionicons
             name="close-outline"
             size={18}
-            color={Colors.light.darkButtonText}
+            color={Colors.light.activeIcon}
           />
           <Text style={styles.buttonText}>Zavrni</Text>
         </TouchableOpacity>
@@ -54,7 +54,7 @@ export default function Appointment({ appointmentData }: Props) {
           <Ionicons
             name="calendar-outline"
             size={18}
-            color={Colors.light.darkButtonText}
+            color={Colors.light.activeIcon}
           />
           <Text style={styles.buttonText}>Spremeni</Text>
         </TouchableOpacity>
@@ -66,7 +66,7 @@ export default function Appointment({ appointmentData }: Props) {
           <Ionicons
             name="checkmark-outline"
             size={18}
-            color={Colors.light.darkButtonText}
+            color={Colors.light.activeIcon}
           />
           <Text style={styles.buttonText}>Potrdi</Text>
         </TouchableOpacity>
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: 18,
     fontWeight: "bold",
-    color: Colors.light.text,
+    color: Colors.light.primaryText,
   },
   vehicleBadge: {
     backgroundColor: Colors.light.inactiveButton,
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
   },
   vehicleText: {
     fontSize: 14,
-    color: Colors.light.darkButtonText,
+    color: Colors.light.primaryText,
   },
   date: {
     fontSize: 14,
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: 16,
-    color: Colors.light.text,
+    color: Colors.light.primaryText,
   },
   actionsContainer: {
     flexDirection: "row",
@@ -189,6 +189,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 16,
-    color: Colors.light.darkButtonText,
+    color: Colors.light.primaryText,
   },
 });

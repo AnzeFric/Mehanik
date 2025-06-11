@@ -1,4 +1,4 @@
-import { TouchableHighlight, StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import PlusIcon from "@/assets/icons/PlusIcon.svg";
 import { Colors } from "@/constants/Colors";
 
@@ -8,13 +8,9 @@ interface Props {
 
 export default function PlusButton({ onPress }: Props) {
   return (
-    <TouchableHighlight
-      style={styles.fixedAddButton}
-      underlayColor={Colors.light.specialBlueClick}
-      onPress={onPress}
-    >
+    <TouchableOpacity style={styles.fixedAddButton} onPress={onPress}>
       <PlusIcon height={35} width={35} color={Colors.light.background} />
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 }
 
@@ -29,10 +25,5 @@ const styles = StyleSheet.create({
     height: 60,
     justifyContent: "center",
     alignItems: "center",
-    elevation: 3.5,
-    shadowColor: Colors.light.shadowColor,
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 1,
-    shadowRadius: 3,
   },
 });

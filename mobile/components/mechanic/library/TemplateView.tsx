@@ -1,9 +1,9 @@
 import {
   Text,
   View,
-  TouchableHighlight,
   StyleSheet,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import { AppStyles } from "@/constants/Styles";
 import { Colors } from "@/constants/Colors";
@@ -60,13 +60,12 @@ export default function TemplateView({
       <ScrollView style={styles.childrenContainer} ref={scrollRef}>
         {children}
         {buttonText ? (
-          <TouchableHighlight
+          <TouchableOpacity
             style={[AppStyles.button, styles.button]}
             onPress={onButtonPress}
-            underlayColor={Colors.light.specialBlueClick}
           >
             <Text style={AppStyles.buttonText}>{buttonText}</Text>
-          </TouchableHighlight>
+          </TouchableOpacity>
         ) : (
           <View style={styles.button} />
         )}

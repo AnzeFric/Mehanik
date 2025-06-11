@@ -1,4 +1,4 @@
-import { TouchableHighlight, Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import CameraIcon from "@/assets/icons/CameraIcon.svg";
 import { Colors } from "@/constants/Colors";
 import * as ImagePicker from "expo-image-picker";
@@ -67,9 +67,8 @@ export default function ImageForm({ image, setImage }: Props) {
   );
 
   return (
-    <TouchableHighlight
+    <TouchableOpacity
       style={styles.cameraContainer}
-      underlayColor={Colors.light.underlayColor}
       onPress={pickCustomerImage}
     >
       {imageLocal ? (
@@ -77,7 +76,7 @@ export default function ImageForm({ image, setImage }: Props) {
       ) : (
         <CameraIcon height={30} width={30} />
       )}
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 }
 

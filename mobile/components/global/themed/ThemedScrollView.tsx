@@ -1,5 +1,5 @@
+import { ScrollView, ScrollViewProps, Animated } from "react-native";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
-import { ScrollViewProps, Animated, ScrollView } from "react-native";
 
 type Props = ScrollViewProps & {
   animatedTheme?: boolean;

@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   buttonText: {
-    color: Colors.light.darkButtonText,
+    color: Colors.light.primaryText,
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",

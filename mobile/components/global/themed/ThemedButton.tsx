@@ -28,7 +28,6 @@ export default function ThemedButton({
   ...props
 }: Props) {
   const { staticColors } = useAnimatedTheme();
-  console.log("Button colors:", staticColors.button, staticColors.bigButton);
 
   return buttonType === "small" ? (
     <TouchableOpacity

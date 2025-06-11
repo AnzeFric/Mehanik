@@ -1,10 +1,10 @@
 import {
   Text,
-  TouchableHighlight,
   StyleSheet,
   Image,
   View,
   TextInput,
+  TouchableOpacity,
 } from "react-native";
 import CameraIcon from "@/assets/icons/CameraIcon.svg";
 import { Colors } from "@/constants/Colors";
@@ -272,13 +272,12 @@ export default function RepairForm({ repair, setRepair }: Props) {
 
       <View style={styles.dateContainer}>
         <Text style={AppStyles.text}>Datum servisa:</Text>
-        <TouchableHighlight
+        <TouchableOpacity
           style={styles.dateButton}
-          underlayColor={Colors.light.underlayColor}
           onPress={() => setShowDatePicker(true)}
         >
           <Text style={styles.dateButtonText}>{formatDate(date)}</Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
       </View>
 
       <Text style={AppStyles.text}>Slike servisa (ni obvezno):</Text>
@@ -286,23 +285,21 @@ export default function RepairForm({ repair, setRepair }: Props) {
         {repairImages.map((uri, index) => (
           <View key={index} style={styles.repairImageContainer}>
             <Image source={{ uri }} style={styles.repairImage} />
-            <TouchableHighlight
+            <TouchableOpacity
               style={styles.removeImageButton}
-              underlayColor={Colors.light.underlayColor}
               onPress={() => removeRepairImage(index)}
             >
               <Text style={styles.removeImageText}>X</Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
           </View>
         ))}
         {repairImages.length < 6 && (
-          <TouchableHighlight
+          <TouchableOpacity
             style={styles.addImageButton}
-            underlayColor={Colors.light.underlayColor}
             onPress={pickRepairImage}
           >
             <CameraIcon height={20} width={20} />
-          </TouchableHighlight>
+          </TouchableOpacity>
         )}
       </View>
 
@@ -359,7 +356,7 @@ const styles = StyleSheet.create({
   },
   dateButtonText: {
     fontSize: 16,
-    color: Colors.light.text || "#000",
+    color: Colors.light.primaryText,
   },
   repairImagesContainer: {
     flexDirection: "row",

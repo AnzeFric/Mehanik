@@ -1,5 +1,4 @@
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
-import { Colors } from "@/constants/Colors";
 
 interface Props {
   buttonDay: string;

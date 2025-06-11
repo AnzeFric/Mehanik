@@ -1,4 +1,4 @@
-import { Text, TouchableHighlight, StyleSheet } from "react-native";
+import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Colors } from "@/constants/Colors";
 
 interface Props {
@@ -15,12 +15,11 @@ export default function CustomRadioButton({
   value,
 }: Props) {
   return (
-    <TouchableHighlight
+    <TouchableOpacity
       style={[
         styles.radioButton,
         currentValue === value && styles.radioButtonSelected,
       ]}
-      underlayColor={Colors.light.underlayColor}
       onPress={onChange}
     >
       <Text
@@ -31,7 +30,7 @@ export default function CustomRadioButton({
       >
         {name}
       </Text>
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 }
 
@@ -51,7 +50,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   radioTextSelected: {
-    color: Colors.light.darkButtonText,
+    color: Colors.light.primaryText,
     fontWeight: "bold",
   },
 });

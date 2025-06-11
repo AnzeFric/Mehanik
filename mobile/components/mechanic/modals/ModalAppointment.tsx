@@ -158,15 +158,7 @@ const styles = StyleSheet.create({
   modalView: {
     backgroundColor: Colors.light.background,
     borderRadius: 20,
-    shadowColor: Colors.light.shadowColor,
     width: "75%",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
   },
   header: {
     display: "flex",

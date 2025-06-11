@@ -3,7 +3,6 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  TouchableHighlight,
   ScrollView,
   StyleSheet,
   Alert,
@@ -141,13 +140,12 @@ export default function LoginScreen() {
             </View>
           </View>
 
-          <TouchableHighlight
+          <TouchableOpacity
             style={AppStyles.bigButton}
             onPress={handleRegisterPress}
-            underlayColor={Colors.light.specialBlueClick}
           >
             <Text style={AppStyles.bigButtonText}>Registracija</Text>
-          </TouchableHighlight>
+          </TouchableOpacity>
 
           <View style={styles.loginContainer}>
             <Text style={styles.subtitle}>Že imate račun? </Text>
