@@ -18,7 +18,7 @@ export default function ThemedScrollView({
     />
   ) : (
     <ScrollView
-      style={[style, { backgroundColor: staticColors.backgroundColor }]}
+      style={[style, { backgroundColor: staticColors.background }]}
       {...props}
     />
   );

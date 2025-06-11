@@ -18,6 +18,6 @@ export default function ThemedText({
       {...props}
     />
   ) : (
-    <Text style={[style, { color: staticColors.primaryColor }]} {...props} />
+    <Text style={[style, { color: staticColors.primaryText }]} {...props} />
   );
 }

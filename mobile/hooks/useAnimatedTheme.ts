@@ -56,13 +56,41 @@ export const useAnimatedTheme = () => {
   };
 
   const staticColors = {
-    backgroundColor: theme.background,
+    /* Backgrounds */
+    background: theme.background,
     primaryBackground: theme.primaryBackground,
     secondaryBackground: theme.secondaryBackground,
-    primaryColor: theme.primaryText,
-    secondaryTextColor: theme.secondaryText,
-    borderColor: theme.inactiveBorder,
-    iconColor: theme.activeIcon,
+
+    /* Texts */
+    primaryText: theme.primaryText,
+    secondaryText: theme.secondaryText,
+
+    /* Buttons */
+    button: theme.button,
+    buttonText: theme.buttonText,
+    bigButton: theme.bigButton,
+    bigButtonText: theme.bigButtonText,
+    inactiveButton: theme.inactiveButton,
+    confirmButton: theme.confirmButton,
+    cancelButton: theme.cancelButton,
+    destroyButton: theme.destroyButton,
+    utilityButton: theme.utilityButton,
+
+    /* Icons */
+    activeIcon: theme.activeIcon,
+    inactiveIcon: theme.inactiveIcon,
+
+    /* Inputs */
+    inputBackground: theme.inputBackground,
+    inputBorder: theme.inputBorder,
+
+    /* Borders */
+    border: theme.border,
+    inactiveBorder: theme.inactiveBorder,
+
+    /* Other */
+    specialBlue: theme.specialBlue,
+    destructiveRed: theme.destructiveRed,
   };
 
   return {

@@ -28,9 +28,12 @@ export const Colors = {
     inputBackground: "#F8F8F8",
     inputBorder: "#DDDDDD",
 
+    /* Borders */
+    border: "#DDDDDD",
+    inactiveBorder: "#C3C3C3",
+
     /* Other */
     specialBlue: "#003366",
-    inactiveBorder: "#C3C3C3",
     destructiveRed: "#E24A4A",
   },
   dark: {
@@ -62,9 +65,12 @@ export const Colors = {
     inputBackground: "#2A2A2A",
     inputBorder: "#404040",
 
+    /* Borders */
+    border: "#404040",
+    inactiveBorder: "#4A4A4A",
+
     /* Other */
     specialBlue: "#4A9EFF",
-    inactiveBorder: "#4A4A4A",
     destructiveRed: "#FF6B6B",
   },
 };

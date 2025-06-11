@@ -32,6 +32,6 @@ export default function ThemedStatusBar({
       />
     </>
   ) : (
-    <StatusBar backgroundColor={staticColors.backgroundColor} {...props} />
+    <StatusBar backgroundColor={staticColors.background} {...props} />
   );
 }

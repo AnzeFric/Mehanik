@@ -12,11 +12,11 @@ export const AppStyles = StyleSheet.create({
   },
   textInput: {
     borderWidth: 1,
-    borderColor: Colors.light.textInputBorder,
+    borderColor: Colors.light.inputBorder,
     borderRadius: 8,
     padding: 15,
     fontSize: 16,
-    backgroundColor: Colors.light.textInputBackground,
+    backgroundColor: Colors.light.inputBackground,
   },
   buttonText: {
     fontSize: 20,
@@ -37,7 +37,7 @@ export const AppStyles = StyleSheet.create({
     alignItems: "center",
   },
   bigButtonText: {
-    color: Colors.light.darkButtonText,
+    color: Colors.light.bigButtonText,
     fontSize: 24,
     fontWeight: "bold",
   },
@@ -69,7 +69,7 @@ export const AppStyles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     borderWidth: 1,
-    borderColor: Colors.light.textInputBorder,
+    borderColor: Colors.light.inputBorder,
     alignItems: "center",
     borderRadius: 12,
     paddingHorizontal: 12,

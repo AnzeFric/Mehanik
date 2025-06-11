@@ -26,7 +26,7 @@ export default function ThemedView({
   };
 
   const staticTypeToColor: Record<ViewTypes, string> = {
-    background: staticColors.backgroundColor,
+    background: staticColors.background,
     primary: staticColors.primaryBackground,
     secondary: staticColors.secondaryBackground,
   };
