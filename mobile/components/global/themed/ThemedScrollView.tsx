@@ -4,6 +4,7 @@ import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 type Props = ScrollViewProps & {
   animatedTheme?: boolean;
 };
+
 export default function ThemedScrollView({
   style,
   animatedTheme = false,

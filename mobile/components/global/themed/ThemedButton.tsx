@@ -38,7 +38,6 @@ export default function ThemedButton({
             ? staticColors.button
             : staticColors.inactiveButton,
         },
-
         buttonStyle,
       ]}
       {...props}

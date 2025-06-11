@@ -62,7 +62,7 @@ export const Colors = {
     inactiveIcon: "#6A6A6A",
 
     /* Inputs */
-    inputBackground: "#2A2A2A",
+    inputBackground: "#6A6A6A",
     inputBorder: "#404040",
 
     /* Borders */
