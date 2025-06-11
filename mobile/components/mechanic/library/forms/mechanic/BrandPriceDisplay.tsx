@@ -1,8 +1,8 @@
 import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
 import { BrandPrice } from "@/interfaces/user";
 import BrandPriceItem from "./BrandPriceItem";
-import { AppStyles } from "@/constants/Styles";
-import { Colors } from "@/constants/Colors";
+import ThemedButton from "@/components/global/themed/ThemedButton";
+import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 
 interface Props {
   brandPriceArray: Array<BrandPrice>;
@@ -13,6 +13,8 @@ export default function BrandPriceDisplay({
   brandPriceArray,
   setBrandPriceArray,
 }: Props) {
+  const { staticColors } = useAnimatedTheme();
+
   const updateBrandPriceArray = (index: number, updatedItem: BrandPrice) => {
     const newArray = brandPriceArray.map((item, i) =>
       i === index ? updatedItem : item
@@ -43,7 +45,10 @@ export default function BrandPriceDisplay({
               />
             </View>
             <TouchableOpacity
-              style={styles.deleteButton}
+              style={[
+                styles.deleteButton,
+                { backgroundColor: staticColors.destroyButton },
+              ]}
               onPress={() => {
                 deleteItem(index);
               }}
@@ -53,9 +58,11 @@ export default function BrandPriceDisplay({
           </View>
         ))}
       </View>
-      <TouchableOpacity style={AppStyles.button} onPress={addNewItem}>
-        <Text style={AppStyles.buttonText}>+ Dodaj</Text>
-      </TouchableOpacity>
+      <ThemedButton
+        buttonType={"small"}
+        buttonText={"+ Dodaj"}
+        onPress={addNewItem}
+      />
     </View>
   );
 }
@@ -69,7 +76,6 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     paddingHorizontal: 5,
-    backgroundColor: Colors.light.destructiveRed,
     borderRadius: 60,
     marginLeft: 20,
     alignSelf: "flex-start",

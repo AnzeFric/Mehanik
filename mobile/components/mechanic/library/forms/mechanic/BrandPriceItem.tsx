@@ -1,7 +1,6 @@
 import {
   View,
   StyleSheet,
-  TextInput,
   Text,
   ScrollView,
   TouchableOpacity,
@@ -10,6 +9,7 @@ import { BrandPrice } from "@/interfaces/user";
 import { Colors } from "@/constants/Colors";
 import { vehicleBrands } from "@/interfaces/vehicle";
 import { useEffect, useMemo, useState } from "react";
+import ThemedTextInput from "@/components/global/themed/ThemedTextInput";
 
 interface Props {
   brandPrice: BrandPrice;
@@ -42,7 +42,7 @@ export default function BrandPriceItem({ brandPrice, setBrandPrice }: Props) {
   return (
     <View>
       <View style={styles.contentContainer}>
-        <TextInput
+        <ThemedTextInput
           style={[styles.input, { flex: 1 }]}
           placeholder={"Znamka"}
           value={name}
@@ -53,7 +53,7 @@ export default function BrandPriceItem({ brandPrice, setBrandPrice }: Props) {
             setOptionsFocus(false);
           }}
         />
-        <TextInput
+        <ThemedTextInput
           style={[styles.input, styles.inputPhone]}
           placeholder={"Cena"}
           value={brandPrice?.price}

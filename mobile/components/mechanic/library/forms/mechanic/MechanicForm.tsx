@@ -8,9 +8,10 @@ import {
 import { Colors } from "@/constants/Colors";
 import { AppStyles } from "@/constants/Styles";
 import { BrandPrice, MechanicData } from "@/interfaces/user";
-import { TextInput, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import BrandPriceDisplay from "./BrandPriceDisplay";
 import ThemedText from "@/components/global/themed/ThemedText";
+import ThemedTextInput from "@/components/global/themed/ThemedTextInput";
 
 interface Props {
   mechanic: MechanicData;
@@ -137,11 +138,11 @@ export default function MechanicForm({ mechanic, setMechanic }: Props) {
   return (
     <>
       <View style={styles.container}>
-        <ThemedText bold type={"normal"} style={AppStyles.text}>
+        <ThemedText type={"normal"} bold style={AppStyles.text}>
           Osebni podatki
         </ThemedText>
 
-        <TextInput
+        <ThemedTextInput
           style={styles.input}
           placeholder={"Ime"}
           value={mechanic.firstName}
@@ -149,7 +150,7 @@ export default function MechanicForm({ mechanic, setMechanic }: Props) {
           autoCapitalize={"words"}
         />
 
-        <TextInput
+        <ThemedTextInput
           style={styles.input}
           placeholder={"Priimek"}
           value={mechanic.lastName}
@@ -157,7 +158,7 @@ export default function MechanicForm({ mechanic, setMechanic }: Props) {
           autoCapitalize={"words"}
         />
 
-        <TextInput
+        <ThemedTextInput
           style={styles.input}
           placeholder={"Naslov"}
           value={mechanic.info.address || ""}
@@ -165,7 +166,7 @@ export default function MechanicForm({ mechanic, setMechanic }: Props) {
           autoCapitalize={"sentences"}
         />
 
-        <TextInput
+        <ThemedTextInput
           style={styles.input}
           placeholder={"Kraj"}
           value={mechanic.info.city || ""}
@@ -173,7 +174,7 @@ export default function MechanicForm({ mechanic, setMechanic }: Props) {
           autoCapitalize={"sentences"}
         />
 
-        <TextInput
+        <ThemedTextInput
           style={styles.input}
           placeholder={"Telefonska št."}
           value={mechanic.info.phone || ""}
@@ -183,11 +184,13 @@ export default function MechanicForm({ mechanic, setMechanic }: Props) {
         />
       </View>
       <View style={styles.container}>
-        <Text style={AppStyles.text}>Cene storitev</Text>
-        <Text>Povprečna cena za vsako storitev</Text>
+        <ThemedText type={"normal"} bold>
+          Cene storitev
+        </ThemedText>
+        <ThemedText type={"small"}>Povprečna cena za vsako storitev</ThemedText>
         <View style={styles.brandPriceContainer}>
           <View>
-            <Text>Veliki servis</Text>
+            <ThemedText type={"small"}>Veliki servis</ThemedText>
             <BrandPriceDisplay
               brandPriceArray={largeBrandPrice}
               setBrandPriceArray={handleLargeBrandChange}
@@ -195,7 +198,7 @@ export default function MechanicForm({ mechanic, setMechanic }: Props) {
           </View>
           <View>
             <View>
-              <Text>Mali servis</Text>
+              <ThemedText type={"small"}>Mali servis</ThemedText>
               <BrandPriceDisplay
                 brandPriceArray={smallBrandPrice}
                 setBrandPriceArray={handleSmallBrandChange}
@@ -204,7 +207,7 @@ export default function MechanicForm({ mechanic, setMechanic }: Props) {
           </View>
           <View>
             <View>
-              <Text>Menjava gum</Text>
+              <ThemedText type={"small"}>Menjava gum</ThemedText>
               <BrandPriceDisplay
                 brandPriceArray={tyreBrandPrice}
                 setBrandPriceArray={handleTyrePriceChange}
