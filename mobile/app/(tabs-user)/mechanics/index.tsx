@@ -1,20 +1,18 @@
-import { View, TextInput, StyleSheet } from "react-native";
-import { useState, useEffect, useCallback, useRef } from "react";
-import { AppStyles } from "@/constants/Styles";
+import { View, StyleSheet } from "react-native";
+import { useState, useEffect, useCallback } from "react";
 import { useFocusEffect } from "expo-router";
 import Mechanic from "@/components/user/items/Mechanic";
 import DisplayItems from "@/components/global/DisplayItems";
 import TitleRow from "@/components/shared/TitleRow";
 import useMechanicStore from "@/stores/useMechanicStore";
 import { useUser } from "@/hooks/useUser";
-import { Ionicons } from "@expo/vector-icons";
+import ThemedView from "@/components/global/themed/ThemedView";
+import ThemedSearchInput from "@/components/global/themed/ThemedSearchInput";
 
 export default function MechanicsScreen() {
   const { mechanics } = useMechanicStore();
   const { getMechanics } = useUser();
   const [search, setSearch] = useState<string>("");
-
-  const inputRef = useRef<TextInput>(null);
 
   const filteredMechanics =
     search.trim() === ""
@@ -41,33 +39,20 @@ export default function MechanicsScreen() {
   useFocusEffect(
     useCallback(() => {
       return () => {
-        setTimeout(() => {
-          setSearch("");
-        }, 100); // For smooth transition between screens
+        setSearch("");
       };
     }, [])
   );
 
   return (
-    <View style={styles.container}>
+    <ThemedView type={"background"} style={{ flex: 1 }}>
       <TitleRow title={"Mehaniki"} hasBackButton={false} />
-
       <View style={styles.header}>
-        <View style={AppStyles.inputContainer}>
-          <TextInput
-            style={AppStyles.input}
-            placeholder={"Iskanje"}
-            value={search}
-            onChangeText={setSearch}
-            ref={inputRef}
-          />
-          <Ionicons
-            name={"search-outline"}
-            size={20}
-            color={"#888"}
-            onPress={() => inputRef.current?.focus()}
-          />
-        </View>
+        <ThemedSearchInput
+          placeholder={"Iskanje"}
+          value={search}
+          onChangeText={setSearch}
+        />
       </View>
       <DisplayItems
         list={filteredMechanics}
@@ -76,14 +61,11 @@ export default function MechanicsScreen() {
         )}
         emptyMessage="Mehaniki ne obstajajo."
       />
-    </View>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   header: {
     paddingTop: 15,
     paddingBottom: 10,
