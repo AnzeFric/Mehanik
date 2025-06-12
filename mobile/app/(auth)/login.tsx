@@ -1,20 +1,24 @@
 import {
   View,
-  Text,
-  TextInput,
   TouchableOpacity,
   Alert,
   ScrollView,
   StyleSheet,
 } from "react-native";
 import { useState, useCallback } from "react";
-import { Link, useFocusEffect } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import { AppStyles } from "@/constants/Styles";
-import { Colors } from "@/constants/Colors";
 import { useAuth } from "@/hooks/useAuth";
+import ThemedView from "@/components/global/themed/ThemedView";
+import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import ThemedText from "@/components/global/themed/ThemedText";
+import ThemedButton from "@/components/global/themed/ThemedButton";
+import ThemedTextInput from "@/components/global/themed/ThemedTextInput";
 
 export default function LoginScreen() {
   const { handleLogin } = useAuth();
+  const { staticColors } = useAnimatedTheme();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -32,16 +36,30 @@ export default function LoginScreen() {
       Alert.alert("Napačen vnos", "Vsa polja potrebujejo biti izpolnjena");
       return;
     }
-
     handleLogin(email, password);
   };
 
+  const inputStyle = [
+    [
+      styles.input,
+      {
+        borderColor: staticColors.inputBorder,
+        backgroundColor: staticColors.inputBackground,
+      },
+    ],
+  ];
+
   return (
-    <View style={styles.container}>
-      <ScrollView style={AppStyles.parentPadding}>
+    <ThemedView type={"background"} style={styles.container}>
+      <ScrollView
+        style={AppStyles.parentPadding}
+        keyboardShouldPersistTaps={"handled"}
+      >
         <View style={styles.headerContainer}>
-          <Text style={styles.title}>Mehanik</Text>
-          <Text style={styles.subtitle}>Prijavite se za nadaljevanje</Text>
+          <ThemedText type={"xxlTitle"} bold>
+            Mehanik
+          </ThemedText>
+          <ThemedText type={"normal"}>Prijavite se za nadaljevanje</ThemedText>
         </View>
 
         <View
@@ -49,8 +67,8 @@ export default function LoginScreen() {
             gap: 20,
           }}
         >
-          <TextInput
-            style={AppStyles.textInput}
+          <ThemedTextInput
+            style={inputStyle}
             placeholder={"Email"}
             value={email}
             onChangeText={setEmail}
@@ -59,8 +77,8 @@ export default function LoginScreen() {
             autoComplete={"off"}
           />
 
-          <TextInput
-            style={AppStyles.textInput}
+          <ThemedTextInput
+            style={inputStyle}
             placeholder={"Geslo"}
             value={password}
             onChangeText={setPassword}
@@ -69,53 +87,48 @@ export default function LoginScreen() {
             secureTextEntry
           />
 
-          <TouchableOpacity
-            style={AppStyles.bigButton}
+          <ThemedButton
+            buttonType={"large"}
             onPress={handleLoginPress}
-          >
-            <Text style={AppStyles.bigButtonText}>Prijava</Text>
-          </TouchableOpacity>
+            buttonText={"Prijava"}
+          />
 
           <View style={styles.registerContainer}>
-            <Text style={styles.registerText}>Nimate računa? </Text>
-            <Link href="/(auth)/register" asChild>
-              <TouchableOpacity>
-                <Text style={styles.registerLink}>Registracija</Text>
-              </TouchableOpacity>
-            </Link>
+            <ThemedText type={"small"}>Nimate računa? </ThemedText>
+            <TouchableOpacity
+              onPress={() => router.replace("/(auth)/register")}
+            >
+              <ThemedText
+                type={"small"}
+                bold
+                style={{ color: staticColors.button }}
+              >
+                Registracija
+              </ThemedText>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
-    </View>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     paddingTop: 100,
+    flex: 1,
   },
   headerContainer: {
     paddingVertical: 35,
-  },
-  title: {
-    fontSize: 44,
-    fontWeight: "bold",
-  },
-  subtitle: {
-    fontSize: 16,
-    color: Colors.light.secondaryText,
   },
   registerContainer: {
     flexDirection: "row",
     justifyContent: "center",
   },
-  registerText: {
+  input: {
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 15,
     fontSize: 16,
-    color: Colors.light.secondaryText,
-  },
-  registerLink: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: Colors.light.specialBlue,
   },
 });

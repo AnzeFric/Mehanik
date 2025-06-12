@@ -1,7 +1,13 @@
 import { Text, TextProps, Animated, TextStyle } from "react-native";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 
-type TextTypes = "extraSmall" | "small" | "normal" | "title" | "bigTitle";
+type TextTypes =
+  | "extraSmall"
+  | "small"
+  | "normal"
+  | "title"
+  | "bigTitle"
+  | "xxlTitle";
 
 type Props = TextProps & {
   animatedTheme?: boolean;
@@ -24,6 +30,7 @@ export default function ThemedText({
     normal: 20,
     title: 24,
     bigTitle: 32,
+    xxlTitle: 44,
   };
 
   const staticStyle: TextStyle = {
@@ -39,8 +46,8 @@ export default function ThemedText({
   };
 
   return animatedTheme ? (
-    <Animated.Text style={[style, animatedStyle]} {...props} />
+    <Animated.Text style={[animatedStyle, style]} {...props} />
   ) : (
-    <Text style={[style, staticStyle]} {...props} />
+    <Text style={[staticStyle, style]} {...props} />
   );
 }
