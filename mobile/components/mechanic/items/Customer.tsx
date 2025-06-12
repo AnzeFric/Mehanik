@@ -5,12 +5,10 @@ import { CustomerVehicleData } from "@/interfaces/customer";
 
 interface Props {
   customerData: CustomerVehicleData;
-  setSearch: (text: string) => void;
 }
 
-export default function Customer({ customerData, setSearch }: Props) {
+export default function Customer({ customerData }: Props) {
   const handlePress = () => {
-    setSearch("");
     router.push(
       `/library/customer/${customerData.vehicle.uuid}?firstName=${customerData.customer.firstName}`
     );

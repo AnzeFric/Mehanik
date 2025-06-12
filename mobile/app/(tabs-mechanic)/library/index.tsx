@@ -10,8 +10,8 @@ import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedSearchInput from "@/components/global/themed/ThemedSearchInput";
 
 export default function LibraryScreen() {
-  const [search, setSearch] = useState<string>("");
   const { customers, updateStoredCustomerData } = useCustomer();
+  const [search, setSearch] = useState<string>("");
 
   const filteredCustomers =
     search.trim() === ""
@@ -46,15 +46,19 @@ export default function LibraryScreen() {
   );
 
   return (
-    <ThemedView type={"background"} style={styles.container}>
+    <ThemedView type={"background"} style={{ flex: 1 }}>
       <View style={styles.header}>
         <TitleRow title={"Knjižnica servisov"} hasBackButton={false} />
-        <ThemedSearchInput viewStyle={{ marginHorizontal: 25 }} />
+        <ThemedSearchInput
+          value={search}
+          onChangeText={setSearch}
+          viewStyle={{ marginHorizontal: 25 }}
+        />
       </View>
       <DisplayItems
         list={filteredCustomers}
         renderItem={(customer, index) => (
-          <Customer customerData={customer} setSearch={setSearch} key={index} />
+          <Customer customerData={customer} key={index} />
         )}
         emptyMessage="Stranke ne obstajajo."
       />
@@ -68,9 +72,6 @@ export default function LibraryScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   header: {
     paddingBottom: 10,
     gap: 15,

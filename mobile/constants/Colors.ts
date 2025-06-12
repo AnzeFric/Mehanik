@@ -36,6 +36,7 @@ export const Colors = {
     /* Inputs */
     inputBackground: "#F8F8F8",
     inputBorder: "#DDDDDD",
+    inputText: "#000000",
 
     /* Borders */
     border: "#DDDDDD",
@@ -82,6 +83,7 @@ export const Colors = {
     /* Inputs */
     inputBackground: "#6A6A6A",
     inputBorder: "#404040",
+    inputText: "#FFFFFF",
 
     /* Borders */
     border: "#404040",

@@ -30,12 +30,11 @@ export default function ThemedSearchInput({ viewStyle = {}, ...props }: Props) {
   return (
     <View style={viewStyles}>
       <TextInput
-        style={[AppStyles.input]}
-        placeholder={"Iskanje"}
-        placeholderTextColor={staticColors.primaryText}
-        value={props.value}
-        onChangeText={props.onChangeText}
         ref={inputRef}
+        placeholder={"Iskanje"}
+        placeholderTextColor={staticColors.inputText}
+        style={[AppStyles.input, { color: staticColors.inputText }]}
+        {...props}
       />
       <ThemedIcon
         name={"search-outline"}

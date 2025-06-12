@@ -92,6 +92,7 @@ export const useAnimatedTheme = () => {
     /* Inputs */
     inputBackground: theme.inputBackground,
     inputBorder: theme.inputBorder,
+    inputText: theme.inputText,
 
     /* Borders */
     border: theme.border,
