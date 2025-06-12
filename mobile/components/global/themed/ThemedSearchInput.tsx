@@ -1,23 +1,34 @@
-import { TextInput, TextInputProps, View } from "react-native";
+import {
+  StyleProp,
+  TextInput,
+  TextInputProps,
+  View,
+  ViewStyle,
+} from "react-native";
 import { useRef } from "react";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 import ThemedIcon from "./ThemedIcon";
 import { AppStyles } from "@/constants/Styles";
 
-export default function ThemedSearchInput({ ...props }: TextInputProps) {
+type Props = TextInputProps & {
+  viewStyle?: StyleProp<ViewStyle>;
+};
+
+export default function ThemedSearchInput({ viewStyle = {}, ...props }: Props) {
   const { staticColors } = useAnimatedTheme();
   const inputRef = useRef<TextInput>(null);
 
+  const viewStyles = [
+    AppStyles.inputContainer,
+    {
+      borderColor: staticColors.inputBorder,
+      backgroundColor: staticColors.inputBackground,
+    },
+    viewStyle,
+  ];
+
   return (
-    <View
-      style={[
-        AppStyles.inputContainer,
-        {
-          borderColor: staticColors.inputBorder,
-          backgroundColor: staticColors.inputBackground,
-        },
-      ]}
-    >
+    <View style={viewStyles}>
       <TextInput
         style={[AppStyles.input]}
         placeholder={"Iskanje"}
