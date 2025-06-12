@@ -1,21 +1,24 @@
 import {
   View,
-  Text,
-  TextInput,
   TouchableOpacity,
   ScrollView,
   StyleSheet,
   Alert,
 } from "react-native";
 import { useState, useCallback } from "react";
-import { Link, useFocusEffect } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import { useAuth } from "@/hooks/useAuth";
-import { Colors } from "@/constants/Colors";
-import { AppStyles } from "@/constants/Styles";
 import { AccountType } from "@/interfaces/account";
+import ThemedView from "@/components/global/themed/ThemedView";
+import ThemedText from "@/components/global/themed/ThemedText";
+import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import ThemedButton from "@/components/global/themed/ThemedButton";
+import ThemedTextInput from "@/components/global/themed/ThemedTextInput";
 
 export default function LoginScreen() {
   const { handleRegister } = useAuth();
+  const { staticColors } = useAnimatedTheme();
+
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -56,19 +59,31 @@ export default function LoginScreen() {
     handleRegister(email, firstName, lastName, password, accountType);
   };
 
+  const inputStyle = [
+    [
+      styles.input,
+      {
+        borderColor: staticColors.inputBorder,
+        backgroundColor: staticColors.inputBackground,
+      },
+    ],
+  ];
+
   return (
-    <View style={styles.container}>
-      <ScrollView style={AppStyles.parentPadding}>
-        <View style={styles.headerContainer}>
-          <Text style={styles.title}>Ustvarite račun</Text>
-          <Text style={styles.subtitle}>
+    <ThemedView type={"background"} style={{ flex: 1 }}>
+      <ScrollView style={styles.container}>
+        <View style={{ paddingVertical: 35 }}>
+          <ThemedText type={"xxlTitle"} bold>
+            Ustvarite račun
+          </ThemedText>
+          <ThemedText type={"small"}>
             Izberite vrsto računa in izpolnite podatke
-          </Text>
+          </ThemedText>
         </View>
 
         <View style={{ gap: 20 }}>
-          <TextInput
-            style={AppStyles.textInput}
+          <ThemedTextInput
+            style={inputStyle}
             placeholder={"Ime"}
             value={firstName}
             onChangeText={setFirstName}
@@ -76,8 +91,8 @@ export default function LoginScreen() {
             autoComplete={"off"}
           />
 
-          <TextInput
-            style={AppStyles.textInput}
+          <ThemedTextInput
+            style={inputStyle}
             placeholder={"Priimek"}
             value={lastName}
             onChangeText={setLastName}
@@ -85,8 +100,8 @@ export default function LoginScreen() {
             autoComplete={"off"}
           />
 
-          <TextInput
-            style={AppStyles.textInput}
+          <ThemedTextInput
+            style={inputStyle}
             placeholder={"Email"}
             value={email}
             onChangeText={setEmail}
@@ -95,8 +110,8 @@ export default function LoginScreen() {
             autoComplete={"off"}
           />
 
-          <TextInput
-            style={AppStyles.textInput}
+          <ThemedTextInput
+            style={inputStyle}
             placeholder={"Geslo"}
             value={password}
             onChangeText={setPassword}
@@ -105,8 +120,8 @@ export default function LoginScreen() {
             secureTextEntry
           />
 
-          <TextInput
-            style={AppStyles.textInput}
+          <ThemedTextInput
+            style={inputStyle}
             placeholder={"Ponovite geslo"}
             value={confirmPassword}
             onChangeText={setConfirmPassword}
@@ -116,93 +131,65 @@ export default function LoginScreen() {
           />
 
           <View style={{ gap: 10 }}>
-            <Text style={styles.subtitle}>Kdo ste?</Text>
+            <ThemedText type={"small"}>Kdo ste?</ThemedText>
             <View style={styles.userTypeContainer}>
-              <TouchableOpacity
-                style={[
-                  styles.userTypeButton,
-                  accountType === "user" && styles.selectedButton,
-                ]}
+              <ThemedButton
+                buttonType={"option"}
+                buttonText={"Sem stranka"}
+                selected={accountType === "user"}
                 onPress={() => setAccountType("user")}
-              >
-                <Text style={styles.userTypeText}>Sem stranka</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={[
-                  styles.userTypeButton,
-                  accountType === "mechanic" && styles.selectedButton,
-                ]}
+              />
+              <ThemedButton
+                buttonType={"option"}
+                buttonText={"Sem avtomehanik"}
+                selected={accountType === "mechanic"}
                 onPress={() => setAccountType("mechanic")}
-              >
-                <Text style={styles.userTypeText}>Sem avtomehanik</Text>
-              </TouchableOpacity>
+              />
             </View>
           </View>
 
-          <TouchableOpacity
-            style={AppStyles.bigButton}
+          <ThemedButton
+            buttonType={"large"}
             onPress={handleRegisterPress}
-          >
-            <Text style={AppStyles.bigButtonText}>Registracija</Text>
-          </TouchableOpacity>
+            buttonText={"Registracija"}
+          />
 
           <View style={styles.loginContainer}>
-            <Text style={styles.subtitle}>Že imate račun? </Text>
-            <Link href="/(auth)/login" asChild>
-              <TouchableOpacity>
-                <Text style={styles.loginLink}>Prijava</Text>
-              </TouchableOpacity>
-            </Link>
+            <ThemedText type={"small"}>Že imate račun? </ThemedText>
+            <TouchableOpacity onPress={() => router.replace("/(auth)/login")}>
+              <ThemedText
+                type={"small"}
+                bold
+                style={{ color: staticColors.button }}
+              >
+                Registracija
+              </ThemedText>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
-    </View>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  },
-  headerContainer: {
-    paddingVertical: 35,
-  },
-  title: {
-    fontSize: 44,
-    fontWeight: "bold",
-  },
-  subtitle: {
-    fontSize: 16,
-    color: Colors.light.secondaryText,
+    paddingHorizontal: 25,
+    marginVertical: 20,
   },
   userTypeContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     gap: 10,
   },
-  userTypeButton: {
-    flex: 1,
-    paddingVertical: 12,
-    backgroundColor: Colors.light.inactiveButton,
-    borderRadius: 8,
-    alignItems: "center",
-  },
-  selectedButton: {
-    backgroundColor: Colors.light.specialBlue,
-  },
-  userTypeText: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "white",
-  },
   loginContainer: {
     flexDirection: "row",
     justifyContent: "center",
   },
-  loginLink: {
+  input: {
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 15,
     fontSize: 16,
-    fontWeight: "bold",
-    color: Colors.light.specialBlue,
   },
 });

@@ -70,6 +70,8 @@ export const useAnimatedTheme = () => {
     buttonText: theme.buttonText,
     bigButton: theme.bigButton,
     bigButtonText: theme.bigButtonText,
+    buttonOption: theme.buttonOption,
+    buttonOptionText: theme.buttonOptionText,
     inactiveButton: theme.inactiveButton,
     confirmButton: theme.confirmButton,
     cancelButton: theme.cancelButton,
