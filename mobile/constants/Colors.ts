@@ -3,7 +3,7 @@ export const Colors = {
     /* Backgrounds */
     background: "#FFFFFF",
     primaryBackground: "#FFFFFF",
-    secondaryBackground: "#FFFFFF",
+    secondaryBackground: "#F9FAFB",
 
     /* Texts */
     primaryText: "#000000",

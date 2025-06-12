@@ -1,8 +1,9 @@
-import { View, ScrollView, StyleSheet, Text } from "react-native";
+import { View, ScrollView, StyleSheet } from "react-native";
 import { useMemo, useState } from "react";
-import TimeItem from "./items/TimeItem";
 import { useAppointment } from "@/hooks/useAppointment";
 import { Appointment } from "@/interfaces/appointment";
+import ThemedText from "@/components/global/themed/ThemedText";
+import TimeContainer from "./items/TImeContainer";
 
 const times = [
   "00:00",
@@ -122,13 +123,15 @@ interface Props {
   selectedDate: Date;
 }
 
+// Defines the height that empty and time items will have
+const itemHeight = 100;
+
 export default function TimeList({ selectedDate }: Props) {
-  const { groupAppointments, getAppointmentAtHour, isAppointmentStartHour } =
-    useAppointment();
+  const { groupAppointments } = useAppointment();
   const [appointments, setAppointments] =
     useState<Array<Appointment>>(fakeAppointments);
 
-  const filteredAppointments = useMemo(() => {
+  const groupedAppointments = useMemo(() => {
     const targetDate = selectedDate.toISOString().split("T")[0];
 
     // Filter appointments for the selected day
@@ -137,49 +140,28 @@ export default function TimeList({ selectedDate }: Props) {
       return appointmentDate === targetDate;
     });
 
-    return filtered;
+    return groupAppointments(filtered);
   }, [appointments, selectedDate]);
 
-  const groupedAppointments = useMemo(() => {
-    const grouped = groupAppointments(filteredAppointments);
-    return grouped;
-  }, [filteredAppointments]);
-
   return (
-    <ScrollView style={styles.scrollContainer}>
-      <View style={{ display: "flex", flexDirection: "row" }}>
+    <ScrollView style={{ flex: 1 }}>
+      <View style={{ flexDirection: "row" }}>
         <View>
           {times.map((time, index) => (
-            <View
-              style={{
-                height: 80,
-                paddingHorizontal: 10,
-              }}
-              key={index}
-            >
-              <Text style={styles.timeText}>{time}</Text>
+            <View style={styles.hourItem} key={index}>
+              <ThemedText type={"small"}>{time}</ThemedText>
             </View>
           ))}
         </View>
-        <View style={styles.container}>
-          {times.map((time, index) => {
-            const hour = parseInt(time.split(":")[0]);
-            const appointment = getAppointmentAtHour(groupedAppointments, hour);
-
-            return (
-              <View key={index} style={styles.timeRow}>
-                <View style={styles.appointmentContainer}>
-                  {appointment && isAppointmentStartHour(hour, appointment) ? (
-                    <TimeItem appointment={appointment} />
-                  ) : !appointment ? (
-                    <View style={styles.emptySlot}>
-                      <Text style={styles.emptyText}>Prazen termin</Text>
-                    </View>
-                  ) : null}
-                </View>
-              </View>
-            );
-          })}
+        <View style={{ flex: 1 }}>
+          {times.map((time, index) => (
+            <TimeContainer
+              itemHeight={itemHeight}
+              time={time}
+              groupedAppointments={groupedAppointments}
+              key={index}
+            />
+          ))}
         </View>
       </View>
     </ScrollView>
@@ -187,43 +169,8 @@ export default function TimeList({ selectedDate }: Props) {
 }
 
 const styles = StyleSheet.create({
-  scrollContainer: {
-    flex: 1,
-  },
-  container: {
-    display: "flex",
-    flex: 1,
-    flexDirection: "column",
-  },
-  timeRow: {
-    flexDirection: "row",
-  },
-  timeIndicator: {
-    width: 60,
-    justifyContent: "flex-start",
-    alignItems: "center",
-    paddingTop: 8,
-  },
-  timeText: {
-    fontSize: 14,
-    fontWeight: "500",
-    color: "#4B5563",
-  },
-  appointmentContainer: {
-    flex: 1,
-  },
-  emptySlot: {
-    height: 80,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderStyle: "dashed",
-    borderColor: "#D1D5DB",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F9FAFB",
-  },
-  emptyText: {
-    color: "#9CA3AF",
-    fontSize: 14,
+  hourItem: {
+    height: itemHeight,
+    paddingHorizontal: 10,
   },
 });

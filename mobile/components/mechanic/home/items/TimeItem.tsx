@@ -2,31 +2,51 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Colors } from "@/constants/Colors";
 import { GroupedAppointmentData } from "@/interfaces/appointment";
 import { formatTime } from "@/constants/util";
+import ThemedText from "@/components/global/themed/ThemedText";
+import ThemedView from "@/components/global/themed/ThemedView";
+import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import { Status } from "@/interfaces/user";
 
 interface Props {
   appointment: GroupedAppointmentData;
+  itemHeight: number;
 }
 
-export default function TimeItem({ appointment }: Props) {
-  // Calculate appointment duration for display
+export default function TimeItem({ appointment, itemHeight }: Props) {
+  const { staticColors } = useAnimatedTheme();
+
   const getDurationText = () => {
     const startTime = formatTime(appointment.startDateTime);
     const endTime = formatTime(appointment.endDateTime);
     return `${startTime} - ${endTime}`;
   };
 
+  const statusToColor: Record<Status, string> = {
+    Accepted: staticColors.specialBlue,
+    Rejected: "",
+    Pending: "",
+    Changed: "",
+  };
+
   return (
-    <TouchableOpacity
-      style={[styles.container, { height: appointment.numAppointments * 80 }]}
-    >
-      <View>
-        <Text style={styles.durationText}>{getDurationText()}</Text>
-      </View>
-      <View style={styles.customerInfo}>
-        <View style={styles.nameContainer}>
-          <Text style={styles.name}>
+    <ThemedView type={"secondary"}>
+      <TouchableOpacity
+        style={[
+          styles.container,
+          {
+            height: appointment.numAppointments * itemHeight,
+            borderLeftColor: staticColors.specialBlue,
+          },
+        ]}
+      >
+        <View style={{ flexDirection: "row" }}>
+          <ThemedText type={"small"} style={styles.name}>
             {appointment.customerFirstName} {appointment.customerLastName}
-          </Text>
+            {", "}
+          </ThemedText>
+          <ThemedText type={"small"} style={styles.durationText}>
+            {getDurationText()}
+          </ThemedText>
         </View>
         <View style={styles.statusContainer}>
           <View
@@ -35,33 +55,28 @@ export default function TimeItem({ appointment }: Props) {
               {
                 backgroundColor:
                   appointment.status === "Accepted"
-                    ? Colors.light.specialBlue
+                    ? staticColors.specialBlue
                     : "#9CA3AF",
               },
             ]}
           />
-          <Text style={styles.statusText}>{appointment.status}</Text>
+          <ThemedText type={"extraSmall"}>{appointment.status}</ThemedText>
         </View>
-      </View>
-      <Text style={styles.descriptionText} numberOfLines={1}>
-        {appointment.description || "Ni opisa"}
-      </Text>
-      <Text style={styles.descriptionText} numberOfLines={1}>
-        {appointment.numAppointments}
-      </Text>
-    </TouchableOpacity>
+        <ThemedText type={"small"} numberOfLines={1}>
+          {appointment.description || "Ni opisa"}
+        </ThemedText>
+      </TouchableOpacity>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 12,
-    backgroundColor: "#FFFFFF",
     justifyContent: "space-between",
     borderWidth: 0.5,
     borderLeftWidth: 6,
-    borderLeftColor: Colors.light.specialBlue,
+    padding: 12,
   },
   durationText: {
     fontSize: 16,
@@ -73,9 +88,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  nameContainer: {
-    flex: 2,
-  },
   name: {
     fontSize: 15,
     fontWeight: "500",
@@ -84,7 +96,6 @@ const styles = StyleSheet.create({
   statusContainer: {
     flexDirection: "row",
     alignItems: "center",
-    flex: 1,
     justifyContent: "flex-end",
   },
   statusIndicator: {
@@ -92,13 +103,5 @@ const styles = StyleSheet.create({
     height: 8,
     borderRadius: 4,
     marginRight: 4,
-  },
-  statusText: {
-    fontSize: 13,
-    color: "#4B5563",
-  },
-  descriptionText: {
-    fontSize: 14,
-    color: "#6B7280",
   },
 });

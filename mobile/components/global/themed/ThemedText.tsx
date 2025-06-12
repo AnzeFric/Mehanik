@@ -1,7 +1,7 @@
 import { Text, TextProps, Animated, TextStyle } from "react-native";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 
-type TextTypes = "small" | "normal" | "title" | "bigTitle";
+type TextTypes = "extraSmall" | "small" | "normal" | "title" | "bigTitle";
 
 type Props = TextProps & {
   animatedTheme?: boolean;
@@ -19,6 +19,7 @@ export default function ThemedText({
   const { animated, staticColors } = useAnimatedTheme();
 
   const typeToSize: Record<TextTypes, number> = {
+    extraSmall: 14,
     small: 16,
     normal: 20,
     title: 24,
