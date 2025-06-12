@@ -162,7 +162,7 @@ export default function LoginScreen() {
                 bold
                 style={{ color: staticColors.button }}
               >
-                Registracija
+                Prijava
               </ThemedText>
             </TouchableOpacity>
           </View>
