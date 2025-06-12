@@ -78,6 +78,12 @@ export const useAnimatedTheme = () => {
     actionButton: theme.actionButton,
     actionButtonText: theme.actionButtonText,
 
+    /* Statuses */
+    accepted: theme.accepted,
+    rejected: theme.rejected,
+    changed: theme.changed,
+    pending: theme.pending,
+
     /* Icons */
     activeIcon: theme.activeIcon,
     inactiveIcon: theme.inactiveIcon,

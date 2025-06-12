@@ -1,5 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { Colors } from "@/constants/Colors";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { GroupedAppointmentData } from "@/interfaces/appointment";
 import { formatTime } from "@/constants/util";
 import ThemedText from "@/components/global/themed/ThemedText";
@@ -22,23 +21,37 @@ export default function TimeItem({ appointment, itemHeight }: Props) {
   };
 
   const statusToColor: Record<Status, string> = {
-    Accepted: staticColors.specialBlue,
-    Rejected: "",
-    Pending: "",
-    Changed: "",
+    Accepted: staticColors.accepted,
+    Rejected: staticColors.rejected,
+    Pending: staticColors.pending,
+    Changed: staticColors.changed,
   };
+
+  const statusToText: Record<Status, string> = {
+    Accepted: "Sprejeto",
+    Rejected: "Zavrnjeno",
+    Pending: "V obravnavi",
+    Changed: "Spremenjeno",
+  };
+
+  const container = [
+    styles.container,
+    {
+      height: appointment.numAppointments * itemHeight,
+      borderLeftColor: statusToColor[appointment.status],
+    },
+  ];
+
+  const statusIndicator = [
+    styles.statusIndicator,
+    {
+      backgroundColor: statusToColor[appointment.status],
+    },
+  ];
 
   return (
     <ThemedView type={"secondary"}>
-      <TouchableOpacity
-        style={[
-          styles.container,
-          {
-            height: appointment.numAppointments * itemHeight,
-            borderLeftColor: staticColors.specialBlue,
-          },
-        ]}
-      >
+      <TouchableOpacity style={container}>
         <View style={{ flexDirection: "row" }}>
           <ThemedText type={"small"} style={styles.name}>
             {appointment.customerFirstName} {appointment.customerLastName}
@@ -49,18 +62,10 @@ export default function TimeItem({ appointment, itemHeight }: Props) {
           </ThemedText>
         </View>
         <View style={styles.statusContainer}>
-          <View
-            style={[
-              styles.statusIndicator,
-              {
-                backgroundColor:
-                  appointment.status === "Accepted"
-                    ? staticColors.specialBlue
-                    : "#9CA3AF",
-              },
-            ]}
-          />
-          <ThemedText type={"extraSmall"}>{appointment.status}</ThemedText>
+          <View style={statusIndicator} />
+          <ThemedText type={"extraSmall"}>
+            {statusToText[appointment.status]}
+          </ThemedText>
         </View>
         <ThemedText type={"small"} numberOfLines={1}>
           {appointment.description || "Ni opisa"}
@@ -82,11 +87,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     color: "#1F2937",
-  },
-  customerInfo: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
   },
   name: {
     fontSize: 15,

@@ -22,6 +22,12 @@ export const Colors = {
     actionButton: "#F3F4F6",
     actionButtonText: "#4B5563",
 
+    /* Statuses */
+    accepted: "#4CAF50",
+    rejected: "#F44336",
+    changed: "#2196F3",
+    pending: "#FFC107",
+
     /* Icons */
     activeIcon: "#000000",
     inactiveIcon: "#C3C3C3",
@@ -61,6 +67,12 @@ export const Colors = {
     utilityButton: "#B8B8B8",
     actionButton: "#646464",
     actionButtonText: "#FFFFFF",
+
+    /* Statuses */
+    accepted: "#4CAF50",
+    rejected: "#F44336",
+    changed: "#2196F3",
+    pending: "#FFC107",
 
     /* Icons */
     activeIcon: "#F5F5F5",
