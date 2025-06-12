@@ -86,7 +86,7 @@ export const Colors = {
     inputText: "#FFFFFF",
 
     /* Borders */
-    border: "#404040",
+    border: "#B8B8B8",
     inactiveBorder: "#4A4A4A",
 
     /* Other */

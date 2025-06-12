@@ -22,7 +22,7 @@ export default function RepairsDisplay({ repairList, vehicleUuid }: Props) {
           Narejeni servisi
         </ThemedText>
       </View>
-      <ThemedView type={"primary"} style={styles.repairsContainer}>
+      <View style={styles.repairsContainer}>
         {repairList.length > 0 ? (
           repairList.map((repair, index) => (
             <Repair repairData={repair} vehicleUuid={vehicleUuid} key={index} />
@@ -32,7 +32,7 @@ export default function RepairsDisplay({ repairList, vehicleUuid }: Props) {
             Nimate vnešenih servisov.
           </ThemedText>
         )}
-      </ThemedView>
+      </View>
     </>
   );
 }
@@ -46,7 +46,6 @@ const styles = StyleSheet.create({
   repairsContainer: {
     marginTop: 20,
     gap: 15,
-    padding: 10,
   },
   listEmptyText: {
     textAlign: "center",

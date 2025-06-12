@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import { useCallback, useRef } from "react";
 import { useFocusEffect } from "expo-router";
+import ThemedText from "./themed/ThemedText";
 
 interface Props<T> {
   list: T[];
@@ -15,15 +16,12 @@ export default function DisplayItems<T>({
 }: Props<T>) {
   const scrollRef = useRef<ScrollView>(null);
 
-  // Make ScrollView return to top after screen is unfocused
   useFocusEffect(
     useCallback(() => {
       return () => {
-        setTimeout(() => {
-          if (scrollRef.current) {
-            scrollRef.current.scrollTo({ y: 0 });
-          }
-        }, 100); // For smooth transition between screens
+        if (scrollRef.current) {
+          scrollRef.current.scrollTo({ y: 0 });
+        }
       };
     }, [])
   );
@@ -34,7 +32,9 @@ export default function DisplayItems<T>({
         {list.length > 0 ? (
           list.map((item, index) => renderItem(item, index))
         ) : (
-          <Text style={styles.text}>{emptyMessage}</Text>
+          <ThemedText type={"normal"} style={{ textAlign: "center" }}>
+            {emptyMessage}
+          </ThemedText>
         )}
       </View>
     </ScrollView>
@@ -49,9 +49,5 @@ const styles = StyleSheet.create({
   container: {
     gap: 10,
     paddingVertical: 20,
-  },
-  text: {
-    fontSize: 20,
-    textAlign: "center",
   },
 });

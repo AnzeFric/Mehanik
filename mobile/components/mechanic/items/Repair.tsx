@@ -1,11 +1,12 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { router } from "expo-router";
-import { Colors } from "@/constants/Colors";
 import { formatDate, formatRepairType, formatCurrency } from "@/constants/util";
-import { Ionicons } from "@expo/vector-icons";
 import { useRepair } from "@/hooks/useRepair";
 import { RepairData } from "@/interfaces/repair";
 import ThemedView from "@/components/global/themed/ThemedView";
+import ThemedText from "@/components/global/themed/ThemedText";
+import ThemedIcon from "@/components/global/themed/ThemedIcon";
+import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 
 interface Props {
   repairData: RepairData;
@@ -14,6 +15,7 @@ interface Props {
 
 export default function Repair({ repairData, vehicleUuid }: Props) {
   const { setCurrentRepairFocus } = useRepair();
+  const { staticColors } = useAnimatedTheme();
 
   const handleRedirect = () => {
     setCurrentRepairFocus(repairData);
@@ -21,51 +23,46 @@ export default function Repair({ repairData, vehicleUuid }: Props) {
   };
 
   return (
-    <ThemedView type={"secondary"}>
+    <ThemedView type={"primary"}>
       <TouchableOpacity
         style={styles.container}
         activeOpacity={0.7}
         onPress={handleRedirect}
       >
-        <View style={styles.contentContainer}>
+        <View
+          style={[
+            styles.contentContainer,
+            { borderColor: staticColors.border },
+          ]}
+        >
           <View style={styles.header}>
-            <View style={styles.repairTypeBadge}>
-              <Text style={styles.repairTypeText}>
-                {formatRepairType(repairData.type)}
-              </Text>
-            </View>
-            <Text style={styles.priceText}>
+            <ThemedText type={"small"} bold>
+              {formatRepairType(repairData.type)}
+            </ThemedText>
+            <ThemedText type={"small"} bold>
               {formatCurrency(repairData.price || 0)}
-            </Text>
+            </ThemedText>
           </View>
 
           <View style={styles.dateContainer}>
-            <Ionicons
-              name="calendar-outline"
-              size={16}
-              color={Colors.light.secondaryText}
-            />
-            <Text style={styles.dateText}>
+            <ThemedIcon name={"calendar-outline"} size={16} />
+            <ThemedText type={"extraSmall"} bold>
               {formatDate(new Date(repairData.date))}
-            </Text>
+            </ThemedText>
           </View>
 
           {repairData.type === "other" && (
-            <View style={styles.descriptionContainer}>
-              <Text style={styles.descriptionText}>
-                {repairData.description}
-              </Text>
-            </View>
+            <ThemedView type={"secondary"} style={styles.descriptionContainer}>
+              <ThemedText type={"small"}>{repairData.description}</ThemedText>
+            </ThemedView>
           )}
         </View>
 
-        <View style={styles.arrowContainer}>
-          <Ionicons
-            name="chevron-forward"
-            size={20}
-            color={Colors.light.secondaryText}
-          />
-        </View>
+        <ThemedIcon
+          name={"chevron-forward"}
+          size={20}
+          style={{ paddingLeft: 6 }}
+        />
       </TouchableOpacity>
     </ThemedView>
   );
@@ -92,38 +89,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 10,
   },
-  repairTypeBadge: {
-    paddingVertical: 4,
-  },
-  repairTypeText: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  priceText: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
   dateContainer: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 8,
     gap: 6,
   },
-  dateText: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: Colors.light.secondaryText,
-  },
   descriptionContainer: {
-    backgroundColor: "#F9F9F9",
-    borderRadius: 12,
+    borderRadius: 3,
     padding: 10,
     marginTop: 6,
-  },
-  descriptionText: {
-    fontSize: 15,
-  },
-  arrowContainer: {
-    paddingLeft: 8,
   },
 });
