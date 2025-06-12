@@ -2,24 +2,25 @@ import { Tabs, usePathname } from "expo-router";
 import React from "react";
 import { Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Colors } from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
+import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 
 export default function TabLayout() {
   const pathName = usePathname();
-
+  const { staticColors } = useAnimatedTheme();
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Tabs
         screenOptions={() => ({
           headerShown: false,
           tabBarShowLabel: false,
-          tabBarActiveTintColor: Colors.light.specialBlue,
-          tabBarInactiveTintColor: Colors.light.inactiveButton,
+          tabBarActiveTintColor: staticColors.button,
+          tabBarInactiveTintColor: staticColors.inactiveButton,
           tabBarStyle: {
             height: 64,
+            backgroundColor: staticColors.secondaryBackground,
+            borderColor: staticColors.secondaryBackground,
           },
-          sceneStyle: { backgroundColor: Colors.light.background },
 
           // Disables android default onClick ripple effect
           tabBarButton: (props) => (
@@ -44,9 +45,7 @@ export default function TabLayout() {
               <Ionicons
                 name={"home"}
                 color={
-                  pathName.startsWith("/settings")
-                    ? Colors.light.specialBlue
-                    : color
+                  pathName.startsWith("/settings") ? staticColors.button : color
                 }
                 size={28}
               />
@@ -70,9 +69,7 @@ export default function TabLayout() {
               <Ionicons
                 name={"folder"}
                 color={
-                  pathName.startsWith("/library")
-                    ? Colors.light.specialBlue
-                    : color
+                  pathName.startsWith("/library") ? staticColors.button : color
                 }
                 size={28}
               />
