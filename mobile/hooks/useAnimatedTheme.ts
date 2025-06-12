@@ -75,10 +75,13 @@ export const useAnimatedTheme = () => {
     cancelButton: theme.cancelButton,
     destroyButton: theme.destroyButton,
     utilityButton: theme.utilityButton,
+    actionButton: theme.actionButton,
+    actionButtonText: theme.actionButtonText,
 
     /* Icons */
     activeIcon: theme.activeIcon,
     inactiveIcon: theme.inactiveIcon,
+    blueIcon: theme.blueIcon,
 
     /* Inputs */
     inputBackground: theme.inputBackground,

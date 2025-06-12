@@ -9,6 +9,8 @@ import {
 import DatePicker from "react-native-date-picker";
 import { Ionicons } from "@expo/vector-icons";
 import { useAppointment } from "@/hooks/useAppointment";
+import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import DateButton from "./items/DateButton";
 
 const monthNames = [
   "Januar",
@@ -30,7 +32,7 @@ interface DaySelectorProps {
   onDaySelect: (dayIndex: number, date: Date) => void;
 }
 
-interface DateInfo {
+export interface DateInfo {
   dayName: string;
   dayNumber: number;
   month: string;
@@ -43,6 +45,8 @@ export default function DaySelector({
   onDaySelect,
 }: DaySelectorProps) {
   const { days } = useAppointment();
+  const { staticColors } = useAnimatedTheme();
+
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
   const [dateRange, setDateRange] = useState<DateInfo[]>([]);
@@ -130,15 +134,6 @@ export default function DaySelector({
     onDaySelect(dayIndex, date);
   };
 
-  const isToday = (date: Date) => {
-    const today = new Date();
-    return (
-      date.getDate() === today.getDate() &&
-      date.getMonth() === today.getMonth() &&
-      date.getFullYear() === today.getFullYear()
-    );
-  };
-
   const formattedCurrentMonth = () => {
     return `${monthNames[selectedDate.getMonth()]} ${selectedDate.getFullYear()}`;
   };
@@ -162,17 +157,29 @@ export default function DaySelector({
       <View style={styles.header}>
         <TouchableOpacity
           onPress={() => setShowDatePicker(true)}
-          style={styles.datePickerButton}
+          style={[
+            styles.datePickerButton,
+            { backgroundColor: staticColors.actionButton },
+          ]}
         >
-          <Text style={styles.currentMonth}>{formattedCurrentMonth()}</Text>
-          <Ionicons name="calendar" size={20} color="#3B82F6" />
+          <Text
+            style={[
+              styles.currentMonth,
+              { color: staticColors.actionButtonText },
+            ]}
+          >
+            {formattedCurrentMonth()}
+          </Text>
+          <Ionicons name={"calendar"} size={20} color={staticColors.blueIcon} />
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={styles.todayButton}
+          style={[styles.todayButton, { backgroundColor: staticColors.button }]}
           onPress={() => handleDateSelected(new Date())}
         >
-          <Text style={styles.todayText}>Danes</Text>
+          <Text style={[styles.todayText, { color: staticColors.buttonText }]}>
+            Danes
+          </Text>
         </TouchableOpacity>
       </View>
 
@@ -181,55 +188,38 @@ export default function DaySelector({
           style={[styles.weekNavButton, { paddingRight: 10 }]}
           onPress={goToPreviousWeek}
         >
-          <Ionicons name="chevron-back" size={30} color="#3B82F6" />
+          <Ionicons
+            name={"chevron-back"}
+            size={30}
+            color={staticColors.blueIcon}
+          />
         </TouchableOpacity>
 
         <ScrollView
           ref={scrollRef}
           horizontal
           showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.buttonContainer}
         >
-          <View style={styles.buttonContainer}>
-            {dateRange.map((dateInfo, index) => (
-              <View key={index} style={styles.dateButtonWrapper}>
-                <TouchableOpacity
-                  style={[
-                    styles.dateButton,
-                    selectedDay === dateInfo.dayName &&
-                      styles.selectedDateButton,
-                    isToday(dateInfo.fullDate) && styles.todayDateButton,
-                  ]}
-                  onPress={() => handleDaySelect(dateInfo)}
-                >
-                  <Text
-                    style={[
-                      styles.dayName,
-                      selectedDay === dateInfo.dayName && styles.selectedText,
-                      isToday(dateInfo.fullDate) && styles.todayText,
-                    ]}
-                  >
-                    {dateInfo.dayName}
-                  </Text>
-                  <Text
-                    style={[
-                      styles.dayNumber,
-                      selectedDay === dateInfo.dayName && styles.selectedText,
-                      isToday(dateInfo.fullDate) && styles.todayText,
-                    ]}
-                  >
-                    {dateInfo.dayNumber}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            ))}
-          </View>
+          {dateRange.map((dateInfo, index) => (
+            <DateButton
+              dateInfo={dateInfo}
+              selectedDay={selectedDay}
+              handleDaySelect={handleDaySelect}
+              key={index}
+            />
+          ))}
         </ScrollView>
 
         <TouchableOpacity
           style={[styles.weekNavButton, { paddingLeft: 10 }]}
           onPress={goToNextWeek}
         >
-          <Ionicons name="chevron-forward" size={30} color="#3B82F6" />
+          <Ionicons
+            name={"chevron-forward"}
+            size={30}
+            color={staticColors.blueIcon}
+          />
         </TouchableOpacity>
       </View>
 
@@ -260,7 +250,6 @@ const styles = StyleSheet.create({
   currentMonth: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#111827",
     marginRight: 8,
   },
   datePickerButton: {
@@ -269,17 +258,14 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 14,
     borderRadius: 8,
-    backgroundColor: "#F3F4F6",
   },
   todayButton: {
     paddingVertical: 10,
     paddingHorizontal: 14,
     borderRadius: 8,
-    backgroundColor: "#3B82F6",
   },
   todayText: {
-    color: "white",
-    fontWeight: "600",
+    fontWeight: "bold",
   },
   weekNavigationContainer: {
     flexDirection: "row",
@@ -292,37 +278,5 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     gap: 8,
-  },
-  dateButtonWrapper: {
-    alignItems: "center",
-  },
-  dateButton: {
-    width: 54,
-    alignItems: "center",
-    paddingVertical: 10,
-    borderRadius: 8,
-    backgroundColor: "#F3F4F6",
-  },
-  selectedDateButton: {
-    backgroundColor: "#3B82F6",
-  },
-  todayDateButton: {
-    borderWidth: 1,
-    borderColor: "#3B82F6",
-    backgroundColor: "#EBF5FF",
-  },
-  dayName: {
-    fontSize: 14,
-    fontWeight: "500",
-    color: "#4B5563",
-    marginBottom: 4,
-  },
-  dayNumber: {
-    fontSize: 18,
-    fontWeight: "700",
-    color: "#1F2937",
-  },
-  selectedText: {
-    color: "white",
   },
 });

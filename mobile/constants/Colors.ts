@@ -19,10 +19,13 @@ export const Colors = {
     cancelButton: "#C63500",
     destroyButton: "#E24A4A",
     utilityButton: "#3C3C3C",
+    actionButton: "#F3F4F6",
+    actionButtonText: "#4B5563",
 
     /* Icons */
     activeIcon: "#000000",
     inactiveIcon: "#C3C3C3",
+    blueIcon: "#003366",
 
     /* Inputs */
     inputBackground: "#F8F8F8",
@@ -56,10 +59,13 @@ export const Colors = {
     cancelButton: "#FF6B47",
     destroyButton: "#FF6B6B",
     utilityButton: "#B8B8B8",
+    actionButton: "#646464",
+    actionButtonText: "#FFFFFF",
 
     /* Icons */
     activeIcon: "#F5F5F5",
     inactiveIcon: "#6A6A6A",
+    blueIcon: "#4A9EFF",
 
     /* Inputs */
     inputBackground: "#6A6A6A",
