@@ -2,7 +2,6 @@ import { Tabs, usePathname } from "expo-router";
 import React from "react";
 import { Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Colors } from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 
@@ -47,9 +46,7 @@ export default function TabLayout() {
               <Ionicons
                 name={"home"}
                 color={
-                  pathName.startsWith("/settings")
-                    ? Colors.light.specialBlue
-                    : color
+                  pathName.startsWith("/settings") ? staticColors.button : color
                 }
                 size={28}
               />
@@ -65,7 +62,7 @@ export default function TabLayout() {
                 name={"people"}
                 color={
                   pathName.startsWith("/mechanics")
-                    ? Colors.light.specialBlue
+                    ? staticColors.button
                     : color
                 }
                 size={28}
