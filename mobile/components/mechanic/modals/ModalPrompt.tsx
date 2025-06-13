@@ -1,5 +1,8 @@
 import { View, Text, Modal, TouchableOpacity, StyleSheet } from "react-native";
 import { Colors } from "@/constants/Colors";
+import ThemedView from "@/components/global/themed/ThemedView";
+import ThemedButton from "@/components/global/themed/ThemedButton";
+import ThemedText from "@/components/global/themed/ThemedText";
 
 interface Props {
   isVisible: boolean;
@@ -17,23 +20,23 @@ export default function ModalReject({
   return (
     <Modal transparent={true} visible={isVisible} onRequestClose={onCancel}>
       <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <Text style={styles.modalText}>{message}</Text>
+        <ThemedView type={"primary"} style={styles.modalView}>
+          <ThemedText type={"small"} style={styles.modalText}>
+            {message}
+          </ThemedText>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={[styles.button, styles.buttonCancel]}
+            <ThemedButton
+              buttonType={"option-destroy"}
+              buttonText={"Prekliči"}
               onPress={onCancel}
-            >
-              <Text style={styles.textStyle}>Prekliči</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.button, styles.buttonConfirm]}
+            />
+            <ThemedButton
+              buttonType={"option"}
+              buttonText={"Potrdi"}
               onPress={onConfirm}
-            >
-              <Text style={styles.textStyle}>Potrdi</Text>
-            </TouchableOpacity>
+            />
           </View>
-        </View>
+        </ThemedView>
       </View>
     </Modal>
   );
@@ -44,22 +47,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
   },
   modalView: {
     padding: 35,
-    backgroundColor: Colors.light.background,
-    borderRadius: 20,
+    borderRadius: 6,
     alignItems: "center",
     width: "75%",
-
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
   },
   buttonContainer: {
     flexDirection: "row",

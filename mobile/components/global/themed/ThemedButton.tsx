@@ -10,7 +10,7 @@ import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 import { AppStyles } from "@/constants/Styles";
 import ThemedText from "./ThemedText";
 
-type ButtonType = "small" | "large" | "option";
+type ButtonType = "small" | "large" | "option" | "option-destroy";
 
 type Props = TouchableOpacityProps & {
   buttonType: ButtonType;
@@ -30,66 +30,77 @@ export default function ThemedButton({
 }: Props) {
   const { staticColors } = useAnimatedTheme();
 
+  const typeToButtonStyle: Record<ButtonType, StyleProp<ViewStyle>> = {
+    small: AppStyles.button,
+    large: AppStyles.bigButton,
+    option: styles.optionButton,
+    "option-destroy": styles.optionButton,
+  };
+
+  const typeToTextColors: Record<ButtonType, string> = {
+    small: staticColors.buttonText,
+    large: staticColors.bigButtonText,
+    option: staticColors.buttonOptionText,
+    "option-destroy": staticColors.buttonOptionText,
+  };
+
+  const activeColors: Record<ButtonType, string> = {
+    small: staticColors.button,
+    large: staticColors.bigButton,
+    option: staticColors.buttonOption,
+    "option-destroy": staticColors.destroyButton,
+  };
+
+  const inactiveColors: Record<ButtonType, string> = {
+    small: staticColors.inactiveButton,
+    large: staticColors.inactiveButton,
+    option: staticColors.inactiveButton,
+    "option-destroy": staticColors.inactiveButton,
+  };
+
   const buttonStyles = [
-    AppStyles.button,
+    typeToButtonStyle[buttonType],
     {
       backgroundColor: selected
-        ? staticColors.button
-        : staticColors.inactiveButton,
+        ? activeColors[buttonType]
+        : inactiveColors[buttonType],
     },
     buttonStyle,
   ];
 
-  const bigButtonStyles = [
-    AppStyles.bigButton,
+  const buttonTextStyles = [
     {
-      backgroundColor: selected
-        ? staticColors.bigButton
-        : staticColors.inactiveButton,
+      color: typeToTextColors[buttonType],
     },
-    buttonStyle,
+    buttonTextStyle,
   ];
 
-  const buttonOptionStyles = [
-    styles.optionButton,
-    {
-      backgroundColor: selected
-        ? staticColors.buttonOption
-        : staticColors.inactiveButton,
-    },
-    buttonStyle,
-  ];
   return (
     <>
       {buttonType === "small" && (
         <TouchableOpacity style={buttonStyles} {...props}>
-          <ThemedText
-            type={"normal"}
-            bold
-            style={[{ color: staticColors.buttonText }, buttonTextStyle]}
-          >
+          <ThemedText type={"normal"} bold style={buttonTextStyles}>
             {buttonText}
           </ThemedText>
         </TouchableOpacity>
       )}
       {buttonType === "large" && (
-        <TouchableOpacity style={bigButtonStyles} {...props}>
-          <ThemedText
-            type={"title"}
-            bold
-            style={[{ color: staticColors.bigButtonText }, buttonTextStyle]}
-          >
+        <TouchableOpacity style={buttonStyles} {...props}>
+          <ThemedText type={"title"} bold style={buttonTextStyles}>
             {buttonText}
           </ThemedText>
         </TouchableOpacity>
       )}
       {buttonType === "option" && (
-        <TouchableOpacity style={buttonOptionStyles} {...props}>
-          <ThemedText
-            type={"small"}
-            bold
-            style={[{ color: staticColors.buttonOptionText }, buttonTextStyle]}
-          >
+        <TouchableOpacity style={buttonStyles} {...props}>
+          <ThemedText type={"small"} bold style={buttonTextStyles}>
+            {buttonText}
+          </ThemedText>
+        </TouchableOpacity>
+      )}
+      {buttonType === "option-destroy" && (
+        <TouchableOpacity style={buttonStyles} {...props}>
+          <ThemedText type={"small"} bold style={buttonTextStyles}>
             {buttonText}
           </ThemedText>
         </TouchableOpacity>
