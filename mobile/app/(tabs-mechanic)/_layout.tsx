@@ -8,6 +8,7 @@ import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 export default function TabLayout() {
   const pathName = usePathname();
   const { staticColors } = useAnimatedTheme();
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Tabs
