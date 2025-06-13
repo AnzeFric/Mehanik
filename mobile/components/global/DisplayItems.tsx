@@ -27,7 +27,11 @@ export default function DisplayItems<T>({
   );
 
   return (
-    <ScrollView style={styles.scrollContainer} ref={scrollRef}>
+    <ScrollView
+      style={styles.scrollContainer}
+      keyboardShouldPersistTaps={"handled"}
+      ref={scrollRef}
+    >
       <View style={styles.container}>
         {list.length > 0 ? (
           list.map((item, index) => renderItem(item, index))

@@ -1,12 +1,18 @@
-import { View, Text, ActivityIndicator, StyleSheet } from "react-native";
-import { Colors } from "@/constants/Colors";
+import { ActivityIndicator, StyleSheet } from "react-native";
+import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import ThemedText from "./themed/ThemedText";
+import ThemedView from "./themed/ThemedView";
 
 export default function LoadingScreen() {
+  const { staticColors } = useAnimatedTheme();
+
   return (
-    <View style={styles.container}>
-      <ActivityIndicator size={"large"} color={Colors.light.specialBlue} />
-      <Text style={styles.text}>Nalaganje...</Text>
-    </View>
+    <ThemedView type={"background"} style={styles.container}>
+      <ActivityIndicator size={"large"} color={staticColors.specialBlue} />
+      <ThemedText type={"normal"} style={{ marginTop: 10 }}>
+        Nalaganje...
+      </ThemedText>
+    </ThemedView>
   );
 }
 
@@ -15,11 +21,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f4f4f4",
-  },
-  text: {
-    marginTop: 10,
-    fontSize: 18,
-    color: Colors.light.specialBlue,
   },
 });
