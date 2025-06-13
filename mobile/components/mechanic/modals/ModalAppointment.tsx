@@ -1,16 +1,12 @@
-import {
-  Text,
-  View,
-  Modal,
-  TouchableOpacity,
-  StyleSheet,
-  TextInput,
-} from "react-native";
+import { View, Modal, StyleSheet } from "react-native";
 import { useState } from "react";
 import { Colors } from "@/constants/Colors";
-import DatePicker from "react-native-date-picker";
-import { AppStyles } from "@/constants/Styles";
-import CloseIcon from "@/assets/icons/XIcon.svg";
+import ThemedIcon from "@/components/global/themed/ThemedIcon";
+import ThemedView from "@/components/global/themed/ThemedView";
+import ThemedText from "@/components/global/themed/ThemedText";
+import ThemedButton from "@/components/global/themed/ThemedButton";
+import ThemedDatePicker from "@/components/global/themed/ThemedDatePicker";
+import ThemedTextInput from "@/components/global/themed/ThemedTextInput";
 
 interface Props {
   isVisible: boolean;
@@ -20,7 +16,7 @@ interface Props {
   onCancel: () => void;
 }
 
-export default function ModalTime({
+export default function ModalAppointment({
   isVisible,
   title,
   firstScreen,
@@ -28,23 +24,27 @@ export default function ModalTime({
   onCancel,
 }: Props) {
   // Ensure firstScreen is within valid range
-  const normalizedFirstScreen = Math.min(Math.max(firstScreen, 0), 2);
+  const inputScreenNumber = Math.min(Math.max(firstScreen, 0), 2);
 
   const [date, setDate] = useState<Date>(new Date()); // TODO: add prop date and get default values from there
   const [time, setTime] = useState<Date>(new Date());
-  const [description, setDescription] = useState<string>("");
-  const [screenNumber, setScreenNumber] = useState<number>(
-    normalizedFirstScreen
-  );
+  const [message, setMessage] = useState<string>("");
+  const [screenNumber, setScreenNumber] = useState<number>(inputScreenNumber);
+
+  const cleanup = () => {
+    setScreenNumber(inputScreenNumber);
+    setMessage("");
+  };
 
   const handlePreviousPress = () => {
-    if (screenNumber > normalizedFirstScreen) {
+    if (screenNumber > inputScreenNumber) {
       setScreenNumber((prevScreenNumber) => prevScreenNumber - 1);
     }
   };
 
   const handleNextPress = () => {
     if (screenNumber === 2) {
+      cleanup();
       onConfirm();
     } else {
       setScreenNumber((prevScreenNumber) => prevScreenNumber + 1);
@@ -52,8 +52,7 @@ export default function ModalTime({
   };
 
   const handleModalClose = () => {
-    setScreenNumber(normalizedFirstScreen);
-    setDescription("");
+    cleanup();
     onCancel();
   };
 
@@ -62,43 +61,41 @@ export default function ModalTime({
       transparent={true}
       visible={isVisible}
       onRequestClose={handleModalClose}
-      animationType={"fade"}
     >
       <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <View style={styles.header}>
-            <CloseIcon
-              style={styles.closeIcon}
-              color={Colors.light.activeIcon}
-              height={28}
-              width={28}
-              onPress={handleModalClose}
-            />
-            <Text style={[AppStyles.title, styles.title]}>{title}</Text>
-          </View>
+        <ThemedView type={"primary"} style={styles.modalView}>
+          <ThemedIcon
+            name={"close"}
+            size={30}
+            onPress={handleModalClose}
+            style={{ alignSelf: "flex-end" }}
+          />
+          <ThemedText type={"title"} style={{ textAlign: "center" }}>
+            {title}
+          </ThemedText>
           <View style={styles.contentContainer}>
             {screenNumber === 0 && (
               <>
-                <Text style={[AppStyles.text, styles.itemTitle]}>
+                <ThemedText type={"normal"} style={styles.itemTitle}>
                   Izberite datum
-                </Text>
-                <DatePicker
+                </ThemedText>
+                <ThemedDatePicker
                   date={date}
                   onDateChange={(newDate: Date) => {
                     setDate(newDate);
                   }}
-                  mode="date"
-                  is24hourSource="locale"
+                  mode={"date"}
+                  is24hourSource={"locale"}
                 />
               </>
             )}
 
             {screenNumber === 1 && (
               <>
-                <Text style={[AppStyles.text, styles.itemTitle]}>
+                <ThemedText type={"normal"} style={styles.itemTitle}>
                   Izberite čas
-                </Text>
-                <DatePicker
+                </ThemedText>
+                <ThemedDatePicker
                   date={time}
                   onDateChange={(newTime: Date) => {
                     setTime(newTime);
@@ -110,39 +107,31 @@ export default function ModalTime({
             )}
 
             {screenNumber === 2 && (
-              <TextInput
-                style={[styles.input, styles.inputText]}
-                placeholder={"Sporočilo za stranko (ni obvezno)"} // TODO: Dodaj prop za stranka ali mehanik
-                value={description}
-                onChangeText={setDescription}
+              <ThemedTextInput
+                style={styles.input}
+                placeholder={"Sporočilo (ni obvezno)"}
+                value={message}
+                onChangeText={setMessage}
                 multiline={true}
                 numberOfLines={5}
               />
             )}
 
             <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={[
-                  styles.button,
-                  screenNumber === normalizedFirstScreen
-                    ? styles.butonInactive
-                    : styles.buttonCancel,
-                ]}
+              <ThemedButton
+                buttonType={"option-destroy"}
+                buttonText={"Nazaj"}
                 onPress={handlePreviousPress}
-              >
-                <Text style={styles.buttonText}>Nazaj</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.button, styles.buttonConfirm]}
+                selected={screenNumber != inputScreenNumber}
+              />
+              <ThemedButton
+                buttonType={"option"}
+                buttonText={screenNumber === 2 ? "Potrdi" : "Naprej"}
                 onPress={handleNextPress}
-              >
-                <Text style={styles.buttonText}>
-                  {screenNumber === 2 ? "Potrdi" : "Naprej"}
-                </Text>
-              </TouchableOpacity>
+              />
             </View>
           </View>
-        </View>
+        </ThemedView>
       </View>
     </Modal>
   );
@@ -157,20 +146,10 @@ const styles = StyleSheet.create({
   },
   modalView: {
     backgroundColor: Colors.light.background,
-    borderRadius: 20,
+    borderRadius: 6,
     width: "75%",
-  },
-  header: {
-    display: "flex",
-    paddingStart: 35,
-    paddingEnd: 15,
-    paddingTop: 10,
-  },
-  closeIcon: {
-    alignSelf: "flex-end",
-  },
-  title: {
-    alignSelf: "flex-start",
+    paddingVertical: 15,
+    paddingHorizontal: 20,
   },
   contentContainer: {
     alignItems: "center",
@@ -182,40 +161,14 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     paddingTop: 10,
-    gap: 60,
-  },
-  button: {
-    borderRadius: 12,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    elevation: 2,
-  },
-  buttonCancel: {
-    backgroundColor: Colors.light.cancelButton,
-  },
-  butonInactive: {
-    backgroundColor: Colors.light.inactiveButton,
-  },
-  buttonConfirm: {
-    backgroundColor: Colors.light.confirmButton,
+    gap: 50,
   },
   input: {
-    height: 130,
-    width: "80%",
-    fontSize: 16,
+    height: 125,
+    width: "90%",
     borderBottomWidth: 1,
     borderBottomColor: Colors.light.inactiveBorder,
-    marginBottom: 15,
-  },
-  inputText: {
-    textAlign: "left",
+    marginVertical: 10,
     verticalAlign: "bottom",
-    fontSize: 16,
-  },
-  buttonText: {
-    color: Colors.light.background,
-    textAlign: "center",
-    fontSize: 16,
-    fontWeight: "bold",
   },
 });

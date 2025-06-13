@@ -47,6 +47,7 @@ export const Colors = {
     /* Other */
     specialBlue: "#003366",
     destructiveRed: "#E24A4A",
+    datePicker: "#000000",
   },
   dark: {
     /* Backgrounds */
@@ -96,5 +97,6 @@ export const Colors = {
     /* Other */
     specialBlue: "#4A9EFF",
     destructiveRed: "#FF6B6B",
+    datePicker: "#FFFFFF",
   },
 };

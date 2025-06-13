@@ -103,6 +103,7 @@ export const useAnimatedTheme = () => {
     /* Other */
     specialBlue: theme.specialBlue,
     destructiveRed: theme.destructiveRed,
+    datePicker: theme.datePicker,
   };
 
   return {
