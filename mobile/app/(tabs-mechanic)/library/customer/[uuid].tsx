@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Alert,
-  ActivityIndicator,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { useState, useCallback, useEffect } from "react";
 import { useLocalSearchParams, router, useFocusEffect } from "expo-router";
 import { Colors } from "@/constants/Colors";
@@ -139,13 +132,11 @@ export default function DetailCustomerScreen() {
                 <CustomerDisplay customer={customer.customer} />
               </View>
               {loading ? (
-                <View style={styles.loadingContainer}>
-                  <ActivityIndicator
-                    size={"large"}
-                    color={Colors.light.specialBlue}
-                  />
-                  <Text style={styles.loadingText}>Nalaganje servisov...</Text>
-                </View>
+                <LoadingScreen
+                  type={"partial"}
+                  text={"Nalaganje servisov..."}
+                  style={{ paddingVertical: 30 }}
+                />
               ) : (
                 <RepairsDisplay
                   repairList={repairList}
@@ -163,7 +154,7 @@ export default function DetailCustomerScreen() {
               )}
             </>
           ) : (
-            <LoadingScreen />
+            <LoadingScreen type={"full"} text={"Nalaganje..."} />
           )}
         </View>
       </TemplateView>
@@ -222,15 +213,5 @@ const styles = StyleSheet.create({
   },
   menuItemTextDelete: {
     color: "#E53935",
-  },
-  loadingContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 30,
-  },
-  loadingText: {
-    marginTop: 10,
-    color: Colors.light.specialBlue,
-    fontWeight: "bold",
   },
 });

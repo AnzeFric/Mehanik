@@ -43,7 +43,7 @@ export default function HomeScreen() {
   }, []);
 
   if (loading) {
-    return <LoadingScreen />;
+    return <LoadingScreen type={"full"} text={"Nalaganje..."} />;
   }
 
   return isLoggined ? (
