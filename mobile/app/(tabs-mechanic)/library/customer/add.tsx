@@ -1,22 +1,18 @@
-import {
-  Text,
-  View,
-  ScrollView,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
-import { useState, useCallback, useRef, useEffect } from "react";
+import { View, ScrollView, StyleSheet } from "react-native";
+import { useState, useCallback, useRef, useMemo } from "react";
 import { router, useFocusEffect } from "expo-router";
 import { useCustomer } from "@/hooks/useCustomer";
 import { CustomerData } from "@/interfaces/customer";
 import { VehicleData } from "@/interfaces/vehicle";
 import { RepairData } from "@/interfaces/repair";
 import TitleRow from "@/components/shared/TitleRow";
-import { AppStyles } from "@/constants/Styles";
 import ImageForm from "@/components/mechanic/library/forms/ImageForm";
 import RepairForm from "@/components/mechanic/library/forms/RepairForm";
 import CustomerForm from "@/components/mechanic/library/forms/CustomerForm";
 import VehicleForm from "@/components/mechanic/library/forms/VehicleForm";
+import ThemedView from "@/components/global/themed/ThemedView";
+import ThemedText from "@/components/global/themed/ThemedText";
+import ThemedButton from "@/components/global/themed/ThemedButton";
 
 export default function AddCustomerScreen() {
   const { saveCustomerVehicleRepair } = useCustomer();
@@ -42,20 +38,20 @@ export default function AddCustomerScreen() {
 
   const scrollRef = useRef<ScrollView>(null);
 
-  const canSave = () => {
-    return (
+  const canSave: boolean = useMemo(() => {
+    return Boolean(
       customerData &&
-      vehicleData &&
-      customerData.firstName &&
-      customerData.lastName &&
-      vehicleData.brand &&
-      vehicleData.model &&
-      vehicleData.vin
+        vehicleData &&
+        customerData.firstName &&
+        customerData.lastName &&
+        vehicleData.brand &&
+        vehicleData.model &&
+        vehicleData.vin
     );
-  };
+  }, [customerData, vehicleData]);
 
   const handlePress = async () => {
-    if (!canSave()) {
+    if (!canSave) {
       return;
     }
 
@@ -69,102 +65,61 @@ export default function AddCustomerScreen() {
     router.push(`/(tabs-mechanic)/library`);
   };
 
-  // Reset form when screen loses focus
   useFocusEffect(
     useCallback(() => {
       return () => {
-        setCustomerData({
-          uuid: "",
-          firstName: "",
-          lastName: "",
-          email: null,
-          phone: null,
-        });
-        setVehicleData({
-          uuid: "",
-          brand: "",
-          model: "",
-          vin: "",
-          image: null,
-          buildYear: null,
-          description: null,
-        });
-        setRepairData(null);
-        setVehicleImage("");
-
-        setTimeout(() => {
-          if (scrollRef.current) {
-            scrollRef.current.scrollTo({ y: 0 });
-          }
-        }, 100);
+        if (scrollRef.current) {
+          scrollRef.current.scrollTo({ y: 0 });
+        }
       };
     }, [])
   );
 
   return (
-    <View style={styles.container}>
+    <ThemedView type={"background"} style={{ flex: 1 }}>
       <TitleRow title={"Dodaj stranko"} hasBackButton={true} />
-      <ScrollView style={styles.childrenContainer} ref={scrollRef}>
+      <ScrollView
+        style={styles.childrenContainer}
+        contentContainerStyle={{ gap: 25 }}
+        ref={scrollRef}
+      >
         <ImageForm setImage={setVehicleImage} />
-
-        <Text style={styles.sectionTitle}>Informacije o stranki</Text>
-        <CustomerForm setCustomer={setCustomerData} />
-
-        <Text style={styles.sectionTitle}>Informacije o vozilu</Text>
-        <VehicleForm setVehicle={setVehicleData} />
-
-        <Text style={styles.sectionTitle}>Informacije o servisu.</Text>
-        <Text style={[AppStyles.smallText, { paddingBottom: 15 }]}>
-          Če servis ni bil izveden izberite "Drugo" in pustite prazno.
-        </Text>
-        <RepairForm setRepair={setRepairData} />
-
-        <TouchableOpacity
-          style={[
-            AppStyles.button,
-            styles.button,
-            !canSave() && styles.buttonDisabled,
-          ]}
+        <View>
+          <ThemedText type={"title"} bold>
+            Stranka
+          </ThemedText>
+          <CustomerForm setCustomer={setCustomerData} />
+        </View>
+        <View>
+          <ThemedText type={"title"} bold>
+            Vozilo
+          </ThemedText>
+          <VehicleForm setVehicle={setVehicleData} />
+        </View>
+        <View>
+          <ThemedText type={"title"} bold>
+            Servis
+          </ThemedText>
+          <ThemedText type={"small"} style={{ paddingBottom: 15 }}>
+            Če servis ni bil izveden izberite "Drugo" in pustite prazno.
+          </ThemedText>
+          <RepairForm setRepair={setRepairData} />
+        </View>
+        <ThemedButton
+          buttonType={"small"}
+          buttonText={"Dodaj"}
           onPress={handlePress}
-          disabled={!canSave()}
-        >
-          <Text
-            style={[
-              AppStyles.buttonText,
-              !canSave() && styles.buttonTextDisabled,
-            ]}
-          >
-            Dodaj
-          </Text>
-        </TouchableOpacity>
+          selected={canSave}
+          disabled={!canSave}
+        />
       </ScrollView>
-    </View>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    gap: 15,
-  },
   childrenContainer: {
-    flex: 1,
     paddingHorizontal: 25,
     marginVertical: 20,
-  },
-  button: {
-    marginTop: 25,
-  },
-  buttonDisabled: {
-    opacity: 0.5,
-  },
-  buttonTextDisabled: {
-    opacity: 0.7,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginTop: 20,
-    marginBottom: 10,
   },
 });
