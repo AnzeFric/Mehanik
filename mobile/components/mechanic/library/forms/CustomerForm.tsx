@@ -97,7 +97,6 @@ export default function CustomerForm({ customer, setCustomer }: Props) {
         onChangeText={handleFirstNameChange}
         autoCapitalize={"words"}
       />
-
       <ThemedTextInput
         style={styles.input}
         placeholder={"Priimek"}
@@ -105,7 +104,6 @@ export default function CustomerForm({ customer, setCustomer }: Props) {
         onChangeText={handleLastNameChange}
         autoCapitalize={"words"}
       />
-
       <ThemedTextInput
         style={styles.input}
         placeholder={"Telefonska št. (ni obvezno)"}
@@ -114,7 +112,6 @@ export default function CustomerForm({ customer, setCustomer }: Props) {
         autoCapitalize={"none"}
         keyboardType={"phone-pad"}
       />
-
       <ThemedTextInput
         style={styles.input}
         placeholder={"Email (ni obvezno)"}

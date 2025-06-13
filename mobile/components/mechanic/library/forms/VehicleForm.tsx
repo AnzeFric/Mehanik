@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { VehicleData } from "@/interfaces/vehicle";
 import { Colors } from "@/constants/Colors";
 import { useFocusEffect } from "expo-router";
+import ThemedTextInput from "@/components/global/themed/ThemedTextInput";
 
 interface Props {
   vehicle?: VehicleData;
@@ -101,21 +102,21 @@ export default function VehicleForm({ vehicle, setVehicle }: Props) {
 
   return (
     <>
-      <TextInput
+      <ThemedTextInput
         style={styles.input}
         placeholder={"Znamka"}
         value={brand}
         onChangeText={handleBrandChange}
         autoCapitalize={"words"}
       />
-      <TextInput
+      <ThemedTextInput
         style={styles.input}
         placeholder={"Model"}
         value={model}
         onChangeText={handleModelChange}
         autoCapitalize={"words"}
       />
-      <TextInput
+      <ThemedTextInput
         style={styles.input}
         placeholder={"Leto izdelave (ni obvezno)"}
         value={buildYear || ""}
@@ -123,14 +124,14 @@ export default function VehicleForm({ vehicle, setVehicle }: Props) {
         autoCapitalize={"none"}
         keyboardType={"numeric"}
       />
-      <TextInput
+      <ThemedTextInput
         style={styles.input}
         placeholder={"VIN"}
         value={vin}
         onChangeText={handleVinChange}
         autoCapitalize={"characters"}
       />
-      <TextInput
+      <ThemedTextInput
         style={[styles.input, { textAlignVertical: "top" }]}
         placeholder={"Dodaten opis vozila (ni obvezno)"}
         value={description || ""}
