@@ -1,4 +1,4 @@
-import { TextInput, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { useCallback, useEffect, useState } from "react";
 import { VehicleData } from "@/interfaces/vehicle";
 import { Colors } from "@/constants/Colors";

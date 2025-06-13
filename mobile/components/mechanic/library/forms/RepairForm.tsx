@@ -1,23 +1,18 @@
-import {
-  Text,
-  StyleSheet,
-  Image,
-  View,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
-import CameraIcon from "@/assets/icons/CameraIcon.svg";
+import { Text, StyleSheet, Image, View, TouchableOpacity } from "react-native";
 import { Colors } from "@/constants/Colors";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
 import { useCallback, useEffect, useState } from "react";
-import CustomRadioButton from "./components/CustomRadioButton";
 import CustomCheckBox from "./components/CustomCheckBox";
-import { AppStyles } from "@/constants/Styles";
 import { RepairData, RepairOptions } from "@/interfaces/repair";
-import DatePicker from "react-native-date-picker";
 import { formatDate } from "@/constants/util";
 import { useFocusEffect } from "expo-router";
+import ThemedTextInput from "@/components/global/themed/ThemedTextInput";
+import ThemedText from "@/components/global/themed/ThemedText";
+import ThemedDatePicker from "@/components/global/themed/ThemedDatePicker";
+import ThemedButton from "@/components/global/themed/ThemedButton";
+import ThemedIcon from "@/components/global/themed/ThemedIcon";
+import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 
 interface Props {
   repair?: RepairData | null;
@@ -40,6 +35,8 @@ const defaultOptions = {
 };
 
 export default function RepairForm({ repair, setRepair }: Props) {
+  const { staticColors } = useAnimatedTheme();
+
   const [type, setType] = useState<"small" | "large" | "other">("small");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -147,29 +144,25 @@ export default function RepairForm({ repair, setRepair }: Props) {
 
   return (
     <>
-      <View style={styles.repairTypeContainer}>
-        <View style={styles.radioGroup}>
-          <>
-            <CustomRadioButton
-              name="Mali servis"
-              currentValue={type}
-              value="small"
-              onChange={() => setType("small")}
-            />
-            <CustomRadioButton
-              name="Veliki servis"
-              currentValue={type}
-              value="large"
-              onChange={() => setType("large")}
-            />
-            <CustomRadioButton
-              name="Drugo"
-              currentValue={type}
-              value="other"
-              onChange={() => setType("other")}
-            />
-          </>
-        </View>
+      <View style={styles.typeSelectContainer}>
+        <ThemedButton
+          buttonType={"option"}
+          buttonText={"mali"}
+          onPress={() => setType("small")}
+          selected={type === "small"}
+        />
+        <ThemedButton
+          buttonType={"option"}
+          buttonText={"veliki"}
+          onPress={() => setType("large")}
+          selected={type === "large"}
+        />
+        <ThemedButton
+          buttonType={"option"}
+          buttonText={"drugo"}
+          onPress={() => setType("other")}
+          selected={type === "other"}
+        />
       </View>
 
       {(type === "small" || type === "large") && (
@@ -243,7 +236,7 @@ export default function RepairForm({ repair, setRepair }: Props) {
       )}
 
       {type === "other" && (
-        <TextInput
+        <ThemedTextInput
           style={[styles.input, styles.textArea]}
           placeholder={"Opišite izveden servis"}
           value={description}
@@ -253,15 +246,14 @@ export default function RepairForm({ repair, setRepair }: Props) {
           numberOfLines={4}
         />
       )}
-
-      <TextInput
+      <ThemedTextInput
         style={styles.input}
         placeholder={"Opombe za servis (ni obvezno)"}
         value={note}
         onChangeText={setNote}
         autoCapitalize={"sentences"}
       />
-      <TextInput
+      <ThemedTextInput
         style={styles.input}
         placeholder={"Cena (ni obvezno)"}
         value={price}
@@ -271,39 +263,45 @@ export default function RepairForm({ repair, setRepair }: Props) {
       />
 
       <View style={styles.dateContainer}>
-        <Text style={AppStyles.text}>Datum servisa:</Text>
+        <ThemedText type={"small"}>Datum servisa:</ThemedText>
         <TouchableOpacity
           style={styles.dateButton}
           onPress={() => setShowDatePicker(true)}
         >
-          <Text style={styles.dateButtonText}>{formatDate(date)}</Text>
+          <ThemedText type={"small"}>{formatDate(date)}</ThemedText>
         </TouchableOpacity>
       </View>
 
-      <Text style={AppStyles.text}>Slike servisa (ni obvezno):</Text>
+      <ThemedText type={"small"}>Slike servisa (ni obvezno):</ThemedText>
       <View style={styles.repairImagesContainer}>
         {repairImages.map((uri, index) => (
           <View key={index} style={styles.repairImageContainer}>
             <Image source={{ uri }} style={styles.repairImage} />
             <TouchableOpacity
-              style={styles.removeImageButton}
+              style={[
+                styles.removeImageButton,
+                { backgroundColor: staticColors.destroyButton },
+              ]}
               onPress={() => removeRepairImage(index)}
             >
-              <Text style={styles.removeImageText}>X</Text>
+              <Text style={{ color: staticColors.buttonText }}>X</Text>
             </TouchableOpacity>
           </View>
         ))}
         {repairImages.length < 6 && (
           <TouchableOpacity
-            style={styles.addImageButton}
+            style={[
+              styles.addImageButton,
+              { borderColor: staticColors.border },
+            ]}
             onPress={pickRepairImage}
           >
-            <CameraIcon height={20} width={20} />
+            <ThemedIcon name={"image-outline"} size={20} />
           </TouchableOpacity>
         )}
       </View>
 
-      <DatePicker
+      <ThemedDatePicker
         modal
         open={showDatePicker}
         date={date}
@@ -333,12 +331,10 @@ const styles = StyleSheet.create({
     textAlignVertical: "bottom",
     paddingTop: 8,
   },
-  repairTypeContainer: {
-    marginBottom: 15,
-  },
-  radioGroup: {
+  typeSelectContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    gap: 10,
+    marginBottom: 20,
   },
   repairItemsContainer: {
     marginBottom: 15,
@@ -354,14 +350,10 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     marginTop: 5,
   },
-  dateButtonText: {
-    fontSize: 16,
-    color: Colors.light.primaryText,
-  },
   repairImagesContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-    marginBottom: 20,
+    marginVertical: 10,
   },
   repairImageContainer: {
     width: 100,
@@ -378,22 +370,16 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: -8,
     right: -8,
-    backgroundColor: Colors.light.cancelButton,
     width: 24,
     height: 24,
     borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",
   },
-  removeImageText: {
-    color: "white",
-    fontWeight: "bold",
-  },
   addImageButton: {
     width: 100,
     height: 100,
-    borderWidth: 1,
-    borderColor: Colors.light.inactiveBorder,
+    borderWidth: 2,
     borderRadius: 5,
     borderStyle: "dashed",
     alignItems: "center",

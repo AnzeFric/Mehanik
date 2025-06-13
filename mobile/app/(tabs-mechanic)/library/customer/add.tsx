@@ -111,6 +111,7 @@ export default function AddCustomerScreen() {
           onPress={handlePress}
           selected={canSave}
           disabled={!canSave}
+          buttonStyle={{ marginBottom: 20 }}
         />
       </ScrollView>
     </ThemedView>
@@ -120,6 +121,6 @@ export default function AddCustomerScreen() {
 const styles = StyleSheet.create({
   childrenContainer: {
     paddingHorizontal: 25,
-    marginVertical: 20,
+    marginTop: 20,
   },
 });

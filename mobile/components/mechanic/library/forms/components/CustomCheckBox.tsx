@@ -1,5 +1,7 @@
-import { Text, View, TouchableHighlight, StyleSheet } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Colors } from "@/constants/Colors";
+import ThemedText from "@/components/global/themed/ThemedText";
+import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 
 interface Props {
   text: string;
@@ -8,16 +10,21 @@ interface Props {
 }
 
 export default function CustomCheckBox({ text, value, onChange }: Props) {
+  const { staticColors } = useAnimatedTheme();
+
   return (
     <View style={styles.checkboxRow}>
-      <TouchableHighlight
-        style={[styles.checkbox, value && styles.checkboxSelected]}
-        underlayColor={Colors.light.underlayColor}
+      <TouchableOpacity
+        style={[
+          styles.checkbox,
+          value && {
+            backgroundColor: staticColors.specialBlue,
+            borderColor: staticColors.specialBlue,
+          },
+        ]}
         onPress={() => onChange(!value)}
-      >
-        <View />
-      </TouchableHighlight>
-      <Text style={styles.checkboxLabel}>{text}</Text>
+      />
+      <ThemedText type={"small"}>{text}</ThemedText>
     </View>
   );
 }
@@ -37,12 +44,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginRight: 10,
-  },
-  checkboxSelected: {
-    backgroundColor: Colors.light.specialBlue,
-    borderColor: Colors.light.specialBlue,
-  },
-  checkboxLabel: {
-    fontSize: 18,
   },
 });

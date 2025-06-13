@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     height: 300,
+    borderStyle: "dashed",
   },
   image: {
     width: "100%",
