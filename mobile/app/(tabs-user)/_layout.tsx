@@ -77,7 +77,7 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="mechanics/mechanic/appointment/[id]"
+          name="mechanics/mechanic/appointment/[email]"
           options={{
             href: null,
           }}
