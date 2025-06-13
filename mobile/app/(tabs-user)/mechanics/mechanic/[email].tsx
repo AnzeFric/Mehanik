@@ -1,17 +1,14 @@
-import {
-  Text,
-  View,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { View, ScrollView, StyleSheet } from "react-native";
 import { useState, useEffect, useCallback, useRef } from "react";
-import { AppStyles } from "@/constants/Styles";
 import { Colors } from "@/constants/Colors";
-import BackIcon from "@/assets/icons/BackIcon.svg";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { MechanicData } from "@/interfaces/user";
 import useMechanicStore from "@/stores/useMechanicStore";
+import TitleRow from "@/components/shared/TitleRow";
+import ThemedView from "@/components/global/themed/ThemedView";
+import ThemedText from "@/components/global/themed/ThemedText";
+import BrandPrices from "@/components/user/items/BrandPrices";
+import ThemedButton from "@/components/global/themed/ThemedButton";
 
 export default function MechanicScreen() {
   const { email } = useLocalSearchParams();
@@ -29,146 +26,92 @@ export default function MechanicScreen() {
   useFocusEffect(
     useCallback(() => {
       return () => {
-        setTimeout(() => {
-          if (scrollRef.current) {
-            scrollRef.current.scrollTo({ y: 0 });
-          }
-        }, 100);
+        if (scrollRef.current) {
+          scrollRef.current.scrollTo({ y: 0 });
+        }
       };
     }, [])
   );
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => router.back()}
-        >
-          <BackIcon height={24} width={24} />
-        </TouchableOpacity>
-        <Text style={AppStyles.bigTitle}>
-          {mechanicData?.firstName} {mechanicData?.lastName}
-        </Text>
-      </View>
-
+    <ThemedView type={"background"} style={{ flex: 1 }}>
+      <TitleRow
+        title={`${mechanicData?.firstName} ${mechanicData?.lastName}`}
+        hasBackButton={true}
+      />
       <ScrollView
         ref={scrollRef}
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.sectionContainer}>
-          <Text style={AppStyles.title}>Lokacija</Text>
+          <ThemedText type={"title"} bold>
+            Lokacija
+          </ThemedText>
           <View style={{ flexDirection: "row" }}>
             {mechanicData?.info.address && (
-              <Text style={AppStyles.text}>
+              <ThemedText type={"normal"}>
                 {mechanicData.info.address}
-                {", "}
-              </Text>
+              </ThemedText>
             )}
             {mechanicData?.info.city && (
-              <Text style={AppStyles.text}>{mechanicData.info.city}</Text>
+              <ThemedText type={"normal"}>
+                {", "}
+                {mechanicData.info.city}
+              </ThemedText>
             )}
           </View>
         </View>
 
         <View style={styles.sectionContainer}>
-          <Text style={AppStyles.title}>Kontakt</Text>
+          <ThemedText type={"title"} bold>
+            Kontakt
+          </ThemedText>
           {mechanicData?.info.phone && (
-            <Text style={AppStyles.text}>{mechanicData.info.phone}</Text>
+            <ThemedText type={"normal"}>{mechanicData.info.phone}</ThemedText>
           )}
           {mechanicData?.email && (
-            <Text style={AppStyles.text}>{mechanicData.email}</Text>
+            <ThemedText type={"normal"}>{mechanicData.email}</ThemedText>
           )}
         </View>
 
-        <View style={styles.priceContainer}>
-          <Text style={AppStyles.title}>Cene</Text>
-
-          <View style={styles.repairPriceSection}>
-            <Text style={styles.repairTitle}>Veliki servis</Text>
-            {mechanicData?.info.prices.largeRepair &&
-            mechanicData.info.prices.largeRepair.length > 0 ? (
-              mechanicData.info.prices.largeRepair.map((brand, index) => (
-                <View style={styles.priceRow} key={index}>
-                  <Text style={AppStyles.smallText}>{brand.name}</Text>
-                  <Text style={[AppStyles.smallText, styles.priceText]}>
-                    {brand.price}€
-                  </Text>
-                </View>
-              ))
-            ) : (
-              <Text style={AppStyles.smallText}>Cene niso podane</Text>
-            )}
+        <ThemedView type={"secondary"} style={styles.priceContainer}>
+          <ThemedText type={"title"} bold>
+            Cene
+          </ThemedText>
+          <View style={styles.priceSection}>
+            <BrandPrices
+              title={"Veliki servis"}
+              brandPrices={mechanicData?.info.prices.largeRepair}
+            />
           </View>
-
-          <View style={styles.repairPriceSection}>
-            <Text style={styles.repairTitle}>Mali servisi</Text>
-            {mechanicData?.info.prices.smallRepair &&
-            mechanicData.info.prices.smallRepair.length > 0 ? (
-              mechanicData.info.prices.smallRepair.map((brand, index) => (
-                <View style={styles.priceRow} key={index}>
-                  <Text style={AppStyles.smallText}>{brand.name}</Text>
-                  <Text style={[AppStyles.smallText, styles.priceText]}>
-                    {brand.price}€
-                  </Text>
-                </View>
-              ))
-            ) : (
-              <Text style={AppStyles.smallText}>Cene niso podane</Text>
-            )}
+          <View style={styles.priceSection}>
+            <BrandPrices
+              title={"Mali servis"}
+              brandPrices={mechanicData?.info.prices.smallRepair}
+            />
           </View>
-
-          <View style={styles.repairPriceSection}>
-            <Text style={styles.repairTitle}>Menjava gum</Text>
-            {mechanicData?.info.prices.tyreChange &&
-            mechanicData.info.prices.tyreChange?.length > 0 ? (
-              mechanicData.info.prices.tyreChange.map((brand, index) => (
-                <View style={styles.priceRow} key={index}>
-                  <Text style={AppStyles.smallText}>{brand.name}</Text>
-                  <Text style={[AppStyles.smallText, styles.priceText]}>
-                    {brand.price}€
-                  </Text>
-                </View>
-              ))
-            ) : (
-              <Text style={AppStyles.smallText}>Cene niso podane</Text>
-            )}
+          <View style={styles.priceSection}>
+            <BrandPrices
+              title={"Menjava gum"}
+              brandPrices={mechanicData?.info.prices.tyreChange}
+            />
           </View>
-        </View>
+        </ThemedView>
 
-        <TouchableOpacity
-          style={styles.button}
+        <ThemedButton
+          buttonType={"small"}
+          buttonText={"Preveri proste termine"}
           onPress={() =>
             router.push(`/mechanics/mechanic/appointment/${email}`)
           }
-        >
-          <Text style={styles.buttonText}>Preveri proste termine</Text>
-        </TouchableOpacity>
+        />
       </ScrollView>
-    </View>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.light.background,
-    paddingTop: 20,
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.light.inactiveBorder,
-    borderStyle: "dashed",
-    paddingBottom: 15,
-    marginHorizontal: 25,
-    paddingHorizontal: 5,
-  },
-  backButton: {
-    marginRight: 15,
-  },
   contentContainer: {
     paddingHorizontal: 25,
     paddingVertical: 20,
@@ -184,50 +127,14 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   priceContainer: {
-    backgroundColor: "#fff",
     padding: 15,
-    borderRadius: 12,
+    borderRadius: 4,
     gap: 10,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 3,
   },
-  priceNote: {
-    color: Colors.light.secondaryText,
-    marginBottom: 5,
-  },
-  repairPriceSection: {
+  priceSection: {
     marginTop: 5,
     borderTopWidth: 1,
     borderTopColor: Colors.light.inactiveBorder,
     paddingTop: 8,
-  },
-  repairTitle: {
-    ...AppStyles.text,
-    fontWeight: "bold",
-    marginBottom: 5,
-  },
-  priceRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 3,
-  },
-  priceText: {
-    fontWeight: "bold",
-  },
-  button: {
-    backgroundColor: Colors.light.specialBlue,
-    paddingVertical: 12,
-    borderRadius: 8,
-    alignItems: "center",
-    elevation: 3,
-    marginTop: 10,
-  },
-  buttonText: {
-    color: Colors.light.primaryText,
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
   },
 });

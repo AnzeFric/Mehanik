@@ -145,7 +145,6 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalView: {
-    backgroundColor: Colors.light.background,
     borderRadius: 6,
     width: "75%",
     paddingVertical: 15,
