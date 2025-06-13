@@ -90,6 +90,7 @@ export const useAnimatedTheme = () => {
     activeIcon: theme.activeIcon,
     inactiveIcon: theme.inactiveIcon,
     blueIcon: theme.blueIcon,
+    iconDestroy: theme.iconDestroy,
 
     /* Inputs */
     inputBackground: theme.inputBackground,

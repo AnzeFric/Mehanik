@@ -1,8 +1,6 @@
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { useState, useCallback, useEffect } from "react";
 import { useLocalSearchParams, router, useFocusEffect } from "expo-router";
-import { Colors } from "@/constants/Colors";
-import MenuIcon from "@/assets/icons/MenuIcon.svg";
 import VehicleDisplay from "@/components/mechanic/library/displays/Vehicle";
 import RepairsDisplay from "@/components/mechanic/library/displays/Repairs";
 import { CustomerVehicleData } from "@/interfaces/customer";
@@ -16,12 +14,19 @@ import CustomerDisplay from "@/components/mechanic/library/displays/Customer";
 import { RepairData } from "@/interfaces/repair";
 import useCustomerStore from "@/stores/useCustomerStore";
 import { Ionicons } from "@expo/vector-icons";
+import ThemedIcon from "@/components/global/themed/ThemedIcon";
+import ThemedView from "@/components/global/themed/ThemedView";
+import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import ThemedText from "@/components/global/themed/ThemedText";
 
 export default function DetailCustomerScreen() {
   const { uuid, firstName } = useLocalSearchParams(); // Vehicle uuid
+
   const { getVehicleRepairs } = useRepair();
   const { customers, shouldRefetch, setShouldRefetch } = useCustomerStore();
   const { deleteCustomer } = useCustomer();
+  const { staticColors } = useAnimatedTheme();
+
   const [repairList, setRepairList] = useState<Array<RepairData>>([]);
   const [customer, setCustomer] = useState<CustomerVehicleData>();
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
@@ -78,41 +83,36 @@ export default function DetailCustomerScreen() {
     }
   };
 
-  const menuIcon: React.ReactNode = (
-    <MenuIcon
-      height={30}
-      width={30}
-      style={{ alignSelf: "flex-start" }}
-      onPress={() => {
-        setIsMenuVisible(!isMenuVisible);
-      }}
-    />
-  );
-
   const menu: React.ReactNode = (
-    <View style={styles.menuContainer}>
+    <ThemedView type={"secondary"} style={styles.menuContainer}>
       <TouchableOpacity
-        style={styles.menuItemContainer}
+        style={[
+          styles.menuItemContainer,
+          styles.menuLine,
+          { borderColor: staticColors.border },
+        ]}
         onPress={() => router.push(`/library/customer/edit/${uuid}`)}
       >
-        <Ionicons
-          name="create-outline"
-          size={18}
-          color={Colors.light.primaryText}
-        />
-        <Text style={styles.menuItem}>UREDI</Text>
+        <Ionicons name="create" size={18} color={staticColors.blueIcon} />
+        <ThemedText type={"small"} bold style={styles.menuItem}>
+          UREDI
+        </ThemedText>
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={[styles.menuItemContainer, styles.menuItemDelete]}
+        style={styles.menuItemContainer}
         onPress={() => setIsModalOpen(true)}
       >
-        <Ionicons name="trash-outline" size={18} color="#E53935" />
-        <Text style={[styles.menuItem, styles.menuItemTextDelete]}>
+        <Ionicons
+          name="trash-outline"
+          size={18}
+          color={staticColors.iconDestroy}
+        />
+        <ThemedText type={"small"} bold style={styles.menuItem}>
           IZBRIŠI
-        </Text>
+        </ThemedText>
       </TouchableOpacity>
-    </View>
+    </ThemedView>
   );
 
   return (
@@ -122,7 +122,15 @@ export default function DetailCustomerScreen() {
         backButton={true}
         isMenuVisible={isMenuVisible}
         menu={menu}
-        menuIcon={menuIcon}
+        menuIcon={
+          <ThemedIcon
+            name={"menu"}
+            size={30}
+            onPress={() => {
+              setIsMenuVisible(!isMenuVisible);
+            }}
+          />
+        }
       >
         <View style={styles.container}>
           {customer ? (
@@ -131,10 +139,11 @@ export default function DetailCustomerScreen() {
                 <VehicleDisplay vehicle={customer.vehicle} />
                 <CustomerDisplay customer={customer.customer} />
               </View>
+              <ThemedText type={"title"}>Narejeni servisi</ThemedText>
               {loading ? (
                 <LoadingScreen
                   type={"partial"}
-                  text={"Nalaganje servisov..."}
+                  text={"Nalaganje..."}
                   style={{ paddingVertical: 30 }}
                 />
               ) : (
@@ -170,16 +179,12 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     gap: 15,
-    paddingBottom: 20,
-    marginBottom: 10,
-    borderBottomWidth: 0.8,
-    borderStyle: "dashed",
+    paddingBottom: 15,
   },
   menuContainer: {
     position: "absolute",
     right: 20,
     top: -10,
-    backgroundColor: "#FFFFFF",
     width: 180,
     borderRadius: 12,
     shadowColor: "#000",
@@ -199,19 +204,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 12,
     paddingHorizontal: 16,
-    marginVertical: 2,
-    borderRadius: 8,
+  },
+  menuLine: {
+    borderBottomWidth: 1,
+    borderStyle: "dashed",
   },
   menuItem: {
-    fontSize: 16,
-    fontWeight: "bold",
     marginLeft: 12,
-    color: Colors.light.primaryText,
-  },
-  menuItemDelete: {
-    backgroundColor: "rgba(229, 57, 53, 0.08)",
-  },
-  menuItemTextDelete: {
-    color: "#E53935",
   },
 });
