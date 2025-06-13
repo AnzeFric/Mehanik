@@ -1,8 +1,9 @@
-import { TextInput, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { useCallback, useEffect, useState } from "react";
 import { CustomerData } from "@/interfaces/customer";
 import { Colors } from "@/constants/Colors";
 import { useFocusEffect } from "expo-router";
+import ThemedTextInput from "@/components/global/themed/ThemedTextInput";
 
 interface Props {
   customer?: CustomerData;
@@ -89,7 +90,7 @@ export default function CustomerForm({ customer, setCustomer }: Props) {
 
   return (
     <>
-      <TextInput
+      <ThemedTextInput
         style={styles.input}
         placeholder={"Ime"}
         value={firstName}
@@ -97,7 +98,7 @@ export default function CustomerForm({ customer, setCustomer }: Props) {
         autoCapitalize={"words"}
       />
 
-      <TextInput
+      <ThemedTextInput
         style={styles.input}
         placeholder={"Priimek"}
         value={lastName}
@@ -105,7 +106,7 @@ export default function CustomerForm({ customer, setCustomer }: Props) {
         autoCapitalize={"words"}
       />
 
-      <TextInput
+      <ThemedTextInput
         style={styles.input}
         placeholder={"Telefonska št. (ni obvezno)"}
         value={phone || ""}
@@ -114,7 +115,7 @@ export default function CustomerForm({ customer, setCustomer }: Props) {
         keyboardType={"phone-pad"}
       />
 
-      <TextInput
+      <ThemedTextInput
         style={styles.input}
         placeholder={"Email (ni obvezno)"}
         value={email || ""}
