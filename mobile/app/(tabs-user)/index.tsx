@@ -1,12 +1,13 @@
 import { View, StyleSheet, ScrollView } from "react-native";
 import { useState, useRef, useCallback } from "react";
-import MenuIcon from "@/assets/icons/MenuIcon.svg";
 import { router, useFocusEffect } from "expo-router";
 import { AppointmentData } from "@/interfaces/user";
 import Appointment from "@/components/user/items/Appointment";
 import ModalAppointment from "@/components/mechanic/modals/ModalAppointment";
 import ModalPrompt from "@/components/mechanic/modals/ModalPrompt";
 import TitleRow from "@/components/shared/TitleRow";
+import ThemedView from "@/components/global/themed/ThemedView";
+import ThemedIcon from "@/components/global/themed/ThemedIcon";
 
 const fakeAppointmentData: AppointmentData[] = [
   {
@@ -123,35 +124,32 @@ export default function HomeUserScreen() {
     setModalVisible(false);
   };
 
-  // Make ScrollView return to top after screen is unfocused
   useFocusEffect(
     useCallback(() => {
       return () => {
-        setTimeout(() => {
-          if (scrollRef.current) {
-            scrollRef.current.scrollTo({ y: 0 });
-          }
-        }, 100); // For smooth transition between screens
+        if (scrollRef.current) {
+          scrollRef.current.scrollTo({ y: 0 });
+        }
       };
     }, [])
   );
 
   return (
-    <View style={styles.container}>
+    <ThemedView type={"background"} style={{ flex: 1 }}>
       <TitleRow
         title={"Termini"}
         hasBackButton={false}
         menuButton={
-          <MenuIcon
-            height={30}
-            width={30}
+          <ThemedIcon
+            name={"menu"}
+            size={30}
             onPress={() => {
               router.push("/(shared)/settings");
             }}
           />
         }
       />
-      <ScrollView style={{ paddingHorizontal: 25, flex: 1 }} ref={scrollRef}>
+      <ScrollView style={styles.container} ref={scrollRef}>
         <View style={styles.contentContainer}>
           {appointmentList.map((appointment, index) => (
             <Appointment
@@ -184,20 +182,14 @@ export default function HomeUserScreen() {
             onCancel={handleModalCancel}
           />
         ))}
-    </View>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  },
-  header: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
     paddingHorizontal: 25,
+    flex: 1,
   },
   contentContainer: {
     gap: 10,
