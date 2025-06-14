@@ -24,6 +24,7 @@ import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 import ThemedIcon from "@/components/global/themed/ThemedIcon";
 import EditMenu from "@/components/mechanic/library/EditMenu";
 import ThemedText from "@/components/global/themed/ThemedText";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function DetailRepairScreen() {
   const { uuid } = useLocalSearchParams(); // Vehicle uuid
@@ -141,7 +142,11 @@ export default function DetailRepairScreen() {
                           { backgroundColor: staticColors.specialBlue },
                         ]}
                       >
-                        <ThemedIcon name="checkmark" size={14} />
+                        <Ionicons
+                          name="checkmark"
+                          size={14}
+                          color={staticColors.iconWithDarkBackground}
+                        />
                       </View>
                       <ThemedText type={"small"}>
                         {formatRepairItems(key)}

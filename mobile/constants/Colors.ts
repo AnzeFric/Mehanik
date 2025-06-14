@@ -35,6 +35,7 @@ export const Colors = {
     inactiveIcon: "#C3C3C3",
     blueIcon: "#003366",
     iconDestroy: "#E24A4A",
+    iconWithDarkBackground: "#FFFFFF",
 
     /* Inputs */
     inputBackground: "#F8F8F8",
@@ -86,6 +87,7 @@ export const Colors = {
     inactiveIcon: "#6A6A6A",
     blueIcon: "#4A9EFF",
     iconDestroy: "#FF6B6B",
+    iconWithDarkBackground: "#FFFFFF",
 
     /* Inputs */
     inputBackground: "#6A6A6A",
