@@ -36,6 +36,7 @@ const repairRouter = require("./routes/repair");
 const vehicleRouter = require("./routes/vehicle");
 const userRouter = require("./routes/accounts/user");
 const customerRouter = require("./routes/accounts/customer");
+const appointmentRouter = require("./routes/accounts/appointment");
 
 // Public routes
 app.use("/api/auth", authRoutes);
@@ -48,6 +49,7 @@ app.use("/api/users", userRouter);
 app.use("/api/repairs", repairRouter);
 app.use("/api/vehicles", vehicleRouter);
 app.use("/api/customers", customerRouter);
+app.use("/api/appointments", appointmentRouter);
 
 // 404 handler
 app.use("*", (req, res) => {
