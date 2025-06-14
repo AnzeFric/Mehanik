@@ -46,16 +46,6 @@ export default function RepairForm({ repair, setRepair }: Props) {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [options, setOptions] = useState<RepairOptions>(defaultOptions);
 
-  const handleChange = (key: keyof typeof options, value: boolean) => {
-    setOptions((prev) => ({ ...prev, [key]: value }));
-  };
-
-  const removeRepairImage = (index: number) => {
-    const newImages = [...repairImages];
-    newImages.splice(index, 1);
-    setRepairImages(newImages);
-  };
-
   const pickRepairImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
@@ -73,17 +63,12 @@ export default function RepairForm({ repair, setRepair }: Props) {
         });
 
         // Add data URL prefix for proper format
-        const base64WithPrefix = `data:image/jpeg;base64,${base64}`;
-        setRepairImages([...repairImages, base64WithPrefix]);
+        const newImage = `data:image/jpeg;base64,${base64}`;
+        handleImageAdd(newImage);
       } catch (error) {
         console.error("Error converting image to base64:", error);
       }
     }
-  };
-
-  const handleDateSelected = (selectedDate: Date) => {
-    setDate(selectedDate);
-    setShowDatePicker(false);
   };
 
   useEffect(() => {
@@ -98,33 +83,109 @@ export default function RepairForm({ repair, setRepair }: Props) {
     }
   }, [repair]);
 
-  // Update parent whenever form data changes
-  useEffect(() => {
-    if (type === "other") {
-      var repairData: RepairData = {
+  // Helper function to update parent
+  const updateParent = useCallback(
+    (updates: Partial<RepairData>) => {
+      const repairData: RepairData = {
         uuid: repair?.uuid || "",
         type: type,
-        options: defaultOptions,
-        description: description,
         price: parseFloat(price) || null,
-        note: note,
         date: date,
-        images: repairImages,
-      };
-    } else {
-      var repairData: RepairData = {
-        uuid: repair?.uuid || "",
-        type: type,
         options: options,
-        description: "",
-        price: parseFloat(price) || null,
-        note: note,
-        date: date,
-        images: repairImages,
+        description: description || null,
+        images: repairImages || null,
+        note: note || null,
+        ...updates,
       };
-    }
-    setRepair(repairData);
-  }, [type, description, note, price, date, repairImages, options]);
+      setRepair(repairData);
+    },
+    [
+      repair,
+      type,
+      description,
+      price,
+      note,
+      repairImages,
+      date,
+      options,
+      setRepair,
+    ]
+  );
+
+  const handleDescriptionChange = useCallback(
+    (value: string) => {
+      setDescription(value);
+      updateParent({ description: value });
+    },
+    [updateParent]
+  );
+
+  const handleNoteChange = useCallback(
+    (value: string) => {
+      setNote(value);
+      updateParent({ note: value });
+    },
+    [updateParent]
+  );
+
+  const handlePriceChange = useCallback(
+    (value: string) => {
+      setPrice(value);
+      updateParent({ price: parseFloat(value) });
+    },
+    [updateParent]
+  );
+
+  const handleDateChange = useCallback(
+    (value: Date) => {
+      setDate(value);
+      setShowDatePicker(false);
+      updateParent({ date: value });
+    },
+    [updateParent]
+  );
+
+  const handleTypeChange = useCallback(
+    (newType: "small" | "large" | "other") => {
+      setType(newType);
+      updateParent({ type: newType });
+    },
+    [updateParent]
+  );
+
+  const handleChange = useCallback(
+    (key: keyof typeof options, value: boolean) => {
+      setOptions((prev) => {
+        const newOptions = { ...prev, [key]: value };
+        updateParent({ options: newOptions });
+        return newOptions;
+      });
+    },
+    [updateParent]
+  );
+
+  const handleImageAdd = useCallback(
+    (base64WithPrefix: string) => {
+      setRepairImages((prev) => {
+        const newImages = [...prev, base64WithPrefix];
+        updateParent({ images: newImages });
+        return newImages;
+      });
+    },
+    [updateParent]
+  );
+
+  const handleImageRemove = useCallback(
+    (index: number) => {
+      setRepairImages((prev) => {
+        const newImages = [...prev];
+        newImages.splice(index, 1);
+        updateParent({ images: newImages });
+        return newImages;
+      });
+    },
+    [updateParent]
+  );
 
   useFocusEffect(
     useCallback(() => {
@@ -148,19 +209,19 @@ export default function RepairForm({ repair, setRepair }: Props) {
         <ThemedButton
           buttonType={"option"}
           buttonText={"mali"}
-          onPress={() => setType("small")}
+          onPress={() => handleTypeChange("small")}
           selected={type === "small"}
         />
         <ThemedButton
           buttonType={"option"}
           buttonText={"veliki"}
-          onPress={() => setType("large")}
+          onPress={() => handleTypeChange("large")}
           selected={type === "large"}
         />
         <ThemedButton
           buttonType={"option"}
           buttonText={"drugo"}
-          onPress={() => setType("other")}
+          onPress={() => handleTypeChange("other")}
           selected={type === "other"}
         />
       </View>
@@ -240,7 +301,7 @@ export default function RepairForm({ repair, setRepair }: Props) {
           style={[styles.input, styles.textArea]}
           placeholder={"Opišite izveden servis"}
           value={description}
-          onChangeText={setDescription}
+          onChangeText={handleDescriptionChange}
           autoCapitalize={"sentences"}
           multiline={true}
           numberOfLines={4}
@@ -250,14 +311,14 @@ export default function RepairForm({ repair, setRepair }: Props) {
         style={styles.input}
         placeholder={"Opombe za servis (ni obvezno)"}
         value={note}
-        onChangeText={setNote}
+        onChangeText={handleNoteChange}
         autoCapitalize={"sentences"}
       />
       <ThemedTextInput
         style={styles.input}
         placeholder={"Cena (ni obvezno)"}
         value={price}
-        onChangeText={setPrice}
+        onChangeText={handlePriceChange}
         autoCapitalize={"none"}
         keyboardType={"numeric"}
       />
@@ -282,7 +343,7 @@ export default function RepairForm({ repair, setRepair }: Props) {
                 styles.removeImageButton,
                 { backgroundColor: staticColors.destroyButton },
               ]}
-              onPress={() => removeRepairImage(index)}
+              onPress={() => handleImageRemove(index)}
             >
               <Text style={{ color: staticColors.buttonText }}>X</Text>
             </TouchableOpacity>
@@ -305,7 +366,7 @@ export default function RepairForm({ repair, setRepair }: Props) {
         modal
         open={showDatePicker}
         date={date}
-        onConfirm={handleDateSelected}
+        onConfirm={handleDateChange}
         onCancel={() => setShowDatePicker(false)}
         mode="date"
         locale="sl" // Slovenian locale

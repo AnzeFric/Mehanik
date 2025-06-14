@@ -16,7 +16,6 @@ export default function CustomerForm({ customer, setCustomer }: Props) {
   const [phone, setPhone] = useState<string | null>("");
   const [email, setEmail] = useState<string | null>("");
 
-  // Only populate form fields when customer prop changes
   useEffect(() => {
     if (customer) {
       setFirstName(customer.firstName || "");
@@ -26,7 +25,6 @@ export default function CustomerForm({ customer, setCustomer }: Props) {
     }
   }, [customer]);
 
-  // Helper function to update parent
   const updateParent = useCallback(
     (updates: Partial<CustomerData>) => {
       const customerData: CustomerData = {
@@ -35,14 +33,13 @@ export default function CustomerForm({ customer, setCustomer }: Props) {
         lastName: lastName,
         phone: phone || null,
         email: email || null,
-        ...updates, // Apply the specific update
+        ...updates,
       };
       setCustomer(customerData);
     },
     [customer, firstName, lastName, phone, email, setCustomer]
   );
 
-  // Individual change handlers
   const handleFirstNameChange = useCallback(
     (value: string) => {
       setFirstName(value);
