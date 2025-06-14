@@ -1,5 +1,4 @@
 import { View, Modal, StyleSheet } from "react-native";
-import { Colors } from "@/constants/Colors";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedButton from "@/components/global/themed/ThemedButton";
 import ThemedText from "@/components/global/themed/ThemedText";
@@ -21,7 +20,7 @@ export default function ModalReject({
     <Modal transparent={true} visible={isVisible} onRequestClose={onCancel}>
       <View style={styles.centeredView}>
         <ThemedView type={"primary"} style={styles.modalView}>
-          <ThemedText type={"small"} style={styles.modalText}>
+          <ThemedText type={"normal"} style={styles.modalText}>
             {message}
           </ThemedText>
           <View style={styles.buttonContainer}>
@@ -60,27 +59,8 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     gap: 60,
   },
-  button: {
-    borderRadius: 12,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    elevation: 2,
-  },
-  buttonCancel: {
-    backgroundColor: Colors.light.cancelButton,
-  },
-  buttonConfirm: {
-    backgroundColor: Colors.light.confirmButton,
-  },
-  textStyle: {
-    color: Colors.light.background,
-    textAlign: "center",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
   modalText: {
     marginBottom: 15,
     textAlign: "center",
-    fontSize: 20,
   },
 });
