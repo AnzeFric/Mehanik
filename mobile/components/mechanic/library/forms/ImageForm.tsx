@@ -63,7 +63,10 @@ export default function ImageForm({ image, setImage }: Props) {
 
   return (
     <TouchableOpacity
-      style={[styles.cameraContainer, { borderColor: staticColors.border }]}
+      style={[
+        styles.cameraContainer,
+        { borderColor: staticColors.border, borderWidth: imageLocal ? 0 : 2 },
+      ]}
       onPress={pickCustomerImage}
     >
       {imageLocal ? (
@@ -77,7 +80,6 @@ export default function ImageForm({ image, setImage }: Props) {
 
 const styles = StyleSheet.create({
   cameraContainer: {
-    borderWidth: 2,
     borderRadius: 4,
     alignItems: "center",
     justifyContent: "center",
