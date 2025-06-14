@@ -1,16 +1,9 @@
-import {
-  Text,
-  View,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
-import { AppStyles } from "@/constants/Styles";
-import { Colors } from "@/constants/Colors";
+import { View, StyleSheet, ScrollView } from "react-native";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useRef } from "react";
 import TitleRow from "@/components/shared/TitleRow";
 import ThemedView from "@/components/global/themed/ThemedView";
+import ThemedButton from "@/components/global/themed/ThemedButton";
 
 interface TemplateScreenProps {
   title: string;
@@ -36,15 +29,12 @@ export default function TemplateView({
 }: TemplateScreenProps) {
   const scrollRef = useRef<ScrollView>(null);
 
-  // Make ScrollView return to top after screen is unfocused
   useFocusEffect(
     useCallback(() => {
       return () => {
-        setTimeout(() => {
-          if (scrollRef.current) {
-            scrollRef.current.scrollTo({ y: 0 });
-          }
-        }, 100); // For smooth transition between screens
+        if (scrollRef.current) {
+          scrollRef.current.scrollTo({ y: 0 });
+        }
       };
     }, [])
   );
@@ -57,15 +47,15 @@ export default function TemplateView({
         menuButton={menuIcon}
       />
       <View>{isMenuVisible && menu}</View>
-      <ScrollView style={styles.childrenContainer} ref={scrollRef}>
+      <ScrollView ref={scrollRef}>
         {children}
         {buttonText ? (
-          <TouchableOpacity
-            style={[AppStyles.button, styles.button]}
+          <ThemedButton
+            buttonType={"small"}
+            buttonText={buttonText}
             onPress={onButtonPress}
-          >
-            <Text style={AppStyles.buttonText}>{buttonText}</Text>
-          </TouchableOpacity>
+            buttonStyle={styles.button}
+          />
         ) : (
           <View style={styles.button} />
         )}
@@ -79,26 +69,7 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 15,
   },
-  header: {
-    borderBottomColor: Colors.light.inactiveBorder,
-    borderBottomWidth: 1,
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    borderStyle: "dashed",
-    paddingTop: 20,
-    marginHorizontal: 25,
-  },
-  userName: {
-    fontSize: 32,
-    flex: 1,
-    textAlign: "center",
-  },
-  childrenContainer: {
-    flex: 1,
-  },
   button: {
-    marginHorizontal: 25,
-    marginBottom: 25,
+    margin: 25,
   },
 });
