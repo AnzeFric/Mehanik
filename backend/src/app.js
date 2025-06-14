@@ -35,8 +35,8 @@ const authRoutes = require("./routes/auth");
 const repairRouter = require("./routes/repair");
 const vehicleRouter = require("./routes/vehicle");
 const userRouter = require("./routes/accounts/user");
+const appointmentRouter = require("./routes/appointment");
 const customerRouter = require("./routes/accounts/customer");
-const appointmentRouter = require("./routes/accounts/appointment");
 
 // Public routes
 app.use("/api/auth", authRoutes);
