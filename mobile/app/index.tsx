@@ -4,6 +4,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useState, useEffect } from "react";
 import LoadingScreen from "@/components/global/LoadingScreen";
 import useUserStore from "@/stores/useUserStore";
+import ThemedView from "@/components/global/themed/ThemedView";
 
 export default function HomeScreen() {
   const { getUser } = useUser();
@@ -46,13 +47,17 @@ export default function HomeScreen() {
     return <LoadingScreen type={"full"} text={"Nalaganje..."} />;
   }
 
-  return isLoggined ? (
-    currentUser.accountType === "user" ? (
-      <Redirect href="/(tabs-user)" />
-    ) : (
-      <Redirect href="/(tabs-mechanic)" />
-    )
-  ) : (
-    <Redirect href="/(auth)/login" />
+  return (
+    <ThemedView type={"background"} style={{ flex: 1 }}>
+      {isLoggined ? (
+        currentUser.accountType === "user" ? (
+          <Redirect href="/(tabs-user)" />
+        ) : (
+          <Redirect href="/(tabs-mechanic)" />
+        )
+      ) : (
+        <Redirect href="/(auth)/login" />
+      )}
+    </ThemedView>
   );
 }
