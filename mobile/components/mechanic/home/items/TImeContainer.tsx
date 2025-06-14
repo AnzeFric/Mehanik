@@ -1,9 +1,8 @@
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import TimeItem from "./TimeItem";
-import ThemedView from "@/components/global/themed/ThemedView";
-import ThemedText from "@/components/global/themed/ThemedText";
 import { useAppointment } from "@/hooks/useAppointment";
 import { GroupedAppointmentData } from "@/interfaces/appointment";
+import EmptyTimeItem from "./EmptyTimeItem";
 
 interface Props {
   time: string;
@@ -26,24 +25,8 @@ export default function TimeContainer({
       {appointment && isAppointmentStartHour(hour, appointment) ? (
         <TimeItem appointment={appointment} itemHeight={itemHeight} />
       ) : !appointment ? (
-        <ThemedView
-          type={"primary"}
-          style={[styles.emptySlot, { height: itemHeight }]}
-        >
-          <ThemedText type={"small"}>Prazen termin</ThemedText>
-        </ThemedView>
+        <EmptyTimeItem itemHeight={itemHeight} onPress={() => {}} />
       ) : null}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  emptySlot: {
-    borderRadius: 8,
-    borderWidth: 1,
-    borderStyle: "dashed",
-    borderColor: "#D1D5DB",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
