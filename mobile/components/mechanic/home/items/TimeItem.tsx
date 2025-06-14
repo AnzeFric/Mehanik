@@ -53,13 +53,11 @@ export default function TimeItem({ appointment, itemHeight }: Props) {
     <ThemedView type={"secondary"}>
       <TouchableOpacity style={container}>
         <View style={{ flexDirection: "row" }}>
-          <ThemedText type={"small"} style={styles.name}>
+          <ThemedText type={"small"}>
             {appointment.customerFirstName} {appointment.customerLastName}
             {", "}
           </ThemedText>
-          <ThemedText type={"small"} style={styles.durationText}>
-            {getDurationText()}
-          </ThemedText>
+          <ThemedText type={"small"}>{getDurationText()}</ThemedText>
         </View>
         <View style={styles.statusContainer}>
           <View style={statusIndicator} />
@@ -82,16 +80,6 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderLeftWidth: 6,
     padding: 12,
-  },
-  durationText: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#1F2937",
-  },
-  name: {
-    fontSize: 15,
-    fontWeight: "500",
-    color: "#111827",
   },
   statusContainer: {
     flexDirection: "row",
