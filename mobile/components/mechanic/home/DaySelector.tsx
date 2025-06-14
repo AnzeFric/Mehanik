@@ -6,11 +6,11 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
-import DatePicker from "react-native-date-picker";
 import { Ionicons } from "@expo/vector-icons";
 import { useAppointment } from "@/hooks/useAppointment";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 import DateButton from "./items/DateButton";
+import ThemedDatePicker from "@/components/global/themed/ThemedDatePicker";
 
 const monthNames = [
   "Januar",
@@ -223,7 +223,7 @@ export default function DaySelector({
         </TouchableOpacity>
       </View>
 
-      <DatePicker
+      <ThemedDatePicker
         modal
         open={showDatePicker}
         date={selectedDate}
