@@ -1,4 +1,4 @@
-import { View, StyleSheet, Alert } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useState } from "react";
 import { AppStyles } from "@/constants/Styles";
 import { router } from "expo-router";
@@ -10,6 +10,7 @@ import { useTheme } from "@/context/ThemeContext";
 import ThemedScrollView from "@/components/global/themed/ThemedScrollView";
 import ThemedText from "@/components/global/themed/ThemedText";
 import ThemedButton from "@/components/global/themed/ThemedButton";
+import ModalPrompt from "@/components/shared/modals/ModalPrompt";
 
 export default function SettingsScreen() {
   const { handleLogout } = useAuth();
@@ -18,20 +19,8 @@ export default function SettingsScreen() {
 
   const { selectedTheme, setSelectedTheme } = useTheme();
 
-  const [notificationsEnabled, setNotificationsEnabled] =
-    useState<boolean>(true);
-
-  const handleDeleteUser = () => {
-    Alert.alert("Brisanje računa", "Ste prepričani?", [
-      {
-        text: "Zavrni",
-      },
-      {
-        text: "Potrdi",
-        onPress: () => deleteUser,
-      },
-    ]);
-  };
+  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const [deleteModal, setDeleteModal] = useState(false);
 
   const handleEditMechanic = () => {
     router.push("/(shared)/profile");
@@ -124,11 +113,17 @@ export default function SettingsScreen() {
             <ThemedButton
               buttonType={"small"}
               buttonText={"Odstrani"}
-              onPress={handleDeleteUser}
+              onPress={() => setDeleteModal(true)}
             />
           </View>
         </View>
       </View>
+      <ModalPrompt
+        isVisible={deleteModal}
+        message={"Ste prepričani, da želite izbrisati račun?"}
+        onConfirm={() => deleteUser()}
+        onCancel={() => setDeleteModal(false)}
+      />
     </ThemedScrollView>
   );
 }

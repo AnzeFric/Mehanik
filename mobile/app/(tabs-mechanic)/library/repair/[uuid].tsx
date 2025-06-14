@@ -13,7 +13,7 @@ import {
   formatRepairItems,
   formatCurrency,
 } from "@/constants/util";
-import ModalPrompt from "@/components/mechanic/modals/ModalPrompt";
+import ModalPrompt from "@/components/shared/modals/ModalPrompt";
 import LoadingScreen from "@/components/global/LoadingScreen";
 import { useRepair } from "@/hooks/useRepair";
 import TitleRow from "@/components/shared/TitleRow";

@@ -1,11 +1,11 @@
-import { View, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import { useState, useCallback, useEffect } from "react";
 import { useLocalSearchParams, router, useFocusEffect } from "expo-router";
 import VehicleDisplay from "@/components/mechanic/library/displays/Vehicle";
 import RepairsDisplay from "@/components/mechanic/library/displays/Repairs";
 import { CustomerVehicleData } from "@/interfaces/customer";
 import TemplateView from "@/components/mechanic/library/TemplateView";
-import ModalPrompt from "@/components/mechanic/modals/ModalPrompt";
+import ModalPrompt from "@/components/shared/modals/ModalPrompt";
 import PlusButton from "@/components/global/PlusButton";
 import { useCustomer } from "@/hooks/useCustomer";
 import { useRepair } from "@/hooks/useRepair";

@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useState } from "react";
 import { Colors } from "@/constants/Colors";
-import ModalPrompt from "../modals/ModalPrompt";
-import ModalAppointment from "../modals/ModalAppointment";
+import ModalPrompt from "../../shared/modals/ModalPrompt";
+import ModalAppointment from "../../shared/modals/ModalAppointment";
 import { formatDateTime } from "@/constants/util";
 import { AppointmentData } from "@/interfaces/appointment";
 import { Ionicons } from "@expo/vector-icons";
