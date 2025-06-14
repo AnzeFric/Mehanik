@@ -13,11 +13,10 @@ import LoadingScreen from "@/components/global/LoadingScreen";
 import CustomerDisplay from "@/components/mechanic/library/displays/Customer";
 import { RepairData } from "@/interfaces/repair";
 import useCustomerStore from "@/stores/useCustomerStore";
-import { Ionicons } from "@expo/vector-icons";
 import ThemedIcon from "@/components/global/themed/ThemedIcon";
-import ThemedView from "@/components/global/themed/ThemedView";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 import ThemedText from "@/components/global/themed/ThemedText";
+import EditMenu from "@/components/mechanic/library/EditMenu";
 
 export default function DetailCustomerScreen() {
   const { uuid, firstName } = useLocalSearchParams(); // Vehicle uuid
@@ -83,45 +82,18 @@ export default function DetailCustomerScreen() {
     }
   };
 
-  const menu: React.ReactNode = (
-    <ThemedView type={"secondary"} style={styles.menuContainer}>
-      <TouchableOpacity
-        style={[
-          styles.menuItemContainer,
-          styles.menuLine,
-          { borderColor: staticColors.border },
-        ]}
-        onPress={() => router.push(`/library/customer/edit/${uuid}`)}
-      >
-        <Ionicons name="create" size={18} color={staticColors.blueIcon} />
-        <ThemedText type={"small"} bold style={styles.menuItem}>
-          UREDI
-        </ThemedText>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.menuItemContainer}
-        onPress={() => setIsModalOpen(true)}
-      >
-        <Ionicons
-          name="trash-outline"
-          size={18}
-          color={staticColors.iconDestroy}
-        />
-        <ThemedText type={"small"} bold style={styles.menuItem}>
-          IZBRIŠI
-        </ThemedText>
-      </TouchableOpacity>
-    </ThemedView>
-  );
-
   return (
     <>
       <TemplateView
         title={`${firstName}`}
         backButton={true}
         isMenuVisible={isMenuVisible}
-        menu={menu}
+        menu={
+          <EditMenu
+            onEditPress={() => router.push(`/library/customer/edit/${uuid}`)}
+            onDeleteClose={() => setIsModalOpen(true)}
+          />
+        }
         menuIcon={
           <ThemedIcon
             name={"menu"}

@@ -1,6 +1,5 @@
 import {
   View,
-  Text,
   ScrollView,
   TouchableOpacity,
   StyleSheet,
@@ -8,7 +7,6 @@ import {
 } from "react-native";
 import { useState, useCallback, useMemo } from "react";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
-import { Colors } from "@/constants/Colors";
 import {
   formatDate,
   formatRepairType,
@@ -16,18 +14,24 @@ import {
   formatCurrency,
 } from "@/constants/util";
 import ModalPrompt from "@/components/mechanic/modals/ModalPrompt";
-import MenuIcon from "@/assets/icons/MenuIcon.svg";
-import { Ionicons } from "@expo/vector-icons";
 import LoadingScreen from "@/components/global/LoadingScreen";
 import { useRepair } from "@/hooks/useRepair";
 import TitleRow from "@/components/shared/TitleRow";
 import useCustomerStore from "@/stores/useCustomerStore";
 import ImageView from "react-native-image-viewing";
+import ThemedView from "@/components/global/themed/ThemedView";
+import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import ThemedIcon from "@/components/global/themed/ThemedIcon";
+import EditMenu from "@/components/mechanic/library/EditMenu";
+import ThemedText from "@/components/global/themed/ThemedText";
 
 export default function DetailRepairScreen() {
   const { uuid } = useLocalSearchParams(); // Vehicle uuid
+
+  const { staticColors } = useAnimatedTheme();
   const { setShouldRefetch } = useCustomerStore();
   const { currentRepairFocus, deleteVehicleRepair } = useRepair();
+
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
   const [imageViewVisible, setImageViewVisible] = useState(false);
@@ -65,229 +69,154 @@ export default function DetailRepairScreen() {
     }
   };
 
-  const menuIcon: React.ReactNode = (
-    <MenuIcon
-      height={30}
-      width={30}
-      style={{ alignSelf: "flex-start" }}
-      onPress={() => {
-        setIsMenuVisible(!isMenuVisible);
-      }}
-    />
-  );
-
   return (
-    <View style={styles.mainContainer}>
+    <ThemedView type={"background"} style={styles.container}>
+      <TitleRow
+        title={
+          currentRepairFocus
+            ? formatRepairType(currentRepairFocus.type)
+            : "Servis ne obstaja"
+        }
+        hasBackButton={true}
+        menuButton={
+          <ThemedIcon
+            name={"menu"}
+            size={30}
+            onPress={() => {
+              setIsMenuVisible(!isMenuVisible);
+            }}
+          />
+        }
+      />
       <View>
-        <TitleRow
-          title={
-            currentRepairFocus
-              ? formatRepairType(currentRepairFocus.type)
-              : "Servis ne obstaja"
-          }
-          hasBackButton={true}
-          menuButton={menuIcon}
-        />
-
         {isMenuVisible && currentRepairFocus && (
-          <View style={styles.menuContainer}>
-            <TouchableOpacity
-              style={styles.menuItemContainer}
-              onPress={() => router.push(`/library/repair/edit/${uuid}`)}
-            >
-              <Ionicons
-                name="create-outline"
-                size={18}
-                color={Colors.light.activeIcon}
-              />
-              <Text style={styles.menuItem}>UREDI</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[styles.menuItemContainer, styles.menuItemDelete]}
-              onPress={() => setIsModalOpen(true)}
-            >
-              <Ionicons name="trash-outline" size={18} color="#E53935" />
-              <Text style={[styles.menuItem, styles.menuItemTextDelete]}>
-                IZBRIŠI
-              </Text>
-            </TouchableOpacity>
-          </View>
+          <EditMenu
+            onEditPress={() => router.push(`/library/repair/edit/${uuid}`)}
+            onDeleteClose={() => setIsModalOpen(true)}
+          />
         )}
       </View>
       {currentRepairFocus ? (
-        <>
-          <ScrollView
-            style={styles.container}
-            showsVerticalScrollIndicator={false}
-          >
-            <View style={styles.scrollViewContent}>
-              <View style={styles.infoCard}>
-                <View style={styles.infoRow}>
-                  <View style={styles.infoSection}>
-                    <Text style={styles.sectionTitle}>Cena popravila</Text>
-                    <View style={styles.dateContainer}>
-                      <Ionicons
-                        name={"cash-outline"}
-                        size={16}
-                        color={Colors.light.secondaryText}
-                      />
-                      <Text style={styles.dateText}>
-                        {formatCurrency(currentRepairFocus.price)}
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-
-              <View style={styles.infoCard}>
-                <View style={styles.infoRow}>
-                  <View style={styles.infoSection}>
-                    <Text style={styles.sectionTitle}>Datum izvedbe</Text>
-                    <View style={styles.dateContainer}>
-                      <Ionicons
-                        name="calendar-outline"
-                        size={16}
-                        color={Colors.light.secondaryText}
-                      />
-                      <Text style={styles.dateText}>
-                        {formatDate(new Date(currentRepairFocus.date))}
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-
-              <View style={styles.infoCard}>
-                <Text style={styles.sectionTitle}>Izvedena popravila</Text>
-                <View style={styles.repairsList}>
-                  {currentRepairFocus.options &&
-                    Object.entries(currentRepairFocus.options)
-                      .filter(([_, value]) => value)
-                      .map(([key], index) => (
-                        <View key={key} style={styles.repairItem}>
-                          <View style={styles.checkmarkCircle}>
-                            <Ionicons
-                              name="checkmark"
-                              size={14}
-                              color="#FFFFFF"
-                            />
-                          </View>
-                          <Text style={styles.repairText}>
-                            {formatRepairItems(key)}
-                          </Text>
-                        </View>
-                      ))}
-                  {currentRepairFocus.description && (
-                    <Text style={styles.customRepairText}>
-                      {currentRepairFocus.description}
-                    </Text>
-                  )}
-                </View>
-              </View>
-
-              {currentRepairFocus.note && (
-                <View style={styles.infoCard}>
-                  <Text style={styles.sectionTitle}>Dodatne opombe</Text>
-                  <Text style={styles.notesText}>
-                    {currentRepairFocus.note}
-                  </Text>
-                </View>
-              )}
-
-              {currentRepairFocus.images &&
-                currentRepairFocus.images.length > 0 && (
-                  <View style={styles.infoCard}>
-                    <Text style={styles.sectionTitle}>Slike servisa</Text>
-                    <TouchableOpacity
-                      style={styles.imagesPlaceholder}
-                      onPress={() => setImageViewVisible(true)}
-                    >
-                      <Ionicons
-                        name="images-outline"
-                        size={24}
-                        color={Colors.light.secondaryText}
-                      />
-                      <Text style={styles.imagesText}>
-                        {currentRepairFocus.images.length} slik
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                )}
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.contentContainer}
+        >
+          <ThemedView type={"primary"} style={styles.itemContainer}>
+            <ThemedText type={"normal"} bold>
+              Cena popravila
+            </ThemedText>
+            <View style={styles.itemContent}>
+              <ThemedIcon name={"cash-outline"} size={15} />
+              <ThemedText type={"small"}>
+                {formatCurrency(currentRepairFocus.price)}
+              </ThemedText>
             </View>
-          </ScrollView>
-        </>
-      ) : (
-        <LoadingScreen />
-      )}
+          </ThemedView>
 
+          <ThemedView type={"primary"} style={styles.itemContainer}>
+            <ThemedText type={"normal"} bold>
+              Datum izvedbe
+            </ThemedText>
+            <View style={styles.itemContent}>
+              <ThemedIcon name="calendar" size={16} />
+              <ThemedText type={"small"}>
+                {formatDate(new Date(currentRepairFocus.date))}
+              </ThemedText>
+            </View>
+          </ThemedView>
+
+          <ThemedView type={"primary"} style={styles.itemContainer}>
+            <ThemedText type={"normal"} bold>
+              Izvedena popravila
+            </ThemedText>
+            <View style={{ gap: 10 }}>
+              {currentRepairFocus.options &&
+                Object.entries(currentRepairFocus.options)
+                  .filter(([_, value]) => value)
+                  .map(([key], index) => (
+                    <View key={key} style={styles.repairItem}>
+                      <View
+                        style={[
+                          styles.checkmarkCircle,
+                          { backgroundColor: staticColors.specialBlue },
+                        ]}
+                      >
+                        <ThemedIcon name="checkmark" size={14} />
+                      </View>
+                      <ThemedText type={"small"}>
+                        {formatRepairItems(key)}
+                      </ThemedText>
+                    </View>
+                  ))}
+              {currentRepairFocus.description && (
+                <ThemedText type={"small"}>
+                  {currentRepairFocus.description}
+                </ThemedText>
+              )}
+            </View>
+          </ThemedView>
+
+          {currentRepairFocus.note && (
+            <ThemedView type={"primary"} style={styles.itemContainer}>
+              <ThemedText type={"normal"} bold>
+                Dodatne opombe
+              </ThemedText>
+              <ThemedText type={"small"}>{currentRepairFocus.note}</ThemedText>
+            </ThemedView>
+          )}
+
+          {currentRepairFocus.images &&
+            currentRepairFocus.images.length > 0 && (
+              <ThemedView type={"primary"} style={styles.itemContainer}>
+                <ThemedText type={"normal"} bold>
+                  Slike servisa
+                </ThemedText>
+                <ThemedView type={"secondary"} style={{ borderRadius: 12 }}>
+                  <TouchableOpacity
+                    style={styles.imageButton}
+                    onPress={() => setImageViewVisible(true)}
+                  >
+                    <ThemedIcon name="images-outline" size={24} />
+                    <ThemedText type={"small"}>
+                      {currentRepairFocus.images.length} slik
+                    </ThemedText>
+                  </TouchableOpacity>
+                </ThemedView>
+              </ThemedView>
+            )}
+        </ScrollView>
+      ) : (
+        <LoadingScreen type={"full"} text={"Nalaganje..."} />
+      )}
       <ModalPrompt
         isVisible={isModalOpen}
         message={"Trajno boste izbrisali servis. Ste prepričani?"}
         onCancel={() => setIsModalOpen(false)}
         onConfirm={handleDeleteRepairPress}
       />
-
       <ImageView
         images={viewImages}
         imageIndex={0}
         visible={imageViewVisible}
         onRequestClose={() => setImageViewVisible(false)}
       />
-    </View>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    backgroundColor: "#F7F8FA",
-  },
   container: {
     flex: 1,
+    gap: 15,
   },
-  header: {
-    backgroundColor: "#FFFFFF",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 16,
-    paddingTop: 16,
-    paddingBottom: 16,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
-    zIndex: 10,
+  contentContainer: {
+    gap: 15,
+    paddingHorizontal: 25,
   },
-  backButton: {
-    padding: 8,
-    borderRadius: 8,
-  },
-  menuButton: {
-    padding: 8,
-    borderRadius: 8,
-  },
-  titleContainer: {
-    flex: 1,
-    alignItems: "center",
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: Colors.light.primaryText,
-  },
-  scrollViewContent: {
-    padding: 16,
-    gap: 16,
-  },
-  infoCard: {
-    backgroundColor: "#FFFFFF",
-    padding: 16,
+  itemContainer: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    gap: 10,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -298,30 +227,10 @@ const styles = StyleSheet.create({
     elevation: 2,
     borderRadius: 8,
   },
-  infoRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  infoSection: {
-    flex: 1,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: Colors.light.primaryText,
-    marginBottom: 8,
-  },
-  dateContainer: {
+  itemContent: {
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
-  },
-  dateText: {
-    fontSize: 16,
-    color: Colors.light.primaryText,
-  },
-  repairsList: {
-    gap: 10,
   },
   repairItem: {
     flexDirection: "row",
@@ -329,76 +238,18 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   checkmarkCircle: {
-    backgroundColor: Colors.light.specialBlue,
     width: 20,
     height: 20,
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
   },
-  repairText: {
-    fontSize: 16,
-    color: Colors.light.primaryText,
-  },
-  customRepairText: {
-    fontSize: 16,
-    color: Colors.light.primaryText,
-    marginTop: 8,
-  },
-  notesText: {
-    fontSize: 16,
-    color: Colors.light.primaryText,
-  },
-  imagesPlaceholder: {
+  imageButton: {
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
-    backgroundColor: "#F0F0F0",
-    borderRadius: 12,
     padding: 16,
     justifyContent: "center",
-  },
-  imagesText: {
-    fontSize: 16,
-    color: Colors.light.secondaryText,
-  },
-  menuContainer: {
-    position: "absolute",
-    right: 16,
-    top: 70,
-    backgroundColor: "#FFFFFF",
-    width: 180,
-    borderRadius: 12,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.15,
-    shadowRadius: 6,
-    elevation: 5,
-    zIndex: 5,
-    padding: 6,
-    overflow: "hidden",
-  },
-  menuItemContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    marginVertical: 2,
-    borderRadius: 8,
-  },
-  menuItem: {
-    fontSize: 16,
-    fontWeight: "bold",
-    marginLeft: 12,
-    color: Colors.light.primaryText,
-  },
-  menuItemDelete: {
-    backgroundColor: "rgba(229, 57, 53, 0.08)",
-  },
-  menuItemTextDelete: {
-    color: "#E53935",
+    flex: 1,
   },
 });
