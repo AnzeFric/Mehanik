@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import { useAppointment } from "@/hooks/useAppointment";
 import { Appointment } from "@/interfaces/appointment";
 import ThemedText from "@/components/global/themed/ThemedText";
-import TimeContainer from "./items/TImeContainer";
+import TimeContainer from "./items/TimeContainer";
 
 const times = [
   "00:00",
