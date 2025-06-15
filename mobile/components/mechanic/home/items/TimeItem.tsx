@@ -4,7 +4,7 @@ import { formatTime } from "@/constants/util";
 import ThemedText from "@/components/global/themed/ThemedText";
 import ThemedView from "@/components/global/themed/ThemedView";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
-import { Status } from "@/interfaces/user";
+import { AppointmentStatus } from "@/interfaces/appointment";
 
 interface Props {
   appointment: GroupedAppointmentData;
@@ -20,14 +20,14 @@ export default function TimeItem({ appointment, itemHeight }: Props) {
     return `${startTime} - ${endTime}`;
   };
 
-  const statusToColor: Record<Status, string> = {
+  const statusToColor: Record<AppointmentStatus, string> = {
     Accepted: staticColors.accepted,
     Rejected: staticColors.rejected,
     Pending: staticColors.pending,
     Changed: staticColors.changed,
   };
 
-  const statusToText: Record<Status, string> = {
+  const statusToText: Record<AppointmentStatus, string> = {
     Accepted: "Sprejeto",
     Rejected: "Zavrnjeno",
     Pending: "V obravnavi",

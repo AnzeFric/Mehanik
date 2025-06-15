@@ -3,11 +3,11 @@ import { useState, useRef, useCallback } from "react";
 import { router, useFocusEffect } from "expo-router";
 import { AppointmentData } from "@/interfaces/user";
 import Appointment from "@/components/user/items/Appointment";
-import ModalAppointment from "@/components/shared/modals/ModalAppointment";
-import ModalPrompt from "@/components/shared/modals/ModalPrompt";
 import TitleRow from "@/components/shared/TitleRow";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedIcon from "@/components/global/themed/ThemedIcon";
+import ModalAppointment from "@/components/shared/modals/ModalAppointment";
+import ModalPrompt from "@/components/shared/modals/ModalPrompt";
 
 const fakeAppointmentData: AppointmentData[] = [
   {
@@ -101,7 +101,7 @@ const fakeAppointmentData: AppointmentData[] = [
 ];
 
 export default function HomeUserScreen() {
-  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const [selectedAppointment, setSelectedAppointment] =
     useState<AppointmentData | null>(null);
 
@@ -149,16 +149,18 @@ export default function HomeUserScreen() {
           />
         }
       />
-      <ScrollView style={styles.container} ref={scrollRef}>
-        <View style={styles.contentContainer}>
-          {appointmentList.map((appointment, index) => (
-            <Appointment
-              appointmentData={appointment}
-              onPress={() => handleAppointmentPress(appointment)}
-              key={index}
-            />
-          ))}
-        </View>
+      <ScrollView
+        style={styles.container}
+        ref={scrollRef}
+        contentContainerStyle={styles.contentContainer}
+      >
+        {appointmentList.map((appointment, index) => (
+          <Appointment
+            appointmentData={appointment}
+            onPress={() => handleAppointmentPress(appointment)}
+            key={index}
+          />
+        ))}
       </ScrollView>
       {selectedAppointment &&
         (selectedAppointment.status === "Accepted" ||
