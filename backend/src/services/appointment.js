@@ -21,7 +21,23 @@ const appointmentService = {
     return parsedData;
   },
 
-  async saveAppointmentByUserUuid(userUuid, appointmentData) {},
+  async saveAppointmentByUserUuid(userUuid, appointmentData) {
+    const uuid = uuidv4();
+
+    const { error } = await supabase.from("appointments").insert({
+      uuid: uuid,
+      date: appointmentData.date,
+      status: appointmentData.status,
+      user_message: appointmentData.userMessage,
+      mechanic_response: appointmentData.mechanicResponse,
+      fk_user: userUuid,
+      fk_mechanic: appointmentData.mechanicUuid,
+    });
+
+    if (error) throw error;
+
+    return uuid;
+  },
 
   async updateAppointmentByUserUuid(userUuid, appointmentData) {},
 };

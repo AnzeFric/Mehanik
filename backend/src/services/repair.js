@@ -15,7 +15,7 @@ const repairService = {
   },
 
   async saveRepair(mechanicUuid, vehicleUuid, repairData) {
-    let uuid = uuidv4();
+    const uuid = uuidv4();
 
     const { error } = await supabase.from("repairs").insert({
       uuid: uuid,
