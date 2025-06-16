@@ -1,6 +1,5 @@
 import { View, ScrollView, StyleSheet } from "react-native";
 import { useMemo, useState } from "react";
-import { useAppointment } from "@/hooks/useAppointment";
 import { UserAppointmentData } from "@/interfaces/appointment";
 import ThemedText from "@/components/global/themed/ThemedText";
 import TimeContainer from "./items/TimeContainer";
@@ -32,38 +31,17 @@ const times = [
   "23:00",
 ];
 
-const fakeAppointments: UserAppointmentData[] = [
-  {
-    uuid: "asdasd",
-    startDate: new Date(2025, 5, 16, 12, 0, 0),
-    endDate: new Date(2025, 5, 16, 14, 0, 0),
-    status: "accepted",
-    userMessage: "Mali servis",
-    numAppointments: 0,
-    user: {
-      firstName: "Anze",
-      lastName: "Fric",
-      email: "anze.fric@gmail.com",
-    },
-    vehicle: {
-      brand: "Skoda",
-      model: "Octavia",
-      buildYear: 2014,
-    },
-  },
-];
-
 interface Props {
   selectedDate: Date;
 }
 
-// Defines the height that empty and time items will have
+// Defines the height that elements in list will have
 const itemHeight = 100;
 
 export default function TimeList({ selectedDate }: Props) {
-  const { groupAppointments } = useAppointment();
-  const [appointments, setAppointments] =
-    useState<Array<UserAppointmentData>>(fakeAppointments);
+  const [appointments, setAppointments] = useState<Array<UserAppointmentData>>(
+    []
+  );
 
   const groupedAppointments = useMemo(() => {
     const targetDate = selectedDate.toISOString().split("T")[0];
@@ -74,7 +52,7 @@ export default function TimeList({ selectedDate }: Props) {
       return appointmentDate === targetDate;
     });
 
-    return groupAppointments(filtered);
+    return filtered;
   }, [appointments, selectedDate]);
 
   return (

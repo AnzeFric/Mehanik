@@ -7,25 +7,9 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useAppointment } from "@/hooks/useAppointment";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 import DateButton from "./items/DateButton";
 import ThemedDatePicker from "@/components/global/themed/ThemedDatePicker";
-
-const monthNames = [
-  "Januar",
-  "Februar",
-  "Marec",
-  "April",
-  "Maj",
-  "Junij",
-  "Julij",
-  "Avgust",
-  "September",
-  "Oktober",
-  "November",
-  "December",
-];
 
 interface DaySelectorProps {
   selectedDay: string;
@@ -44,7 +28,22 @@ export default function DaySelector({
   selectedDay,
   onDaySelect,
 }: DaySelectorProps) {
-  const { days } = useAppointment();
+  const days = ["Pon", "Tor", "Sre", "Čet", "Pet", "Sob", "Ned"];
+  const months = [
+    "Januar",
+    "Februar",
+    "Marec",
+    "April",
+    "Maj",
+    "Junij",
+    "Julij",
+    "Avgust",
+    "September",
+    "Oktober",
+    "November",
+    "December",
+  ];
+
   const { staticColors } = useAnimatedTheme();
 
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
@@ -91,7 +90,7 @@ export default function DaySelector({
       dates.push({
         dayName: days[dayIndex],
         dayNumber: currentDate.getDate(),
-        month: monthNames[currentDate.getMonth()],
+        month: months[currentDate.getMonth()],
         year: currentDate.getFullYear(),
         fullDate: new Date(currentDate),
       });
@@ -135,7 +134,7 @@ export default function DaySelector({
   };
 
   const formattedCurrentMonth = () => {
-    return `${monthNames[selectedDate.getMonth()]} ${selectedDate.getFullYear()}`;
+    return `${months[selectedDate.getMonth()]} ${selectedDate.getFullYear()}`;
   };
 
   const goToPreviousWeek = () => {
@@ -177,7 +176,7 @@ export default function DaySelector({
           style={[styles.todayButton, { backgroundColor: staticColors.button }]}
           onPress={() => handleDateSelected(new Date())}
         >
-          <Text style={[styles.todayText, { color: staticColors.buttonText }]}>
+          <Text style={{ fontWeight: "bold", color: staticColors.buttonText }}>
             Danes
           </Text>
         </TouchableOpacity>
@@ -263,9 +262,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 14,
     borderRadius: 8,
-  },
-  todayText: {
-    fontWeight: "bold",
   },
   weekNavigationContainer: {
     flexDirection: "row",

@@ -2,10 +2,10 @@ import { View, StyleSheet } from "react-native";
 import { useState } from "react";
 import DaySelector from "./DaySelector";
 import TimeList from "./TimeList";
-import { useAppointment } from "@/hooks/useAppointment";
 
 export default function DaySchedule() {
-  const { days } = useAppointment();
+  const days = ["Pon", "Tor", "Sre", "Čet", "Pet", "Sob", "Ned"];
+
   const [selectedDay, setSelectedDay] = useState<string>(days[0]);
   const [date, setDate] = useState<Date>(new Date());
 
@@ -16,7 +16,7 @@ export default function DaySchedule() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.daySelectorContainer}>
+      <View style={{ paddingHorizontal: 15 }}>
         <DaySelector selectedDay={selectedDay} onDaySelect={handleDaySelect} />
       </View>
       <TimeList selectedDate={date} />
@@ -28,8 +28,5 @@ const styles = StyleSheet.create({
   container: {
     gap: 20,
     flex: 1,
-  },
-  daySelectorContainer: {
-    paddingHorizontal: 15,
   },
 });

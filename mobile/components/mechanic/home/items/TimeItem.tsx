@@ -37,7 +37,7 @@ export default function TimeItem({ appointment, itemHeight }: Props) {
   const container = [
     styles.container,
     {
-      height: appointment.numAppointments * itemHeight,
+      height: itemHeight,
       borderLeftColor: statusToColor[appointment.status],
     },
   ];
@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderLeftWidth: 6,
     padding: 12,
+    minHeight: 100,
   },
   statusContainer: {
     flexDirection: "row",

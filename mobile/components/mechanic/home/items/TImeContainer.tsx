@@ -15,18 +15,31 @@ export default function TimeContainer({
   itemHeight,
   groupedAppointments,
 }: Props) {
-  const { getAppointmentAtHour, isAppointmentStartHour } = useAppointment();
+  const {
+    isWithinAppointmentDuration,
+    getAppointmentHeight,
+    getAppointmentAtHour,
+    isAppointmentStartHour,
+  } = useAppointment();
 
   const hour = parseInt(time.split(":")[0]);
   const appointment = getAppointmentAtHour(groupedAppointments, hour);
 
+  // Find any appointment that spans this hour, start or any time in between
+  const spanningAppointment = groupedAppointments.find((apt) =>
+    isWithinAppointmentDuration(hour, apt)
+  );
+
   return (
     <View style={{ flex: 1 }}>
       {appointment && isAppointmentStartHour(hour, appointment) ? (
-        <TimeItem appointment={appointment} itemHeight={itemHeight} />
-      ) : !appointment ? (
+        <TimeItem
+          appointment={appointment}
+          itemHeight={getAppointmentHeight(appointment, itemHeight)}
+        />
+      ) : spanningAppointment ? null : ( // This hour is part of an ongoing appointment, render nothing
         <EmptyTimeItem itemHeight={itemHeight} onPress={() => {}} />
-      ) : null}
+      )}
     </View>
   );
 }
