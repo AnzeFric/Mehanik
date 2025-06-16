@@ -1,77 +1,68 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useState } from "react";
-import { Colors } from "@/constants/Colors";
 import ModalPrompt from "../../shared/modals/ModalPrompt";
 import ModalAppointment from "../../shared/modals/ModalAppointment";
 import { formatDateTime } from "@/constants/util";
 import { UserAppointmentData } from "@/interfaces/appointment";
-import { Ionicons } from "@expo/vector-icons";
+import ThemedView from "@/components/global/themed/ThemedView";
+import ThemedText from "@/components/global/themed/ThemedText";
+import ThemedButton from "@/components/global/themed/ThemedButton";
 
 interface Props {
   appointmentData: UserAppointmentData;
 }
 
+// TODO: onConfirm functions
 export default function Appointment({ appointmentData }: Props) {
   const [isRejectOpen, setIsRejectOpen] = useState<boolean>(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);
   const [isChangeOpen, setIsChangeOpen] = useState<boolean>(false);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.userInfo}>
-          <Text style={styles.userName}>{appointmentData.user.firstName}</Text>
-          <View style={styles.vehicleBadge}>
-            <Text style={styles.vehicleText}>
-              {appointmentData.vehicle.brand}
-            </Text>
-          </View>
+    <ThemedView type={"primary"} style={styles.container}>
+      <View style={{ gap: 10 }}>
+        <View style={styles.userVehicleInfo}>
+          <ThemedText type={"normal"} bold>
+            {appointmentData.user.firstName} {appointmentData.user.lastName}
+          </ThemedText>
+          <ThemedText type={"extraSmall"} bold>
+            {appointmentData.vehicle.brand} {appointmentData.vehicle.model},{" "}
+            {appointmentData.vehicle.buildYear}
+          </ThemedText>
         </View>
-        <Text style={styles.date}>
-          {formatDateTime(appointmentData.startDate)}
-        </Text>
+        <View style={{ paddingStart: 10 }}>
+          <ThemedText type={"small"}>
+            Od: {formatDateTime(appointmentData.startDate)}
+          </ThemedText>
+          <ThemedText type={"small"}>
+            Do: {formatDateTime(appointmentData.endDate)}
+          </ThemedText>
+        </View>
       </View>
 
-      <View style={styles.descriptionContainer}>
-        <Text style={styles.description}>{appointmentData.userMessage}</Text>
-      </View>
+      <ThemedView type={"secondary"} style={styles.serviceInfo}>
+        <ThemedText type={"extraSmall"} bold>
+          Potrebno popravilo:
+        </ThemedText>
+        <ThemedText type={"small"}>{appointmentData.userMessage}</ThemedText>
+      </ThemedView>
 
-      <View style={styles.actionsContainer}>
-        <TouchableOpacity
-          style={styles.buttonReject}
+      <View style={{ flexDirection: "row", gap: 15 }}>
+        <ThemedButton
+          buttonText={"Zavrni"}
+          buttonType={"option-destroy"}
           onPress={() => setIsRejectOpen(true)}
-        >
-          <Ionicons
-            name="close-outline"
-            size={18}
-            color={Colors.light.activeIcon}
-          />
-          <Text style={styles.buttonText}>Zavrni</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.buttonChange}
+        />
+        <ThemedButton
+          buttonText={"Spremeni"}
+          buttonType={"option-change"}
           onPress={() => setIsChangeOpen(true)}
-        >
-          <Ionicons
-            name="calendar-outline"
-            size={18}
-            color={Colors.light.activeIcon}
-          />
-          <Text style={styles.buttonText}>Spremeni</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.buttonAccept}
+        />
+        <ThemedButton
+          buttonText={"Potrdi"}
+          buttonType={"option"}
           onPress={() => setIsConfirmOpen(true)}
-        >
-          <Ionicons
-            name="checkmark-outline"
-            size={18}
-            color={Colors.light.activeIcon}
-          />
-          <Text style={styles.buttonText}>Potrdi</Text>
-        </TouchableOpacity>
+        />
       </View>
 
       <ModalPrompt
@@ -94,103 +85,23 @@ export default function Appointment({ appointmentData }: Props) {
         onCancel={() => setIsChangeOpen(false)}
         onConfirm={() => {}}
       />
-    </View>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    backgroundColor: "#FFFFFF",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 3,
-    marginVertical: 8,
-    marginHorizontal: 2,
+    gap: 20,
   },
-  header: {
+  userVehicleInfo: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 12,
   },
-  userInfo: {
-    flexDirection: "column",
-    gap: 4,
-  },
-  userName: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: Colors.light.primaryText,
-  },
-  vehicleBadge: {
-    backgroundColor: Colors.light.inactiveButton,
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    borderRadius: 8,
-    alignSelf: "flex-start",
-  },
-  vehicleText: {
-    fontSize: 14,
-    color: Colors.light.primaryText,
-  },
-  date: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: Colors.light.secondaryText,
-    backgroundColor: "#F5F5F5",
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 8,
-  },
-  descriptionContainer: {
-    backgroundColor: "#F9F9F9",
-    borderRadius: 8,
-    padding: 12,
-    marginBottom: 16,
-  },
-  description: {
-    fontSize: 16,
-    color: Colors.light.primaryText,
-  },
-  actionsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  buttonReject: {
-    backgroundColor: Colors.light.cancelButton,
-    borderRadius: 8,
-    paddingVertical: 8,
-    paddingHorizontal: 14,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 6,
-  },
-  buttonAccept: {
-    backgroundColor: Colors.light.confirmButton,
-    borderRadius: 8,
-    paddingVertical: 8,
-    paddingHorizontal: 14,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 6,
-  },
-  buttonChange: {
-    backgroundColor: Colors.light.inactiveButton,
-    borderRadius: 8,
-    paddingVertical: 8,
-    paddingHorizontal: 14,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 6,
-  },
-  buttonText: {
-    fontSize: 16,
-    color: Colors.light.primaryText,
+  serviceInfo: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 4,
   },
 });

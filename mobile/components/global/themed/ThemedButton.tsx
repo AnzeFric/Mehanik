@@ -10,7 +10,12 @@ import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 import { AppStyles } from "@/constants/Styles";
 import ThemedText from "./ThemedText";
 
-type ButtonType = "small" | "large" | "option" | "option-destroy";
+type ButtonType =
+  | "small"
+  | "large"
+  | "option"
+  | "option-destroy"
+  | "option-change";
 
 type Props = TouchableOpacityProps & {
   buttonType: ButtonType;
@@ -35,6 +40,7 @@ export default function ThemedButton({
     large: AppStyles.bigButton,
     option: styles.optionButton,
     "option-destroy": styles.optionButton,
+    "option-change": styles.optionButton,
   };
 
   const typeToTextColors: Record<ButtonType, string> = {
@@ -42,6 +48,7 @@ export default function ThemedButton({
     large: staticColors.bigButtonText,
     option: staticColors.buttonOptionText,
     "option-destroy": staticColors.buttonOptionText,
+    "option-change": staticColors.buttonOptionText,
   };
 
   const activeColors: Record<ButtonType, string> = {
@@ -49,6 +56,7 @@ export default function ThemedButton({
     large: staticColors.bigButton,
     option: staticColors.buttonOption,
     "option-destroy": staticColors.destroyButton,
+    "option-change": staticColors.utilityButton,
   };
 
   const inactiveColors: Record<ButtonType, string> = {
@@ -56,6 +64,7 @@ export default function ThemedButton({
     large: staticColors.inactiveButton,
     option: staticColors.inactiveButton,
     "option-destroy": staticColors.inactiveButton,
+    "option-change": staticColors.inactiveButton,
   };
 
   const buttonStyles = [
@@ -99,6 +108,13 @@ export default function ThemedButton({
         </TouchableOpacity>
       )}
       {buttonType === "option-destroy" && (
+        <TouchableOpacity style={buttonStyles} {...props}>
+          <ThemedText type={"small"} bold style={buttonTextStyles}>
+            {buttonText}
+          </ThemedText>
+        </TouchableOpacity>
+      )}
+      {buttonType === "option-change" && (
         <TouchableOpacity style={buttonStyles} {...props}>
           <ThemedText type={"small"} bold style={buttonTextStyles}>
             {buttonText}
