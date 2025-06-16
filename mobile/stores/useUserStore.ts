@@ -1,8 +1,7 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { AccountType } from "@/interfaces/account";
-import { MechanicData } from "@/interfaces/user";
+import { MechanicData, AccountType } from "@/interfaces/user";
 
 interface UserStore {
   currentUser: MechanicData;

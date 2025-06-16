@@ -1,4 +1,4 @@
-import { AccountType } from "./account";
+export type AccountType = "user" | "mechanic";
 
 export interface MechanicData {
   firstName: string;
@@ -22,15 +22,3 @@ export interface BrandPrice {
   name: string;
   price: string; // Using string to enable user decimal input
 }
-
-export interface AppointmentData {
-  id: number;
-  mechanicId: number;
-  userId: number;
-  date: Date;
-  status: Status;
-  mechanicMessage?: string;
-  mechanic: MechanicData;
-}
-
-export type Status = "Accepted" | "Rejected" | "Changed" | "Pending";

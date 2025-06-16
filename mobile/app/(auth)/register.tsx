@@ -8,12 +8,12 @@ import {
 import { useState, useCallback } from "react";
 import { router, useFocusEffect } from "expo-router";
 import { useAuth } from "@/hooks/useAuth";
-import { AccountType } from "@/interfaces/account";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedText from "@/components/global/themed/ThemedText";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 import ThemedButton from "@/components/global/themed/ThemedButton";
 import ThemedTextInput from "@/components/global/themed/ThemedTextInput";
+import { AccountType } from "@/interfaces/user";
 
 export default function LoginScreen() {
   const { handleRegister } = useAuth();

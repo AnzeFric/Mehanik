@@ -1,8 +1,8 @@
 import useAuthStore from "@/stores/useAuthStore";
 import { router } from "expo-router";
 import { API_BASE_URL } from "@/constants/Config";
-import { AccountType } from "@/interfaces/account";
 import { Alert } from "react-native";
+import { AccountType } from "@/interfaces/user";
 
 export function useAuth() {
   const {
