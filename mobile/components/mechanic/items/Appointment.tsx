@@ -4,11 +4,11 @@ import { Colors } from "@/constants/Colors";
 import ModalPrompt from "../../shared/modals/ModalPrompt";
 import ModalAppointment from "../../shared/modals/ModalAppointment";
 import { formatDateTime } from "@/constants/util";
-import { AppointmentData } from "@/interfaces/appointment";
+import { UserAppointmentData } from "@/interfaces/appointment";
 import { Ionicons } from "@expo/vector-icons";
 
 interface Props {
-  appointmentData: AppointmentData;
+  appointmentData: UserAppointmentData;
 }
 
 export default function Appointment({ appointmentData }: Props) {
@@ -20,18 +20,20 @@ export default function Appointment({ appointmentData }: Props) {
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.userInfo}>
-          <Text style={styles.userName}>{appointmentData.name}</Text>
+          <Text style={styles.userName}>{appointmentData.user.firstName}</Text>
           <View style={styles.vehicleBadge}>
-            <Text style={styles.vehicleText}>{appointmentData.vehicle}</Text>
+            <Text style={styles.vehicleText}>
+              {appointmentData.vehicle.brand}
+            </Text>
           </View>
         </View>
         <Text style={styles.date}>
-          {formatDateTime(appointmentData.dateTime)}
+          {formatDateTime(appointmentData.startDate)}
         </Text>
       </View>
 
       <View style={styles.descriptionContainer}>
-        <Text style={styles.description}>{appointmentData.description}</Text>
+        <Text style={styles.description}>{appointmentData.userMessage}</Text>
       </View>
 
       <View style={styles.actionsContainer}>
