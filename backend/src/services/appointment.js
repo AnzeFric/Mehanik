@@ -2,36 +2,53 @@ const supabase = require("../config/database");
 const { v4: uuidv4 } = require("uuid");
 
 const appointmentService = {
-  async getAppointmentsByUserUuid(userUuid) {
+  async getAppointmentsByMechanicUuid(mechanicUuid) {
     const { data, error } = await supabase
       .from("appointments")
-      .select("uuid, date, status, user_message, mechanic_response")
-      .eq("fk_user", userUuid);
+      .select(
+        "uuid, start_date, end_date, status, user_message, vehicles(brand, model, build_year, users(first_name, last_name))"
+      )
+      .eq("fk_mechanic", mechanicUuid)
+      .is("vehicles.fk_customer", null);
 
-    if (error) throw error;
-
-    const parsedData = (data || []).map((appointment) => ({
-      uuid: appointment.uuid,
-      date: appointment.date,
-      status: appointment.status,
-      userMessage: appointment.user_message,
-      mechanicResponse: appointment.mechanic_response,
-    }));
-
-    return parsedData;
+    if (error) {
+      console.error("Appointment mechanic database error:", error);
+      throw new Error(
+        `Failed to fetch appointments for mechanic: ${error.message}`
+      );
+    }
+    return data;
   },
 
-  async saveAppointmentByUserUuid(userUuid, appointmentData) {
+  async getAppointmentsByVehicleUuid(vehicleUuid) {
+    const { data, error } = await supabase
+      .from("appointments")
+      .select(
+        "uuid, start_date, end_date, status, mechanic_response, mechanics(phone, address, city, users(first_name, last_name))"
+      )
+      .eq("fk_vehicle", vehicleUuid);
+
+    if (error) {
+      console.error("Appointment vehicle database error:", error);
+      throw new Error(
+        `Failed to fetch appointments for vehicle: ${error.message}`
+      );
+    }
+    return data;
+  },
+
+  async saveAppointmentByUserUuid(userUuid, mechanicUuid, appointmentData) {
     const uuid = uuidv4();
 
     const { error } = await supabase.from("appointments").insert({
       uuid: uuid,
-      date: appointmentData.date,
+      start_date: appointmentData.startDate,
+      end_date: appointmentData.endDate,
       status: appointmentData.status,
       user_message: appointmentData.userMessage,
       mechanic_response: appointmentData.mechanicResponse,
       fk_user: userUuid,
-      fk_mechanic: appointmentData.mechanicUuid,
+      fk_mechanic: mechanicUuid,
     });
 
     if (error) throw error;

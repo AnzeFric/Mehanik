@@ -26,12 +26,38 @@ export interface AppointmentData {
   description: string;
 }
 
-export interface AppointmentData {
+export interface MechanicAppointmentData {
   uuid: string;
-  date: Date;
+  startDate: Date;
+  endDate: Date;
+  status: AppointmentStatus;
+  mechanicResponse: string;
+  mechanic: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    address: string | null;
+    city: string | null;
+    phone: string | null;
+  };
+}
+
+export interface UserAppointmentData {
+  uuid: string;
+  startDate: Date;
+  endDate: Date;
   status: AppointmentStatus;
   userMessage: string;
-  mechanicResponse: string;
+  user: {
+    firstName: string;
+    lastName: string;
+    email: string;
+  };
+  vehicle: {
+    brand: string;
+    model: string;
+    buildYear: number | null;
+  };
 }
 
 export type AppointmentStatus = "Accepted" | "Rejected" | "Changed" | "Pending";
