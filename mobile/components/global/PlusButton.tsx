@@ -1,7 +1,6 @@
 import { StyleSheet, TouchableOpacity } from "react-native";
-import PlusIcon from "@/assets/icons/PlusIcon.svg";
-import { Colors } from "@/constants/Colors";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import { Ionicons } from "@expo/vector-icons";
 
 interface Props {
   onPress: () => void;
@@ -18,7 +17,11 @@ export default function PlusButton({ onPress }: Props) {
       ]}
       onPress={onPress}
     >
-      <PlusIcon height={35} width={35} color={Colors.light.background} />
+      <Ionicons
+        name={"add"}
+        size={40}
+        color={staticColors.iconWithDarkBackground}
+      />
     </TouchableOpacity>
   );
 }
