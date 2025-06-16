@@ -6,7 +6,6 @@ import { items } from "@/data/terms/terms.json";
 import { Terms } from "@/data/terms/terms";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedText from "@/components/global/themed/ThemedText";
-import { AppStyles } from "@/constants/Styles";
 
 export default function TermsAndConditionsItem() {
   const { id } = useLocalSearchParams();
@@ -15,24 +14,18 @@ export default function TermsAndConditionsItem() {
     return items.find((item) => item.id === Number(id));
   }, [id]);
 
-  if (!data) {
-    return (
-      <ThemedView type={"background"} style={styles.container}>
-        <TitleRow title={"Item not found"} hasBackButton={true} />
-        <View style={AppStyles.parentPadding}>
-          <ThemedText type={"small"}>
-            Return to the previous page and try again.
-          </ThemedText>
-        </View>
-      </ThemedView>
-    );
-  }
-
   return (
-    <ThemedView type={"background"} style={styles.container}>
-      <TitleRow title={data.title} hasBackButton={true} />
-      <View style={AppStyles.parentPadding}>
-        <ThemedText type={"small"}>{data.description}</ThemedText>
+    <ThemedView type={"background"} style={{ flex: 1 }}>
+      <TitleRow
+        title={data ? data.title : "Item not found"}
+        hasBackButton={true}
+      />
+      <View style={styles.container}>
+        <ThemedText type={"small"}>
+          {data
+            ? data.description
+            : "Return to the previous page and try again."}
+        </ThemedText>
       </View>
     </ThemedView>
   );
@@ -40,6 +33,7 @@ export default function TermsAndConditionsItem() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    paddingVertical: 20,
+    paddingHorizontal: 25,
   },
 });

@@ -6,7 +6,6 @@ import {
   useState,
 } from "react";
 import { Colors } from "@/constants/Colors";
-import { AppStyles } from "@/constants/Styles";
 import { BrandPrice, MechanicData } from "@/interfaces/user";
 import { StyleSheet, View } from "react-native";
 import BrandPriceDisplay from "./BrandPriceDisplay";
@@ -138,7 +137,7 @@ export default function MechanicForm({ mechanic, setMechanic }: Props) {
   return (
     <>
       <View style={styles.container}>
-        <ThemedText type={"normal"} bold style={AppStyles.text}>
+        <ThemedText type={"normal"} bold>
           Osebni podatki
         </ThemedText>
 

@@ -7,7 +7,6 @@ import {
   StyleSheet,
 } from "react-native";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
-import { AppStyles } from "@/constants/Styles";
 import ThemedText from "./ThemedText";
 
 type ButtonType =
@@ -36,8 +35,8 @@ export default function ThemedButton({
   const { staticColors } = useAnimatedTheme();
 
   const typeToButtonStyle: Record<ButtonType, StyleProp<ViewStyle>> = {
-    small: AppStyles.button,
-    large: AppStyles.bigButton,
+    small: styles.button,
+    large: styles.bigButton,
     option: styles.optionButton,
     "option-destroy": styles.optionButton,
     "option-change": styles.optionButton,
@@ -129,6 +128,17 @@ const styles = StyleSheet.create({
   optionButton: {
     flex: 1,
     paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: "center",
+  },
+  button: {
+    paddingVertical: 6,
+    borderRadius: 8,
+    alignItems: "center",
+    paddingHorizontal: 10,
+  },
+  bigButton: {
+    padding: 15,
     borderRadius: 8,
     alignItems: "center",
   },

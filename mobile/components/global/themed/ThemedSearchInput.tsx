@@ -4,11 +4,11 @@ import {
   TextInputProps,
   View,
   ViewStyle,
+  StyleSheet,
 } from "react-native";
 import { useRef } from "react";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 import ThemedIcon from "./ThemedIcon";
-import { AppStyles } from "@/constants/Styles";
 
 type Props = TextInputProps & {
   viewStyle?: StyleProp<ViewStyle>;
@@ -19,7 +19,7 @@ export default function ThemedSearchInput({ viewStyle = {}, ...props }: Props) {
   const inputRef = useRef<TextInput>(null);
 
   const viewStyles = [
-    AppStyles.inputContainer,
+    styles.inputContainer,
     {
       borderColor: staticColors.inputBorder,
       backgroundColor: staticColors.inputBackground,
@@ -33,7 +33,7 @@ export default function ThemedSearchInput({ viewStyle = {}, ...props }: Props) {
         ref={inputRef}
         placeholder={"Iskanje"}
         placeholderTextColor={staticColors.inputText}
-        style={[AppStyles.input, { color: staticColors.inputText }]}
+        style={[styles.input, { color: staticColors.inputText }]}
         {...props}
       />
       <ThemedIcon
@@ -44,3 +44,19 @@ export default function ThemedSearchInput({ viewStyle = {}, ...props }: Props) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  inputContainer: {
+    display: "flex",
+    flexDirection: "row",
+    borderWidth: 1,
+    alignItems: "center",
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    gap: 10,
+  },
+  input: {
+    height: 50,
+    flex: 1,
+  },
+});

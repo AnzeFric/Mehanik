@@ -7,7 +7,6 @@ import {
 } from "react-native";
 import { useState, useCallback } from "react";
 import { router, useFocusEffect } from "expo-router";
-import { AppStyles } from "@/constants/Styles";
 import { useAuth } from "@/hooks/useAuth";
 import ThemedView from "@/components/global/themed/ThemedView";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
@@ -52,7 +51,7 @@ export default function LoginScreen() {
   return (
     <ThemedView type={"background"} style={styles.container}>
       <ScrollView
-        style={AppStyles.parentPadding}
+        style={styles.scrollContainer}
         keyboardShouldPersistTaps={"handled"}
       >
         <View style={styles.headerContainer}>
@@ -117,6 +116,10 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 100,
     flex: 1,
+  },
+  scrollContainer: {
+    paddingVertical: 20,
+    paddingHorizontal: 25,
   },
   headerContainer: {
     paddingVertical: 35,

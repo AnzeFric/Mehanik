@@ -1,6 +1,5 @@
 import { View, StyleSheet } from "react-native";
 import { useState } from "react";
-import { AppStyles } from "@/constants/Styles";
 import { router } from "expo-router";
 import { useAuth } from "@/hooks/useAuth";
 import { useUser } from "@/hooks/useUser";
@@ -33,7 +32,7 @@ export default function SettingsScreen() {
         hasBackButton={true}
       />
 
-      <View style={[AppStyles.parentPadding, styles.contentContainer]}>
+      <View style={styles.container}>
         <View style={styles.itemContainer}>
           <ThemedText type={"normal"}>Barva aplikacije</ThemedText>
           <View style={styles.optionContainer}>
@@ -74,48 +73,40 @@ export default function SettingsScreen() {
           </View>
         </View>
 
-        <View style={styles.itemContainer}>
-          <ThemedText type={"normal"}>Pogoji uporabe</ThemedText>
-          <ThemedButton
-            buttonType={"small"}
-            buttonText={"Preberi"}
-            onPress={() => router.push("../terms")}
-          />
-        </View>
+        <ThemedText type={"normal"}>Pogoji uporabe</ThemedText>
+        <ThemedButton
+          buttonType={"small"}
+          buttonText={"Preberi"}
+          onPress={() => router.push("../terms")}
+        />
 
         {currentUser.accountType === "mechanic" && (
           <View style={styles.itemContainer}>
-            <View style={styles.itemContainer}>
-              <View>
-                <ThemedText type={"normal"}>Javni profil</ThemedText>
-                <ThemedText type={"small"}>
-                  Podatke vidijo stranke na seznamu mehanikov
-                </ThemedText>
-              </View>
-              <ThemedButton
-                buttonType={"small"}
-                buttonText={"Uredi"}
-                onPress={handleEditMechanic}
-              />
+            <View>
+              <ThemedText type={"normal"}>Profil</ThemedText>
+              <ThemedText type={"extraSmall"}>
+                Podatki vidni strankam na seznamu mehanikov
+              </ThemedText>
             </View>
+            <ThemedButton
+              buttonType={"small"}
+              buttonText={"Uredi"}
+              onPress={handleEditMechanic}
+            />
           </View>
         )}
         <View style={styles.itemContainer}>
-          <View style={styles.itemContainer}>
-            <ThemedText type={"normal"}>Račun</ThemedText>
-            <ThemedButton
-              buttonType={"small"}
-              buttonText={"Odjava"}
-              onPress={handleLogout}
-            />
-          </View>
-          <View>
-            <ThemedButton
-              buttonType={"small"}
-              buttonText={"Odstrani"}
-              onPress={() => setDeleteModal(true)}
-            />
-          </View>
+          <ThemedText type={"normal"}>Račun</ThemedText>
+          <ThemedButton
+            buttonType={"small"}
+            buttonText={"Odjava"}
+            onPress={handleLogout}
+          />
+          <ThemedButton
+            buttonType={"small"}
+            buttonText={"Odstrani"}
+            onPress={() => setDeleteModal(true)}
+          />
         </View>
       </View>
       <ModalPrompt
@@ -129,8 +120,9 @@ export default function SettingsScreen() {
 }
 
 const styles = StyleSheet.create({
-  contentContainer: {
+  container: {
     paddingVertical: 20,
+    paddingHorizontal: 25,
     gap: 20,
   },
   itemContainer: {
