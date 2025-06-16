@@ -6,6 +6,8 @@ import {
   MechanicAppointmentData,
 } from "@/interfaces/appointment";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import ThemedView from "@/components/global/themed/ThemedView";
+import ThemedText from "@/components/global/themed/ThemedText";
 
 interface Props {
   appointmentData: MechanicAppointmentData;
@@ -46,94 +48,61 @@ export default function Appointment({ appointmentData, onPress }: Props) {
   }, [appointmentData, appointmentData.status]);
 
   return (
-    <TouchableOpacity
-      style={[styles.container, { borderLeftColor: statusColor }]}
-      onPress={onPress}
+    <ThemedView
+      type={"primary"}
+      style={{ borderLeftWidth: 6, borderLeftColor: statusColor }}
     >
-      <View style={styles.detailsContainer}>
-        <Text style={styles.name}>
-          {appointmentData.mechanic.firstName}{" "}
-          {appointmentData.mechanic.lastName}
-        </Text>
-        {appointmentData.mechanic.address && (
-          <Text style={styles.address}>
-            {appointmentData.mechanic.address}, {appointmentData.mechanic.city}
-          </Text>
-        )}
-        {appointmentData.mechanic.email && (
-          <Text style={styles.contact}>{appointmentData.mechanic.email}</Text>
-        )}
-        <Text style={styles.statusText}>
-          Termin {formatDate(appointmentData.startDate)},{" "}
-          <Text style={{ color: statusColor }}>
-            {statusToTranslation(appointmentData.status)}
-          </Text>
-          .
-        </Text>
-        {appointmentData.mechanicResponse && (
-          <View style={styles.messageContainer}>
-            <Text style={styles.messageTitle}>Sporočilo avtomehanika:</Text>
-            <Text style={styles.messageText}>
-              {appointmentData.mechanicResponse}
+      <TouchableOpacity onPress={onPress} style={{ padding: 15 }}>
+        <View style={{ flex: 1 }}>
+          <ThemedText type={"normal"} bold>
+            {appointmentData.mechanic.firstName}{" "}
+            {appointmentData.mechanic.lastName}
+          </ThemedText>
+          {appointmentData.mechanic.address && (
+            <ThemedText type={"extraSmall"}>
+              {appointmentData.mechanic.address},{" "}
+              {appointmentData.mechanic.city}
+            </ThemedText>
+          )}
+          {appointmentData.mechanic.email && (
+            <ThemedText type={"extraSmall"}>
+              {appointmentData.mechanic.email}
+            </ThemedText>
+          )}
+          {appointmentData.mechanic.phone && (
+            <ThemedText type={"extraSmall"}>
+              {appointmentData.mechanic.phone}
+            </ThemedText>
+          )}
+          <ThemedText type={"extraSmall"} bold style={{ paddingTop: 10 }}>
+            Termin {formatDate(appointmentData.startDate)},{" "}
+            <Text style={{ color: statusColor }}>
+              {statusToTranslation(appointmentData.status)}
             </Text>
-          </View>
-        )}
-      </View>
-    </TouchableOpacity>
+            .
+          </ThemedText>
+          {appointmentData.mechanicResponse && (
+            <ThemedView type={"secondary"} style={styles.messageContainer}>
+              <ThemedText type={"extraSmall"} bold>
+                Sporočilo avtomehanika:
+              </ThemedText>
+              <ThemedText type={"extraSmall"}>
+                {appointmentData.mechanicResponse}
+              </ThemedText>
+            </ThemedView>
+          )}
+        </View>
+      </TouchableOpacity>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    backgroundColor: "#fff",
-    padding: 15,
-    borderLeftWidth: 6,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 3,
-    marginBottom: 10,
-  },
-  image: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    marginRight: 15,
-  },
-  detailsContainer: {
-    flex: 1,
-  },
-  name: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  address: {
-    fontSize: 14,
-    color: "#666",
-  },
-  contact: {
-    fontSize: 14,
-    color: "#888",
-  },
-  statusText: {
-    fontSize: 14,
-    fontWeight: "bold",
-    marginTop: 5,
-  },
   messageContainer: {
     marginTop: 10,
-    padding: 10,
-    backgroundColor: "#F0F0F0",
-    borderRadius: 8,
-  },
-  messageTitle: {
-    fontSize: 14,
-    fontWeight: "bold",
-    marginBottom: 3,
-  },
-  messageText: {
-    fontSize: 14,
-    color: "#333",
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 4,
+    gap: 5,
   },
 });
