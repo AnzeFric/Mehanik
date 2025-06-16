@@ -1,101 +1,28 @@
-import { View, StyleSheet, ScrollView } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
 import { useState, useRef, useCallback } from "react";
 import { router, useFocusEffect } from "expo-router";
-import { AppointmentData } from "@/interfaces/user";
 import Appointment from "@/components/user/items/Appointment";
 import TitleRow from "@/components/shared/TitleRow";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedIcon from "@/components/global/themed/ThemedIcon";
 import ModalAppointment from "@/components/shared/modals/ModalAppointment";
 import ModalPrompt from "@/components/shared/modals/ModalPrompt";
+import { MechanicAppointmentData } from "@/interfaces/appointment";
 
-const fakeAppointmentData: AppointmentData[] = [
+const fakeAppointmentData: MechanicAppointmentData[] = [
   {
-    id: 0,
-    userId: 0,
-    mechanicId: 0,
-    date: new Date(),
-    status: "Accepted",
+    uuid: "asdasd",
+    startDate: new Date(2025, 6, 16, 12, 0, 0),
+    endDate: new Date(2025, 6, 16, 14, 0, 0),
+    status: "accepted",
+    mechanicResponse: "pridi 10min prej",
     mechanic: {
-      id: 0,
-      firstName: "John",
-      lastName: "Doe",
-      address: "123 Main St",
-      city: "New York",
-      image: "john_doe.jpg",
-      email: "john.doe@example.com",
-      prices: {},
-    },
-  },
-  {
-    id: 1,
-    userId: 0,
-    mechanicId: 0,
-    date: new Date(),
-    status: "Pending",
-    mechanic: {
-      id: 0,
-      firstName: "John",
-      lastName: "Doe",
-      address: "123 Main St",
-      city: "New York",
-      image: "john_doe.jpg",
-      email: "john.doe@example.com",
-      prices: {},
-    },
-  },
-  {
-    id: 1,
-    userId: 0,
-    mechanicId: 0,
-    date: new Date(),
-    status: "Rejected",
-    mechanicMessage: "Ne",
-    mechanic: {
-      id: 0,
-      firstName: "John",
-      lastName: "Doe",
-      address: "123 Main St",
-      city: "New York",
-      image: "john_doe.jpg",
-      email: "john.doe@example.com",
-      prices: {},
-    },
-  },
-  {
-    id: 1,
-    userId: 0,
-    mechanicId: 0,
-    date: new Date(),
-    status: "Changed",
-    mechanicMessage: "Opis ni zadosten, pridi na pregled",
-    mechanic: {
-      id: 0,
-      firstName: "John",
-      lastName: "Doe",
-      address: "123 Main St",
-      city: "New York",
-      image: "john_doe.jpg",
-      email: "john.doe@example.com",
-      prices: {},
-    },
-  },
-  {
-    id: 1,
-    userId: 0,
-    mechanicId: 0,
-    date: new Date(),
-    status: "Changed",
-    mechanicMessage: "Pridi 10min prej",
-    mechanic: {
-      id: 0,
-      firstName: "John",
-      lastName: "Doe",
-      address: "123 Main St",
-      city: "New York",
-      image: "john_doe.jpg",
-      email: "john.doe@example.com",
-      prices: {},
+      firstName: "Matej",
+      lastName: "Kovac",
+      email: "matej.kovac@mehanik.sem.si",
+      address: "lublanska cesta 31",
+      city: "Ptuj",
+      phone: "031-123-123",
     },
   },
 ];
@@ -103,15 +30,15 @@ const fakeAppointmentData: AppointmentData[] = [
 export default function HomeUserScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedAppointment, setSelectedAppointment] =
-    useState<AppointmentData | null>(null);
+    useState<MechanicAppointmentData | null>(null);
 
   const scrollRef = useRef<ScrollView>(null);
 
   // TODO: post to backend and get all appointments as the loggined user id
   const [appointmentList, setAppointmentList] =
-    useState<Array<AppointmentData>>(fakeAppointmentData);
+    useState<Array<MechanicAppointmentData>>(fakeAppointmentData);
 
-  const handleAppointmentPress = (appointment: AppointmentData) => {
+  const handleAppointmentPress = (appointment: MechanicAppointmentData) => {
     setSelectedAppointment(appointment);
     setModalVisible(true);
   };
@@ -163,8 +90,8 @@ export default function HomeUserScreen() {
         ))}
       </ScrollView>
       {selectedAppointment &&
-        (selectedAppointment.status === "Accepted" ||
-        selectedAppointment.status === "Rejected" ? (
+        (selectedAppointment.status === "accepted" ||
+        selectedAppointment.status === "rejected" ? (
           <ModalPrompt
             isVisible={modalVisible}
             message={"Termin boste trajno izbrisali."}
@@ -175,7 +102,7 @@ export default function HomeUserScreen() {
           <ModalAppointment
             isVisible={modalVisible}
             title={
-              selectedAppointment.status === "Pending"
+              selectedAppointment.status === "pending"
                 ? "Spremeni termin"
                 : "Potrdi termin"
             }
