@@ -6,10 +6,9 @@ const appointmentService = {
     const { data, error } = await supabase
       .from("appointments")
       .select(
-        "uuid, start_date, end_date, status, user_message, vehicles(brand, model, build_year, users(first_name, last_name))"
+        "uuid, start_date, end_date, status, user_message, vehicles(brand, model, build_year, fk_customer, users(first_name, last_name))"
       )
-      .eq("fk_mechanic", mechanicUuid)
-      .is("vehicles.fk_customer", null);
+      .eq("fk_mechanic", mechanicUuid);
 
     if (error) {
       console.error("Appointment mechanic database error:", error);
@@ -17,14 +16,17 @@ const appointmentService = {
         `Failed to fetch appointments for mechanic: ${error.message}`
       );
     }
-    return data;
+    const filtered = data.filter(
+      (appointment) => appointment.vehicles?.fk_customer === null // Only return users
+    );
+    return filtered;
   },
 
-  async getAppointmentsByVehicleUuid(vehicleUuid) {
+  async getAppointmentsByVehicleUuid(userUuid, vehicleUuid) {
     const { data, error } = await supabase
       .from("appointments")
       .select(
-        "uuid, start_date, end_date, status, mechanic_response, mechanics(phone, address, city, users(first_name, last_name))"
+        "uuid, start_date, end_date, status, mechanic_response, mechanics(phone, address, city, users(uuid, first_name, last_name, email)), vehicles(fk_user)"
       )
       .eq("fk_vehicle", vehicleUuid);
 
@@ -34,7 +36,10 @@ const appointmentService = {
         `Failed to fetch appointments for vehicle: ${error.message}`
       );
     }
-    return data;
+    const filtered = data.filter(
+      (appointment) => appointment.vehicles?.fk_user === userUuid // Only return data from the auth user
+    );
+    return filtered;
   },
 
   async saveAppointmentByUserUuid(userUuid, mechanicUuid, appointmentData) {

@@ -3,6 +3,7 @@ const appointmentService = require("../services/appointment");
 const appointmentController = {
   async getAppointments(req, res, next) {
     try {
+      const userUuid = req.user.userUuid;
       const mechanicUuid = req.user.mechanicUuid;
       const vehicleUuid = req.body.vehicleUuid;
 
@@ -31,7 +32,10 @@ const appointmentController = {
         if (!vehicleUuid) throw new Error("Vehicle uuid not provided!");
 
         const appointments =
-          await appointmentService.getAppointmentsByVehicleUuid(vehicleUuid);
+          await appointmentService.getAppointmentsByVehicleUuid(
+            userUuid,
+            vehicleUuid
+          );
 
         var resData = (appointments || []).map((appointment) => ({
           uuid: appointment.uuid,
@@ -40,11 +44,12 @@ const appointmentController = {
           status: appointment.status,
           mechanicResponse: appointment.mechanic_response,
           mechanic: {
-            firstName: appointment.mechanics.users.first_name,
-            lastName: appointment.mechanics.users.last_name,
-            phone: appointment.mechanics.phone,
-            address: appointment.mechanics.address,
-            city: appointment.mechanics.city,
+            firstName: appointment.mechanics?.users?.first_name || "",
+            lastName: appointment.mechanics?.users?.last_name || "",
+            email: appointment.mechanics?.users?.email || "",
+            phone: appointment.mechanics?.phone || "",
+            address: appointment.mechanics?.address || "",
+            city: appointment.mechanics?.city || "",
           },
         }));
       }
