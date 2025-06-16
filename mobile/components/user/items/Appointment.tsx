@@ -1,47 +1,53 @@
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import { AppointmentData, Status } from "@/interfaces/user";
 import { formatDate } from "@/constants/util";
 import { useMemo } from "react";
+import {
+  AppointmentStatus,
+  MechanicAppointmentData,
+} from "@/interfaces/appointment";
+import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 
 interface Props {
-  appointmentData: AppointmentData;
+  appointmentData: MechanicAppointmentData;
   onPress: () => void;
 }
 
-function getColor(status: Status): string {
-  switch (status) {
-    case "Accepted":
-      return "#4CAF50"; // Green
-    case "Rejected":
-      return "#F44336"; // Red
-    case "Changed":
-      return "#2196F3"; // Blue
-    case "Pending":
-      return "#FFC107"; // Yellow
-  }
-}
-
-function getStatusTranslation(status: Status): string {
-  switch (status) {
-    case "Accepted":
-      return "je bil sprejet";
-    case "Rejected":
-      return "je bil zavrnjen";
-    case "Changed":
-      return "je bil spremenjen";
-    case "Pending":
-      return "še v pregledu";
-  }
-}
-
 export default function Appointment({ appointmentData, onPress }: Props) {
-  const textColor = useMemo(() => {
-    return getColor(appointmentData.status);
-  }, [appointmentData.status]);
+  const { staticColors } = useAnimatedTheme();
+
+  const statusToTranslation = (status: AppointmentStatus): string => {
+    switch (status) {
+      case "accepted":
+        return "je bil sprejet";
+      case "rejected":
+        return "je bil zavrnjen";
+      case "changed":
+        return "je bil spremenjen";
+      case "pending":
+        return "še v pregledu";
+    }
+  };
+
+  const statusToColor = (status: AppointmentStatus): string => {
+    switch (status) {
+      case "accepted":
+        return staticColors.accepted;
+      case "rejected":
+        return staticColors.rejected;
+      case "changed":
+        return staticColors.changed;
+      case "pending":
+        return staticColors.pending;
+    }
+  };
+
+  const statusColor = useMemo(() => {
+    return statusToColor(appointmentData.status);
+  }, [appointmentData, appointmentData.status]);
 
   return (
     <TouchableOpacity
-      style={[styles.container, { borderLeftColor: textColor }]}
+      style={[styles.container, { borderLeftColor: statusColor }]}
       onPress={onPress}
     >
       <View style={styles.detailsContainer}>
@@ -58,17 +64,17 @@ export default function Appointment({ appointmentData, onPress }: Props) {
           <Text style={styles.contact}>{appointmentData.mechanic.email}</Text>
         )}
         <Text style={styles.statusText}>
-          Termin {formatDate(appointmentData.date)},{" "}
-          <Text style={{ color: textColor }}>
-            {getStatusTranslation(appointmentData.status)}
+          Termin {formatDate(appointmentData.startDate)},{" "}
+          <Text style={{ color: statusColor }}>
+            {statusToTranslation(appointmentData.status)}
           </Text>
           .
         </Text>
-        {appointmentData.mechanicMessage && (
+        {appointmentData.mechanicResponse && (
           <View style={styles.messageContainer}>
             <Text style={styles.messageTitle}>Sporočilo avtomehanika:</Text>
             <Text style={styles.messageText}>
-              {appointmentData.mechanicMessage}
+              {appointmentData.mechanicResponse}
             </Text>
           </View>
         )}
