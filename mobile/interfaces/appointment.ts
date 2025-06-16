@@ -60,4 +60,4 @@ export interface UserAppointmentData {
   };
 }
 
-export type AppointmentStatus = "Accepted" | "Rejected" | "Changed" | "Pending";
+export type AppointmentStatus = "accepted" | "rejected" | "changed" | "pending";
