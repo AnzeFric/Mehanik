@@ -1,7 +1,7 @@
 import { View, ScrollView, StyleSheet } from "react-native";
 import { useMemo, useState } from "react";
 import { useAppointment } from "@/hooks/useAppointment";
-import { Appointment } from "@/interfaces/appointment";
+import { UserAppointmentData } from "@/interfaces/appointment";
 import ThemedText from "@/components/global/themed/ThemedText";
 import TimeContainer from "./items/TimeContainer";
 
@@ -32,90 +32,24 @@ const times = [
   "23:00",
 ];
 
-const fakeAppointments: Appointment[] = [
+const fakeAppointments: UserAppointmentData[] = [
   {
-    customerFirstName: "Anze",
-    customerLastName: "Fric",
-    dateTime: new Date("2025-05-28T09:00:00"),
-    status: "Accepted",
-    description: "",
-  },
-  {
-    customerFirstName: "Anze",
-    customerLastName: "Fric",
-    dateTime: new Date("2025-05-28T10:00:00"),
-    status: "Accepted",
-    description: "",
-  },
-  {
-    customerFirstName: "Anze",
-    customerLastName: "Fric",
-    dateTime: new Date("2025-05-28T11:00:00"),
-    status: "Accepted",
-    description: "",
-  },
-  {
-    customerFirstName: "Dana",
-    customerLastName: "Fric",
-    dateTime: new Date("2025-05-28T12:00:00"),
-    status: "Accepted",
-    description: "",
-  },
-  {
-    customerFirstName: "Dana",
-    customerLastName: "Fric",
-    dateTime: new Date("2025-05-28T13:00:00"),
-    status: "Accepted",
-    description: "",
-  },
-  {
-    customerFirstName: "Dana",
-    customerLastName: "Fric",
-    dateTime: new Date("2025-05-28T14:00:00"),
-    status: "Accepted",
-    description: "",
-  },
-  {
-    customerFirstName: "Dana",
-    customerLastName: "Fric",
-    dateTime: new Date("2025-05-28T16:00:00"),
-    status: "Accepted",
-    description: "",
-  },
-  {
-    customerFirstName: "Ziga",
-    customerLastName: "Fric",
-    dateTime: new Date("2025-05-29T14:00:00"),
-    status: "Accepted",
-    description: "",
-  },
-  {
-    customerFirstName: "Ziga",
-    customerLastName: "Fric",
-    dateTime: new Date("2025-05-29T15:00:00"),
-    status: "Accepted",
-    description: "",
-  },
-  {
-    customerFirstName: "Anze",
-    customerLastName: "Fric",
-    dateTime: new Date("2025-05-29T10:00:00"),
-    status: "Accepted",
-    description: "",
-  },
-  {
-    customerFirstName: "Anze",
-    customerLastName: "Fric",
-    dateTime: new Date("2025-05-29T09:00:00"),
-    status: "Accepted",
-    description: "",
-  },
-  {
-    customerFirstName: "Anze",
-    customerLastName: "Fric",
-    dateTime: new Date("2025-05-29T13:00:00"),
-    status: "Accepted",
-    description: "",
+    uuid: "asdasd",
+    startDate: new Date(2025, 5, 16, 12, 0, 0),
+    endDate: new Date(2025, 5, 16, 14, 0, 0),
+    status: "accepted",
+    userMessage: "Mali servis",
+    numAppointments: 0,
+    user: {
+      firstName: "Anze",
+      lastName: "Fric",
+      email: "anze.fric@gmail.com",
+    },
+    vehicle: {
+      brand: "Skoda",
+      model: "Octavia",
+      buildYear: 2014,
+    },
   },
 ];
 
@@ -129,14 +63,14 @@ const itemHeight = 100;
 export default function TimeList({ selectedDate }: Props) {
   const { groupAppointments } = useAppointment();
   const [appointments, setAppointments] =
-    useState<Array<Appointment>>(fakeAppointments);
+    useState<Array<UserAppointmentData>>(fakeAppointments);
 
   const groupedAppointments = useMemo(() => {
     const targetDate = selectedDate.toISOString().split("T")[0];
 
     // Filter appointments for the selected day
     const filtered = appointments.filter((appointment) => {
-      const appointmentDate = appointment.dateTime.toISOString().split("T")[0];
+      const appointmentDate = appointment.startDate.toISOString().split("T")[0];
       return appointmentDate === targetDate;
     });
 

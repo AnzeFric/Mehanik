@@ -20,6 +20,7 @@ export interface UserAppointmentData {
   endDate: Date;
   status: AppointmentStatus;
   userMessage: string;
+  numAppointments: number;
   user: {
     firstName: string;
     lastName: string;

@@ -13,6 +13,7 @@ const fakeAppointments: UserAppointmentData[] = [
     endDate: new Date(2025, 6, 16, 14, 0, 0),
     status: "accepted",
     userMessage: "Mali servis",
+    numAppointments: 0,
     user: {
       firstName: "Anze",
       lastName: "Fric",

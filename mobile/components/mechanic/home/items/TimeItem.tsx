@@ -1,5 +1,5 @@
 import { View, StyleSheet, TouchableOpacity } from "react-native";
-import { GroupedAppointmentData } from "@/interfaces/appointment";
+import { UserAppointmentData } from "@/interfaces/appointment";
 import { formatTime } from "@/constants/util";
 import ThemedText from "@/components/global/themed/ThemedText";
 import ThemedView from "@/components/global/themed/ThemedView";
@@ -7,7 +7,7 @@ import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 import { AppointmentStatus } from "@/interfaces/appointment";
 
 interface Props {
-  appointment: GroupedAppointmentData;
+  appointment: UserAppointmentData;
   itemHeight: number;
 }
 
@@ -15,8 +15,8 @@ export default function TimeItem({ appointment, itemHeight }: Props) {
   const { staticColors } = useAnimatedTheme();
 
   const getDurationText = () => {
-    const startTime = formatTime(appointment.startDateTime);
-    const endTime = formatTime(appointment.endDateTime);
+    const startTime = formatTime(appointment.startDate);
+    const endTime = formatTime(appointment.endDate);
     return `${startTime} - ${endTime}`;
   };
 
@@ -54,7 +54,7 @@ export default function TimeItem({ appointment, itemHeight }: Props) {
       <TouchableOpacity style={container}>
         <View style={{ flexDirection: "row" }}>
           <ThemedText type={"small"}>
-            {appointment.customerFirstName} {appointment.customerLastName}
+            {appointment.user.firstName} {appointment.user.lastName}
             {", "}
           </ThemedText>
           <ThemedText type={"small"}>{getDurationText()}</ThemedText>
@@ -66,7 +66,7 @@ export default function TimeItem({ appointment, itemHeight }: Props) {
           </ThemedText>
         </View>
         <ThemedText type={"small"} numberOfLines={1}>
-          {appointment.description || "Ni opisa"}
+          {appointment.userMessage || "Ni opisa"}
         </ThemedText>
       </TouchableOpacity>
     </ThemedView>

@@ -1,13 +1,13 @@
 import { View } from "react-native";
 import TimeItem from "./TimeItem";
 import { useAppointment } from "@/hooks/useAppointment";
-import { GroupedAppointmentData } from "@/interfaces/appointment";
 import EmptyTimeItem from "./EmptyTimeItem";
+import { UserAppointmentData } from "@/interfaces/appointment";
 
 interface Props {
   time: string;
   itemHeight: number;
-  groupedAppointments: Array<GroupedAppointmentData>;
+  groupedAppointments: Array<UserAppointmentData>;
 }
 
 export default function TimeContainer({
