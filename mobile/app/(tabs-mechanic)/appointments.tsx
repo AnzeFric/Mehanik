@@ -2,46 +2,34 @@ import { StyleSheet } from "react-native";
 import { useState } from "react";
 import DisplayItems from "@/components/global/DisplayItems";
 import Appointment from "@/components/mechanic/items/Appointment";
-import { AppointmentData } from "@/interfaces/appointment";
 import TitleRow from "@/components/shared/TitleRow";
 import ThemedView from "@/components/global/themed/ThemedView";
+import { UserAppointmentData } from "@/interfaces/appointment";
 
-const fakeAppointments: AppointmentData[] = [
+const fakeAppointments: UserAppointmentData[] = [
   {
-    id: 0,
-    name: "Marko Petrović",
-    vehicle: "Volkswagen Golf 7",
-    dateTime: new Date(2024, 3, 1, 12, 0, 0),
-    description:
-      "Avto dela zanimive zvoke v mašini. To je nek daljsi zapis, da lahko vidim kaj se zgodi, ko se bo besedilo pričelo sekat.",
-  },
-  {
-    id: 1,
-    name: "Ivana Jovanović",
-    vehicle: "Audi A4",
-    dateTime: new Date(2024, 3, 3, 11, 0, 0),
-    description: "Potrebujem redni servis",
-  },
-  {
-    id: 2,
-    name: "Nemanja Nikolić",
-    vehicle: "BMW X5",
-    dateTime: new Date(2024, 3, 7, 9, 15, 0),
-    description: "Hladilna tekočina mi toči",
-  },
-  {
-    id: 3,
-    name: "Ana Simić",
-    vehicle: "Mercedes-Benz C200",
-    dateTime: new Date(2022, 11, 10, 16, 20),
-    description: "Menjava gum",
+    uuid: "asdasd",
+    startDate: new Date(2025, 6, 16, 12, 0, 0),
+    endDate: new Date(2025, 6, 16, 14, 0, 0),
+    status: "accepted",
+    userMessage: "Mali servis",
+    user: {
+      firstName: "Anze",
+      lastName: "Fric",
+      email: "anze.fric@gmail.com",
+    },
+    vehicle: {
+      brand: "Skoda",
+      model: "Octavia",
+      buildYear: 2014,
+    },
   },
 ];
 
 // TODO: Get items from database
 export default function AppointmentsScreen() {
   const [appointmentList, setAppointmentList] =
-    useState<Array<AppointmentData>>(fakeAppointments);
+    useState<Array<UserAppointmentData>>(fakeAppointments);
 
   return (
     <ThemedView type={"background"} style={styles.container}>
