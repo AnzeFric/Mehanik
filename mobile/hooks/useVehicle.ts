@@ -5,15 +5,15 @@ import { VehicleData } from "@/interfaces/vehicle";
 export function useVehicle() {
   const { jwt } = useAuthStore();
 
-  const updateVehicle = async (vehicle: VehicleData) => {
+  const saveVehicle = async (vehicle: VehicleData) => {
     try {
       const response = await fetch(`${API_BASE_URL}/vehicles/`, {
-        method: "PATCH",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + jwt,
         },
-        body: JSON.stringify({ vehicle: vehicle }),
+        body: JSON.stringify({ vehicleData: vehicle }),
       });
 
       const data = await response.json();
@@ -23,9 +23,31 @@ export function useVehicle() {
       }
       return false;
     } catch (error) {
-      console.error("Error deleting user: ", error);
+      console.error("Error saving vehicle: ", error);
     }
   };
 
-  return { updateVehicle };
+  const updateVehicle = async (vehicle: VehicleData) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/vehicles/`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + jwt,
+        },
+        body: JSON.stringify({ vehicleData: vehicle }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error("Error patching vehicle: ", error);
+    }
+  };
+
+  return { saveVehicle, updateVehicle };
 }

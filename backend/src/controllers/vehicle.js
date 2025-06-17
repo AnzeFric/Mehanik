@@ -6,25 +6,23 @@ const vehicleController = {
       console.log("Save vehicle. Req from: ", req.user);
       console.log("Body: ", req.body);
 
-      const vehicleData = req.body.vehicleData;
-      const userUuid = req.body.userUuid;
+      const userUuid = req.user.userUuid;
       const customerUuid = req.body.customerUuid;
+      const vehicleData = req.body.vehicleData;
 
       if (!vehicleData) throw new Error("Vehicle data is not provided");
-      if (!userUuid && !customerUuid)
-        throw new Error("No user or customer uuid provided");
-
       await checkInput(vehicleData);
-      if (userUuid) {
+
+      if (customerUuid) {
         var vehicleUuid = await vehicleService.saveVehicleByUserOrCustomerUuid(
-          userUuid,
           null,
+          customerUuid,
           vehicleData
         );
       } else {
         var vehicleUuid = await vehicleService.saveVehicleByUserOrCustomerUuid(
+          userUuid,
           null,
-          customerUuid,
           vehicleData
         );
       }
