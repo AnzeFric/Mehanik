@@ -1,5 +1,5 @@
 import { Alert, StyleSheet, View } from "react-native";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import VehicleForm from "@/components/mechanic/library/forms/VehicleForm";
 import TitleRow from "@/components/shared/TitleRow";
 import { VehicleData } from "@/interfaces/vehicle";
@@ -20,33 +20,38 @@ export default function EditUserVehicleScreen() {
     return JSON.parse(vehicle.toString());
   }, [vehicle]);
 
-  const [newVehicle, setNewVehicle] = useState<VehicleData>(vehicleData);
-  const [newVehicleImage, setNewVehicleImage] = useState<string | null>(
-    vehicleData.image
-  );
+  const [newVehicle, setNewVehicle] = useState<VehicleData>();
+  const [newVehicleImage, setNewVehicleImage] = useState<string | null>();
+
+  useEffect(() => {
+    setNewVehicle(vehicleData);
+    setNewVehicleImage(vehicleData.image);
+  }, [vehicle]);
 
   const handleEditVehicle = async () => {
-    const finalVehicleData = {
-      ...newVehicle,
-      image: newVehicleImage,
-    };
-
-    const result = await updateVehicle(finalVehicleData);
-    if (result) {
-      setShouldRefetch(true);
-    } else {
-      Alert.alert(
-        "Napaka",
-        "Prišlo je do napake pri posodabljanju podatkov. Poskusite ponovno kasneje"
-      );
+    if (newVehicle && newVehicleImage) {
+      const finalVehicleData = {
+        ...newVehicle,
+        image: newVehicleImage,
+      };
+      const result = await updateVehicle(finalVehicleData);
+      if (result) {
+        setShouldRefetch(true);
+      } else {
+        Alert.alert(
+          "Napaka",
+          "Prišlo je do napake pri posodabljanju podatkov. Poskusite ponovno kasneje"
+        );
+      }
+      router.replace("/(tabs-user)/vehicles");
     }
-    router.replace("/(tabs-user)/vehicles");
   };
 
   useFocusEffect(
     useCallback(() => {
       return () => {
         setNewVehicle(vehicleData);
+        setNewVehicleImage("");
       };
     }, [])
   );
@@ -59,8 +64,13 @@ export default function EditUserVehicleScreen() {
         style={{ paddingBottom: 20 }}
       />
       <View style={styles.container}>
-        <ImageForm image={newVehicle.image} setImage={setNewVehicleImage} />
-        <VehicleForm vehicle={newVehicle} setVehicle={setNewVehicle} />
+        <ImageForm
+          image={newVehicle?.image || ""}
+          setImage={setNewVehicleImage}
+        />
+        <View>
+          <VehicleForm vehicle={newVehicle} setVehicle={setNewVehicle} />
+        </View>
         <ThemedButton
           buttonType={"small"}
           buttonText={"Uredi"}
