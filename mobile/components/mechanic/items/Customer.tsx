@@ -35,7 +35,7 @@ export default function Customer({ customerData }: Props) {
           />
         ) : (
           <Image
-            source={require("@/assets/images/logo-main.png")}
+            source={require("@/assets/logo-main.png")}
             style={styles.image}
           />
         )}

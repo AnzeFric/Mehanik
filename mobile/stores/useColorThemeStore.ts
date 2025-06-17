@@ -16,7 +16,7 @@ const initialState = {
 
 const useColorThemeStore = create(
   persist<ColorThemeStore>(
-    (set, get) => ({
+    (set) => ({
       ...initialState,
       setSelectedTheme: (selectedTheme: ThemeMode) => {
         set({ selectedTheme: selectedTheme });

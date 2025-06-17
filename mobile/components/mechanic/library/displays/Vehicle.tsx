@@ -13,7 +13,7 @@ export default function VehicleDisplay({ vehicle }: Props) {
         <Image source={{ uri: vehicle.image }} style={styles.image} />
       ) : (
         <Image
-          source={require("@/assets/images/logo-main.png")}
+          source={require("@/assets/logo-main.png")}
           style={styles.image}
         />
       )}

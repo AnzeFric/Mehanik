@@ -4,7 +4,7 @@
     "slug": "mehanik",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo-main.png",
+    "icon": "./assets/logo-main.png",
     "scheme": "mehanik",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -13,7 +13,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/logo-main.png",
+        "foregroundImage": "./assets/logo-main.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.anzefric.mehanik"
@@ -21,14 +21,14 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/logo2.png"
+      "favicon": "./assets/logo2.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/logo-splash-screen.png",
+          "image": "./assets/logo-splash-screen.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"

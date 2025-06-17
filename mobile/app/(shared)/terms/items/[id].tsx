@@ -2,8 +2,8 @@ import { View, StyleSheet } from "react-native";
 import TitleRow from "@/components/shared/TitleRow";
 import { useLocalSearchParams } from "expo-router";
 import { useMemo } from "react";
-import { items } from "@/data/terms/terms.json";
-import { Terms } from "@/data/terms/terms";
+import { items } from "@/constants/data/terms.json";
+import { Terms } from "@/interfaces/terms";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedText from "@/components/global/themed/ThemedText";
 

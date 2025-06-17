@@ -33,7 +33,7 @@ export default function Mechanic({ mechanicData }: Props) {
           />
         ) : (
           <Image
-            source={require("@/assets/images/logo-main.png")}
+            source={require("@/assets/logo-main.png")}
             style={styles.image}
           />
         )}
