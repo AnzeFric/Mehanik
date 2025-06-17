@@ -1,9 +1,11 @@
 import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { useState } from "react";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedText from "@/components/global/themed/ThemedText";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 import { VehicleData } from "@/interfaces/vehicle";
 import { router } from "expo-router";
+import ModalPrompt from "@/components/shared/modals/ModalPrompt";
 
 interface Props {
   vehicle: VehicleData;
@@ -11,6 +13,8 @@ interface Props {
 
 export default function Vehicle({ vehicle }: Props) {
   const { staticColors } = useAnimatedTheme();
+
+  const [isDeleteVisible, setIsDeleteVisible] = useState(false);
 
   const handlePress = () => {
     router.push({
@@ -28,6 +32,7 @@ export default function Vehicle({ vehicle }: Props) {
           styles.container,
           { borderLeftColor: staticColors.specialBlue },
         ]}
+        onLongPress={() => setIsDeleteVisible(true)}
         onPress={handlePress}
       >
         {vehicle.image ? (
@@ -54,6 +59,12 @@ export default function Vehicle({ vehicle }: Props) {
           )}
         </View>
       </TouchableOpacity>
+      <ModalPrompt
+        isVisible={isDeleteVisible}
+        message={"Ste prepričani, da želite izbrisati vozilo?"}
+        onConfirm={() => {}}
+        onCancel={() => setIsDeleteVisible(false)}
+      />
     </ThemedView>
   );
 }
