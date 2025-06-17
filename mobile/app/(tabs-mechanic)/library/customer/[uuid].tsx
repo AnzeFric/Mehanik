@@ -14,7 +14,6 @@ import CustomerDisplay from "@/components/mechanic/library/displays/Customer";
 import { RepairData } from "@/interfaces/repair";
 import useCustomerStore from "@/stores/useCustomerStore";
 import ThemedIcon from "@/components/global/themed/ThemedIcon";
-import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 import ThemedText from "@/components/global/themed/ThemedText";
 import EditMenu from "@/components/mechanic/library/EditMenu";
 
@@ -24,7 +23,6 @@ export default function DetailCustomerScreen() {
   const { getVehicleRepairs } = useRepair();
   const { customers, shouldRefetch, setShouldRefetch } = useCustomerStore();
   const { deleteCustomer } = useCustomer();
-  const { staticColors } = useAnimatedTheme();
 
   const [repairList, setRepairList] = useState<Array<RepairData>>([]);
   const [customer, setCustomer] = useState<CustomerVehicleData>();

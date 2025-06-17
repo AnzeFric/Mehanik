@@ -8,6 +8,7 @@ import ImageForm from "@/components/mechanic/library/forms/ImageForm";
 import ThemedButton from "@/components/global/themed/ThemedButton";
 import ThemedScrollView from "@/components/global/themed/ThemedScrollView";
 import { useVehicle } from "@/hooks/useVehicle";
+import useVehicleStore from "@/stores/useVehicleStore";
 
 const defaultValues: VehicleData = {
   uuid: "",
@@ -21,6 +22,7 @@ const defaultValues: VehicleData = {
 
 export default function AddUserVehicleScreen() {
   const { saveVehicle } = useVehicle();
+  const { setShouldRefetch } = useVehicleStore();
 
   const [vehicle, setVehicle] = useState<VehicleData>(defaultValues);
   const [vehicleImage, setVehicleImage] = useState<string | null>(null);
@@ -31,9 +33,10 @@ export default function AddUserVehicleScreen() {
       image: vehicleImage,
     };
 
-    var result = await saveVehicle(vehicleData);
-
-    if (!result) {
+    const result = await saveVehicle(vehicleData);
+    if (result) {
+      setShouldRefetch(true);
+    } else {
       Alert.alert(
         "Napaka",
         "Prišlo je do napake pri shranjevanju podatkov. Poskusite ponovno kasneje"

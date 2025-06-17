@@ -8,10 +8,13 @@ import ImageForm from "@/components/mechanic/library/forms/ImageForm";
 import ThemedButton from "@/components/global/themed/ThemedButton";
 import ThemedScrollView from "@/components/global/themed/ThemedScrollView";
 import { useVehicle } from "@/hooks/useVehicle";
+import useVehicleStore from "@/stores/useVehicleStore";
 
 export default function EditUserVehicleScreen() {
   const { vehicle } = useLocalSearchParams();
+
   const { updateVehicle } = useVehicle();
+  const { setShouldRefetch } = useVehicleStore();
 
   const vehicleData: VehicleData = useMemo(() => {
     return JSON.parse(vehicle.toString());
@@ -28,9 +31,10 @@ export default function EditUserVehicleScreen() {
       image: newVehicleImage,
     };
 
-    var result = await updateVehicle(finalVehicleData);
-
-    if (!result) {
+    const result = await updateVehicle(finalVehicleData);
+    if (result) {
+      setShouldRefetch(true);
+    } else {
       Alert.alert(
         "Napaka",
         "Prišlo je do napake pri posodabljanju podatkov. Poskusite ponovno kasneje"

@@ -5,6 +5,27 @@ import { VehicleData } from "@/interfaces/vehicle";
 export function useVehicle() {
   const { jwt } = useAuthStore();
 
+  const fetchVehicles = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/vehicles/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + jwt,
+        },
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        return data.vehicles;
+      }
+      return [];
+    } catch (error) {
+      console.error("Error fetching vehicles: ", error);
+    }
+  };
+
   const saveVehicle = async (vehicle: VehicleData) => {
     try {
       const response = await fetch(`${API_BASE_URL}/vehicles/`, {
@@ -49,5 +70,5 @@ export function useVehicle() {
     }
   };
 
-  return { saveVehicle, updateVehicle };
+  return { fetchVehicles, saveVehicle, updateVehicle };
 }

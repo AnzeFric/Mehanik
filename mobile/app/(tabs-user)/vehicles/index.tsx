@@ -1,25 +1,36 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { VehicleData } from "@/interfaces/vehicle";
 import Vehicle from "@/components/user/items/Vehicle";
 import TitleRow from "@/components/shared/TitleRow";
 import DisplayItems from "@/components/global/DisplayItems";
 import ThemedView from "@/components/global/themed/ThemedView";
 import PlusButton from "@/components/global/PlusButton";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
+import useVehicleStore from "@/stores/useVehicleStore";
+import { useVehicle } from "@/hooks/useVehicle";
 
-const fakeVehice: VehicleData = {
-  uuid: "123",
-  brand: "123",
-  model: "123",
-  buildYear: null,
-  vin: "123",
-  image: null,
-  description: null,
-};
-
-// TODO: Get vehicles dynamically
 export default function UserVehiclesScreen() {
-  const [vehicles, setVehicles] = useState<Array<VehicleData>>([fakeVehice]);
+  const { shouldRefetch, setShouldRefetch } = useVehicleStore();
+  const { fetchVehicles } = useVehicle();
+  const [vehicles, setVehicles] = useState<Array<VehicleData>>([]);
+
+  useEffect(() => {
+    setShouldRefetch(true);
+  }, []);
+
+  const vehiclesFetch = async () => {
+    const fetchedVehicles = await fetchVehicles();
+    setVehicles(fetchedVehicles);
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      if (shouldRefetch) {
+        vehiclesFetch();
+        setShouldRefetch(false);
+      }
+    }, [shouldRefetch])
+  );
 
   return (
     <ThemedView type={"background"} style={{ flex: 1 }}>

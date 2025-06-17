@@ -4,6 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface VehicleStore {
   shouldRefetch: Boolean;
+  setShouldRefetch: (shouldRefetch: Boolean) => void;
   reset: () => void;
 }
 
