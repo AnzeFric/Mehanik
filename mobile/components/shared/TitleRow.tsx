@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, StyleProp, ViewStyle } from "react-native";
 import { router } from "expo-router";
 import ThemedView from "../global/themed/ThemedView";
 import ThemedText from "../global/themed/ThemedText";
@@ -8,11 +8,17 @@ interface Props {
   title: string;
   hasBackButton: boolean;
   menuButton?: React.ReactNode;
+  style?: StyleProp<ViewStyle>;
 }
 
-export default function TitleRow({ title, hasBackButton, menuButton }: Props) {
+export default function TitleRow({
+  title,
+  hasBackButton,
+  menuButton,
+  style,
+}: Props) {
   return (
-    <ThemedView type={"background"} style={styles.container}>
+    <ThemedView type={"background"} style={[styles.container, style]}>
       {hasBackButton && (
         <ThemedIcon
           name={"arrow-back"}
