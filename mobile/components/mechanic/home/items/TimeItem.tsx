@@ -5,6 +5,10 @@ import ThemedText from "@/components/global/themed/ThemedText";
 import ThemedView from "@/components/global/themed/ThemedView";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 import { AppointmentStatus } from "@/interfaces/appointment";
+import useUserStore from "@/stores/useUserStore";
+import ModalInfo, { SectionData } from "@/components/shared/modals/ModalInfo";
+import { useState } from "react";
+import { formatDateTime } from "@/constants/util";
 
 interface Props {
   appointment: UserAppointmentData;
@@ -12,7 +16,11 @@ interface Props {
 }
 
 export default function TimeItem({ appointment, itemHeight }: Props) {
+  const { currentUser } = useUserStore();
   const { staticColors } = useAnimatedTheme();
+
+  const [infoModalVisible, setInfoModalVisible] = useState(false);
+  const [modalSections, setModalSections] = useState<Array<SectionData>>([]);
 
   const getDurationText = () => {
     const startTime = formatTime(appointment.startDate);
@@ -49,9 +57,47 @@ export default function TimeItem({ appointment, itemHeight }: Props) {
     },
   ];
 
+  const handleItemPress = () => {
+    if (currentUser.accountType === "mechanic") {
+      const userSection: SectionData = {
+        title: "Podatki o stranki",
+        text: [`${appointment.user.firstName} ${appointment.user.lastName}`],
+      };
+      const dateSection: SectionData = {
+        title: "Trajanje",
+        text: [
+          formatDateTime(appointment.startDate),
+          formatDateTime(appointment.endDate),
+        ],
+      };
+      const contactSection: SectionData = {
+        title: "Kontakt",
+        text: [appointment.user.email],
+      };
+      const vehicleSection: SectionData = {
+        title: "Vozilo",
+        text: [
+          `${appointment.vehicle.brand} ${appointment.vehicle.model}, ${appointment.vehicle.buildYear}`,
+        ],
+      };
+      const infoSection: SectionData = {
+        title: "Podrobnosti",
+        text: [statusToText[appointment.status], appointment.userMessage],
+      };
+      setModalSections([
+        userSection,
+        dateSection,
+        contactSection,
+        vehicleSection,
+        infoSection,
+      ]);
+      setInfoModalVisible(true);
+    }
+  };
+
   return (
     <ThemedView type={"secondary"}>
-      <TouchableOpacity style={container}>
+      <TouchableOpacity style={container} onPress={handleItemPress}>
         <View style={{ flexDirection: "row" }}>
           <ThemedText type={"small"}>
             {appointment.user.firstName} {appointment.user.lastName}
@@ -69,6 +115,12 @@ export default function TimeItem({ appointment, itemHeight }: Props) {
           {appointment.userMessage || "Ni opisa"}
         </ThemedText>
       </TouchableOpacity>
+      <ModalInfo
+        isVisible={infoModalVisible}
+        sections={modalSections}
+        modalTitle={"Podatki o stranki"}
+        onCancel={() => setInfoModalVisible(false)}
+      />
     </ThemedView>
   );
 }

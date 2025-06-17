@@ -10,7 +10,7 @@ interface Props {
   onCancel: () => void;
 }
 
-export default function ModalReject({
+export default function ModalPrompt({
   isVisible,
   message,
   onConfirm,
