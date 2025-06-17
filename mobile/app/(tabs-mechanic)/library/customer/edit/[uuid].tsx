@@ -1,4 +1,4 @@
-import { View, StyleSheet, Alert } from "react-native";
+import { View, Alert } from "react-native";
 import { useCallback, useState } from "react";
 import CustomerForm from "@/components/mechanic/library/forms/CustomerForm";
 import TemplateView from "@/components/mechanic/library/TemplateView";
@@ -44,14 +44,15 @@ export default function EditCustomerScreen() {
         currentCustomer,
         finalVehicleData
       );
+
+      if (!result) {
+        Alert.alert(
+          "Napaka",
+          "Prišlo je do napake pri posodabljanju podatkov. Poskusite ponovno kasneje"
+        );
+      }
+      router.replace("/(tabs-mechanic)/library");
     }
-    if (!result) {
-      Alert.alert(
-        "Napaka",
-        "Prišlo je do napake pri posodabljanju podatkov. Poskusite ponovno kasneje"
-      );
-    }
-    router.replace("/(tabs-mechanic)/library");
   };
 
   return (
@@ -61,7 +62,7 @@ export default function EditCustomerScreen() {
       buttonText={"Uredi"}
       onButtonPress={handleSaveEdit}
     >
-      <View style={styles.container}>
+      <View style={{ paddingHorizontal: 25 }}>
         <ImageForm image={currentImage} setImage={setCurrentImage} />
         <CustomerForm
           customer={currentCustomer}
@@ -72,9 +73,3 @@ export default function EditCustomerScreen() {
     </TemplateView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 25,
-  },
-});

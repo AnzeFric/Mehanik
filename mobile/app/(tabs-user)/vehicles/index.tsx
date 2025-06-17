@@ -5,9 +5,19 @@ import TitleRow from "@/components/shared/TitleRow";
 import DisplayItems from "@/components/global/DisplayItems";
 import ThemedView from "@/components/global/themed/ThemedView";
 
+const fakeVehice: VehicleData = {
+  uuid: "123",
+  brand: "123",
+  model: "123",
+  buildYear: null,
+  vin: "123",
+  image: null,
+  description: null,
+};
+
 // TODO: Get vehicles dynamically
 export default function UserVehiclesScreen() {
-  const [vehicles, setVehicles] = useState<Array<VehicleData>>([]);
+  const [vehicles, setVehicles] = useState<Array<VehicleData>>([fakeVehice]);
 
   return (
     <ThemedView type={"background"} style={{ flex: 1 }}>

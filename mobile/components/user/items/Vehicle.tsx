@@ -1,8 +1,9 @@
-import { View, Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedText from "@/components/global/themed/ThemedText";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 import { VehicleData } from "@/interfaces/vehicle";
+import { router } from "expo-router";
 
 interface Props {
   vehicle: VehicleData;
@@ -11,34 +12,48 @@ interface Props {
 export default function Vehicle({ vehicle }: Props) {
   const { staticColors } = useAnimatedTheme();
 
+  const handlePress = () => {
+    router.push({
+      pathname: "/(tabs-user)/vehicles/vehicle/edit",
+      params: {
+        vehicle: JSON.stringify(vehicle),
+      },
+    });
+  };
+
   return (
-    <ThemedView
-      type={"secondary"}
-      style={[styles.container, { borderLeftColor: staticColors.specialBlue }]}
-    >
-      {vehicle.image ? (
-        <Image source={{ uri: vehicle.image }} style={styles.image} />
-      ) : (
-        <Image
-          source={require("@/assets/logo-main.png")}
-          style={styles.image}
-        />
-      )}
-      <View style={{ flex: 1 }}>
-        <ThemedText type={"small"} bold>
-          {vehicle.brand} {vehicle.model}
-          {vehicle.buildYear && (
-            <>
-              {", "}
-              {vehicle.buildYear}
-            </>
-          )}
-        </ThemedText>
-        <ThemedText type={"extraSmall"}>{vehicle.vin}</ThemedText>
-        {vehicle.description && (
-          <ThemedText type={"extraSmall"}>{vehicle.description}</ThemedText>
+    <ThemedView type={"secondary"}>
+      <TouchableOpacity
+        style={[
+          styles.container,
+          { borderLeftColor: staticColors.specialBlue },
+        ]}
+        onPress={handlePress}
+      >
+        {vehicle.image ? (
+          <Image source={{ uri: vehicle.image }} style={styles.image} />
+        ) : (
+          <Image
+            source={require("@/assets/logo-main.png")}
+            style={styles.image}
+          />
         )}
-      </View>
+        <View style={{ flex: 1 }}>
+          <ThemedText type={"small"} bold>
+            {vehicle.brand} {vehicle.model}
+            {vehicle.buildYear && (
+              <>
+                {", "}
+                {vehicle.buildYear}
+              </>
+            )}
+          </ThemedText>
+          <ThemedText type={"extraSmall"}>{vehicle.vin}</ThemedText>
+          {vehicle.description && (
+            <ThemedText type={"extraSmall"}>{vehicle.description}</ThemedText>
+          )}
+        </View>
+      </TouchableOpacity>
     </ThemedView>
   );
 }

@@ -74,7 +74,7 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="vehicles/vehicle/[uuid]"
+          name="vehicles/vehicle/edit"
           options={{
             href: null,
           }}
