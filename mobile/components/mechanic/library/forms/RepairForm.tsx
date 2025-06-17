@@ -148,7 +148,9 @@ export default function RepairForm({ repair, setRepair }: Props) {
   const handleTypeChange = useCallback(
     (newType: "small" | "large" | "other") => {
       setType(newType);
-      updateParent({ type: newType });
+      setOptions(defaultOptions);
+      setDescription("");
+      updateParent({ type: newType, options: defaultOptions, description: "" });
     },
     [updateParent]
   );
