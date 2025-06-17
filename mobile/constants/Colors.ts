@@ -2,8 +2,8 @@ export const Colors = {
   light: {
     /* Backgrounds */
     background: "#FFFFFF",
-    primaryBackground: "#FFFFFF",
-    secondaryBackground: "#F9FAFB",
+    primaryBackground: "#E4E4E4",
+    secondaryBackground: "#F3F3F3",
 
     /* Texts */
     primaryText: "#000000",
