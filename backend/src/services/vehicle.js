@@ -58,15 +58,20 @@ const vehicleService = {
   },
 
   async deleteVehicleByUuid(userUuid, customerUuid, vehicleUuid) {
-    const { error } = await supabase
-      .from("vehicles")
-      .delete()
-      .eq("uuid", vehicleUuid)
-      .eq("fk_user", userUuid)
-      .eq("fk_customer", customerUuid);
+    let query = supabase.from("vehicles").delete().eq("uuid", vehicleUuid);
+
+    if (customerUuid !== null && customerUuid !== undefined) {
+      query = query.eq("fk_customer", customerUuid);
+    } else {
+      query = query.eq("fk_user", userUuid);
+    }
+
+    const { error } = await query;
 
     if (error)
-      throw new Error(`Failed to delete vehicle ${uuid}: ${error.message}`);
+      throw new Error(
+        `Failed to delete vehicle ${vehicleUuid}: ${error.message}`
+      );
 
     return true;
   },

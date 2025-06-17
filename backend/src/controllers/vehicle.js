@@ -36,8 +36,7 @@ const vehicleController = {
       console.log("Body: ", req.body);
 
       const userUuid = req.user.userUuid;
-      const customerUuid = req.body.customerUuid;
-      const vehicleData = req.body.vehicleData;
+      const { customerUuid, vehicleData } = req.body;
 
       if (!vehicleData) throw new Error("Vehicle data is not provided");
       await checkInput(vehicleData);
@@ -88,24 +87,19 @@ const vehicleController = {
 
   async deleteVehicle(req, res, next) {
     try {
-      console.log("Patch vehicle. Req from: ", req.user);
+      console.log("Delete vehicle. Req from: ", req.user);
       console.log("Body: ", req.body);
 
       const userUuid = req.user.userUuid;
-      const customerUuid = req.body.customerUuid;
-      const vehicleUuid = req.body.vehicleUuid;
+      const { customerUuid, vehicleUuid } = req.body;
 
       if (!vehicleUuid) throw new Error("Vehicle uuid is not provided");
 
-      if (customerUuid) {
-        await vehicleService.deleteVehicleByUuid(
-          null,
-          customerUuid,
-          vehicleUuid
-        );
-      } else {
-        await vehicleService.deleteVehicleByUuid(userUuid, null, vehicleUuid);
-      }
+      await vehicleService.deleteVehicleByUuid(
+        userUuid,
+        customerUuid,
+        vehicleUuid
+      );
 
       return res.status(200).json({
         success: true,

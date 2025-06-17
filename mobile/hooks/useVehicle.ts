@@ -73,5 +73,33 @@ export function useVehicle() {
     }
   };
 
-  return { fetchVehicles, saveVehicle, updateVehicle };
+  const deleteVehicle = async (vehicleUuid: string) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/vehicles/`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + jwt,
+        },
+        body: JSON.stringify({ vehicleUuid: vehicleUuid }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        return true;
+      }
+      console.error("Error deleting vehicle: ", data.message);
+      return false;
+    } catch (error) {
+      console.error("Error deleting vehicle: ", error);
+    }
+  };
+
+  return {
+    fetchVehicles,
+    saveVehicle,
+    updateVehicle,
+    deleteVehicle,
+  };
 }

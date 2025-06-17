@@ -1,4 +1,4 @@
-import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Image, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { useState } from "react";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedText from "@/components/global/themed/ThemedText";
@@ -6,6 +6,8 @@ import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 import { VehicleData } from "@/interfaces/vehicle";
 import { router } from "expo-router";
 import ModalPrompt from "@/components/shared/modals/ModalPrompt";
+import { useVehicle } from "@/hooks/useVehicle";
+import useVehicleStore from "@/stores/useVehicleStore";
 
 interface Props {
   vehicle: VehicleData;
@@ -13,6 +15,8 @@ interface Props {
 
 export default function Vehicle({ vehicle }: Props) {
   const { staticColors } = useAnimatedTheme();
+  const { deleteVehicle } = useVehicle();
+  const { setShouldRefetch } = useVehicleStore();
 
   const [isDeleteVisible, setIsDeleteVisible] = useState(false);
 
@@ -23,6 +27,19 @@ export default function Vehicle({ vehicle }: Props) {
         vehicle: JSON.stringify(vehicle),
       },
     });
+  };
+
+  const handleDelete = async () => {
+    const success = await deleteVehicle(vehicle.uuid);
+    setIsDeleteVisible(false);
+    if (success) {
+      setShouldRefetch(true);
+    } else {
+      Alert.alert(
+        "Napaka",
+        "Prišlo je do napake pri brisanju vozila. Poskusite ponovno kasneje."
+      );
+    }
   };
 
   return (
@@ -62,7 +79,7 @@ export default function Vehicle({ vehicle }: Props) {
       <ModalPrompt
         isVisible={isDeleteVisible}
         message={"Ste prepričani, da želite izbrisati vozilo?"}
-        onConfirm={() => {}}
+        onConfirm={handleDelete}
         onCancel={() => setIsDeleteVisible(false)}
       />
     </ThemedView>
