@@ -20,6 +20,7 @@ export function useVehicle() {
       if (data.success) {
         return data.vehicles;
       }
+      console.error("Error fetching vehicles: ", data.message);
       return [];
     } catch (error) {
       console.error("Error fetching vehicles: ", error);
@@ -42,6 +43,7 @@ export function useVehicle() {
       if (data.success) {
         return true;
       }
+      console.error("Error saving vehicle: ", data.message);
       return false;
     } catch (error) {
       console.error("Error saving vehicle: ", error);
@@ -64,6 +66,7 @@ export function useVehicle() {
       if (data.success) {
         return true;
       }
+      console.error("Error patching vehicle: ", data.message);
       return false;
     } catch (error) {
       console.error("Error patching vehicle: ", error);

@@ -49,8 +49,8 @@ export default function RepairForm({ repair, setRepair }: Props) {
   const pickRepairImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
+      aspect: [4, 4],
+      quality: 0.3,
     });
 
     if (!result.canceled) {

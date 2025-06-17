@@ -26,8 +26,8 @@ export default function ImageForm({ image, setImage }: Props) {
   const pickCustomerImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
-      aspect: [16, 14],
-      quality: 1,
+      aspect: [4, 4],
+      quality: 0.3,
     });
 
     if (!result.canceled) {
