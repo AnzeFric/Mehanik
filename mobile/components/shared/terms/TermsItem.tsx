@@ -14,8 +14,7 @@ export default function TermsItem({ id, title }: Props) {
 
   return (
     <ThemedButton
-      buttonType={"small"}
-      selected={false}
+      buttonType={"option-change"}
       buttonText={title}
       onPress={handlePress}
       buttonStyle={styles.container}

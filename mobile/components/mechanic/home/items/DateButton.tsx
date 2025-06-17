@@ -30,7 +30,10 @@ export default function DateButton({
 
   const buttonStyle = [
     styles.dateButton,
-    { backgroundColor: staticColors.actionButton },
+    {
+      backgroundColor: staticColors.actionButton,
+      borderColor: staticColors.inactiveBorder,
+    },
     isToday() && styles.todayDateButton,
     isSelected() && {
       backgroundColor: staticColors.button,
@@ -62,7 +65,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 10,
     borderRadius: 8,
-    borderWidth: 0.5,
+    borderWidth: 0.2,
   },
   selectedDateButton: {
     backgroundColor: "#3B82F6",

@@ -1,6 +1,7 @@
 import { TouchableOpacity, StyleSheet } from "react-native";
 import ThemedText from "@/components/global/themed/ThemedText";
 import ThemedView from "@/components/global/themed/ThemedView";
+import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 
 interface Props {
   itemHeight: number;
@@ -8,11 +9,15 @@ interface Props {
 }
 
 export default function EmptyTimeItem({ itemHeight, onPress }: Props) {
+  const { staticColors } = useAnimatedTheme();
+
+  const containerStyle = [
+    styles.container,
+    { height: itemHeight, borderColor: staticColors.inactiveBorder },
+  ];
+
   return (
-    <ThemedView
-      type={"primary"}
-      style={[styles.container, { height: itemHeight }]}
-    >
+    <ThemedView type={"primary"} style={containerStyle}>
       <TouchableOpacity onPress={onPress} style={styles.content}>
         <ThemedText type={"small"}>Prazen termin</ThemedText>
       </TouchableOpacity>
@@ -25,7 +30,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     borderStyle: "dashed",
-    borderColor: "#D1D5DB",
   },
   content: {
     flex: 1,

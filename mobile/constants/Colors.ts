@@ -20,7 +20,7 @@ export const Colors = {
     confirmButton: "#006DB5",
     cancelButton: "#C63500",
     destroyButton: "#E24A4A",
-    utilityButton: "#3C3C3C",
+    utilityButton: "#575757",
     actionButton: "#F3F4F6",
     actionButtonText: "#4B5563",
 
@@ -43,8 +43,8 @@ export const Colors = {
     inputText: "#000000",
 
     /* Borders */
-    border: "#DDDDDD",
-    inactiveBorder: "#C3C3C3",
+    border: "#000000",
+    inactiveBorder: "#656565",
 
     /* Other */
     specialBlue: "#003366",
@@ -96,7 +96,7 @@ export const Colors = {
 
     /* Borders */
     border: "#B8B8B8",
-    inactiveBorder: "#4A4A4A",
+    inactiveBorder: "#D1D5DB",
 
     /* Other */
     specialBlue: "#4A9EFF",

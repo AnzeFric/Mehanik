@@ -23,7 +23,7 @@ export default function Repair({ repairData, vehicleUuid }: Props) {
   };
 
   return (
-    <ThemedView type={"primary"}>
+    <ThemedView type={"primary"} style={{ borderRadius: 4 }}>
       <TouchableOpacity
         style={styles.container}
         activeOpacity={0.7}
@@ -75,8 +75,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 16,
     paddingVertical: 14,
-    borderWidth: 0.2,
+    flex: 1,
   },
+
   contentContainer: {
     flex: 1,
     borderRightWidth: 1,
