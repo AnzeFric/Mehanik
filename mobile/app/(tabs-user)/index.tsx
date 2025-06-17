@@ -66,6 +66,7 @@ export default function HomeUserScreen() {
       <TitleRow
         title={"Termini"}
         hasBackButton={false}
+        style={{ paddingBottom: 20 }}
         menuButton={
           <ThemedIcon
             name={"menu"}

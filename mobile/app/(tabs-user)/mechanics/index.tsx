@@ -46,7 +46,11 @@ export default function MechanicsScreen() {
 
   return (
     <ThemedView type={"background"} style={{ flex: 1 }}>
-      <TitleRow title={"Mehaniki"} hasBackButton={false} />
+      <TitleRow
+        title={"Mehaniki"}
+        hasBackButton={false}
+        style={{ paddingBottom: 20 }}
+      />
       <View style={styles.header}>
         <ThemedSearchInput
           placeholder={"Iskanje"}
