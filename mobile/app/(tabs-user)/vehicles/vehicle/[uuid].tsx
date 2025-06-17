@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 
-export default function UserVehicleDetailScreen() {
+export default function EditUserVehicleScreen() {
   return (
     <View>
       <Text>Hello detail</Text>
