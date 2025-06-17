@@ -4,6 +4,8 @@ import Vehicle from "@/components/user/items/Vehicle";
 import TitleRow from "@/components/shared/TitleRow";
 import DisplayItems from "@/components/global/DisplayItems";
 import ThemedView from "@/components/global/themed/ThemedView";
+import PlusButton from "@/components/global/PlusButton";
+import { router } from "expo-router";
 
 const fakeVehice: VehicleData = {
   uuid: "123",
@@ -32,6 +34,11 @@ export default function UserVehiclesScreen() {
           <Vehicle vehicle={vehicle} key={index} />
         )}
         emptyMessage="Nimate vnešenih vozil."
+      />
+      <PlusButton
+        onPress={() => {
+          router.push("/(tabs-user)/vehicles/vehicle/add");
+        }}
       />
     </ThemedView>
   );
