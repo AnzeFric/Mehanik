@@ -2,6 +2,17 @@ const supabase = require("../config/database");
 const { v4: uuidv4 } = require("uuid");
 
 const vehicleService = {
+  async getVehiclesByUserUuid(userUuid) {
+    const { data, error } = await supabase
+      .from("vehicles")
+      .select("uuid, brand, model, build_year, vin, image, description")
+      .eq("fk_user", userUuid);
+
+    if (error) throw error;
+
+    return data;
+  },
+
   // Accepts user or customer uuid and vehicleData to save. Both uuid's cannot be null
   async saveVehicleByUserOrCustomerUuid(userUuid, customerUuid, vehicleData) {
     let uuid = uuidv4();

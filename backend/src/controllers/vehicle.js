@@ -1,6 +1,35 @@
 const vehicleService = require("../services/vehicle");
 
 const vehicleController = {
+  async getVehicles(req, res, next) {
+    try {
+      console.log("Fetch vehicles. Req from: ", req.user);
+      console.log("Body: ", req.body);
+
+      const userUuid = req.user.userUuid;
+
+      const vehicles = await vehicleService.getVehiclesByUserUuid(userUuid);
+
+      const parsedData = (vehicles || []).map((vehicle) => ({
+        uuid: vehicle.uuid,
+        brand: vehicle.brand,
+        model: vehicle.model,
+        buildYear: vehicle.build_year,
+        image: vehicle.image,
+        vin: vehicle.vin,
+        description: vehicle.description,
+      }));
+
+      return res.status(200).json({
+        success: true,
+        message: "Vehicles fetched successfully",
+        vehicles: parsedData,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
   async saveVehicle(req, res, next) {
     try {
       console.log("Save vehicle. Req from: ", req.user);
