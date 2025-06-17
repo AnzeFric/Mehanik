@@ -54,6 +54,39 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
+          name="vehicles/index"
+          options={{
+            title: "Vehicles",
+            tabBarIcon: ({ color }) => (
+              <Ionicons
+                name={"car"}
+                color={
+                  pathName.startsWith("/vehicles") ? staticColors.button : color
+                }
+                size={30}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="vehicles/vehicle/add"
+          options={{
+            href: null,
+          }}
+        />
+        <Tabs.Screen
+          name="vehicles/vehicle/[uuid]"
+          options={{
+            href: null,
+          }}
+        />
+        <Tabs.Screen
+          name="vehicles/vehicle/edit/[uuid]"
+          options={{
+            href: null,
+          }}
+        />
+        <Tabs.Screen
           name="mechanics/index"
           options={{
             title: "Mechanics",
