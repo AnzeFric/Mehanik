@@ -14,14 +14,14 @@ export default function UserVehiclesScreen() {
   const { fetchVehicles } = useVehicle();
   const [vehicles, setVehicles] = useState<Array<VehicleData>>([]);
 
-  useEffect(() => {
-    setShouldRefetch(true);
-  }, []);
-
   const vehiclesFetch = async () => {
     const fetchedVehicles = await fetchVehicles();
     setVehicles(fetchedVehicles);
   };
+
+  useEffect(() => {
+    vehiclesFetch();
+  }, []);
 
   useFocusEffect(
     useCallback(() => {
