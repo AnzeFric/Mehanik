@@ -56,6 +56,20 @@ const vehicleService = {
 
     return true;
   },
+
+  async deleteVehicleByUuid(userUuid, customerUuid, vehicleUuid) {
+    const { error } = await supabase
+      .from("vehicles")
+      .delete()
+      .eq("uuid", vehicleUuid)
+      .eq("fk_user", userUuid)
+      .eq("fk_customer", customerUuid);
+
+    if (error)
+      throw new Error(`Failed to delete vehicle ${uuid}: ${error.message}`);
+
+    return true;
+  },
 };
 
 module.exports = vehicleService;

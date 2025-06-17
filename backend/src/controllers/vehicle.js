@@ -85,6 +85,36 @@ const vehicleController = {
       next(error);
     }
   },
+
+  async deleteVehicle(req, res, next) {
+    try {
+      console.log("Patch vehicle. Req from: ", req.user);
+      console.log("Body: ", req.body);
+
+      const userUuid = req.user.userUuid;
+      const customerUuid = req.body.customerUuid;
+      const vehicleUuid = req.body.vehicleUuid;
+
+      if (!vehicleUuid) throw new Error("Vehicle uuid is not provided");
+
+      if (customerUuid) {
+        await vehicleService.deleteVehicleByUuid(
+          null,
+          customerUuid,
+          vehicleUuid
+        );
+      } else {
+        await vehicleService.deleteVehicleByUuid(userUuid, null, vehicleUuid);
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: "Vehicle deleted successfully",
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
 };
 
 async function checkInput(vehicleData, customField) {

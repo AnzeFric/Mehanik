@@ -8,4 +8,6 @@ router.post("/", vehicleController.saveVehicle);
 
 router.patch("/", vehicleController.patchVehicle);
 
+router.delete("/", vehicleController.deleteVehicle);
+
 module.exports = router;
