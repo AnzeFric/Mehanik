@@ -66,15 +66,14 @@ const appointmentController = {
 
   async saveAppointment(req, res, next) {
     try {
-      const userUuid = req.user.userUuid;
-      const mechanicUuid = req.body.mechanicUuid;
-      const appointmentData = req.body.appointmentData;
+      const { vehicleUuid, mechanicUuid, appointmentData } = req.body;
 
+      if (!vehicleUuid) throw new Error("Vehicle uuid not provided!");
       if (!mechanicUuid) throw new Error("Mechanic uuid not provided!");
       if (!appointmentData) throw new Error("Appointment data not provided!");
 
-      await appointmentService.saveAppointmentByUserUuid(
-        userUuid,
+      await appointmentService.saveAppointmentByVehicleUuid(
+        vehicleUuid,
         mechanicUuid,
         appointmentData
       );

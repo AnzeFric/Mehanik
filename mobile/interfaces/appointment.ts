@@ -1,3 +1,12 @@
+export interface AppointmentData {
+  uuid: string;
+  startDate: Date;
+  endDate: Date;
+  userMessage: string;
+  mechanicResponse: string;
+  status: AppointmentStatus;
+}
+
 export interface MechanicAppointmentData {
   uuid: string;
   startDate: Date;

@@ -42,7 +42,11 @@ const appointmentService = {
     return filtered;
   },
 
-  async saveAppointmentByUserUuid(userUuid, mechanicUuid, appointmentData) {
+  async saveAppointmentByVehicleUuid(
+    vehicleUuid,
+    mechanicUuid,
+    appointmentData
+  ) {
     const uuid = uuidv4();
 
     const { error } = await supabase.from("appointments").insert({
@@ -52,7 +56,7 @@ const appointmentService = {
       status: appointmentData.status,
       user_message: appointmentData.userMessage,
       mechanic_response: appointmentData.mechanicResponse,
-      fk_user: userUuid,
+      fk_vehicle: vehicleUuid,
       fk_mechanic: mechanicUuid,
     });
 
