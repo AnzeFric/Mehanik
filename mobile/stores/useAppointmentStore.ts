@@ -4,10 +4,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { UserAppointmentData } from "@/interfaces/appointment";
 
 interface AppointmentStore {
+  // Variables for mechanic side
   shouldRefetch: Boolean;
   userAppointments: Array<UserAppointmentData>;
   setShouldRefetch: (shouldRefetch: Boolean) => void;
   setUserAppointments: (userAppointments: Array<UserAppointmentData>) => void;
+
+  // Variables for user side
+  // NaN
   reset: () => void;
 }
 

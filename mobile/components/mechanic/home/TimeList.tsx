@@ -32,6 +32,7 @@ const times = [
 ];
 
 interface Props {
+  appointments: Array<UserAppointmentData>;
   selectedDate: Date;
   mechanicEmail?: string;
 }
@@ -39,11 +40,11 @@ interface Props {
 // Defines the height that elements in list will have
 const itemHeight = 100;
 
-export default function TimeList({ selectedDate, mechanicEmail }: Props) {
-  const [appointments, setAppointments] = useState<Array<UserAppointmentData>>(
-    []
-  );
-
+export default function TimeList({
+  appointments,
+  selectedDate,
+  mechanicEmail,
+}: Props) {
   const groupedAppointments = useMemo(() => {
     const targetDate = selectedDate.toISOString().split("T")[0];
 

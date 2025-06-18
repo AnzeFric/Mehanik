@@ -2,12 +2,14 @@ import { View, StyleSheet } from "react-native";
 import { useState } from "react";
 import DaySelector from "./DaySelector";
 import TimeList from "./TimeList";
+import { UserAppointmentData } from "@/interfaces/appointment";
 
 interface Props {
+  appointments: Array<UserAppointmentData>;
   mechanicEmail?: string;
 }
 
-export default function DaySchedule({ mechanicEmail }: Props) {
+export default function DaySchedule({ appointments, mechanicEmail }: Props) {
   const days = ["Pon", "Tor", "Sre", "Čet", "Pet", "Sob", "Ned"];
 
   const [selectedDay, setSelectedDay] = useState<string>(days[0]);
@@ -23,7 +25,11 @@ export default function DaySchedule({ mechanicEmail }: Props) {
       <View style={{ paddingHorizontal: 15 }}>
         <DaySelector selectedDay={selectedDay} onDaySelect={handleDaySelect} />
       </View>
-      <TimeList selectedDate={date} mechanicEmail={mechanicEmail} />
+      <TimeList
+        appointments={appointments}
+        selectedDate={date}
+        mechanicEmail={mechanicEmail}
+      />
     </View>
   );
 }
