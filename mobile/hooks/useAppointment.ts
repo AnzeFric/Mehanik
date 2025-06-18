@@ -7,7 +7,7 @@ export function useAppointment() {
 
   const saveAppointment = async (
     vehicleUuid: string,
-    mechanicUuid: string,
+    mechanicEmail: string,
     appointmentData: AppointmentData
   ) => {
     try {
@@ -18,7 +18,7 @@ export function useAppointment() {
         },
         body: JSON.stringify({
           vehicleUuid,
-          mechanicUuid,
+          mechanicEmail,
           appointmentData,
         }),
       });

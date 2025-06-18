@@ -11,7 +11,7 @@ export default function AppointmentScreen() {
     <ThemedView type={"background"} style={styles.container}>
       <TitleRow title={"Pregled terminov"} hasBackButton={true} />
       <View style={styles.contentContainer}>
-        <DaySchedule />
+        <DaySchedule mechanicEmail={email.toString()} />
       </View>
     </ThemedView>
   );

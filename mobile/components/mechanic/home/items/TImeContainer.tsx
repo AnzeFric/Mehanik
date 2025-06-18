@@ -1,26 +1,39 @@
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import TimeItem from "./TimeItem";
+import { useAppointment } from "@/hooks/useAppointment";
 import { useAppointmentUtils } from "@/hooks/useAppointmentUtils";
 import EmptyTimeItem from "./EmptyTimeItem";
-import { UserAppointmentData } from "@/interfaces/appointment";
+import { AppointmentData, UserAppointmentData } from "@/interfaces/appointment";
+import useUserStore from "@/stores/useUserStore";
+import useVehicleStore from "@/stores/useVehicleStore";
+import ModalSelectVehicle from "@/components/shared/modals/ModalSelectVehicle";
+import { VehicleData } from "@/interfaces/vehicle";
+import { useState } from "react";
+import { router } from "expo-router";
 
 interface Props {
   time: string;
   itemHeight: number;
+  mechanicEmail?: string;
   groupedAppointments: Array<UserAppointmentData>;
 }
 
 export default function TimeContainer({
   time,
   itemHeight,
+  mechanicEmail,
   groupedAppointments,
 }: Props) {
+  const { currentUser } = useUserStore();
+  const { saveAppointment } = useAppointment();
   const {
     isWithinAppointmentDuration,
     getAppointmentHeight,
     getAppointmentAtHour,
     isAppointmentStartHour,
   } = useAppointmentUtils();
+
+  const [selectedVehicle, setSelectedVehicle] = useState<VehicleData>();
 
   const hour = parseInt(time.split(":")[0]);
   const appointment = getAppointmentAtHour(groupedAppointments, hour);
@@ -30,7 +43,32 @@ export default function TimeContainer({
     isWithinAppointmentDuration(hour, apt)
   );
 
-  const reserveAppointmentPress = () => {};
+  // Only allow users to reserve appointments
+  const reserveAppointmentPress = async () => {
+    if (currentUser.accountType === "user") {
+      const reserveAppointment: AppointmentData = {
+        startDate: new Date(),
+        endDate: new Date(),
+        userMessage: "Hello",
+        status: "pending",
+      };
+      if (mechanicEmail && selectedVehicle) {
+        const success = await saveAppointment(
+          mechanicEmail,
+          selectedVehicle.uuid,
+          reserveAppointment
+        );
+
+        if (!success) {
+          Alert.alert(
+            "Napaka",
+            "Prišlo je do napake pri shranjevanju termina. Poskusite ponovno kasneje"
+          );
+        }
+        router.replace("/(tabs-user)/mechanics");
+      }
+    }
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -45,6 +83,7 @@ export default function TimeContainer({
           onPress={reserveAppointmentPress}
         />
       )}
+      <ModalSelectVehicle />
     </View>
   );
 }

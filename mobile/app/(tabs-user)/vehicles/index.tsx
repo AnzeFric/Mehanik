@@ -8,11 +8,10 @@ import PlusButton from "@/components/global/PlusButton";
 import { router, useFocusEffect } from "expo-router";
 import useVehicleStore from "@/stores/useVehicleStore";
 import { useVehicle } from "@/hooks/useVehicle";
-
 export default function UserVehiclesScreen() {
-  const { shouldRefetch, setShouldRefetch } = useVehicleStore();
+  const { vehicles, setVehicles, shouldRefetch, setShouldRefetch } =
+    useVehicleStore();
   const { fetchVehicles } = useVehicle();
-  const [vehicles, setVehicles] = useState<Array<VehicleData>>([]);
 
   const vehiclesFetch = async () => {
     const fetchedVehicles = await fetchVehicles();

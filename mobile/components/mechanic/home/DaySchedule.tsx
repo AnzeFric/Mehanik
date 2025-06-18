@@ -3,7 +3,11 @@ import { useState } from "react";
 import DaySelector from "./DaySelector";
 import TimeList from "./TimeList";
 
-export default function DaySchedule() {
+interface Props {
+  mechanicEmail?: string;
+}
+
+export default function DaySchedule({ mechanicEmail }: Props) {
   const days = ["Pon", "Tor", "Sre", "Čet", "Pet", "Sob", "Ned"];
 
   const [selectedDay, setSelectedDay] = useState<string>(days[0]);
@@ -19,7 +23,7 @@ export default function DaySchedule() {
       <View style={{ paddingHorizontal: 15 }}>
         <DaySelector selectedDay={selectedDay} onDaySelect={handleDaySelect} />
       </View>
-      <TimeList selectedDate={date} />
+      <TimeList selectedDate={date} mechanicEmail={mechanicEmail} />
     </View>
   );
 }

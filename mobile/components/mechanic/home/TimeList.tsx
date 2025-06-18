@@ -33,12 +33,13 @@ const times = [
 
 interface Props {
   selectedDate: Date;
+  mechanicEmail?: string;
 }
 
 // Defines the height that elements in list will have
 const itemHeight = 100;
 
-export default function TimeList({ selectedDate }: Props) {
+export default function TimeList({ selectedDate, mechanicEmail }: Props) {
   const [appointments, setAppointments] = useState<Array<UserAppointmentData>>(
     []
   );
@@ -70,6 +71,7 @@ export default function TimeList({ selectedDate }: Props) {
             <TimeContainer
               itemHeight={itemHeight}
               time={time}
+              mechanicEmail={mechanicEmail}
               groupedAppointments={groupedAppointments}
               key={index}
             />
