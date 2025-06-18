@@ -36,7 +36,30 @@ export function useAppointment() {
     }
   };
 
+  const getAppointments = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/appointments`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + jwt,
+        },
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        return data.appointments;
+      }
+      console.log("Error fetching appointments: ", data.message);
+      return [];
+    } catch (error) {
+      console.error("Error while fetching appointment: ", error);
+    }
+  };
+
   return {
     saveAppointment,
+    getAppointments,
   };
 }

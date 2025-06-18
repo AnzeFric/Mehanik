@@ -8,6 +8,7 @@ import { router, useFocusEffect } from "expo-router";
 import useVehicleStore from "@/stores/useVehicleStore";
 import { useVehicle } from "@/hooks/useVehicle";
 import { VehicleData } from "@/interfaces/vehicle";
+
 export default function UserVehiclesScreen() {
   const { vehicles, setVehicles, shouldRefetch, setShouldRefetch } =
     useVehicleStore();

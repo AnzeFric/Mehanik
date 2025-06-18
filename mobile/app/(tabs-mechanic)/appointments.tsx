@@ -1,36 +1,26 @@
 import { StyleSheet } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DisplayItems from "@/components/global/DisplayItems";
 import Appointment from "@/components/mechanic/items/Appointment";
 import TitleRow from "@/components/shared/TitleRow";
 import ThemedView from "@/components/global/themed/ThemedView";
 import { UserAppointmentData } from "@/interfaces/appointment";
+import { useAppointment } from "@/hooks/useAppointment";
 
-const fakeAppointments: UserAppointmentData[] = [
-  {
-    uuid: "asdasd",
-    startDate: new Date(2025, 6, 16, 12, 0, 0),
-    endDate: new Date(2025, 6, 16, 14, 0, 0),
-    status: "accepted",
-    userMessage: "Mali servis",
-    numAppointments: 0,
-    user: {
-      firstName: "Anze",
-      lastName: "Fric",
-      email: "anze.fric@gmail.com",
-    },
-    vehicle: {
-      brand: "Skoda",
-      model: "Octavia",
-      buildYear: 2014,
-    },
-  },
-];
-
-// TODO: Get items from database
 export default function AppointmentsScreen() {
-  const [appointmentList, setAppointmentList] =
-    useState<Array<UserAppointmentData>>(fakeAppointments);
+  const { getAppointments } = useAppointment();
+  const [appointmentList, setAppointmentList] = useState<
+    Array<UserAppointmentData>
+  >([]);
+
+  const appointmentsFetch = async () => {
+    const fetchedAppointments = await getAppointments();
+    setAppointmentList(fetchedAppointments);
+  };
+
+  useEffect(() => {
+    appointmentsFetch();
+  }, []);
 
   return (
     <ThemedView type={"background"} style={styles.container}>
