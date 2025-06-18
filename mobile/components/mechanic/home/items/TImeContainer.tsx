@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import TimeItem from "./TimeItem";
-import { useAppointment } from "@/hooks/useAppointment";
+import { useAppointmentUtils } from "@/hooks/useAppointmentUtils";
 import EmptyTimeItem from "./EmptyTimeItem";
 import { UserAppointmentData } from "@/interfaces/appointment";
 
@@ -20,7 +20,7 @@ export default function TimeContainer({
     getAppointmentHeight,
     getAppointmentAtHour,
     isAppointmentStartHour,
-  } = useAppointment();
+  } = useAppointmentUtils();
 
   const hour = parseInt(time.split(":")[0]);
   const appointment = getAppointmentAtHour(groupedAppointments, hour);
@@ -30,6 +30,8 @@ export default function TimeContainer({
     isWithinAppointmentDuration(hour, apt)
   );
 
+  const reserveAppointmentPress = () => {};
+
   return (
     <View style={{ flex: 1 }}>
       {appointment && isAppointmentStartHour(hour, appointment) ? (
@@ -38,7 +40,10 @@ export default function TimeContainer({
           itemHeight={getAppointmentHeight(appointment, itemHeight)}
         />
       ) : spanningAppointment ? null : ( // This hour is part of an ongoing appointment, render nothing
-        <EmptyTimeItem itemHeight={itemHeight} onPress={() => {}} />
+        <EmptyTimeItem
+          itemHeight={itemHeight}
+          onPress={reserveAppointmentPress}
+        />
       )}
     </View>
   );
