@@ -2,10 +2,12 @@ import useAuthStore from "@/stores/useAuthStore";
 import useColorThemeStore from "@/stores/useColorThemeStore";
 import useUserStore from "@/stores/useUserStore";
 
-export function formatDate(date: Date): string {
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1; // Months start at 0
-  const day = date.getDate();
+export function formatDate(date: Date | string): string {
+  const dateObj = date instanceof Date ? date : new Date(date);
+
+  const year = dateObj.getFullYear();
+  const month = dateObj.getMonth() + 1; // Months start at 0
+  const day = dateObj.getDate();
 
   const paddedMonth = month.toString().padStart(2, "0");
   const paddedDay = day.toString().padStart(2, "0");
@@ -13,16 +15,18 @@ export function formatDate(date: Date): string {
   return `${paddedDay}. ${paddedMonth}. ${year}`;
 }
 
-export function formatDateTime(dateTime: Date): string {
-  const date = formatDate(dateTime);
+export function formatDateTime(dateTime: Date | string): string {
+  const date = dateTime instanceof Date ? dateTime : new Date(dateTime);
 
-  const hour = dateTime.getHours();
-  const minute = dateTime.getMinutes();
+  const formattedDate = formatDate(date);
+
+  const hour = date.getHours();
+  const minute = date.getMinutes();
 
   const paddedHour = hour.toString().padStart(2, "0");
   const paddedMinute = minute.toString().padStart(2, "0");
 
-  return `${date}, ${paddedHour}:${paddedMinute}`;
+  return `${formattedDate}, ${paddedHour}:${paddedMinute}`;
 }
 
 // (HH:MM)
