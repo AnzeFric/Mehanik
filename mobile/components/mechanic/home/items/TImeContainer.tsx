@@ -25,6 +25,7 @@ export default function TimeContainer({
   groupedAppointments,
 }: Props) {
   const { currentUser } = useUserStore();
+  const { vehicles } = useVehicleStore();
   const { saveAppointment } = useAppointment();
   const {
     isWithinAppointmentDuration,
@@ -34,6 +35,7 @@ export default function TimeContainer({
   } = useAppointmentUtils();
 
   const [selectedVehicle, setSelectedVehicle] = useState<VehicleData>();
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const hour = parseInt(time.split(":")[0]);
   const appointment = getAppointmentAtHour(groupedAppointments, hour);
@@ -80,10 +82,15 @@ export default function TimeContainer({
       ) : spanningAppointment ? null : ( // This hour is part of an ongoing appointment, render nothing
         <EmptyTimeItem
           itemHeight={itemHeight}
-          onPress={reserveAppointmentPress}
+          onPress={() => setIsModalVisible(true)}
         />
       )}
-      <ModalSelectVehicle />
+      <ModalSelectVehicle
+        vehicles={vehicles}
+        setSelectedVehicle={setSelectedVehicle}
+        isVisible={isModalVisible}
+        setIsVisible={setIsModalVisible}
+      />
     </View>
   );
 }

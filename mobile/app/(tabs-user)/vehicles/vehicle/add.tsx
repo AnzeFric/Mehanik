@@ -49,6 +49,7 @@ export default function AddUserVehicleScreen() {
     useCallback(() => {
       return () => {
         setVehicle(defaultValues);
+        setVehicleImage("");
       };
     }, [])
   );
@@ -62,7 +63,9 @@ export default function AddUserVehicleScreen() {
       />
       <View style={styles.container}>
         <ImageForm setImage={setVehicleImage} />
-        <VehicleForm setVehicle={setVehicle} />
+        <View>
+          <VehicleForm setVehicle={setVehicle} />
+        </View>
         <ThemedButton
           buttonType={"small"}
           buttonText={"Shrani"}

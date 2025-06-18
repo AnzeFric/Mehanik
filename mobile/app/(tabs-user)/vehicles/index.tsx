@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
-import { VehicleData } from "@/interfaces/vehicle";
+import { useCallback, useEffect } from "react";
 import Vehicle from "@/components/user/items/Vehicle";
 import TitleRow from "@/components/shared/TitleRow";
 import DisplayItems from "@/components/global/DisplayItems";
@@ -8,6 +7,7 @@ import PlusButton from "@/components/global/PlusButton";
 import { router, useFocusEffect } from "expo-router";
 import useVehicleStore from "@/stores/useVehicleStore";
 import { useVehicle } from "@/hooks/useVehicle";
+import { VehicleData } from "@/interfaces/vehicle";
 export default function UserVehiclesScreen() {
   const { vehicles, setVehicles, shouldRefetch, setShouldRefetch } =
     useVehicleStore();
@@ -31,6 +31,15 @@ export default function UserVehiclesScreen() {
     }, [shouldRefetch])
   );
 
+  const handlePress = (vehicle: VehicleData) => {
+    router.push({
+      pathname: "/(tabs-user)/vehicles/vehicle/edit",
+      params: {
+        vehicle: JSON.stringify(vehicle),
+      },
+    });
+  };
+
   return (
     <ThemedView type={"background"} style={{ flex: 1 }}>
       <TitleRow
@@ -41,7 +50,11 @@ export default function UserVehiclesScreen() {
       <DisplayItems
         list={vehicles}
         renderItem={(vehicle, index) => (
-          <Vehicle vehicle={vehicle} key={index} />
+          <Vehicle
+            vehicle={vehicle}
+            onPress={() => handlePress(vehicle)}
+            key={index}
+          />
         )}
         emptyMessage="Nimate vnešenih vozil."
       />

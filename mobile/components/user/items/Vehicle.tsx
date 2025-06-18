@@ -11,23 +11,15 @@ import useVehicleStore from "@/stores/useVehicleStore";
 
 interface Props {
   vehicle: VehicleData;
+  onPress: () => void;
 }
 
-export default function Vehicle({ vehicle }: Props) {
+export default function Vehicle({ vehicle, onPress }: Props) {
   const { staticColors } = useAnimatedTheme();
   const { deleteVehicle } = useVehicle();
   const { setShouldRefetch } = useVehicleStore();
 
   const [isDeleteVisible, setIsDeleteVisible] = useState(false);
-
-  const handlePress = () => {
-    router.push({
-      pathname: "/(tabs-user)/vehicles/vehicle/edit",
-      params: {
-        vehicle: JSON.stringify(vehicle),
-      },
-    });
-  };
 
   const handleDelete = async () => {
     const success = await deleteVehicle(vehicle.uuid);
@@ -50,7 +42,7 @@ export default function Vehicle({ vehicle }: Props) {
           { borderLeftColor: staticColors.specialBlue },
         ]}
         onLongPress={() => setIsDeleteVisible(true)}
-        onPress={handlePress}
+        onPress={onPress}
       >
         {vehicle.image ? (
           <Image source={{ uri: vehicle.image }} style={styles.image} />
