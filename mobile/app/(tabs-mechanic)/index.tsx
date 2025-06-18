@@ -10,8 +10,8 @@ import { useCallback, useEffect } from "react";
 
 export default function HomeMechanicScreen() {
   const {
-    userAppointments,
     shouldRefetch,
+    getUserAppointments,
     setUserAppointments,
     setShouldRefetch,
   } = useAppointmentStore();
@@ -54,7 +54,7 @@ export default function HomeMechanicScreen() {
         }
       />
       <View style={styles.contentContainer}>
-        <DaySchedule appointments={userAppointments} />
+        <DaySchedule appointments={getUserAppointments()} />
       </View>
     </ThemedView>
   );

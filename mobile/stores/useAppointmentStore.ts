@@ -4,14 +4,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { UserAppointmentData } from "@/interfaces/appointment";
 
 interface AppointmentStore {
-  // Variables for mechanic side
   shouldRefetch: Boolean;
   userAppointments: Array<UserAppointmentData>;
   setShouldRefetch: (shouldRefetch: Boolean) => void;
   setUserAppointments: (userAppointments: Array<UserAppointmentData>) => void;
-
-  // Variables for user side
-  // NaN
+  getUserAppointments: () => Array<UserAppointmentData>;
   reset: () => void;
 }
 
@@ -20,15 +17,28 @@ const initialState = {
   userAppointments: [],
 };
 
+// Convert date strings back to Date objects
+const convertDatesToObjects = (appointments: Array<UserAppointmentData>) => {
+  return appointments.map((appointment) => ({
+    ...appointment,
+    startDate: new Date(appointment.startDate),
+    endDate: new Date(appointment.endDate),
+  }));
+};
+
 const useAppointmentStore = create(
   persist<AppointmentStore>(
-    (set) => ({
+    (set, get) => ({
       ...initialState,
       setShouldRefetch: (shouldRefetch: Boolean) => {
         set({ shouldRefetch: shouldRefetch });
       },
       setUserAppointments: (userAppointments: Array<UserAppointmentData>) => {
         set({ userAppointments: userAppointments });
+      },
+      getUserAppointments: () => {
+        const appointments = get().userAppointments;
+        return convertDatesToObjects(appointments);
       },
       reset: async () => {
         set(() => ({ ...initialState }));

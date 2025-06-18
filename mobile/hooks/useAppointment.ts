@@ -49,7 +49,16 @@ export function useAppointment() {
       const data = await response.json();
 
       if (data.success) {
-        return data.appointments;
+        // Convert date strings to Date objects
+        const convertedAppointments = data.appointments.map(
+          (appointment: any) => ({
+            ...appointment,
+            startDate: new Date(appointment.startDate),
+            endDate: new Date(appointment.endDate),
+          })
+        );
+
+        return convertedAppointments;
       }
       console.log("Error fetching appointments: ", data.message);
       return [];

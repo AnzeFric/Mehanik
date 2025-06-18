@@ -31,14 +31,14 @@ const times = [
   "23:00",
 ];
 
+// Defines the height that elements in list will have
+const itemHeight = 100;
+
 interface Props {
   appointments: Array<UserAppointmentData>;
   selectedDate: Date;
   mechanicEmail?: string;
 }
-
-// Defines the height that elements in list will have
-const itemHeight = 100;
 
 export default function TimeList({
   appointments,
@@ -47,7 +47,7 @@ export default function TimeList({
 }: Props) {
   const groupedAppointments = useMemo(() => {
     const targetDate = selectedDate.toISOString().split("T")[0];
-
+    console.log("appt: ", appointments);
     // Filter appointments for the selected day
     const filtered = appointments.filter((appointment) => {
       const appointmentDate = appointment.startDate.toISOString().split("T")[0];
