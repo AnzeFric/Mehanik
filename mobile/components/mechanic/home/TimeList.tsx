@@ -71,6 +71,7 @@ export default function TimeList({ selectedDate, mechanicEmail }: Props) {
             <TimeContainer
               itemHeight={itemHeight}
               time={time}
+              date={selectedDate}
               mechanicEmail={mechanicEmail}
               groupedAppointments={groupedAppointments}
               key={index}

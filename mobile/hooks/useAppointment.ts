@@ -12,14 +12,15 @@ export function useAppointment() {
   ) => {
     try {
       const response = await fetch(`${API_BASE_URL}/appointments`, {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + jwt,
         },
         body: JSON.stringify({
-          vehicleUuid,
-          mechanicEmail,
-          appointmentData,
+          vehicleUuid: vehicleUuid,
+          mechanicEmail: mechanicEmail,
+          appointmentData: appointmentData,
         }),
       });
 

@@ -10,9 +10,11 @@ import ModalSelectVehicle from "@/components/shared/modals/ModalSelectVehicle";
 import { VehicleData } from "@/interfaces/vehicle";
 import { useState } from "react";
 import { router } from "expo-router";
+import ModalAppointment from "@/components/shared/modals/ModalAppointment";
 
 interface Props {
   time: string;
+  date: Date;
   itemHeight: number;
   mechanicEmail?: string;
   groupedAppointments: Array<UserAppointmentData>;
@@ -20,6 +22,7 @@ interface Props {
 
 export default function TimeContainer({
   time,
+  date,
   itemHeight,
   mechanicEmail,
   groupedAppointments,
@@ -35,7 +38,8 @@ export default function TimeContainer({
   } = useAppointmentUtils();
 
   const [selectedVehicle, setSelectedVehicle] = useState<VehicleData>();
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isVehicleVisible, setIsVehicleVisible] = useState(false);
+  const [isAppointmentVisible, setIsAppointmentVisible] = useState(false);
 
   const hour = parseInt(time.split(":")[0]);
   const appointment = getAppointmentAtHour(groupedAppointments, hour);
@@ -45,30 +49,47 @@ export default function TimeContainer({
     isWithinAppointmentDuration(hour, apt)
   );
 
-  // Only allow users to reserve appointments
-  const reserveAppointmentPress = async () => {
-    if (currentUser.accountType === "user") {
-      const reserveAppointment: AppointmentData = {
-        startDate: new Date(),
-        endDate: new Date(),
-        userMessage: "Hello",
-        status: "pending",
-      };
-      if (mechanicEmail && selectedVehicle) {
-        const success = await saveAppointment(
-          mechanicEmail,
-          selectedVehicle.uuid,
-          reserveAppointment
-        );
+  const reserveAppointmentPress = async (appointment: AppointmentData) => {
+    if (mechanicEmail && selectedVehicle) {
+      const success = await saveAppointment(
+        selectedVehicle.uuid,
+        mechanicEmail,
+        appointment
+      );
 
-        if (!success) {
-          Alert.alert(
-            "Napaka",
-            "Prišlo je do napake pri shranjevanju termina. Poskusite ponovno kasneje"
-          );
-        }
-        router.replace("/(tabs-user)/mechanics");
+      if (!success) {
+        Alert.alert(
+          "Napaka",
+          "Prišlo je do napake pri shranjevanju termina. Poskusite ponovno kasneje"
+        );
       }
+      router.replace("/(tabs-user)/mechanics");
+    }
+  };
+
+  const handleAppointmentConfirm = (endDate: Date, userMessage: string) => {
+    let startDate = date;
+    startDate.setHours(hour);
+
+    const appointment: AppointmentData = {
+      startDate: startDate,
+      endDate: endDate,
+      userMessage: userMessage,
+      status: "pending",
+    };
+    setIsAppointmentVisible(false);
+    reserveAppointmentPress(appointment);
+  };
+
+  const handleVehicleConfirm = (vehicle: VehicleData) => {
+    setSelectedVehicle(vehicle);
+    setIsVehicleVisible(false);
+    setIsAppointmentVisible(true);
+  };
+
+  const handleEmptyItemPress = () => {
+    if (currentUser.accountType === "user") {
+      setIsVehicleVisible(true);
     }
   };
 
@@ -80,16 +101,20 @@ export default function TimeContainer({
           itemHeight={getAppointmentHeight(appointment, itemHeight)}
         />
       ) : spanningAppointment ? null : ( // This hour is part of an ongoing appointment, render nothing
-        <EmptyTimeItem
-          itemHeight={itemHeight}
-          onPress={() => setIsModalVisible(true)}
-        />
+        <EmptyTimeItem itemHeight={itemHeight} onPress={handleEmptyItemPress} />
       )}
       <ModalSelectVehicle
         vehicles={vehicles}
-        setSelectedVehicle={setSelectedVehicle}
-        isVisible={isModalVisible}
-        setIsVisible={setIsModalVisible}
+        isVisible={isVehicleVisible}
+        onConfirm={handleVehicleConfirm}
+        setIsVisible={setIsVehicleVisible}
+      />
+      <ModalAppointment
+        isVisible={isAppointmentVisible}
+        title={"Izberite termin"}
+        firstScreen={0}
+        onConfirm={handleAppointmentConfirm}
+        onCancel={() => setIsAppointmentVisible(false)}
       />
     </View>
   );

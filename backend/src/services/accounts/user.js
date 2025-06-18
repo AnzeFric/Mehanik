@@ -28,8 +28,25 @@ const userService = {
       .maybeSingle();
 
     if (error)
-      throw new Error(`Failed to fetch user ${uuid}: ${error.message}`);
-    if (!data) throw new Error("User not found");
+      throw new Error(`Failed to fetch mechanic ${uuid}: ${error.message}`);
+    if (!data) throw new Error("Mechanic not found");
+
+    return data;
+  },
+
+  async getMechanicByEmailAndEnabled(email) {
+    const { data, error } = await supabase
+      .from("users")
+      .select(
+        "email, first_name, last_name, account_type, mechanics(uuid, phone, address, city, prices)"
+      )
+      .eq("email", email)
+      .eq("enabled", true)
+      .maybeSingle();
+
+    if (error)
+      throw new Error(`Failed to fetch mechanic ${email}: ${error.message}`);
+    if (!data) throw new Error("Mechanic not found");
 
     return data;
   },

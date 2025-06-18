@@ -12,7 +12,7 @@ interface Props {
   isVisible: boolean;
   title: string;
   firstScreen: number; // 0 - date picker, 1 - time picker, 2 - text input for message
-  onConfirm: () => void;
+  onConfirm: (date: Date, userMessage: string) => void;
   onCancel: () => void;
 }
 
@@ -45,7 +45,7 @@ export default function ModalAppointment({
   const handleNextPress = () => {
     if (screenNumber === 2) {
       cleanup();
-      onConfirm();
+      onConfirm(date, message);
     } else {
       setScreenNumber((prevScreenNumber) => prevScreenNumber + 1);
     }

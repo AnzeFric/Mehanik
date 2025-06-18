@@ -8,22 +8,17 @@ import Vehicle from "@/components/user/items/Vehicle";
 interface Props {
   vehicles: Array<VehicleData>;
   isVisible: boolean;
-  setSelectedVehicle: (vehicle: VehicleData) => void;
+  onConfirm: (vehicle: VehicleData) => void;
   setIsVisible: (isVisible: boolean) => void;
 }
 
 export default function ModalSelectVehicle({
   vehicles,
   isVisible,
-  setSelectedVehicle,
+  onConfirm,
   setIsVisible,
 }: Props) {
   const onCancel = () => {
-    setIsVisible(false);
-  };
-
-  const handlePress = (vehicle: VehicleData) => {
-    setSelectedVehicle(vehicle);
     setIsVisible(false);
   };
 
@@ -51,7 +46,7 @@ export default function ModalSelectVehicle({
               {vehicles.map((vehicle, index) => (
                 <Vehicle
                   vehicle={vehicle}
-                  onPress={() => handlePress(vehicle)}
+                  onPress={() => onConfirm(vehicle)}
                   key={index}
                 />
               ))}

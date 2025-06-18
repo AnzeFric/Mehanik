@@ -1,8 +1,12 @@
 const appointmentService = require("../services/appointment");
+const userService = require("../services/accounts/user");
 
 const appointmentController = {
   async getAppointments(req, res, next) {
     try {
+      console.log("Get appointments. Req from: ", req.user);
+      console.log("Body: ", req.body);
+
       const userUuid = req.user.userUuid;
       const mechanicUuid = req.user.mechanicUuid;
       const vehicleUuid = req.body.vehicleUuid;
@@ -66,15 +70,21 @@ const appointmentController = {
 
   async saveAppointment(req, res, next) {
     try {
-      const { vehicleUuid, mechanicUuid, appointmentData } = req.body;
+      console.log("Save appointment. Req from: ", req.user);
+      console.log("Body: ", req.body);
+
+      const { vehicleUuid, mechanicEmail, appointmentData } = req.body;
 
       if (!vehicleUuid) throw new Error("Vehicle uuid not provided!");
-      if (!mechanicUuid) throw new Error("Mechanic uuid not provided!");
+      if (!mechanicEmail) throw new Error("Mechanic email not provided!");
       if (!appointmentData) throw new Error("Appointment data not provided!");
+
+      const mechanic =
+        await userService.getMechanicByEmailAndEnabled(mechanicEmail);
 
       await appointmentService.saveAppointmentByVehicleUuid(
         vehicleUuid,
-        mechanicUuid,
+        mechanic.mechanics[0].uuid,
         appointmentData
       );
 
@@ -89,6 +99,9 @@ const appointmentController = {
 
   async updateAppointment(req, res, next) {
     try {
+      console.log("Update appointment. Req from: ", req.user);
+      console.log("Body: ", req.body);
+
       const userUuid = req.user.userUuid;
       const appointmentData = req.body.appointmentData;
 
