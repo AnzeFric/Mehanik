@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import { useState } from "react";
 import ModalPrompt from "../../shared/modals/ModalPrompt";
 import ModalAppointment from "../../shared/modals/ModalAppointment";
@@ -20,6 +20,30 @@ export default function Appointment({ appointmentData }: Props) {
   const [isRejectOpen, setIsRejectOpen] = useState<boolean>(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);
   const [isChangeOpen, setIsChangeOpen] = useState<boolean>(false);
+
+  const handleChangeConfirm = (date: Date, userMessage: string) => {};
+
+  const handleAcceptConfirm = async () => {
+    const newAppointment: UserAppointmentData = {
+      ...appointmentData,
+      status: "accepted",
+    };
+    const success = await updateAppointment(newAppointment);
+    if (!success) {
+      Alert.alert("Napaka", "Prišlo je do napake pri sprejemu termina");
+    }
+  };
+
+  const handleRejectConfirm = async () => {
+    const newAppointment: UserAppointmentData = {
+      ...appointmentData,
+      status: "rejected",
+    };
+    const success = await updateAppointment(newAppointment);
+    if (!success) {
+      Alert.alert("Napaka", "Prišlo je do napake pri zavračanju termina");
+    }
+  };
 
   return (
     <ThemedView type={"primary"} style={styles.container}>
@@ -72,21 +96,21 @@ export default function Appointment({ appointmentData }: Props) {
         isVisible={isRejectOpen}
         message={"Ste prepričani, da želite zavrniti termin?"}
         onCancel={() => setIsRejectOpen(false)}
-        onConfirm={() => {}}
+        onConfirm={handleRejectConfirm}
       />
       <ModalAppointment
         isVisible={isConfirmOpen}
         title={"Potrditev termina"}
         firstScreen={2}
         onCancel={() => setIsConfirmOpen(false)}
-        onConfirm={() => {}}
+        onConfirm={handleAcceptConfirm}
       />
       <ModalAppointment
         isVisible={isChangeOpen}
         title={"Sprememba termina"}
         firstScreen={0}
         onCancel={() => setIsChangeOpen(false)}
-        onConfirm={() => {}}
+        onConfirm={handleChangeConfirm}
       />
     </ThemedView>
   );
