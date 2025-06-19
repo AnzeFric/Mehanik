@@ -12,8 +12,12 @@ const appointmentController = {
 
       if (mechanicUuid) {
         // Returns detailed data for the authorized mechanic
-        const appointments =
+        let appointments =
           await appointmentService.getAppointmentsByMechanicUuid(mechanicUuid);
+
+        appointments = appointments.filter(
+          (appointment) => appointment.status != "changed"
+        );
 
         var parsedData = (appointments || []).map((appointment) => ({
           uuid: appointment.uuid,
