@@ -7,7 +7,7 @@ router.post("/get", appointmentController.getAppointments);
 
 router.post("/", appointmentController.saveAppointment);
 
-// Updates status, userMessage or mechanicResponse
+// Updates status, dates, userMessage or mechanicResponse
 router.patch("/", appointmentController.updateAppointment);
 
 module.exports = router;

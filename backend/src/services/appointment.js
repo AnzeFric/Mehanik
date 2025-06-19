@@ -65,7 +65,16 @@ const appointmentService = {
     return uuid;
   },
 
-  async updateAppointmentByUserUuid(userUuid, appointmentData) {},
+  async updateAppointmentByMechanicUuid(mechanicUuid, appointmentData) {
+    const { error } = await supabase
+      .from("appointments")
+      .update({ ...appointmentData, updated_at: new Date().toISOString() })
+      .eq("fk_mechanic", mechanicUuid);
+
+    if (error) throw error;
+
+    return true;
+  },
 };
 
 module.exports = appointmentService;

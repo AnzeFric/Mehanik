@@ -94,13 +94,14 @@ const appointmentController = {
       console.log("Update appointment. Req from: ", req.user);
       console.log("Body: ", req.body);
 
-      const userUuid = req.user.userUuid;
+      const mechanicUuid = req.user.mechanicUuid;
       const appointmentData = req.body.appointmentData;
 
+      if (!mechanicUuid) throw new Error("User is not a mechanic");
       if (!appointmentData) throw new Error("Appointment data not provided!");
 
-      await appointmentService.updateAppointmentByUserUuid(
-        userUuid,
+      await appointmentService.updateAppointmentByMechanicUuid(
+        mechanicUuid,
         appointmentData
       );
 
