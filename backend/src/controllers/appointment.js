@@ -7,15 +7,15 @@ const appointmentController = {
       console.log("Get appointments. Req from: ", req.user);
       console.log("Body: ", req.body);
 
-      const userUuid = req.user.userUuid;
       const mechanicUuid = req.user.mechanicUuid;
-      const vehicleUuid = req.body.vehicleUuid;
+      const mechanicEmail = req.body.mechanicEmail;
 
       if (mechanicUuid) {
+        // Returns detailed data for the authorized mechanic
         const appointments =
           await appointmentService.getAppointmentsByMechanicUuid(mechanicUuid);
 
-        var resData = (appointments || []).map((appointment) => ({
+        var parsedData = (appointments || []).map((appointment) => ({
           uuid: appointment.uuid,
           startDate: appointment.start_date,
           endDate: appointment.end_date,
@@ -33,35 +33,27 @@ const appointmentController = {
           },
         }));
       } else {
-        if (!vehicleUuid) throw new Error("Vehicle uuid not provided!");
+        // Returns limited data for users looking to book an appointment
+        if (!mechanicEmail) throw new Error("Mechanic email not provided!");
+
+        const mechanic =
+          await userService.getMechanicByEmailAndEnabled(mechanicEmail);
 
         const appointments =
-          await appointmentService.getAppointmentsByVehicleUuid(
-            userUuid,
-            vehicleUuid
+          await appointmentService.getAppointmentsByMechanicUuid(
+            mechanic.mechanics[0].uuid
           );
 
-        var resData = (appointments || []).map((appointment) => ({
-          uuid: appointment.uuid,
+        var parsedData = (appointments || []).map((appointment) => ({
           startDate: appointment.start_date,
           endDate: appointment.end_date,
-          status: appointment.status,
-          mechanicResponse: appointment.mechanic_response,
-          mechanic: {
-            firstName: appointment.mechanics?.users?.first_name || "",
-            lastName: appointment.mechanics?.users?.last_name || "",
-            email: appointment.mechanics?.users?.email || "",
-            phone: appointment.mechanics?.phone || "",
-            address: appointment.mechanics?.address || "",
-            city: appointment.mechanics?.city || "",
-          },
         }));
       }
 
       return res.status(200).json({
         success: true,
         message: "Appointments fetch successfully",
-        appointments: resData,
+        appointments: parsedData,
       });
     } catch (error) {
       next(error);

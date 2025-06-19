@@ -85,6 +85,7 @@ export const useAnimatedTheme = () => {
     rejected: theme.rejected,
     changed: theme.changed,
     pending: theme.pending,
+    unknown: theme.unknown,
 
     /* Icons */
     activeIcon: theme.activeIcon,

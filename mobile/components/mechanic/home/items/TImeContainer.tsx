@@ -1,5 +1,6 @@
 import { Alert, View } from "react-native";
 import TimeItem from "./TimeItem";
+import PrivateTimeItem from "./PrivateTimeItem";
 import { useAppointment } from "@/hooks/useAppointment";
 import { useAppointmentUtils } from "@/hooks/useAppointmentUtils";
 import EmptyTimeItem from "./EmptyTimeItem";
@@ -96,10 +97,18 @@ export default function TimeContainer({
   return (
     <View style={{ flex: 1 }}>
       {appointment && isAppointmentStartHour(hour, appointment) ? (
-        <TimeItem
-          appointment={appointment}
-          itemHeight={getAppointmentHeight(appointment, itemHeight)}
-        />
+        currentUser.accountType === "mechanic" ? (
+          <TimeItem
+            appointment={appointment}
+            itemHeight={getAppointmentHeight(appointment, itemHeight)}
+          />
+        ) : (
+          <PrivateTimeItem
+            startDate={appointment.startDate}
+            endDate={appointment.endDate}
+            itemHeight={getAppointmentHeight(appointment, itemHeight)}
+          />
+        )
       ) : spanningAppointment ? null : ( // This hour is part of an ongoing appointment, render nothing
         <EmptyTimeItem itemHeight={itemHeight} onPress={handleEmptyItemPress} />
       )}

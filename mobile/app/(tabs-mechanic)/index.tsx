@@ -16,10 +16,10 @@ export default function HomeMechanicScreen() {
     setShouldRefetch,
   } = useAppointmentStore();
 
-  const { getAppointments } = useAppointment();
+  const { getMechanicAppointments } = useAppointment();
 
   const appointmentsFetch = async () => {
-    const fetchedAppointments = await getAppointments();
+    const fetchedAppointments = await getMechanicAppointments();
     setUserAppointments(fetchedAppointments);
   };
 

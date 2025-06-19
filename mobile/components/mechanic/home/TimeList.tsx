@@ -47,7 +47,7 @@ export default function TimeList({
 }: Props) {
   const groupedAppointments = useMemo(() => {
     const targetDate = selectedDate.toISOString().split("T")[0];
-    console.log("appt: ", appointments);
+
     // Filter appointments for the selected day
     const filtered = appointments.filter((appointment) => {
       const appointmentDate = appointment.startDate.toISOString().split("T")[0];

@@ -29,6 +29,7 @@ export const Colors = {
     rejected: "#F44336",
     changed: "#2196F3",
     pending: "#FFC107",
+    unknown: "#374151",
 
     /* Icons */
     activeIcon: "#000000",
@@ -81,6 +82,7 @@ export const Colors = {
     rejected: "#F44336",
     changed: "#2196F3",
     pending: "#FFC107",
+    unknown: "#E5E7EB",
 
     /* Icons */
     activeIcon: "#F5F5F5",

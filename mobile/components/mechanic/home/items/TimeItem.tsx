@@ -33,6 +33,7 @@ export default function TimeItem({ appointment, itemHeight }: Props) {
     rejected: staticColors.rejected,
     pending: staticColors.pending,
     changed: staticColors.changed,
+    unknown: staticColors.changed,
   };
 
   const statusToText: Record<AppointmentStatus, string> = {
@@ -40,6 +41,7 @@ export default function TimeItem({ appointment, itemHeight }: Props) {
     rejected: "Zavrnjeno",
     pending: "V obravnavi",
     changed: "Spremenjeno",
+    unknown: "Zakrito",
   };
 
   const container = [
