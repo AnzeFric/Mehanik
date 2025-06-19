@@ -115,8 +115,7 @@ export function useAppointment() {
       });
 
       const data = await response.json();
-      console.log("Appts: ");
-      console.log(JSON.stringify({ data }));
+
       if (data.success) {
         // Convert date strings to Date objects
         const convertedAppointments = data.appointments.map(
@@ -190,5 +189,6 @@ export function useAppointment() {
     getMechanicAppointments,
     getPrivateMechanicAppointments,
     getUserAppointments,
+    deleteAppointment,
   };
 }

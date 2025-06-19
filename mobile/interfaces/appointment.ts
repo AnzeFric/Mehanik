@@ -46,6 +46,10 @@ export interface UserAppointmentData {
   };
 }
 
+// Accepted - Mechanic accepted the appointment || User accepted the appointment after mechanic changed details
+// Rejected - Mechanic rejected the appointment || User rejected the appointment after mechanic changed details
+// Changed - Mechanic changed details about the appointment
+// Pending - User changed details about the appointment
 export type AppointmentStatus =
   | "accepted"
   | "rejected"

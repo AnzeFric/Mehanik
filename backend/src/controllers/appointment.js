@@ -71,8 +71,12 @@ const appointmentController = {
 
       const userUuid = req.user.userUuid;
 
-      const appointments =
+      let appointments =
         await appointmentService.getAppointmentsByUserUuid(userUuid);
+
+      appointments = appointments.filter(
+        (appointment) => appointment.status != "pending"
+      );
 
       var parsedData = (appointments || []).map((appointment) => ({
         uuid: appointment.uuid,
@@ -153,6 +157,26 @@ const appointmentController = {
       return res.status(200).json({
         success: true,
         message: "User appointment updated successfully",
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async deleteAppointment(req, res, next) {
+    try {
+      console.log("Delete appointment. Req from: ", req.user);
+      console.log("Body: ", req.body);
+
+      const appointmentUuid = req.body.appointmentUuid;
+
+      if (!appointmentUuid) throw new Error("Appointment uuid is not provided");
+
+      await appointmentService.deleteAppointment(appointmentUuid);
+
+      return res.status(200).json({
+        success: true,
+        message: "User appointment deleted successfully",
       });
     } catch (error) {
       next(error);

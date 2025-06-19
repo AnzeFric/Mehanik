@@ -90,6 +90,17 @@ const appointmentService = {
 
     return true;
   },
+
+  async deleteAppointment(appointmentUuid) {
+    const { error } = await supabase
+      .from("appointments")
+      .delete()
+      .eq("uuid", appointmentUuid);
+
+    if (error) throw error;
+
+    return true;
+  },
 };
 
 module.exports = appointmentService;

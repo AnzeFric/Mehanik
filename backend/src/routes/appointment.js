@@ -15,4 +15,6 @@ router.post("/", appointmentController.saveAppointment);
 // Updates status, dates, userMessage or mechanicResponse
 router.patch("/", appointmentController.updateAppointment);
 
+router.delete("/", appointmentController.deleteAppointment);
+
 module.exports = router;
