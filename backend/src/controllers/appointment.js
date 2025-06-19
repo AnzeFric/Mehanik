@@ -2,9 +2,9 @@ const appointmentService = require("../services/appointment");
 const userService = require("../services/accounts/user");
 
 const appointmentController = {
-  async getAppointments(req, res, next) {
+  async getMechanicAppointments(req, res, next) {
     try {
-      console.log("Get appointments. Req from: ", req.user);
+      console.log("Get mechanic appointments. Req from: ", req.user);
       console.log("Body: ", req.body);
 
       const mechanicUuid = req.user.mechanicUuid;
@@ -53,6 +53,47 @@ const appointmentController = {
           endDate: appointment.end_date,
         }));
       }
+
+      return res.status(200).json({
+        success: true,
+        message: "Appointments fetch successfully",
+        appointments: parsedData,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async getUserAppointments(req, res, next) {
+    try {
+      console.log("Get all user vehicles appointments. Req from: ", req.user);
+      console.log("Body: ", req.body);
+
+      const userUuid = req.body.userUuid;
+
+      const appointments =
+        await appointmentService.getAppointmentsByUserUuid(userUuid);
+
+      var parsedData = (appointments || []).map((appointment) => ({
+        uuid: appointment.uuid,
+        startDate: appointment.start_date,
+        endDate: appointment.end_date,
+        status: appointment.status,
+        mechanicResponse: appointment.mechanic_response,
+        mechanic: {
+          firstName: appointment.mechanics?.users?.first_name || "",
+          lastName: appointment.mechanics?.users?.last_name || "",
+          email: appointment.mechanics?.users?.email || "",
+          phone: appointment.mechanics?.phone || "",
+          address: appointment.mechanics?.address || "",
+          city: appointment.mechanics?.city || "",
+        },
+        vehicle: {
+          brand: appointment.vehicles?.brand || "",
+          model: appointment.vehicles?.model || "",
+          buildYear: appointment.vehicles?.build_year || "",
+        },
+      }));
 
       return res.status(200).json({
         success: true,

@@ -22,13 +22,12 @@ const appointmentService = {
     return filtered;
   },
 
-  async getAppointmentsByVehicleUuid(userUuid, vehicleUuid) {
+  async getAppointmentsByUserUuid(userUuid) {
     const { data, error } = await supabase
       .from("appointments")
       .select(
-        "uuid, start_date, end_date, status, mechanic_response, mechanics(phone, address, city, users(uuid, first_name, last_name, email)), vehicles(fk_user)"
-      )
-      .eq("fk_vehicle", vehicleUuid);
+        "uuid, start_date, end_date, status, mechanic_response, mechanics(phone, address, city, users(first_name, last_name, email)), vehicles(fk_user, brand, model, build_year)"
+      );
 
     if (error) {
       console.error("Appointment vehicle database error:", error);
