@@ -24,6 +24,7 @@ export default function Appointment({ appointmentData }: Props) {
   const handleChangeConfirm = (date: Date, userMessage: string) => {};
 
   const handleAcceptConfirm = async () => {
+    setIsConfirmOpen(false);
     const newAppointment: UserAppointmentData = {
       ...appointmentData,
       status: "accepted",
@@ -35,6 +36,7 @@ export default function Appointment({ appointmentData }: Props) {
   };
 
   const handleRejectConfirm = async () => {
+    setIsRejectOpen(false);
     const newAppointment: UserAppointmentData = {
       ...appointmentData,
       status: "rejected",
