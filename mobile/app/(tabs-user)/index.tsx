@@ -1,6 +1,6 @@
-import { StyleSheet, ScrollView, Alert } from "react-native";
-import { useState, useRef, useCallback, useEffect } from "react";
-import { router, useFocusEffect } from "expo-router";
+import { Alert } from "react-native";
+import { useState, useEffect } from "react";
+import { router } from "expo-router";
 import Appointment from "@/components/user/items/Appointment";
 import TitleRow from "@/components/shared/TitleRow";
 import ThemedView from "@/components/global/themed/ThemedView";
@@ -12,6 +12,7 @@ import {
   UserAppointmentData,
 } from "@/interfaces/appointment";
 import { useAppointment } from "@/hooks/useAppointment";
+import DisplayItems from "@/components/global/DisplayItems";
 
 export default function HomeUserScreen() {
   const { getUserAppointments, deleteAppointment, updateAppointment } =
@@ -20,8 +21,6 @@ export default function HomeUserScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedAppointment, setSelectedAppointment] =
     useState<MechanicAppointmentData | null>(null);
-
-  const scrollRef = useRef<ScrollView>(null);
 
   const [appointmentList, setAppointmentList] = useState<
     Array<MechanicAppointmentData>
@@ -86,16 +85,6 @@ export default function HomeUserScreen() {
     fetchUserAppointments();
   }, []);
 
-  useFocusEffect(
-    useCallback(() => {
-      return () => {
-        if (scrollRef.current) {
-          scrollRef.current.scrollTo({ y: 0 });
-        }
-      };
-    }, [])
-  );
-
   return (
     <ThemedView type={"background"} style={{ flex: 1 }}>
       <TitleRow
@@ -112,19 +101,17 @@ export default function HomeUserScreen() {
           />
         }
       />
-      <ScrollView
-        style={styles.container}
-        ref={scrollRef}
-        contentContainerStyle={styles.contentContainer}
-      >
-        {appointmentList.map((appointment, index) => (
+      <DisplayItems
+        list={appointmentList}
+        renderItem={(appointment, index) => (
           <Appointment
             appointmentData={appointment}
             onPress={() => handleAppointmentPress(appointment)}
             key={index}
           />
-        ))}
-      </ScrollView>
+        )}
+        emptyMessage="Nimate vnešenih terminov."
+      />
       {selectedAppointment &&
         (selectedAppointment.status === "accepted" ||
         selectedAppointment.status === "rejected" ? (
@@ -152,14 +139,3 @@ export default function HomeUserScreen() {
     </ThemedView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 25,
-    flex: 1,
-  },
-  contentContainer: {
-    gap: 10,
-    paddingTop: 15,
-  },
-});
