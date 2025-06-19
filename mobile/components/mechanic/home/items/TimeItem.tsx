@@ -82,16 +82,21 @@ export default function TimeItem({ appointment, itemHeight }: Props) {
           `${appointment.vehicle.brand} ${appointment.vehicle.model}, ${appointment.vehicle.buildYear}`,
         ],
       };
-      const infoSection: SectionData = {
-        title: "Podrobnosti",
-        text: [statusToText[appointment.status], appointment.userMessage],
+      const statusSection: SectionData = {
+        title: "Status",
+        text: [statusToText[appointment.status]],
+      };
+      const userMessage: SectionData = {
+        title: "Sporočilo uporabnika",
+        text: [appointment.userMessage],
       };
       setModalSections([
         userSection,
         dateSection,
         contactSection,
         vehicleSection,
-        infoSection,
+        statusSection,
+        userMessage,
       ]);
       setInfoModalVisible(true);
     }
@@ -113,9 +118,14 @@ export default function TimeItem({ appointment, itemHeight }: Props) {
             {statusToText[appointment.status]}
           </ThemedText>
         </View>
-        <ThemedText type={"small"} numberOfLines={1}>
-          {appointment.userMessage || "Ni opisa"}
-        </ThemedText>
+        <View>
+          <ThemedText type={"small"} bold>
+            {"Sporočilo uporabnika:"}
+          </ThemedText>
+          <ThemedText type={"small"} numberOfLines={1}>
+            {appointment.userMessage || "Ni opisa"}
+          </ThemedText>
+        </View>
       </TouchableOpacity>
       <ModalInfo
         isVisible={infoModalVisible}
