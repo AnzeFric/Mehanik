@@ -41,18 +41,6 @@ export const useAnimatedTheme = () => {
       inputRange: [0, 1],
       outputRange: [Colors.light.primaryText, Colors.dark.primaryText],
     }),
-    secondaryTextColor: animatedValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: [Colors.light.secondaryText, Colors.dark.secondaryText],
-    }),
-    borderColor: animatedValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: [Colors.light.inactiveBorder, Colors.dark.inactiveBorder],
-    }),
-    iconColor: animatedValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: [Colors.light.activeIcon, Colors.dark.activeIcon],
-    }),
   };
 
   const staticColors = {
