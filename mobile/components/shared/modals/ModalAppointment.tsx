@@ -9,10 +9,10 @@ import ThemedDatePicker from "@/components/global/themed/ThemedDatePicker";
 import ThemedTextInput from "@/components/global/themed/ThemedTextInput";
 
 interface Props {
-  isVisible: boolean;
   title: string;
   firstScreen: number; // 0 - date picker, 1 - time picker, 2 - text input for message
-  onConfirm: (date: Date, userMessage: string) => void;
+  isVisible: boolean;
+  onConfirm: (startDate: Date, endDate: Date, userMessage: string) => void;
   onCancel: () => void;
 }
 

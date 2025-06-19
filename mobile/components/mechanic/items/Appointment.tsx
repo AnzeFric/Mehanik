@@ -3,7 +3,10 @@ import { useState } from "react";
 import ModalPrompt from "../../shared/modals/ModalPrompt";
 import ModalAppointment from "../../shared/modals/ModalAppointment";
 import { formatDateTime } from "@/constants/util";
-import { UserAppointmentData } from "@/interfaces/appointment";
+import {
+  MechanicAppointmentData,
+  UserAppointmentData,
+} from "@/interfaces/appointment";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedText from "@/components/global/themed/ThemedText";
 import ThemedButton from "@/components/global/themed/ThemedButton";
@@ -13,7 +16,6 @@ interface Props {
   appointmentData: UserAppointmentData;
 }
 
-// TODO: onConfirm functions
 export default function Appointment({ appointmentData }: Props) {
   const { updateAppointment } = useAppointment();
 
@@ -21,7 +23,24 @@ export default function Appointment({ appointmentData }: Props) {
   const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);
   const [isChangeOpen, setIsChangeOpen] = useState<boolean>(false);
 
-  const handleChangeConfirm = (date: Date, userMessage: string) => {};
+  const handleChangeConfirm = async (
+    startDate: Date,
+    endDate: Date,
+    message: string
+  ) => {
+    setIsChangeOpen(false);
+    const newAppointment: MechanicAppointmentData = {
+      uuid: appointmentData.uuid,
+      startDate: startDate,
+      endDate: endDate,
+      mechanicResponse: message,
+      status: "changed",
+    };
+    const success = await updateAppointment(newAppointment);
+    if (!success) {
+      Alert.alert("Napaka", "Prišlo je do napake pri spreminjanju termina");
+    }
+  };
 
   const handleAcceptConfirm = async () => {
     setIsConfirmOpen(false);

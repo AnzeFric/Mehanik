@@ -11,7 +11,7 @@ export interface MechanicAppointmentData {
   endDate: Date;
   status: AppointmentStatus;
   mechanicResponse: string;
-  mechanic: {
+  mechanic?: {
     firstName: string;
     lastName: string;
     email: string;

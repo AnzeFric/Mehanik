@@ -1,4 +1,8 @@
-import { AppointmentData, UserAppointmentData } from "@/interfaces/appointment";
+import {
+  AppointmentData,
+  MechanicAppointmentData,
+  UserAppointmentData,
+} from "@/interfaces/appointment";
 import { API_BASE_URL } from "@/constants/Config";
 import useAuthStore from "@/stores/useAuthStore";
 
@@ -100,7 +104,9 @@ export function useAppointment() {
     }
   };
 
-  const updateAppointment = async (appointmentData: UserAppointmentData) => {
+  const updateAppointment = async (
+    appointmentData: UserAppointmentData | MechanicAppointmentData
+  ) => {
     try {
       const response = await fetch(`${API_BASE_URL}/appointments/`, {
         method: "PATCH",
