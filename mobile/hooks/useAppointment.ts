@@ -1,4 +1,4 @@
-import { AppointmentData } from "@/interfaces/appointment";
+import { AppointmentData, UserAppointmentData } from "@/interfaces/appointment";
 import { API_BASE_URL } from "@/constants/Config";
 import useAuthStore from "@/stores/useAuthStore";
 
@@ -100,8 +100,32 @@ export function useAppointment() {
     }
   };
 
+  const updateAppointment = async (appointmentData: UserAppointmentData) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/appointments/`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + jwt,
+        },
+        body: JSON.stringify({ appointmentData: appointmentData }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        return true;
+      }
+      console.log("Error updating appointments: ", data.message);
+      return false;
+    } catch (error) {
+      console.error("Error while updating appointment: ", error);
+    }
+  };
+
   return {
     saveAppointment,
+    updateAppointment,
     getMechanicAppointments,
     getUserAppointments,
   };
