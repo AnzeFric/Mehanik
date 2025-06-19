@@ -54,7 +54,7 @@ export default function HomeMechanicScreen() {
         }
       />
       <View style={styles.contentContainer}>
-        <DaySchedule appointments={getUserAppointments()} />
+        <DaySchedule appointments={getUserAppointments(["accepted"])} />
       </View>
     </ThemedView>
   );

@@ -11,13 +11,15 @@ import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedText from "@/components/global/themed/ThemedText";
 import ThemedButton from "@/components/global/themed/ThemedButton";
 import { useAppointment } from "@/hooks/useAppointment";
+import useAppointmentStore from "@/stores/useAppointmentStore";
 
 interface Props {
   appointmentData: UserAppointmentData;
 }
 
 export default function Appointment({ appointmentData }: Props) {
-  const { updateAppointment } = useAppointment();
+  const { updateAppointment, getMechanicAppointments } = useAppointment();
+  const { setUserAppointments } = useAppointmentStore();
 
   const [isRejectOpen, setIsRejectOpen] = useState<boolean>(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);
@@ -49,7 +51,10 @@ export default function Appointment({ appointmentData }: Props) {
       status: "accepted",
     };
     const success = await updateAppointment(newAppointment);
-    if (!success) {
+    if (success) {
+      const fetchedAppointments = await getMechanicAppointments();
+      setUserAppointments(fetchedAppointments);
+    } else {
       Alert.alert("Napaka", "Prišlo je do napake pri sprejemu termina");
     }
   };
@@ -61,7 +66,10 @@ export default function Appointment({ appointmentData }: Props) {
       status: "rejected",
     };
     const success = await updateAppointment(newAppointment);
-    if (!success) {
+    if (success) {
+      const fetchedAppointments = await getMechanicAppointments();
+      setUserAppointments(fetchedAppointments);
+    } else {
       Alert.alert("Napaka", "Prišlo je do napake pri zavračanju termina");
     }
   };

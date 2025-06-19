@@ -21,7 +21,6 @@ const appointmentController = {
           endDate: appointment.end_date,
           status: appointment.status,
           userMessage: appointment.user_message,
-          new: appointment.new,
           user: {
             firstName: appointment.vehicles?.users?.first_name || "",
             lastName: appointment.vehicles?.users?.last_name || "",

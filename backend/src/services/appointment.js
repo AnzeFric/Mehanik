@@ -6,7 +6,7 @@ const appointmentService = {
     const { data, error } = await supabase
       .from("appointments")
       .select(
-        "uuid, start_date, end_date, status, user_message, new, vehicles(brand, model, build_year, fk_customer, users(first_name, last_name))"
+        "uuid, start_date, end_date, status, user_message, vehicles(brand, model, build_year, fk_customer, users(first_name, last_name))"
       )
       .eq("fk_mechanic", mechanicUuid);
 
@@ -26,7 +26,7 @@ const appointmentService = {
     const { data, error } = await supabase
       .from("appointments")
       .select(
-        "uuid, start_date, end_date, status, mechanic_response, new, mechanics(phone, address, city, users(uuid, first_name, last_name, email)), vehicles(fk_user)"
+        "uuid, start_date, end_date, status, mechanic_response, mechanics(phone, address, city, users(uuid, first_name, last_name, email)), vehicles(fk_user)"
       )
       .eq("fk_vehicle", vehicleUuid);
 
@@ -56,7 +56,6 @@ const appointmentService = {
       status: appointmentData.status,
       user_message: appointmentData.userMessage,
       mechanic_response: appointmentData.mechanicResponse,
-      new: true,
       fk_vehicle: vehicleUuid,
       fk_mechanic: mechanicUuid,
     });
@@ -67,14 +66,6 @@ const appointmentService = {
   },
 
   async updateAppointmentByMechanicUuid(mechanicUuid, appointmentData) {
-    let isNew = true;
-    if (
-      appointmentData.status === "accepted" ||
-      appointmentData.status === "rejected"
-    ) {
-      isNew = false;
-    }
-
     const { error } = await supabase
       .from("appointments")
       .update({
@@ -83,7 +74,6 @@ const appointmentService = {
         status: appointmentData.status,
         user_message: appointmentData.userMessage,
         mechanic_response: appointmentData.mechanicResponse,
-        new: isNew,
         updated_at: new Date().toISOString(),
       })
       .eq("fk_mechanic", mechanicUuid);

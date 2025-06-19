@@ -1,14 +1,19 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { UserAppointmentData } from "@/interfaces/appointment";
+import {
+  AppointmentStatus,
+  UserAppointmentData,
+} from "@/interfaces/appointment";
 
 interface AppointmentStore {
   shouldRefetch: Boolean;
   userAppointments: Array<UserAppointmentData>;
   setShouldRefetch: (shouldRefetch: Boolean) => void;
   setUserAppointments: (userAppointments: Array<UserAppointmentData>) => void;
-  getUserAppointments: () => Array<UserAppointmentData>;
+  getUserAppointments: (
+    statuses: Array<AppointmentStatus>
+  ) => Array<UserAppointmentData>;
   reset: () => void;
 }
 
@@ -36,8 +41,10 @@ const useAppointmentStore = create(
       setUserAppointments: (userAppointments: Array<UserAppointmentData>) => {
         set({ userAppointments: userAppointments });
       },
-      getUserAppointments: () => {
-        const appointments = get().userAppointments;
+      getUserAppointments: (statuses: Array<AppointmentStatus>) => {
+        const appointments = get().userAppointments.filter((appointment) =>
+          statuses.includes(appointment.status)
+        );
         return convertDatesToObjects(appointments);
       },
       reset: async () => {

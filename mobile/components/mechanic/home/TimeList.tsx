@@ -1,5 +1,5 @@
 import { View, ScrollView, StyleSheet } from "react-native";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { UserAppointmentData } from "@/interfaces/appointment";
 import ThemedText from "@/components/global/themed/ThemedText";
 import TimeContainer from "./items/TimeContainer";

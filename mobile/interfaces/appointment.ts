@@ -28,6 +28,7 @@ export interface UserAppointmentData {
   status: AppointmentStatus;
   userMessage: string;
   numAppointments: number;
+  new: boolean;
   user: {
     firstName: string;
     lastName: string;
