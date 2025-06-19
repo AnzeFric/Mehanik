@@ -68,10 +68,11 @@ export default function TimeContainer({
     }
   };
 
-  const handleAppointmentConfirm = (endDate: Date, userMessage: string) => {
-    let startDate = date;
-    startDate.setHours(hour);
-
+  const handleAppointmentConfirm = (
+    startDate: Date,
+    endDate: Date,
+    userMessage: string
+  ) => {
     const appointment: AppointmentData = {
       startDate: startDate,
       endDate: endDate,
@@ -122,6 +123,8 @@ export default function TimeContainer({
         isVisible={isAppointmentVisible}
         title={"Izberite termin"}
         firstScreen={0}
+        startDate={date}
+        endDate={date}
         onConfirm={handleAppointmentConfirm}
         onCancel={() => setIsAppointmentVisible(false)}
       />

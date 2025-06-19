@@ -130,6 +130,8 @@ export default function Appointment({ appointmentData }: Props) {
         isVisible={isChangeOpen}
         title={"Sprememba termina"}
         firstScreen={0}
+        startDate={appointmentData.startDate}
+        endDate={appointmentData.endDate}
         onCancel={() => setIsChangeOpen(false)}
         onConfirm={handleChangeConfirm}
       />

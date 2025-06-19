@@ -10,26 +10,30 @@ import ThemedTextInput from "@/components/global/themed/ThemedTextInput";
 
 interface Props {
   title: string;
-  firstScreen: number; // 0 - date picker, 1 - time picker, 2 - text input for message
+  startDate?: Date;
+  endDate?: Date;
+  firstScreen: number; // 0 - start date picker, 1 - end date picker, 2 - text input for message
   isVisible: boolean;
   onConfirm: (startDate: Date, endDate: Date, userMessage: string) => void;
   onCancel: () => void;
 }
 
 export default function ModalAppointment({
-  isVisible,
   title,
+  startDate = new Date(),
+  endDate = new Date(),
   firstScreen,
+  isVisible,
   onConfirm,
   onCancel,
 }: Props) {
   // Ensure firstScreen is within valid range
   const inputScreenNumber = Math.min(Math.max(firstScreen, 0), 2);
 
-  const [date, setDate] = useState<Date>(new Date()); // TODO: add prop date and get default values from there
-  const [time, setTime] = useState<Date>(new Date());
-  const [message, setMessage] = useState<string>("");
-  const [screenNumber, setScreenNumber] = useState<number>(inputScreenNumber);
+  const [newStartDate, setNewStartDate] = useState(startDate);
+  const [mewEndDate, setNewEndDate] = useState(endDate);
+  const [message, setMessage] = useState("");
+  const [screenNumber, setScreenNumber] = useState(inputScreenNumber);
 
   const cleanup = () => {
     setScreenNumber(inputScreenNumber);
@@ -45,7 +49,7 @@ export default function ModalAppointment({
   const handleNextPress = () => {
     if (screenNumber === 2) {
       cleanup();
-      onConfirm(date, message);
+      onConfirm(newStartDate, mewEndDate, message);
     } else {
       setScreenNumber((prevScreenNumber) => prevScreenNumber + 1);
     }
@@ -77,14 +81,14 @@ export default function ModalAppointment({
             {screenNumber === 0 && (
               <>
                 <ThemedText type={"normal"} style={styles.itemTitle}>
-                  Izberite datum
+                  Izberite začetni datum
                 </ThemedText>
                 <ThemedDatePicker
-                  date={date}
+                  date={startDate}
                   onDateChange={(newDate: Date) => {
-                    setDate(newDate);
+                    setNewStartDate(newDate);
                   }}
-                  mode={"date"}
+                  mode={"datetime"}
                   is24hourSource={"locale"}
                 />
               </>
@@ -93,14 +97,14 @@ export default function ModalAppointment({
             {screenNumber === 1 && (
               <>
                 <ThemedText type={"normal"} style={styles.itemTitle}>
-                  Izberite čas
+                  Izberite končni datum
                 </ThemedText>
                 <ThemedDatePicker
-                  date={time}
-                  onDateChange={(newTime: Date) => {
-                    setTime(newTime);
+                  date={endDate}
+                  onDateChange={(newDate: Date) => {
+                    setNewEndDate(newDate);
                   }}
-                  mode={"time"}
+                  mode={"datetime"}
                   is24hourSource={"locale"}
                 />
               </>
