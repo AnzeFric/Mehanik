@@ -39,10 +39,14 @@ const appointmentController = {
         const mechanic =
           await userService.getMechanicByEmailAndEnabled(mechanicEmail);
 
-        const appointments =
+        let appointments =
           await appointmentService.getAppointmentsByMechanicUuid(
             mechanic.mechanics[0].uuid
           );
+
+        appointments = appointments.filter(
+          (appointment) => appointment.status === "accepted"
+        );
 
         var parsedData = (appointments || []).map((appointment) => ({
           startDate: appointment.start_date,
