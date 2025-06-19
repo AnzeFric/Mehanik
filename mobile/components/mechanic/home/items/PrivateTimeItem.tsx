@@ -31,7 +31,7 @@ export default function TimeItem({ startDate, endDate, itemHeight }: Props) {
     <ThemedView type={"secondary"}>
       <TouchableOpacity style={container} onPress={() => {}}>
         <View style={{ flexDirection: "row" }}>
-          <ThemedText type={"small"}>Rezerviran termin, </ThemedText>
+          <ThemedText type={"small"}>Zaseden termin, </ThemedText>
           <ThemedText type={"small"}>{getDurationText()}</ThemedText>
         </View>
       </TouchableOpacity>
