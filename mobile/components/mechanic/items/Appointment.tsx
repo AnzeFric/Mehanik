@@ -7,6 +7,7 @@ import { UserAppointmentData } from "@/interfaces/appointment";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedText from "@/components/global/themed/ThemedText";
 import ThemedButton from "@/components/global/themed/ThemedButton";
+import { useAppointment } from "@/hooks/useAppointment";
 
 interface Props {
   appointmentData: UserAppointmentData;
@@ -14,6 +15,8 @@ interface Props {
 
 // TODO: onConfirm functions
 export default function Appointment({ appointmentData }: Props) {
+  const { updateAppointment } = useAppointment();
+
   const [isRejectOpen, setIsRejectOpen] = useState<boolean>(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);
   const [isChangeOpen, setIsChangeOpen] = useState<boolean>(false);

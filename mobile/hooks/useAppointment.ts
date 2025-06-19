@@ -116,10 +116,33 @@ export function useAppointment() {
       if (data.success) {
         return true;
       }
-      console.log("Error updating appointments: ", data.message);
+      console.log("Error updating appointment: ", data.message);
       return false;
     } catch (error) {
       console.error("Error while updating appointment: ", error);
+    }
+  };
+
+  const deleteAppointment = async (appointmentUuid: string) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/appointments/`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + jwt,
+        },
+        body: JSON.stringify({ appointmentUuid: appointmentUuid }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        return true;
+      }
+      console.log("Error deleting appointment: ", data.message);
+      return false;
+    } catch (error) {
+      console.error("Error while deleting appointment: ", error);
     }
   };
 
