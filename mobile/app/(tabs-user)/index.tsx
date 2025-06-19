@@ -1,4 +1,4 @@
-import { StyleSheet, ScrollView } from "react-native";
+import { StyleSheet, ScrollView, Alert } from "react-native";
 import { useState, useRef, useCallback, useEffect } from "react";
 import { router, useFocusEffect } from "expo-router";
 import Appointment from "@/components/user/items/Appointment";
@@ -7,11 +7,15 @@ import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedIcon from "@/components/global/themed/ThemedIcon";
 import ModalAppointment from "@/components/shared/modals/ModalAppointment";
 import ModalPrompt from "@/components/shared/modals/ModalPrompt";
-import { MechanicAppointmentData } from "@/interfaces/appointment";
+import {
+  MechanicAppointmentData,
+  UserAppointmentData,
+} from "@/interfaces/appointment";
 import { useAppointment } from "@/hooks/useAppointment";
 
 export default function HomeUserScreen() {
-  const { getUserAppointments } = useAppointment();
+  const { getUserAppointments, deleteAppointment, updateAppointment } =
+    useAppointment();
 
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedAppointment, setSelectedAppointment] =
@@ -23,13 +27,55 @@ export default function HomeUserScreen() {
     Array<MechanicAppointmentData>
   >([]);
 
+  const fetchUserAppointments = async () => {
+    const appointments = await getUserAppointments();
+    setAppointmentList(appointments);
+  };
+
   const handleAppointmentPress = (appointment: MechanicAppointmentData) => {
     setSelectedAppointment(appointment);
     setModalVisible(true);
   };
 
-  const handleModalConfirm = () => {
-    setModalVisible(false);
+  const handleDeleteConfirm = async () => {
+    if (selectedAppointment) {
+      setModalVisible(false);
+      const success = await deleteAppointment(selectedAppointment.uuid);
+      if (success) {
+        await fetchUserAppointments();
+      } else {
+        Alert.alert(
+          "Napaka",
+          "Prišlo je do napake pri brisanju termina. Poskusite ponovno kasneje"
+        );
+      }
+    }
+  };
+
+  const handleChangeConfirm = async (
+    startDate: Date,
+    endDate: Date,
+    message: string
+  ) => {
+    if (selectedAppointment) {
+      setModalVisible(false);
+      const newAppointment: UserAppointmentData = {
+        ...selectedAppointment,
+        startDate: startDate,
+        endDate: endDate,
+        userMessage: message,
+        status: "pending",
+      };
+      const success = await updateAppointment(newAppointment);
+      if (success) {
+        await fetchUserAppointments();
+      } else {
+        Alert.alert(
+          "Napaka",
+          "Prišlo je do napake pri posodabljanju termina. Poskusite ponovno kasneje"
+        );
+      }
+    }
   };
 
   const handleModalCancel = () => {
@@ -37,10 +83,6 @@ export default function HomeUserScreen() {
   };
 
   useEffect(() => {
-    const fetchUserAppointments = async () => {
-      const appointments = await getUserAppointments();
-      setAppointmentList(appointments);
-    };
     fetchUserAppointments();
   }, []);
 
@@ -89,19 +131,21 @@ export default function HomeUserScreen() {
           <ModalPrompt
             isVisible={modalVisible}
             message={"Termin boste trajno izbrisali."}
-            onConfirm={handleModalConfirm}
+            onConfirm={handleDeleteConfirm}
             onCancel={handleModalCancel}
           />
         ) : (
           <ModalAppointment
             isVisible={modalVisible}
             title={
-              selectedAppointment.status === "pending"
+              selectedAppointment.status === "changed"
                 ? "Spremeni termin"
                 : "Potrdi termin"
             }
+            startDate={selectedAppointment.startDate}
+            endDate={selectedAppointment.endDate}
             firstScreen={0}
-            onConfirm={handleModalConfirm}
+            onConfirm={handleChangeConfirm}
             onCancel={handleModalCancel}
           />
         ))}

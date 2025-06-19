@@ -32,14 +32,12 @@ export interface UserAppointmentData {
   endDate: Date;
   status: AppointmentStatus;
   userMessage: string;
-  numAppointments: number;
-  new: boolean;
-  user: {
+  user?: {
     firstName: string;
     lastName: string;
     email: string;
   };
-  vehicle: {
+  vehicle?: {
     brand: string;
     model: string;
     buildYear: number | null;

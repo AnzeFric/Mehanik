@@ -12,6 +12,7 @@ import ThemedText from "@/components/global/themed/ThemedText";
 import ThemedButton from "@/components/global/themed/ThemedButton";
 import { useAppointment } from "@/hooks/useAppointment";
 import useAppointmentStore from "@/stores/useAppointmentStore";
+import { router } from "expo-router";
 
 interface Props {
   appointmentData: UserAppointmentData;
@@ -73,6 +74,15 @@ export default function Appointment({ appointmentData }: Props) {
       Alert.alert("Napaka", "Prišlo je do napake pri zavračanju termina");
     }
   };
+
+  if (!appointmentData.user || !appointmentData.vehicle) {
+    Alert.alert(
+      "Napaka",
+      "Napaka pri nalaganju uporabnikov. Poskusite ponovno kasneje"
+    );
+    router.back();
+    return;
+  }
 
   return (
     <ThemedView type={"primary"} style={styles.container}>

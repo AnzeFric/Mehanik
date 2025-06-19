@@ -73,7 +73,7 @@ const appointmentService = {
     return uuid;
   },
 
-  async updateAppointmentByMechanicUuid(mechanicUuid, appointmentData) {
+  async updateAppointmentByMechanicUuid(appointmentData) {
     const { error } = await supabase
       .from("appointments")
       .update({
@@ -84,7 +84,7 @@ const appointmentService = {
         mechanic_response: appointmentData.mechanicResponse,
         updated_at: new Date().toISOString(),
       })
-      .eq("fk_mechanic", mechanicUuid);
+      .eq("uuid", appointmentData.uuid);
 
     if (error) throw error;
 
