@@ -71,7 +71,7 @@ export function useAppointment() {
     }
   };
 
-  const getUserAppointments = async (mechanicEmail: string) => {
+  const getPrivateMechanicAppointments = async (mechanicEmail: string) => {
     try {
       const response = await fetch(`${API_BASE_URL}/appointments/get`, {
         method: "POST",
@@ -92,6 +92,38 @@ export function useAppointment() {
             endDate: new Date(appointment.endDate),
             userMessage: "",
             status: "unknown",
+          })
+        );
+
+        return convertedAppointments;
+      }
+      console.log("Error fetching appointments: ", data.message);
+      return [];
+    } catch (error) {
+      console.error("Error while fetching appointment: ", error);
+    }
+  };
+
+  const getUserAppointments = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/appointments/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + jwt,
+        },
+      });
+
+      const data = await response.json();
+      console.log("Appts: ");
+      console.log(JSON.stringify({ data }));
+      if (data.success) {
+        // Convert date strings to Date objects
+        const convertedAppointments = data.appointments.map(
+          (appointment: any) => ({
+            ...appointment,
+            startDate: new Date(appointment.startDate),
+            endDate: new Date(appointment.endDate),
           })
         );
 
@@ -156,6 +188,7 @@ export function useAppointment() {
     saveAppointment,
     updateAppointment,
     getMechanicAppointments,
+    getPrivateMechanicAppointments,
     getUserAppointments,
   };
 }

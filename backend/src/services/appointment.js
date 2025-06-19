@@ -35,9 +35,18 @@ const appointmentService = {
         `Failed to fetch appointments for vehicle: ${error.message}`
       );
     }
-    const filtered = data.filter(
-      (appointment) => appointment.vehicles?.fk_user === userUuid // Only return data from the auth user
-    );
+
+    const filtered = data.filter((appointment) => {
+      if (
+        appointment.vehicles &&
+        appointment.vehicles.fk_user !== undefined &&
+        appointment.vehicles.fk_user !== null
+      ) {
+        return appointment.vehicles.fk_user === userUuid;
+      }
+      return false; // Exclude appointments without valid user uuid
+    });
+
     return filtered;
   },
 

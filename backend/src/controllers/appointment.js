@@ -69,7 +69,7 @@ const appointmentController = {
       console.log("Get all user vehicles appointments. Req from: ", req.user);
       console.log("Body: ", req.body);
 
-      const userUuid = req.body.userUuid;
+      const userUuid = req.user.userUuid;
 
       const appointments =
         await appointmentService.getAppointmentsByUserUuid(userUuid);

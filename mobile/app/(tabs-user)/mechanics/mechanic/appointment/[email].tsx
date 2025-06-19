@@ -9,14 +9,16 @@ import { UserAppointmentData } from "@/interfaces/appointment";
 
 export default function AppointmentScreen() {
   const { email } = useLocalSearchParams();
-  const { getUserAppointments } = useAppointment();
+  const { getPrivateMechanicAppointments } = useAppointment();
 
   const [appointments, setAppointments] = useState<Array<UserAppointmentData>>(
     []
   );
 
   const appointmentsFetch = async () => {
-    const fetchedAppointments = await getUserAppointments(email.toString());
+    const fetchedAppointments = await getPrivateMechanicAppointments(
+      email.toString()
+    );
     setAppointments(fetchedAppointments);
   };
 

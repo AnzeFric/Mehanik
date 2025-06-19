@@ -19,6 +19,11 @@ export interface MechanicAppointmentData {
     city: string | null;
     phone: string | null;
   };
+  vehicle?: {
+    brand: string;
+    model: string;
+    buildYear: number | null;
+  };
 }
 
 export interface UserAppointmentData {
