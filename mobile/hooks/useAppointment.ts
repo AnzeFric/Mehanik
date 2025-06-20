@@ -1,8 +1,4 @@
-import {
-  AppointmentData,
-  MechanicAppointmentData,
-  UserAppointmentData,
-} from "@/interfaces/appointment";
+import { AppointmentData } from "@/interfaces/appointment";
 import { API_BASE_URL } from "@/constants/Config";
 import useAuthStore from "@/stores/useAuthStore";
 

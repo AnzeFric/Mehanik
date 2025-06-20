@@ -4,7 +4,6 @@ import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedText from "@/components/global/themed/ThemedText";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 import { VehicleData } from "@/interfaces/vehicle";
-import { router } from "expo-router";
 import ModalPrompt from "@/components/shared/modals/ModalPrompt";
 import { useVehicle } from "@/hooks/useVehicle";
 import useVehicleStore from "@/stores/useVehicleStore";

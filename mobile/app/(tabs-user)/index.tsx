@@ -10,7 +10,6 @@ import ModalPrompt from "@/components/shared/modals/ModalPrompt";
 import {
   AppointmentData,
   MechanicAppointmentData,
-  UserAppointmentData,
 } from "@/interfaces/appointment";
 import { useAppointment } from "@/hooks/useAppointment";
 import DisplayItems from "@/components/global/DisplayItems";
