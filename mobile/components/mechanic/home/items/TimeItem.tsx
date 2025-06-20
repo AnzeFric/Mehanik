@@ -34,6 +34,7 @@ export default function TimeItem({ appointment, itemHeight }: Props) {
     pending: staticColors.pending,
     changed: staticColors.changed,
     unknown: staticColors.changed,
+    hidden: staticColors.changed,
   };
 
   const statusToText: Record<AppointmentStatus, string> = {
@@ -42,6 +43,7 @@ export default function TimeItem({ appointment, itemHeight }: Props) {
     pending: "V obravnavi",
     changed: "Spremenjeno",
     unknown: "Zakrito",
+    hidden: "Končano",
   };
 
   const container = [

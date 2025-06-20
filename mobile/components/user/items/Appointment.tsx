@@ -30,6 +30,8 @@ export default function Appointment({ appointmentData, onPress }: Props) {
         return "še v pregledu";
       case "unknown":
         return "Zakrito";
+      case "hidden":
+        return "Končano";
     }
   };
 
@@ -44,6 +46,8 @@ export default function Appointment({ appointmentData, onPress }: Props) {
       case "pending":
         return staticColors.pending;
       case "unknown":
+        return staticColors.pending;
+      case "hidden":
         return staticColors.pending;
     }
   };
