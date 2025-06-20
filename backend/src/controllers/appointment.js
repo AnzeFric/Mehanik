@@ -48,8 +48,14 @@ const appointmentController = {
             mechanic.mechanics[0].uuid
           );
 
+        let today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        // Only return appointments that are accepted and from today onward. The user does not need to see mechanics past work history.
         appointments = appointments.filter(
-          (appointment) => appointment.status === "accepted"
+          (appointment) =>
+            appointment.status === "accepted" &&
+            new Date(appointment.start_date) >= today
         );
 
         var parsedData = (appointments || []).map((appointment) => ({
