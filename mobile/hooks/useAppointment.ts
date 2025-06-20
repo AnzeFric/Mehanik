@@ -60,10 +60,10 @@ export function useAppointment() {
 
         return convertedAppointments;
       }
-      console.log("Error fetching appointments: ", data.message);
+      console.log("Error fetching mechanic appointments: ", data.message);
       return [];
     } catch (error) {
-      console.error("Error while fetching appointment: ", error);
+      console.error("Error while fetching mechanic appointment: ", error);
     }
   };
 
@@ -93,10 +93,10 @@ export function useAppointment() {
 
         return convertedAppointments;
       }
-      console.log("Error fetching appointments: ", data.message);
+      console.log("Error fetching private appointments: ", data.message);
       return [];
     } catch (error) {
-      console.error("Error while fetching appointment: ", error);
+      console.error("Error while fetching private appointment: ", error);
     }
   };
 
@@ -124,10 +124,10 @@ export function useAppointment() {
 
         return convertedAppointments;
       }
-      console.log("Error fetching appointments: ", data.message);
+      console.log("Error fetching user appointments: ", data.message);
       return [];
     } catch (error) {
-      console.error("Error while fetching appointment: ", error);
+      console.error("Error while fetching user appointment: ", error);
     }
   };
 

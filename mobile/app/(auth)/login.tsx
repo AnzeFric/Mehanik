@@ -35,7 +35,15 @@ export default function LoginScreen() {
       Alert.alert("Napačen vnos", "Vsa polja potrebujejo biti izpolnjena");
       return;
     }
-    handleLogin(email, password);
+    const success = await handleLogin(email, password);
+    if (success) {
+      router.replace("/");
+    } else {
+      Alert.alert(
+        "Napaka",
+        "Prišlo je do napake pri prijavi. Poskusite ponovno kasneje."
+      );
+    }
   };
 
   const inputStyle = [

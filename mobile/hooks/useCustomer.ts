@@ -38,15 +38,18 @@ export function useCustomer() {
       const data = await response.json();
 
       if (data.success) {
-        console.log("Successfully saved customer, vehicle and optional repair");
         await updateStoredCustomerData(data.customers);
         return true;
       }
-      console.log("Error saving customer, vehicle and optional repair");
+      console.log(
+        "Error saving customer, vehicle and optional repair: ",
+        data.message
+      );
       return false;
     } catch (error) {
       console.error(
-        "Error while saving mechanic customer, vehicle and optional repair"
+        "Error while saving mechanic customer, vehicle and optional repair: ",
+        error
       );
     }
   };
@@ -71,14 +74,16 @@ export function useCustomer() {
       const data = await response.json();
 
       if (data.success) {
-        console.log("Successfully updated customer and vehicle");
         await updateStoredCustomerData(data.customers);
         return true;
       }
-      console.log("Error updating customer and vehicle");
+      console.log("Error updating customer and vehicle: ", data.message);
       return false;
     } catch (error) {
-      console.error("Error while updating mechanic customer and vehicle");
+      console.error(
+        "Error while updating mechanic customer and vehicle: ",
+        error
+      );
     }
   };
 
@@ -101,14 +106,13 @@ export function useCustomer() {
       const data = await response.json();
 
       if (data.success) {
-        console.log("Successfully deleted customer");
         await updateStoredCustomerData(data.customers);
         return true;
       }
-      console.log("Error deleting customer");
+      console.log("Error deleting customer: ", data.message);
       return false;
     } catch (error) {
-      console.error("Error while deleting mechanic customer");
+      console.error("Error while deleting mechanic customer: ", error);
     }
   };
 
@@ -124,7 +128,6 @@ export function useCustomer() {
 
       const data = await response.json();
       if (data.success) {
-        console.log("Successfully fetched customers");
         return data.customers;
       }
       console.log("Error fetching mechanic customers: ", data.message);

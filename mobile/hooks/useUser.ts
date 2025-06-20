@@ -45,10 +45,9 @@ export function useUser() {
           },
         };
         setCurrentUser(user);
-        console.log("User fetching successfully");
         return true;
       }
-      console.error("Failed to get user");
+      console.error("Failed to get user: ", data.message);
       return false;
     } catch (error) {
       console.error("Error fetching user: ", error);
@@ -86,17 +85,12 @@ export function useUser() {
 
       if (data.success) {
         setCurrentUser(newUserData);
-        Alert.alert("Uspeh!", "Podatki uspešno posodobljeni!");
         return true;
       }
-
-      Alert.alert(
-        "Napaka!",
-        "Napaka pri posodabljanju podatkov. Prosimo poskusite kasneje."
-      );
+      console.error("Error updating user: ", data.message);
       return false;
     } catch (error) {
-      console.error("Error updating user: ", error);
+      console.error("Error ehile updating user: ", error);
       return false;
     }
   };
@@ -115,12 +109,12 @@ export function useUser() {
 
       if (data.success) {
         resetAllStores();
-        router.replace("/(auth)/login");
-      } else {
-        console.error("Failed to delete user");
+        return true;
       }
+      console.log("Error deleting user: ", data.message);
+      return false;
     } catch (error) {
-      console.error("Error deleting user: ", error);
+      console.error("Error while deleting user: ", error);
     }
   };
 
@@ -136,7 +130,6 @@ export function useUser() {
       const data = await response.json();
 
       if (data.success) {
-        console.log("Successfully fetched mechanics data");
         setMechanics(data.mechanics);
         return true;
       }

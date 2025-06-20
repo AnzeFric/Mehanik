@@ -21,7 +21,6 @@ export function useRepair() {
       const data = await response.json();
 
       if (data.success) {
-        console.log("Successfully fetched customer repairs");
         const repairsWithDates = data.repairs.map((repair: any) => ({
           ...repair,
           date: new Date(repair.date),
@@ -60,7 +59,6 @@ export function useRepair() {
 
       const data = await response.json();
       if (data.success) {
-        console.log("Successfully saved vehicle repair");
         return true;
       }
       console.log("Error saving vehicle repair: ", data.message);
@@ -84,7 +82,6 @@ export function useRepair() {
       const data = await reponse.json();
 
       if (data.success) {
-        console.log("Successfully deleted vehicle repair");
         return true;
       }
       console.log("Error deleting vehicle repair: ", data.message);
@@ -110,7 +107,6 @@ export function useRepair() {
       const data = await response.json();
 
       if (data.success) {
-        console.log("Successfully updated vehicle repair");
         return true;
       }
       console.log("Error updating vehicle repair: ", data.message);

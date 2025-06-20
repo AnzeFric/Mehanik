@@ -1,6 +1,11 @@
 import useAuthStore from "@/stores/useAuthStore";
 import useColorThemeStore from "@/stores/useColorThemeStore";
 import useUserStore from "@/stores/useUserStore";
+import useAppointmentStore from "@/stores/useAppointmentStore";
+import useCustomerStore from "@/stores/useCustomerStore";
+import useRepairStore from "@/stores/useRepairStore";
+import useVehicleStore from "@/stores/useVehicleStore";
+import useMechanicStore from "@/stores/useMechanicStore";
 
 export function formatDate(date: Date | string): string {
   const dateObj = date instanceof Date ? date : new Date(date);
@@ -91,4 +96,9 @@ export function resetAllStores() {
   useAuthStore.getState().reset();
   useUserStore.getState().reset();
   useColorThemeStore.getState().reset();
+  useAppointmentStore.getState().reset();
+  useCustomerStore.getState().reset();
+  useMechanicStore.getState().reset();
+  useRepairStore.getState().reset();
+  useVehicleStore.getState().reset();
 }

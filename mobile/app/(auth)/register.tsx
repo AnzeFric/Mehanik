@@ -56,7 +56,21 @@ export default function LoginScreen() {
       return;
     }
 
-    handleRegister(email, firstName, lastName, password, accountType);
+    const success = await handleRegister(
+      email,
+      firstName,
+      lastName,
+      password,
+      accountType
+    );
+    if (success) {
+      router.push("/(auth)/login");
+    } else {
+      Alert.alert(
+        "Napaka",
+        "Prišlo je do napake pri registraciji. Poskusite ponovno kasneje"
+      );
+    }
   };
 
   const inputStyle = [

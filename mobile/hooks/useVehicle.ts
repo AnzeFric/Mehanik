@@ -23,7 +23,7 @@ export function useVehicle() {
       console.error("Error fetching vehicles: ", data.message);
       return [];
     } catch (error) {
-      console.error("Error fetching vehicles: ", error);
+      console.error("Error while fetching vehicles: ", error);
     }
   };
 
@@ -46,7 +46,7 @@ export function useVehicle() {
       console.error("Error saving vehicle: ", data.message);
       return false;
     } catch (error) {
-      console.error("Error saving vehicle: ", error);
+      console.error("Error while saving vehicle: ", error);
     }
   };
 
@@ -69,7 +69,7 @@ export function useVehicle() {
       console.error("Error patching vehicle: ", data.message);
       return false;
     } catch (error) {
-      console.error("Error patching vehicle: ", error);
+      console.error("Error while patching vehicle: ", error);
     }
   };
 
@@ -92,7 +92,7 @@ export function useVehicle() {
       console.error("Error deleting vehicle: ", data.message);
       return false;
     } catch (error) {
-      console.error("Error deleting vehicle: ", error);
+      console.error("Error while deleting vehicle: ", error);
     }
   };
 

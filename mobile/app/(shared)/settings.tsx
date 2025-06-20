@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import { useState } from "react";
 import { router } from "expo-router";
 import { useAuth } from "@/hooks/useAuth";
@@ -23,6 +23,18 @@ export default function SettingsScreen() {
 
   const handleEditMechanic = () => {
     router.push("/(shared)/profile");
+  };
+
+  const handleDeleteUser = async () => {
+    const success = await deleteUser();
+    if (success) {
+      router.replace("/(auth)/login");
+    } else {
+      Alert.alert(
+        "Napaka",
+        "Prišlo je do napake pri brisanju računa. Poskusite ponovno kasneje"
+      );
+    }
   };
 
   return (
@@ -112,7 +124,7 @@ export default function SettingsScreen() {
       <ModalPrompt
         isVisible={deleteModal}
         message={"Ste prepričani, da želite izbrisati račun?"}
-        onConfirm={() => deleteUser()}
+        onConfirm={handleDeleteUser}
         onCancel={() => setDeleteModal(false)}
       />
     </ThemedScrollView>

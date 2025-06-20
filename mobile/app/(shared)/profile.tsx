@@ -1,4 +1,4 @@
-import { StyleSheet, ScrollView } from "react-native";
+import { StyleSheet, ScrollView, Alert } from "react-native";
 import { useCallback, useEffect, useRef, useState } from "react";
 import MechanicForm from "@/components/mechanic/library/forms/mechanic/MechanicForm";
 import { MechanicData } from "@/interfaces/user";
@@ -38,7 +38,13 @@ export default function MechanicProfileScreen() {
       return;
     }
     setIsLoading(true);
-    await updateUser(mechanic);
+    const success = await updateUser(mechanic);
+    if (!success) {
+      Alert.alert(
+        "Napaka!",
+        "Napaka pri posodabljanju podatkov. Prosimo poskusite kasneje."
+      );
+    }
     setIsLoading(false);
   };
 

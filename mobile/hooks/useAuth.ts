@@ -1,7 +1,6 @@
 import useAuthStore from "@/stores/useAuthStore";
 import { router } from "expo-router";
 import { API_BASE_URL } from "@/constants/Config";
-import { Alert } from "react-native";
 import { AccountType } from "@/interfaces/user";
 
 export function useAuth() {
@@ -38,13 +37,10 @@ export function useAuth() {
       const data = await response.json();
 
       if (data.success) {
-        router.push("/(auth)/login");
-      } else {
-        Alert.alert(
-          "Napaka",
-          "Prišlo je do napake pri registracije. Poskusite ponovno kasneje."
-        );
+        return true;
       }
+      console.log("Error registering: ", data.message);
+      return false;
     } catch (error) {
       console.error("Error while registering: ", error);
     }
@@ -72,14 +68,10 @@ export function useAuth() {
         setJwt(jwt);
         setExpiredTimestamp(decodedJwt.exp);
         setIsLoggined(true);
-
-        router.replace("/");
-      } else {
-        Alert.alert(
-          "Napaka",
-          "Prišlo je do napake pri prijavi. Poskusite ponovno kasneje."
-        );
+        return true;
       }
+      console.log("Error logging in: ", data.message);
+      return false;
     } catch (error) {
       console.error("Error while logging in: ", error);
     }
