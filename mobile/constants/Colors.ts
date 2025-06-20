@@ -7,7 +7,7 @@ export const Colors = {
 
     /* Texts */
     primaryText: "#000000",
-    secondaryText: "#3C3C3C",
+    secondaryText: "#C3C3C3",
 
     /* Buttons */
     button: "#003366",
