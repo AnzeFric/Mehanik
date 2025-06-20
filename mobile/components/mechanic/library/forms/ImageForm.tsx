@@ -23,7 +23,7 @@ export default function ImageForm({ image, setImage }: Props) {
     }
   }, [image]);
 
-  const pickCustomerImage = async () => {
+  const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       aspect: [4, 4],
@@ -67,7 +67,7 @@ export default function ImageForm({ image, setImage }: Props) {
         styles.cameraContainer,
         { borderColor: staticColors.border, borderWidth: imageLocal ? 0 : 2 },
       ]}
-      onPress={pickCustomerImage}
+      onPress={pickImage}
     >
       {imageLocal ? (
         <Image source={{ uri: imageLocal }} style={styles.image} />

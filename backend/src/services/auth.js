@@ -86,8 +86,9 @@ const authService = {
 
     let mechanicUuid = null;
     if (user.account_type === "mechanic") {
-      const mechanicData = await mechanicService.check(user.uuid);
-      mechanicUuid = mechanicData?.uuid;
+      const mechanicData =
+        await userService.getMechanicByEmailAndEnabled(email);
+      mechanicUuid = mechanicData.mechanics[0].uuid;
     }
 
     const expiration = 7 * 24 * 60 * 60 * 1000; // 1 week
