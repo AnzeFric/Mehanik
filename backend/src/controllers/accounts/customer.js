@@ -30,6 +30,7 @@ const customerController = {
 
       const customerUuid = req.body.customerUuid;
       const mechanicUuid = req.user.mechanicUuid;
+
       if (!customerUuid) throw new Error("Customer UUID is not provided");
 
       await customerService.deleteByCustomerUuid(customerUuid, mechanicUuid);
@@ -55,6 +56,7 @@ const customerController = {
 
       const { customerData, vehicleData } = req.body;
       const mechanicUuid = req.user.mechanicUuid;
+
       if (!customerData) throw new Error("Customer data is not provided");
       if (!vehicleData) throw new Error("Vehicle data is not provided");
 
@@ -84,6 +86,7 @@ const customerController = {
 
       const mechanicUuid = req.user.mechanicUuid;
       const { customerData, vehicleData, repairData } = req.body;
+
       if (!customerData) throw new Error("Customer data is not provided");
       if (!vehicleData) throw new Error("Customer data is not provided");
 

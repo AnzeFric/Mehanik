@@ -14,7 +14,8 @@ const customerService = {
       fk_mechanic: mechanicUuid,
     });
 
-    if (error) throw error;
+    if (error)
+      throw new Error(`(Save customer) Database error: ${error.message}`);
 
     return uuid;
   },
@@ -27,7 +28,8 @@ const customerService = {
       )
       .eq("fk_mechanic", mechanicUuid);
 
-    if (error) throw error;
+    if (error)
+      throw new Error(`(Fetch customer) Database error: ${error.message}`);
 
     const transformedData = (data || []).map((customer) => ({
       uuid: customer.uuid,
@@ -57,7 +59,8 @@ const customerService = {
       .eq("uuid", customerUuid)
       .eq("fk_mechanic", mechanicUuid);
 
-    if (error) throw error;
+    if (error)
+      throw new Error(`(Delete customer) Database error: ${error.message}`);
 
     return true;
   },
@@ -78,9 +81,7 @@ const customerService = {
       .maybeSingle();
 
     if (error)
-      throw new Error(
-        `Failed to update user ${customerUuid}: ${error.message}`
-      );
+      throw new Error(`(Update customer) Database error: ${error.message}`);
     if (!data) throw new Error("Customer not found");
 
     return true;

@@ -49,6 +49,8 @@ export interface UserAppointmentData {
 // Rejected - Mechanic rejected the appointment || User rejected the appointment after mechanic changed details
 // Changed - Mechanic changed details about the appointment
 // Pending - User changed details about the appointment
+// Unknown - User fetched mechanic appointments. They are with limited data for privacy reasons
+// Hidden - User removed an accepted appointment from his list. Mechanic still sees it in his appointment list
 export type AppointmentStatus =
   | "accepted"
   | "rejected"

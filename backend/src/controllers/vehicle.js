@@ -39,6 +39,7 @@ const vehicleController = {
       const { customerUuid, vehicleData } = req.body;
 
       if (!vehicleData) throw new Error("Vehicle data is not provided");
+
       await checkInput(vehicleData);
 
       if (customerUuid) {
@@ -71,6 +72,7 @@ const vehicleController = {
       console.log("Body: ", req.body);
 
       const vehicleData = req.body.vehicleData;
+
       if (!vehicleData) throw new Error("Vehicle data is not provided");
 
       await checkInput(vehicleData, "uuid");
@@ -145,5 +147,5 @@ async function checkInput(vehicleData, customField) {
 
 module.exports = {
   ...vehicleController,
-  checkInput, // <-- add this line
+  checkInput,
 };

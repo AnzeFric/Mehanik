@@ -9,7 +9,8 @@ const repairService = {
       .eq("fk_mechanic", mechanicUuid)
       .eq("fk_vehicle", vehicleUuid);
 
-    if (error) throw error;
+    if (error)
+      throw new Error(`(Fetch repair) Database error: ${error.message}`);
 
     return data;
   },
@@ -30,7 +31,8 @@ const repairService = {
       fk_vehicle: vehicleUuid,
     });
 
-    if (error) throw error;
+    if (error)
+      throw new Error(`(Save repair) Database error: ${error.message}`);
 
     return uuid;
   },
@@ -42,7 +44,8 @@ const repairService = {
       .eq("uuid", repairUuid)
       .eq("fk_mechanic", mechanicUuid);
 
-    if (error) throw error;
+    if (error)
+      throw new Error(`(Delete repair) Database error: ${error.message}`);
 
     return true;
   },
@@ -54,7 +57,8 @@ const repairService = {
       .eq("uuid", repairData.uuid)
       .eq("fk_mechanic", mechanicUuid);
 
-    if (error) throw error;
+    if (error)
+      throw new Error(`(Update repair) Database error: ${error.message}`);
 
     return true;
   },

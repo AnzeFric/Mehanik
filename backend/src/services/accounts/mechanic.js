@@ -2,7 +2,7 @@ const supabase = require("../../config/database");
 const { v4: uuidv4 } = require("uuid");
 
 const mechanicService = {
-  async create(userUuid) {
+  async saveMechanicByUserUuid(userUuid) {
     let uuid = uuidv4();
 
     const { error } = await supabase.from("mechanics").insert({
@@ -17,33 +17,40 @@ const mechanicService = {
       fk_user: userUuid,
     });
 
-    if (error) throw error;
+    if (error)
+      throw new Error(`(Save mechanic) Database error: ${error.message}`);
 
     return true;
   },
 
-  async delete(userUuid) {
+  async deleteMechanicByUserUuid(userUuid) {
     const { error } = await supabase
       .from("mechanics")
       .delete()
       .eq("fk_user", userUuid);
 
-    if (error) throw error;
+    if (error)
+      throw new Error(`(Delete mechanic) Database error: ${error.message}`);
 
     return true;
   },
 
-  // Function is used to check if the user has an existing mechanic profile
-  async check(userUuid) {
+  async updateMechanicByUuid(uuid, mechanicData) {
     const { data, error } = await supabase
       .from("mechanics")
-      .select("uuid, phone, address, city, prices")
-      .eq("fk_user", userUuid)
+      .update({
+        ...mechanicData,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("uuid", uuid)
+      .select()
       .maybeSingle();
 
-    if (error) throw error;
+    if (error)
+      throw new Error(`(Update mechanic) Database error: ${error.message}`);
+    if (!data) throw new Error("Mechanic not found");
 
-    return data;
+    return true;
   },
 };
 

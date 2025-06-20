@@ -10,15 +10,15 @@ const appointmentService = {
       )
       .eq("fk_mechanic", mechanicUuid);
 
-    if (error) {
-      console.error("Appointment mechanic database error:", error);
+    if (error)
       throw new Error(
-        `Failed to fetch appointments for mechanic: ${error.message}`
+        `(Fetch appointments - mechanicUuid) Database error: ${error.message}`
       );
-    }
+
     const filtered = data.filter(
       (appointment) => appointment.vehicles?.fk_customer === null // Only return users
     );
+
     return filtered;
   },
 
@@ -29,12 +29,10 @@ const appointmentService = {
         "uuid, start_date, end_date, status, mechanic_response, mechanics(phone, address, city, users(first_name, last_name, email)), vehicles(fk_user, brand, model, build_year)"
       );
 
-    if (error) {
-      console.error("Appointment vehicle database error:", error);
+    if (error)
       throw new Error(
-        `Failed to fetch appointments for vehicle: ${error.message}`
+        `(Fetch appointments - userUuid) Database error: ${error.message}`
       );
-    }
 
     const filtered = data.filter((appointment) => {
       if (
@@ -68,7 +66,8 @@ const appointmentService = {
       fk_mechanic: mechanicUuid,
     });
 
-    if (error) throw error;
+    if (error)
+      throw new Error(`(Save appointment) Database error: ${error.message}`);
 
     return uuid;
   },
@@ -86,7 +85,8 @@ const appointmentService = {
       })
       .eq("uuid", appointmentData.uuid);
 
-    if (error) throw error;
+    if (error)
+      throw new Error(`(Update appointment) Database error: ${error.message}`);
 
     return true;
   },
@@ -97,7 +97,8 @@ const appointmentService = {
       .delete()
       .eq("uuid", appointmentUuid);
 
-    if (error) throw error;
+    if (error)
+      throw new Error(`(Delete appointment) Database error: ${error.message}`);
 
     return true;
   },

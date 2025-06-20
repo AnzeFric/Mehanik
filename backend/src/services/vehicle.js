@@ -8,7 +8,8 @@ const vehicleService = {
       .select("uuid, brand, model, build_year, vin, image, description")
       .eq("fk_user", userUuid);
 
-    if (error) throw error;
+    if (error)
+      throw new Error(`(Fetch vehicles) Database error: ${error.message}`);
 
     return data;
   },
@@ -29,7 +30,8 @@ const vehicleService = {
       fk_customer: customerUuid,
     });
 
-    if (error) throw error;
+    if (error)
+      throw new Error(`(Save vehicle) Database error: ${error.message}`);
 
     return uuid;
   },
@@ -51,7 +53,7 @@ const vehicleService = {
       .maybeSingle();
 
     if (error)
-      throw new Error(`Failed to update vehicle ${email}: ${error.message}`);
+      throw new Error(`(Update vehicle) Database error: ${error.message}`);
     if (!data) throw new Error("Vehicle not found");
 
     return true;
@@ -69,9 +71,7 @@ const vehicleService = {
     const { error } = await query;
 
     if (error)
-      throw new Error(
-        `Failed to delete vehicle ${vehicleUuid}: ${error.message}`
-      );
+      throw new Error(`(Delete vehicle) Database error: ${error.message}`);
 
     return true;
   },

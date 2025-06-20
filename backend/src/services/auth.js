@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const supabase = require("../config/database");
 const { v4: uuidv4 } = require("uuid");
 const mechanicService = require("./accounts/mechanic");
+const userService = require("./accounts/user");
 
 const authService = {
   async register(email, password, firstName, lastName, accountType) {
@@ -12,7 +13,8 @@ const authService = {
       .eq("email", email)
       .maybeSingle();
 
-    if (fetchError) throw fetchError;
+    if (fetchError)
+      throw new Error(`(Register - Fetch) Database error: ${error.message}`);
 
     const hashedPassword = await bcrypt.hash(password, 10);
     let userUuid = uuidv4();
@@ -36,7 +38,10 @@ const authService = {
           })
           .eq("email", email);
 
-        if (updateError) throw updateError;
+        if (updateError)
+          throw new Error(
+            `(Register - Update) Database error: ${error.message}`
+          );
       }
     } else {
       // Create new user
@@ -52,12 +57,13 @@ const authService = {
         enabled: true,
       });
 
-      if (saveError) throw saveError;
+      if (saveError)
+        throw new Error(`(Register - Save) Database error: ${error.message}`);
     }
 
     if (accountType === "mechanic") {
-      const data = await mechanicService.check(userUuid);
-      if (!data) await mechanicService.create(userUuid);
+      const data = await userService.getMechanicByUserUuidAndEnabled(userUuid);
+      if (!data) await mechanicService.saveMechanicByUserUuid(userUuid);
     }
 
     return email;
@@ -71,7 +77,7 @@ const authService = {
       .eq("enabled", true)
       .maybeSingle();
 
-    if (error) throw error;
+    if (error) throw new Error(`(Login) Database error: ${error.message}`);
     if (!user) throw new Error("User not found");
 
     // Verify password

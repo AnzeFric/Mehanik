@@ -1,4 +1,5 @@
 const userService = require("../../services/accounts/user");
+const mechanicService = require("../../services/accounts/mechanic");
 
 const userController = {
   async getUser(req, res, next) {
@@ -6,9 +7,8 @@ const userController = {
       console.log("Get user. Req from: ", req.user);
       console.log("Body: ", req.body);
 
-      const mechanicUuid = req.user.mechanicUuid;
-      if (mechanicUuid) {
-        const foundMechanic = await userService.getMechanicByUuidAndEnabled(
+      if (req.user.mechanicUuid) {
+        const foundMechanic = await userService.getMechanicByUserUuidAndEnabled(
           req.user.userUuid
         );
         var user = {
@@ -37,6 +37,7 @@ const userController = {
 
       return res.status(200).json({
         success: true,
+        message: "User fetch successful",
         user,
       });
     } catch (error) {
@@ -51,6 +52,7 @@ const userController = {
 
       const userData = req.body.userData;
       const mechanicData = req.body.mechanicData;
+
       if (!userData) throw new Error("User data is not provided");
       if (userData.accountType === "mechanic")
         if (!mechanicData) throw new Error("Mechanic data is not provided");
@@ -76,7 +78,7 @@ const userController = {
           phone: mechanicData.phone,
           prices: mechanicData.prices,
         };
-        await userService.updateMechanicByUuid(
+        await mechanicService.updateMechanicByUuid(
           req.user.mechanicUuid,
           mechanicFields
         );
@@ -97,6 +99,7 @@ const userController = {
       console.log("Body: ", req.body);
 
       await userService.disableByUuidAndEnabled(req.user.userUuid);
+
       return res.status(200).json({
         success: true,
         message: "User deleted successfully",
