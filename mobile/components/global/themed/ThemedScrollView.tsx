@@ -1,5 +1,5 @@
 import { ScrollView, ScrollViewProps } from "react-native";
-import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import { useAnimatedTheme } from "@/hooks/utils/useAnimatedTheme";
 import { useCallback, useRef } from "react";
 import { useFocusEffect } from "expo-router";
 

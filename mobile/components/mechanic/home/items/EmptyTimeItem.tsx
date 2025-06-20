@@ -1,7 +1,7 @@
 import { TouchableOpacity, StyleSheet } from "react-native";
 import ThemedText from "@/components/global/themed/ThemedText";
 import ThemedView from "@/components/global/themed/ThemedView";
-import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import { useAnimatedTheme } from "@/hooks/utils/useAnimatedTheme";
 
 interface Props {
   itemHeight: number;

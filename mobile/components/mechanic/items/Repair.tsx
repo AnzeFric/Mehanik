@@ -6,7 +6,7 @@ import { RepairData } from "@/interfaces/repair";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedText from "@/components/global/themed/ThemedText";
 import ThemedIcon from "@/components/global/themed/ThemedIcon";
-import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import { useAnimatedTheme } from "@/hooks/utils/useAnimatedTheme";
 
 interface Props {
   repairData: RepairData;

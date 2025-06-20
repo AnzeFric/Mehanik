@@ -2,7 +2,7 @@ import { Tabs, usePathname } from "expo-router";
 import { Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import { useAnimatedTheme } from "@/hooks/utils/useAnimatedTheme";
 
 export default function TabLayout() {
   const pathName = usePathname();

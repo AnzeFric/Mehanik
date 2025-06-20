@@ -2,7 +2,7 @@ import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
 import { BrandPrice } from "@/interfaces/user";
 import BrandPriceItem from "./BrandPriceItem";
 import ThemedButton from "@/components/global/themed/ThemedButton";
-import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import { useAnimatedTheme } from "@/hooks/utils/useAnimatedTheme";
 
 interface Props {
   brandPriceArray: Array<BrandPrice>;

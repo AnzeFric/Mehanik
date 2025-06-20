@@ -4,7 +4,7 @@ import {
   StyleSheet,
   ViewStyle,
 } from "react-native";
-import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import { useAnimatedTheme } from "@/hooks/utils/useAnimatedTheme";
 import ThemedText from "./themed/ThemedText";
 import ThemedView from "./themed/ThemedView";
 

@@ -5,7 +5,7 @@ import { useCallback, useState } from "react";
 import { RepairData } from "@/interfaces/repair";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useRepair } from "@/hooks/useRepair";
-import useCustomerStore from "@/stores/useCustomerStore";
+import useCustomerStore from "@/stores/accounts/useCustomerStore";
 
 export default function EditRepairScreen() {
   const { uuid } = useLocalSearchParams(); // Vehicle uuid

@@ -4,7 +4,7 @@ import * as FileSystem from "expo-file-system";
 import { useState, useEffect, useCallback } from "react";
 import { useFocusEffect } from "expo-router";
 import ThemedIcon from "@/components/global/themed/ThemedIcon";
-import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import { useAnimatedTheme } from "@/hooks/utils/useAnimatedTheme";
 
 interface Props {
   image?: string | null;

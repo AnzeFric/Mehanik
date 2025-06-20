@@ -7,7 +7,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { useRef } from "react";
-import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import { useAnimatedTheme } from "@/hooks/utils/useAnimatedTheme";
 import ThemedIcon from "./ThemedIcon";
 
 type Props = TextInputProps & {

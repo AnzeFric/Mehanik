@@ -1,4 +1,4 @@
-import useAuthStore from "@/stores/useAuthStore";
+import useAuthStore from "@/stores/accounts/useAuthStore";
 import { router } from "expo-router";
 import { API_BASE_URL } from "@/constants/Config";
 import { AccountType } from "@/interfaces/user";

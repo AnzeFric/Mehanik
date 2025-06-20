@@ -1,11 +1,11 @@
-import useAuthStore from "@/stores/useAuthStore";
+import useAuthStore from "@/stores/accounts/useAuthStore";
 import useColorThemeStore from "@/stores/useColorThemeStore";
-import useUserStore from "@/stores/useUserStore";
+import useUserStore from "@/stores/accounts/useUserStore";
 import useAppointmentStore from "@/stores/useAppointmentStore";
-import useCustomerStore from "@/stores/useCustomerStore";
+import useCustomerStore from "@/stores/accounts/useCustomerStore";
 import useRepairStore from "@/stores/useRepairStore";
 import useVehicleStore from "@/stores/useVehicleStore";
-import useMechanicStore from "@/stores/useMechanicStore";
+import useMechanicStore from "@/stores/accounts/useMechanicStore";
 
 export function formatDate(date: Date | string): string {
   const dateObj = date instanceof Date ? date : new Date(date);

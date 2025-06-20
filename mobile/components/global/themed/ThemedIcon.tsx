@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { ComponentProps } from "react";
-import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import { useAnimatedTheme } from "@/hooks/utils/useAnimatedTheme";
 
 type IoniconsProps = ComponentProps<typeof Ionicons>;
 

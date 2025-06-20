@@ -2,7 +2,7 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 import ThemedView from "@/components/global/themed/ThemedView";
 import { Ionicons } from "@expo/vector-icons";
 import ThemedText from "@/components/global/themed/ThemedText";
-import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import { useAnimatedTheme } from "@/hooks/utils/useAnimatedTheme";
 
 interface Props {
   onEditPress: () => void;

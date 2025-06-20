@@ -1,5 +1,5 @@
 import { View, ViewProps, Animated } from "react-native";
-import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import { useAnimatedTheme } from "@/hooks/utils/useAnimatedTheme";
 
 type ViewTypes = "background" | "primary" | "secondary";
 

@@ -10,7 +10,7 @@ import { Colors } from "@/constants/Colors";
 import { vehicleBrands } from "@/interfaces/vehicle";
 import { useEffect, useMemo, useState } from "react";
 import ThemedTextInput from "@/components/global/themed/ThemedTextInput";
-import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import { useAnimatedTheme } from "@/hooks/utils/useAnimatedTheme";
 
 interface Props {
   brandPrice: BrandPrice;

@@ -7,8 +7,8 @@ import { VehicleData } from "@/interfaces/vehicle";
 import VehicleForm from "@/components/mechanic/library/forms/VehicleForm";
 import ImageForm from "@/components/mechanic/library/forms/ImageForm";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
-import { useCustomer } from "@/hooks/useCustomer";
-import useCustomerStore from "@/stores/useCustomerStore";
+import { useCustomer } from "@/hooks/accounts/useCustomer";
+import useCustomerStore from "@/stores/accounts/useCustomerStore";
 
 export default function EditCustomerScreen() {
   const { uuid } = useLocalSearchParams(); // Vehicle uuid

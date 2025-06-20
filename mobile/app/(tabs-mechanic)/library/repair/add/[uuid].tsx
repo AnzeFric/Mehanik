@@ -5,7 +5,7 @@ import { RepairData } from "@/interfaces/repair";
 import { useRepair } from "@/hooks/useRepair";
 import TemplateView from "@/components/mechanic/library/TemplateView";
 import { router, useLocalSearchParams } from "expo-router";
-import useCustomerStore from "@/stores/useCustomerStore";
+import useCustomerStore from "@/stores/accounts/useCustomerStore";
 
 export default function AddRepairScreen() {
   const { uuid } = useLocalSearchParams(); // Vehicle uuid

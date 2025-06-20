@@ -2,7 +2,7 @@ import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { formatTime } from "@/constants/util";
 import ThemedText from "@/components/global/themed/ThemedText";
 import ThemedView from "@/components/global/themed/ThemedView";
-import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import { useAnimatedTheme } from "@/hooks/utils/useAnimatedTheme";
 
 interface Props {
   startDate: Date;

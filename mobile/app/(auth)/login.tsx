@@ -7,9 +7,9 @@ import {
 } from "react-native";
 import { useState, useCallback } from "react";
 import { router, useFocusEffect } from "expo-router";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/accounts/useAuth";
 import ThemedView from "@/components/global/themed/ThemedView";
-import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import { useAnimatedTheme } from "@/hooks/utils/useAnimatedTheme";
 import ThemedText from "@/components/global/themed/ThemedText";
 import ThemedButton from "@/components/global/themed/ThemedButton";
 import ThemedTextInput from "@/components/global/themed/ThemedTextInput";

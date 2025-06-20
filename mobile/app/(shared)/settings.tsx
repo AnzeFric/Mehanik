@@ -1,10 +1,10 @@
 import { View, StyleSheet, Alert } from "react-native";
 import { useState } from "react";
 import { router } from "expo-router";
-import { useAuth } from "@/hooks/useAuth";
-import { useUser } from "@/hooks/useUser";
+import { useAuth } from "@/hooks/accounts/useAuth";
+import { useUser } from "@/hooks/accounts/useUser";
 import TitleRow from "@/components/shared/TitleRow";
-import useUserStore from "@/stores/useUserStore";
+import useUserStore from "@/stores/accounts/useUserStore";
 import { useTheme } from "@/context/ThemeContext";
 import ThemedScrollView from "@/components/global/themed/ThemedScrollView";
 import ThemedText from "@/components/global/themed/ThemedText";

@@ -2,7 +2,7 @@ import { View, Image, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { useState } from "react";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedText from "@/components/global/themed/ThemedText";
-import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import { useAnimatedTheme } from "@/hooks/utils/useAnimatedTheme";
 import { VehicleData } from "@/interfaces/vehicle";
 import ModalPrompt from "@/components/shared/modals/ModalPrompt";
 import { useVehicle } from "@/hooks/useVehicle";

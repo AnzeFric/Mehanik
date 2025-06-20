@@ -3,7 +3,7 @@ import { router } from "expo-router";
 import { MechanicData } from "@/interfaces/user";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedText from "@/components/global/themed/ThemedText";
-import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import { useAnimatedTheme } from "@/hooks/utils/useAnimatedTheme";
 
 interface Props {
   mechanicData: MechanicData;

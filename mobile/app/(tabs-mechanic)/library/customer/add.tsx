@@ -1,7 +1,7 @@
 import { View, ScrollView, StyleSheet } from "react-native";
 import { useState, useCallback, useRef, useMemo } from "react";
 import { router, useFocusEffect } from "expo-router";
-import { useCustomer } from "@/hooks/useCustomer";
+import { useCustomer } from "@/hooks/accounts/useCustomer";
 import { CustomerData } from "@/interfaces/customer";
 import { VehicleData } from "@/interfaces/vehicle";
 import { RepairData } from "@/interfaces/repair";

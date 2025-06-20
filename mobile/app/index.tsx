@@ -1,9 +1,9 @@
 import { Redirect } from "expo-router";
-import { useUser } from "@/hooks/useUser";
-import { useAuth } from "@/hooks/useAuth";
+import { useUser } from "@/hooks/accounts/useUser";
+import { useAuth } from "@/hooks/accounts/useAuth";
 import { useState, useEffect } from "react";
 import LoadingScreen from "@/components/global/LoadingScreen";
-import useUserStore from "@/stores/useUserStore";
+import useUserStore from "@/stores/accounts/useUserStore";
 import ThemedView from "@/components/global/themed/ThemedView";
 
 export default function HomeScreen() {

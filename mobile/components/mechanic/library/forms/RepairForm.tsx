@@ -12,7 +12,7 @@ import ThemedText from "@/components/global/themed/ThemedText";
 import ThemedDatePicker from "@/components/global/themed/ThemedDatePicker";
 import ThemedButton from "@/components/global/themed/ThemedButton";
 import ThemedIcon from "@/components/global/themed/ThemedIcon";
-import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import { useAnimatedTheme } from "@/hooks/utils/useAnimatedTheme";
 
 interface Props {
   repair?: RepairData | null;

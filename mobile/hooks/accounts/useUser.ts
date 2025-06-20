@@ -1,11 +1,11 @@
 import { router } from "expo-router";
-import useUserStore from "@/stores/useUserStore";
+import useUserStore from "@/stores/accounts/useUserStore";
 import { API_BASE_URL } from "@/constants/Config";
 import { resetAllStores } from "@/constants/util";
-import useAuthStore from "@/stores/useAuthStore";
+import useAuthStore from "@/stores/accounts/useAuthStore";
 import { Alert } from "react-native";
 import { MechanicData } from "@/interfaces/user";
-import useMechanicStore from "@/stores/useMechanicStore";
+import useMechanicStore from "@/stores/accounts/useMechanicStore";
 
 export function useUser() {
   const { firstLogin, setFirstLogin, setCurrentUser } = useUserStore();

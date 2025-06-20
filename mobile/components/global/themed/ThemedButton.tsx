@@ -6,7 +6,7 @@ import {
   TextStyle,
   StyleSheet,
 } from "react-native";
-import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import { useAnimatedTheme } from "@/hooks/utils/useAnimatedTheme";
 import ThemedText from "./ThemedText";
 
 type ButtonType =

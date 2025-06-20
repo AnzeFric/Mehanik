@@ -4,8 +4,8 @@ import { useFocusEffect } from "expo-router";
 import Mechanic from "@/components/user/items/Mechanic";
 import DisplayItems from "@/components/global/DisplayItems";
 import TitleRow from "@/components/shared/TitleRow";
-import useMechanicStore from "@/stores/useMechanicStore";
-import { useUser } from "@/hooks/useUser";
+import useMechanicStore from "@/stores/accounts/useMechanicStore";
+import { useUser } from "@/hooks/accounts/useUser";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedSearchInput from "@/components/global/themed/ThemedSearchInput";
 
