@@ -17,7 +17,6 @@ interface Props {
   setMechanic: Dispatch<SetStateAction<MechanicData>>;
 }
 
-// TODO: Dodaj image?
 export default function MechanicForm({ mechanic, setMechanic }: Props) {
   const [largeBrandPrice, setLargeBrandPrice] = useState<Array<BrandPrice>>([
     { name: "", price: "0" },
@@ -136,7 +135,7 @@ export default function MechanicForm({ mechanic, setMechanic }: Props) {
 
   return (
     <>
-      <View style={styles.container}>
+      <View>
         <ThemedText type={"normal"} bold>
           Osebni podatki
         </ThemedText>
@@ -182,7 +181,7 @@ export default function MechanicForm({ mechanic, setMechanic }: Props) {
           keyboardType={"phone-pad"}
         />
       </View>
-      <View style={styles.container}>
+      <View>
         <ThemedText type={"normal"} bold>
           Cene storitev
         </ThemedText>
@@ -220,9 +219,6 @@ export default function MechanicForm({ mechanic, setMechanic }: Props) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingBottom: 15,
-  },
   brandPriceContainer: {
     paddingVertical: 20,
     gap: 15,

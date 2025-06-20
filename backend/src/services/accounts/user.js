@@ -21,7 +21,7 @@ const userService = {
     const { data, error } = await supabase
       .from("users")
       .select(
-        "email, first_name, last_name, account_type, mechanics(phone, address, city, prices)"
+        "email, first_name, last_name, account_type, mechanics(phone, address, city, prices, image)"
       )
       .eq("uuid", userUuid)
       .eq("enabled", true)
@@ -40,7 +40,7 @@ const userService = {
     const { data, error } = await supabase
       .from("users")
       .select(
-        "email, first_name, last_name, account_type, mechanics(uuid, phone, address, city, prices)"
+        "email, first_name, last_name, account_type, mechanics(uuid, phone, address, city, prices, image)"
       )
       .eq("email", email)
       .eq("enabled", true)
@@ -59,7 +59,7 @@ const userService = {
     const { data, error } = await supabase
       .from("users")
       .select(
-        "email, first_name, last_name, mechanics(phone, address, city, prices)"
+        "email, first_name, last_name, mechanics(phone, address, city, prices, image)"
       )
       .eq("account_type", "mechanic")
       .eq("enabled", true);

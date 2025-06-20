@@ -1,9 +1,7 @@
-import { router } from "expo-router";
 import useUserStore from "@/stores/accounts/useUserStore";
 import { API_BASE_URL } from "@/constants/Config";
 import { resetAllStores } from "@/constants/util";
 import useAuthStore from "@/stores/accounts/useAuthStore";
-import { Alert } from "react-native";
 import { MechanicData } from "@/interfaces/user";
 import useMechanicStore from "@/stores/accounts/useMechanicStore";
 

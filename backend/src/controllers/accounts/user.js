@@ -21,6 +21,7 @@ const userController = {
             address: foundMechanic.mechanics[0].address,
             city: foundMechanic.mechanics[0].city,
             prices: foundMechanic.mechanics[0].prices,
+            image: foundMechanic.mechanics[0].image,
           },
         };
       } else {
@@ -124,6 +125,7 @@ const userController = {
           address: mechanic.mechanics[0].address,
           city: mechanic.mechanics[0].city,
           prices: mechanic.mechanics[0].prices,
+          image: mechanic.mechanics[0].image,
         },
       }));
 

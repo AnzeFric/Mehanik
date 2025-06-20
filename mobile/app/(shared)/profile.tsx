@@ -8,11 +8,14 @@ import TitleRow from "@/components/shared/TitleRow";
 import { useFocusEffect } from "expo-router";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedButton from "@/components/global/themed/ThemedButton";
+import ImageForm from "@/components/mechanic/library/forms/ImageForm";
 
 export default function MechanicProfileScreen() {
   const { currentUser } = useUserStore();
   const { updateUser } = useUser();
+
   const [mechanic, setMechanic] = useState<MechanicData>(currentUser);
+  const [image, setImage] = useState<string | null>(currentUser.info.image);
   const [isLoading, setIsLoading] = useState(false);
 
   const scrollRef = useRef<ScrollView>(null);
@@ -24,11 +27,9 @@ export default function MechanicProfileScreen() {
   useFocusEffect(
     useCallback(() => {
       return () => {
-        setTimeout(() => {
-          if (scrollRef.current) {
-            scrollRef.current.scrollTo({ y: 0 });
-          }
-        }, 100); // For smooth transition between screens
+        if (scrollRef.current) {
+          scrollRef.current.scrollTo({ y: 0 });
+        }
       };
     }, [])
   );
@@ -38,7 +39,16 @@ export default function MechanicProfileScreen() {
       return;
     }
     setIsLoading(true);
-    const success = await updateUser(mechanic);
+
+    const newMechanicData: MechanicData = {
+      ...mechanic,
+      info: {
+        ...mechanic.info,
+        image: image,
+      },
+    };
+    const success = await updateUser(newMechanicData);
+
     if (!success) {
       Alert.alert(
         "Napaka!",
@@ -55,7 +65,9 @@ export default function MechanicProfileScreen() {
         style={styles.childrenContainer}
         ref={scrollRef}
         keyboardShouldPersistTaps={"handled"}
+        contentContainerStyle={{ gap: 20 }}
       >
+        <ImageForm image={mechanic.info.image} setImage={setImage} />
         <MechanicForm mechanic={mechanic} setMechanic={setMechanic} />
         <ThemedButton
           buttonType={"small"}
