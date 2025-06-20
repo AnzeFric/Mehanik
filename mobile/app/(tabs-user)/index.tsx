@@ -8,6 +8,7 @@ import ThemedIcon from "@/components/global/themed/ThemedIcon";
 import ModalAppointment from "@/components/shared/modals/ModalAppointment";
 import ModalPrompt from "@/components/shared/modals/ModalPrompt";
 import {
+  AppointmentData,
   MechanicAppointmentData,
   UserAppointmentData,
 } from "@/interfaces/appointment";
@@ -54,7 +55,7 @@ export default function HomeUserScreen() {
   const handleAcceptConfirm = async () => {
     if (selectedAppointment) {
       setModalVisible(false);
-      const newAppointment: MechanicAppointmentData = {
+      const newAppointment: AppointmentData = {
         ...selectedAppointment,
         status: "hidden",
       };
@@ -83,14 +84,14 @@ export default function HomeUserScreen() {
         selectedAppointment.endDate === endDate
       ) {
         // Accept the mechanic changes
-        const newAppointment: MechanicAppointmentData = {
+        const newAppointment: AppointmentData = {
           ...selectedAppointment,
           status: "accepted",
         };
         var success = await updateAppointment(newAppointment);
       } else {
         // Change the mechanic changes
-        const newAppointment: UserAppointmentData = {
+        const newAppointment: AppointmentData = {
           ...selectedAppointment,
           startDate: startDate,
           endDate: endDate,

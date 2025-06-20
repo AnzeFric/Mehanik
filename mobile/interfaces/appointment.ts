@@ -1,7 +1,8 @@
 export interface AppointmentData {
   startDate: Date;
   endDate: Date;
-  userMessage: string;
+  userMessage?: string;
+  mechanicResponse?: string;
   status: AppointmentStatus;
 }
 
@@ -11,7 +12,7 @@ export interface MechanicAppointmentData {
   endDate: Date;
   status: AppointmentStatus;
   mechanicResponse: string;
-  mechanic?: {
+  mechanic: {
     firstName: string;
     lastName: string;
     email: string;
@@ -19,7 +20,7 @@ export interface MechanicAppointmentData {
     city: string | null;
     phone: string | null;
   };
-  vehicle?: {
+  vehicle: {
     brand: string;
     model: string;
     buildYear: number | null;
@@ -32,12 +33,12 @@ export interface UserAppointmentData {
   endDate: Date;
   status: AppointmentStatus;
   userMessage: string;
-  user?: {
+  user: {
     firstName: string;
     lastName: string;
     email: string;
   };
-  vehicle?: {
+  vehicle: {
     brand: string;
     model: string;
     buildYear: number | null;

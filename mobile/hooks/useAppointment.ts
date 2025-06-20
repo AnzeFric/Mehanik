@@ -135,9 +135,7 @@ export function useAppointment() {
     }
   };
 
-  const updateAppointment = async (
-    appointmentData: UserAppointmentData | MechanicAppointmentData
-  ) => {
+  const updateAppointment = async (appointmentData: AppointmentData) => {
     try {
       const response = await fetch(`${API_BASE_URL}/appointments/`, {
         method: "PATCH",

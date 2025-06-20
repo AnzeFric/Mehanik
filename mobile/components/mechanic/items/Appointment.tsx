@@ -3,16 +3,12 @@ import { useState } from "react";
 import ModalPrompt from "../../shared/modals/ModalPrompt";
 import ModalAppointment from "../../shared/modals/ModalAppointment";
 import { formatDateTime } from "@/constants/util";
-import {
-  MechanicAppointmentData,
-  UserAppointmentData,
-} from "@/interfaces/appointment";
+import { AppointmentData, UserAppointmentData } from "@/interfaces/appointment";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedText from "@/components/global/themed/ThemedText";
 import ThemedButton from "@/components/global/themed/ThemedButton";
 import { useAppointment } from "@/hooks/useAppointment";
 import useAppointmentStore from "@/stores/useAppointmentStore";
-import { router } from "expo-router";
 
 interface Props {
   appointmentData: UserAppointmentData;
@@ -32,8 +28,7 @@ export default function Appointment({ appointmentData }: Props) {
     message: string
   ) => {
     setIsChangeOpen(false);
-    const newAppointment: MechanicAppointmentData = {
-      uuid: appointmentData.uuid,
+    const newAppointment: AppointmentData = {
       startDate: startDate,
       endDate: endDate,
       mechanicResponse: message,
@@ -74,15 +69,6 @@ export default function Appointment({ appointmentData }: Props) {
       Alert.alert("Napaka", "Prišlo je do napake pri zavračanju termina");
     }
   };
-
-  if (!appointmentData.user || !appointmentData.vehicle) {
-    Alert.alert(
-      "Napaka",
-      "Napaka pri nalaganju uporabnikov. Poskusite ponovno kasneje"
-    );
-    router.back();
-    return;
-  }
 
   return (
     <ThemedView type={"primary"} style={styles.container}>

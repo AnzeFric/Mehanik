@@ -1,7 +1,6 @@
-import { Text, View, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { formatDate } from "@/constants/util";
 import { useMemo } from "react";
-import { router } from "expo-router";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedText from "@/components/global/themed/ThemedText";
@@ -55,15 +54,6 @@ export default function Appointment({ appointmentData, onPress }: Props) {
   const statusColor = useMemo(() => {
     return statusToColor(appointmentData.status);
   }, [appointmentData, appointmentData.status]);
-
-  if (!appointmentData.mechanic) {
-    Alert.alert(
-      "Napaka",
-      "Napaka pri nalaganju mehanikov. Poskusite ponovno kasneje"
-    );
-    router.back();
-    return;
-  }
 
   return (
     <ThemedView
