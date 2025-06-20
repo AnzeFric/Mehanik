@@ -1,8 +1,12 @@
 const supabase = require("../../config/database");
+const { v4: uuidv4 } = require("uuid");
 
 const mechanicService = {
   async create(userUuid) {
+    let uuid = uuidv4();
+
     const { error } = await supabase.from("mechanics").insert({
+      uuid: uuid,
       phone: null,
       address: null,
       prices: {
