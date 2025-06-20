@@ -46,11 +46,17 @@ export default function TimeList({
   mechanicEmail,
 }: Props) {
   const groupedAppointments = useMemo(() => {
-    const targetDate = selectedDate.toISOString().split("T")[0];
+    const targetDate = selectedDate.toLocaleDateString("en-CA", {
+      timeZone: "Europe/Ljubljana",
+    });
 
-    // Filter appointments for the selected day
     const filtered = appointments.filter((appointment) => {
-      const appointmentDate = appointment.startDate.toISOString().split("T")[0];
+      const appointmentDate = appointment.startDate.toLocaleDateString(
+        "en-CA",
+        {
+          timeZone: "Europe/Ljubljana",
+        }
+      );
       return appointmentDate === targetDate;
     });
 

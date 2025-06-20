@@ -11,8 +11,9 @@ interface Props {
 
 export default function DaySchedule({ appointments, mechanicEmail }: Props) {
   const days = ["Pon", "Tor", "Sre", "Čet", "Pet", "Sob", "Ned"];
+  const todayIndex = new Date().getDay() - 1;
 
-  const [selectedDay, setSelectedDay] = useState<string>(days[0]);
+  const [selectedDay, setSelectedDay] = useState<string>(days[todayIndex]);
   const [date, setDate] = useState<Date>(new Date());
 
   const handleDaySelect = (dayIndex: number, newDate: Date) => {
