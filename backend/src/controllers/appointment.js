@@ -85,7 +85,8 @@ const appointmentController = {
         await appointmentService.getAppointmentsByUserUuid(userUuid);
 
       appointments = appointments.filter(
-        (appointment) => appointment.status != "pending"
+        (appointment) =>
+          appointment.status != "pending" && appointment.status != "hidden"
       );
 
       var parsedData = (appointments || []).map((appointment) => ({

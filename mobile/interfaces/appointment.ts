@@ -53,4 +53,5 @@ export type AppointmentStatus =
   | "rejected"
   | "changed"
   | "pending"
-  | "unknown";
+  | "unknown"
+  | "hidden";

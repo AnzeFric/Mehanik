@@ -51,6 +51,26 @@ export default function HomeUserScreen() {
     }
   };
 
+  const handleAcceptConfirm = async () => {
+    if (selectedAppointment) {
+      setModalVisible(false);
+      const newAppointment: MechanicAppointmentData = {
+        ...selectedAppointment,
+        status: "hidden",
+      };
+
+      const success = await updateAppointment(newAppointment);
+      if (success) {
+        await fetchUserAppointments();
+      } else {
+        Alert.alert(
+          "Napaka",
+          "Prišlo je do napake pri brisanju termina. Poskusite ponovno kasneje"
+        );
+      }
+    }
+  };
+
   const handleChangeConfirm = async (
     startDate: Date,
     endDate: Date,
@@ -58,14 +78,28 @@ export default function HomeUserScreen() {
   ) => {
     if (selectedAppointment) {
       setModalVisible(false);
-      const newAppointment: UserAppointmentData = {
-        ...selectedAppointment,
-        startDate: startDate,
-        endDate: endDate,
-        userMessage: message,
-        status: "pending",
-      };
-      const success = await updateAppointment(newAppointment);
+      if (
+        selectedAppointment.startDate === startDate &&
+        selectedAppointment.endDate === endDate
+      ) {
+        // Accept the mechanic changes
+        const newAppointment: MechanicAppointmentData = {
+          ...selectedAppointment,
+          status: "accepted",
+        };
+        var success = await updateAppointment(newAppointment);
+      } else {
+        // Change the mechanic changes
+        const newAppointment: UserAppointmentData = {
+          ...selectedAppointment,
+          startDate: startDate,
+          endDate: endDate,
+          userMessage: message,
+          status: "pending",
+        };
+        var success = await updateAppointment(newAppointment);
+      }
+
       if (success) {
         await fetchUserAppointments();
       } else {
@@ -112,30 +146,34 @@ export default function HomeUserScreen() {
         )}
         emptyMessage="Nimate vnešenih terminov."
       />
-      {selectedAppointment &&
-        (selectedAppointment.status === "accepted" ||
-        selectedAppointment.status === "rejected" ? (
-          <ModalPrompt
-            isVisible={modalVisible}
-            message={"Termin boste trajno izbrisali."}
-            onConfirm={handleDeleteConfirm}
-            onCancel={handleModalCancel}
-          />
-        ) : (
-          <ModalAppointment
-            isVisible={modalVisible}
-            title={
-              selectedAppointment.status === "changed"
-                ? "Spremeni termin"
-                : "Potrdi termin"
-            }
-            startDate={selectedAppointment.startDate}
-            endDate={selectedAppointment.endDate}
-            firstScreen={0}
-            onConfirm={handleChangeConfirm}
-            onCancel={handleModalCancel}
-          />
-        ))}
+      {selectedAppointment && selectedAppointment.status === "accepted" && (
+        <ModalPrompt
+          isVisible={modalVisible}
+          message={"Termin boste trajno izbrisali."}
+          onConfirm={handleAcceptConfirm}
+          onCancel={handleModalCancel}
+        />
+      )}
+      {selectedAppointment && selectedAppointment.status === "rejected" && (
+        <ModalPrompt
+          isVisible={modalVisible}
+          message={"Termin boste trajno izbrisali."}
+          onConfirm={handleDeleteConfirm}
+          onCancel={handleModalCancel}
+        />
+      )}
+
+      {selectedAppointment && selectedAppointment.status === "changed" && (
+        <ModalAppointment
+          isVisible={modalVisible}
+          title={"Spremeni termin"}
+          startDate={selectedAppointment.startDate}
+          endDate={selectedAppointment.endDate}
+          firstScreen={0}
+          onConfirm={handleChangeConfirm}
+          onCancel={handleModalCancel}
+        />
+      )}
     </ThemedView>
   );
 }
