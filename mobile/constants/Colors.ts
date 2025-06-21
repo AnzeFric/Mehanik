@@ -47,6 +47,10 @@ export const Colors = {
     border: "#000000",
     inactiveBorder: "#656565",
 
+    /* Switch */
+    track: "#656565",
+    thumb: "#F3F3F3",
+
     /* Other */
     specialBlue: "#003366",
     destructiveRed: "#E24A4A",
@@ -99,6 +103,10 @@ export const Colors = {
     /* Borders */
     border: "#B8B8B8",
     inactiveBorder: "#D1D5DB",
+
+    /* Switch */
+    track: "#D1D5DB",
+    thumb: "#646464",
 
     /* Other */
     specialBlue: "#4A9EFF",

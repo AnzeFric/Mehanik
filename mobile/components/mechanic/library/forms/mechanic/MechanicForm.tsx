@@ -6,11 +6,12 @@ import {
   useState,
 } from "react";
 import { Colors } from "@/constants/Colors";
-import { BrandPrice, MechanicData } from "@/interfaces/user";
+import { BrandPrice, MechanicData, WorkHour } from "@/interfaces/user";
 import { StyleSheet, View } from "react-native";
-import BrandPriceDisplay from "./BrandPriceDisplay";
+import BrandPriceDisplay from "./brands/BrandPriceDisplay";
 import ThemedText from "@/components/global/themed/ThemedText";
 import ThemedTextInput from "@/components/global/themed/ThemedTextInput";
+import WorkHourDisplay from "./working/WorkHourDisplay";
 
 interface Props {
   mechanic: MechanicData;
@@ -18,6 +19,7 @@ interface Props {
 }
 
 export default function MechanicForm({ mechanic, setMechanic }: Props) {
+  const [workingHours, setWorkingHours] = useState<Array<WorkHour>>([]);
   const [largeBrandPrice, setLargeBrandPrice] = useState<Array<BrandPrice>>([
     { name: "", price: "0" },
   ]);
@@ -183,10 +185,21 @@ export default function MechanicForm({ mechanic, setMechanic }: Props) {
       </View>
       <View>
         <ThemedText type={"normal"} bold>
+          Delovnik
+        </ThemedText>
+        <View style={styles.container}>
+          <WorkHourDisplay
+            workingHours={workingHours}
+            setWorkingHours={setWorkingHours}
+          />
+        </View>
+      </View>
+      <View>
+        <ThemedText type={"normal"} bold>
           Cene storitev
         </ThemedText>
         <ThemedText type={"small"}>Povprečna cena za vsako storitev</ThemedText>
-        <View style={styles.brandPriceContainer}>
+        <View style={styles.container}>
           <View>
             <ThemedText type={"small"}>Veliki servis</ThemedText>
             <BrandPriceDisplay
@@ -195,22 +208,18 @@ export default function MechanicForm({ mechanic, setMechanic }: Props) {
             />
           </View>
           <View>
-            <View>
-              <ThemedText type={"small"}>Mali servis</ThemedText>
-              <BrandPriceDisplay
-                brandPriceArray={smallBrandPrice}
-                setBrandPriceArray={handleSmallBrandChange}
-              />
-            </View>
+            <ThemedText type={"small"}>Mali servis</ThemedText>
+            <BrandPriceDisplay
+              brandPriceArray={smallBrandPrice}
+              setBrandPriceArray={handleSmallBrandChange}
+            />
           </View>
           <View>
-            <View>
-              <ThemedText type={"small"}>Menjava gum</ThemedText>
-              <BrandPriceDisplay
-                brandPriceArray={tyreBrandPrice}
-                setBrandPriceArray={handleTyrePriceChange}
-              />
-            </View>
+            <ThemedText type={"small"}>Menjava gum</ThemedText>
+            <BrandPriceDisplay
+              brandPriceArray={tyreBrandPrice}
+              setBrandPriceArray={handleTyrePriceChange}
+            />
           </View>
         </View>
       </View>
@@ -219,7 +228,7 @@ export default function MechanicForm({ mechanic, setMechanic }: Props) {
 }
 
 const styles = StyleSheet.create({
-  brandPriceContainer: {
+  container: {
     paddingVertical: 20,
     gap: 15,
   },

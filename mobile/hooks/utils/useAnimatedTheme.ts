@@ -91,6 +91,10 @@ export const useAnimatedTheme = () => {
     border: theme.border,
     inactiveBorder: theme.inactiveBorder,
 
+    /* Switch */
+    track: theme.track,
+    thumb: theme.thumb,
+
     /* Other */
     specialBlue: theme.specialBlue,
     destructiveRed: theme.destructiveRed,
