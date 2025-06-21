@@ -79,7 +79,7 @@ const userController = {
           image: mechanicData.image,
           phone: mechanicData.phone,
           prices: mechanicData.prices,
-          workHours: mechanicData.work_hours,
+          work_hours: mechanicData.workHours,
         };
         await mechanicService.updateMechanicByUuid(
           req.user.mechanicUuid,

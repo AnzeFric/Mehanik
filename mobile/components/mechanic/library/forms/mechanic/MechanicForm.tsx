@@ -19,7 +19,7 @@ interface Props {
 }
 
 export default function MechanicForm({ mechanic, setMechanic }: Props) {
-  const [workingHours, setWorkingHours] = useState<Array<WorkHour>>([]);
+  const [workHours, setWorkHours] = useState<Array<WorkHour>>([]);
   const [largeBrandPrice, setLargeBrandPrice] = useState<Array<BrandPrice>>([
     { name: "", price: "0" },
   ]);
@@ -34,10 +34,12 @@ export default function MechanicForm({ mechanic, setMechanic }: Props) {
     const largeRepairPrices = mechanic.info.prices.largeRepair;
     const smallRepairPrices = mechanic.info.prices.smallRepair;
     const tyreChangePrices = mechanic.info.prices.tyreChange;
+    const workingHours = mechanic.info.workHours;
 
     if (largeRepairPrices) setLargeBrandPrice(largeRepairPrices);
     if (smallRepairPrices) setSmallBrandPrice(smallRepairPrices);
     if (tyreChangePrices) setTyreBrandPrice(tyreChangePrices);
+    if (workingHours) setWorkHours(workingHours);
   }, [mechanic]);
 
   const handleLargeBrandChange = useCallback((newArray: BrandPrice[]) => {
@@ -86,6 +88,19 @@ export default function MechanicForm({ mechanic, setMechanic }: Props) {
             ...prevPrices,
             tyreChange: newArray,
           },
+        },
+      };
+    });
+  }, []);
+
+  const handleWorkHoursChange = useCallback((newArray: WorkHour[]) => {
+    setWorkHours(newArray);
+    setMechanic((prev) => {
+      return {
+        ...prev,
+        info: {
+          ...prev.info,
+          workHours: newArray,
         },
       };
     });
@@ -189,8 +204,8 @@ export default function MechanicForm({ mechanic, setMechanic }: Props) {
         </ThemedText>
         <View style={styles.container}>
           <WorkHourDisplay
-            workingHours={workingHours}
-            setWorkingHours={setWorkingHours}
+            workingHours={workHours}
+            setWorkingHours={handleWorkHoursChange}
           />
         </View>
       </View>

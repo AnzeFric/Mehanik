@@ -65,6 +65,7 @@ export function useUser() {
         image: newUserData.info.image,
         phone: newUserData.info.phone,
         prices: newUserData.info.prices,
+        workHours: newUserData.info.workHours,
       };
 
       const response = await fetch(`${API_BASE_URL}/users/`, {
