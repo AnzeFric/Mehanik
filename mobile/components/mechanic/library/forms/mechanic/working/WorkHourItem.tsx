@@ -39,7 +39,6 @@ export default function WorkHourItem({ workHour, setWorkHour }: Props) {
   const [daySearch, setDaySearch] = useState(dayLabels[workHour.day]);
   const [daysFocus, setDaysFocus] = useState(false);
 
-  const [toggleOpen, setToggleOpen] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
   const [pickerFocus, setPickerFocus] = useState<PickerType>({
     index: 0,
@@ -125,6 +124,10 @@ export default function WorkHourItem({ workHour, setWorkHour }: Props) {
     setPickerOpen(true);
   };
 
+  const handleToggleChange = (value: boolean) => {
+    setWorkHour({ ...workHour, isOpen: value });
+  };
+
   return (
     <View style={{ flex: 1, gap: 10 }}>
       <ThemedTextInput
@@ -169,14 +172,14 @@ export default function WorkHourItem({ workHour, setWorkHour }: Props) {
           Odprto:
         </ThemedText>
         <Switch
-          value={toggleOpen}
-          onValueChange={(value) => setToggleOpen(value)}
+          value={workHour.isOpen}
+          onValueChange={handleToggleChange}
           trackColor={{ true: staticColors.track, false: staticColors.track }}
           thumbColor={staticColors.thumb}
         />
       </View>
 
-      {toggleOpen && (
+      {workHour.isOpen && (
         <View style={{ gap: 10 }}>
           {workHour.shifts.map((slot, index) => (
             <View style={styles.shiftContainer} key={index}>

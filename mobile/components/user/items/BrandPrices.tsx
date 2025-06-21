@@ -10,7 +10,9 @@ interface Props {
 export default function BrandPrices({ title, brandPrices }: Props) {
   return (
     <>
-      <ThemedText type={"normal"}>{title}</ThemedText>
+      <ThemedText type={"small"} bold>
+        {title}
+      </ThemedText>
       {brandPrices && brandPrices.length > 0 ? (
         brandPrices.map((brand, index) => (
           <View style={styles.priceRow} key={index}>

@@ -27,13 +27,8 @@ export default function WorkHourDisplay({
       ...workingHours,
       {
         day: "pon",
-        isOpen: true,
-        shifts: [
-          {
-            start: "08:00",
-            end: "16:00",
-          },
-        ],
+        isOpen: false,
+        shifts: [],
       },
     ]);
   };

@@ -2,13 +2,23 @@ import { View, ScrollView, StyleSheet } from "react-native";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Colors } from "@/constants/Colors";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
-import { MechanicData } from "@/interfaces/user";
+import { DayType, MechanicData } from "@/interfaces/user";
 import useMechanicStore from "@/stores/accounts/useMechanicStore";
 import TitleRow from "@/components/shared/TitleRow";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedText from "@/components/global/themed/ThemedText";
 import BrandPrices from "@/components/user/items/BrandPrices";
 import ThemedButton from "@/components/global/themed/ThemedButton";
+
+const dayLabels: Record<DayType, string> = {
+  pon: "Ponedeljek",
+  tor: "Torek",
+  sre: "Sreda",
+  čet: "Četrtek",
+  pet: "Petek",
+  sob: "Sobota",
+  ned: "Nedelja",
+};
 
 export default function MechanicScreen() {
   const { email } = useLocalSearchParams();
@@ -50,12 +60,12 @@ export default function MechanicScreen() {
           </ThemedText>
           <View style={{ flexDirection: "row" }}>
             {mechanicData?.info.address && (
-              <ThemedText type={"normal"}>
+              <ThemedText type={"small"}>
                 {mechanicData.info.address}
               </ThemedText>
             )}
             {mechanicData?.info.city && (
-              <ThemedText type={"normal"}>
+              <ThemedText type={"small"}>
                 {", "}
                 {mechanicData.info.city}
               </ThemedText>
@@ -68,10 +78,10 @@ export default function MechanicScreen() {
             Kontakt
           </ThemedText>
           {mechanicData?.info.phone && (
-            <ThemedText type={"normal"}>{mechanicData.info.phone}</ThemedText>
+            <ThemedText type={"small"}>{mechanicData.info.phone}</ThemedText>
           )}
           {mechanicData?.email && (
-            <ThemedText type={"normal"}>{mechanicData.email}</ThemedText>
+            <ThemedText type={"small"}>{mechanicData.email}</ThemedText>
           )}
         </View>
 
@@ -97,6 +107,35 @@ export default function MechanicScreen() {
               brandPrices={mechanicData?.info.prices.tyreChange}
             />
           </View>
+        </ThemedView>
+
+        <ThemedView type={"secondary"} style={styles.priceContainer}>
+          <ThemedText type={"title"} bold>
+            Delovnik
+          </ThemedText>
+          {mechanicData?.info.workHours?.map((workHour, index) => (
+            <View style={styles.priceSection} key={index}>
+              <ThemedText type={"small"} bold>
+                {dayLabels[workHour.day]}
+                <ThemedText type={"extraSmall"}>
+                  {workHour.isOpen ? ", Odprto" : ", Zaprto"}
+                </ThemedText>
+              </ThemedText>
+              <View>
+                {workHour.isOpen &&
+                  workHour.shifts.map((shift, index) => (
+                    <View style={{ flexDirection: "row", gap: 10 }} key={index}>
+                      <ThemedText type={"extraSmall"}>
+                        Od: {shift.start}
+                      </ThemedText>
+                      <ThemedText type={"extraSmall"}>
+                        Do: {shift.end}
+                      </ThemedText>
+                    </View>
+                  ))}
+              </View>
+            </View>
+          ))}
         </ThemedView>
 
         <ThemedButton
@@ -132,9 +171,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   priceSection: {
-    marginTop: 5,
-    borderTopWidth: 1,
-    borderTopColor: Colors.light.inactiveBorder,
     paddingTop: 8,
+    gap: 5,
   },
 });
