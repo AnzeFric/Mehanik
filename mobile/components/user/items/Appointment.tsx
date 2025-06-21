@@ -82,12 +82,18 @@ export default function Appointment({ appointmentData, onPress }: Props) {
               {appointmentData.mechanic.phone}
             </ThemedText>
           )}
-          <ThemedText type={"extraSmall"} bold style={{ paddingTop: 10 }}>
+          <View style={{ paddingVertical: 10 }}>
+            <ThemedText type={"extraSmall"}>
+              {appointmentData.vehicle.brand} {appointmentData.vehicle.model}
+              {appointmentData.vehicle.buildYear &&
+                `, ${appointmentData.vehicle.buildYear}`}
+            </ThemedText>
+          </View>
+          <ThemedText type={"extraSmall"} bold>
             Termin {formatDate(appointmentData.startDate)},{" "}
             <Text style={{ color: statusColor }}>
               {statusToTranslation(appointmentData.status)}
             </Text>
-            .
           </ThemedText>
           {appointmentData.mechanicResponse && (
             <ThemedView type={"secondary"} style={styles.messageContainer}>
