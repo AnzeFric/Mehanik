@@ -14,6 +14,7 @@ const mechanicService = {
         smallRepair: null,
         tyreChange: null,
       },
+      work_hours: null,
       fk_user: userUuid,
     });
 

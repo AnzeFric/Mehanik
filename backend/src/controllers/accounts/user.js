@@ -22,6 +22,7 @@ const userController = {
             city: foundMechanic.mechanics[0].city,
             prices: foundMechanic.mechanics[0].prices,
             image: foundMechanic.mechanics[0].image,
+            workHours: foundMechanic.mechanics[0].work_hours,
           },
         };
       } else {
@@ -78,6 +79,7 @@ const userController = {
           image: mechanicData.image,
           phone: mechanicData.phone,
           prices: mechanicData.prices,
+          workHours: mechanicData.work_hours,
         };
         await mechanicService.updateMechanicByUuid(
           req.user.mechanicUuid,
@@ -126,6 +128,7 @@ const userController = {
           city: mechanic.mechanics[0].city,
           prices: mechanic.mechanics[0].prices,
           image: mechanic.mechanics[0].image,
+          workHours: mechanic.mechanics[0].work_hours,
         },
       }));
 
@@ -149,6 +152,7 @@ async function checkInput(userData) {
     "image",
     "phone",
     "prices",
+    "workHours",
   ];
 
   const forbiddenField = Object.keys(userData).find(
