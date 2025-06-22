@@ -8,8 +8,21 @@ const notificationController = {
 
       const userUuid = req.user.userUuid;
       const token = req.body.pushToken;
+      const platform = req.body.platform;
 
-      await notificationService.savePushTokenByUserUuid(userUuid, token);
+      if (!token) throw new Error("Token is not provided");
+      if (!platform) throw new Error("Platform data is not provided");
+
+      const allowedPlatforms = ["android", "ios"];
+      if (!allowedPlatforms.includes(platform)) {
+        throw new Error("Platform data is not allowed");
+      }
+
+      await notificationService.savePushTokenByUserUuid(
+        userUuid,
+        token,
+        platform
+      );
 
       return res.status(200).json({
         success: true,

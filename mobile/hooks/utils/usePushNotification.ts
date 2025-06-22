@@ -1,5 +1,7 @@
 import { API_BASE_URL } from "@/constants/Config";
 import useAuthStore from "@/stores/accounts/useAuthStore";
+import { Platform } from "react-native";
+import * as Notifications from "expo-notifications";
 
 export function usePushNotification() {
   const { jwt } = useAuthStore();
@@ -14,6 +16,7 @@ export function usePushNotification() {
         },
         body: JSON.stringify({
           pushToken: pushToken,
+          platform: Platform.OS,
         }),
       });
 
@@ -26,6 +29,7 @@ export function usePushNotification() {
       return false;
     } catch (error) {
       console.error("Error while saving push token: ", error);
+      return false;
     }
   };
 
