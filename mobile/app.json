@@ -38,6 +38,14 @@
     "experiments": {
       "typedRoutes": true
     },
-    "owner": "anzefric"
+    "owner": "anzefric",
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "b27b6bad-8aae-4066-9e2d-b18aea779d19"
+      }
+    }
   }
 }
