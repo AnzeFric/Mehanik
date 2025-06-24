@@ -35,3 +35,6 @@ yarn-error.*
 *.tsbuildinfo
 
 app-example
+
+google-services.json
+mehanik-54e29-firebase-adminsdk-fbsvc-1281274864.json

@@ -16,7 +16,8 @@
         "foregroundImage": "./assets/logo-main.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anzefric.mehanik"
+      "package": "com.anzefric.mehanik",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "bundler": "metro",
