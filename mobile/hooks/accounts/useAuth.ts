@@ -1,6 +1,6 @@
 import useAuthStore from "@/stores/accounts/useAuthStore";
 import { router } from "expo-router";
-import { API_BASE_URL } from "@/constants/Config";
+import { API_BASE_URL } from "@/constants/config";
 import { AccountType } from "@/interfaces/user";
 
 export function useAuth() {

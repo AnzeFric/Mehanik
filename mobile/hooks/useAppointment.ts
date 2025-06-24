@@ -1,5 +1,5 @@
 import { AppointmentData } from "@/interfaces/appointment";
-import { API_BASE_URL } from "@/constants/Config";
+import { API_BASE_URL } from "@/constants/config";
 import useAuthStore from "@/stores/accounts/useAuthStore";
 
 export function useAppointment() {

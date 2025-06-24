@@ -1,5 +1,5 @@
 import useUserStore from "@/stores/accounts/useUserStore";
-import { API_BASE_URL } from "@/constants/Config";
+import { API_BASE_URL } from "@/constants/config";
 import { resetAllStores } from "@/constants/util";
 import useAuthStore from "@/stores/accounts/useAuthStore";
 import { MechanicData } from "@/interfaces/user";

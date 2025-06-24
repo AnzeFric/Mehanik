@@ -1,4 +1,4 @@
-import { API_BASE_URL } from "@/constants/Config";
+import { API_BASE_URL } from "@/constants/config";
 import useAuthStore from "@/stores/accounts/useAuthStore";
 import { Platform } from "react-native";
 import * as Notifications from "expo-notifications";

@@ -1,5 +1,5 @@
 import useAuthStore from "@/stores/accounts/useAuthStore";
-import { API_BASE_URL } from "@/constants/Config";
+import { API_BASE_URL } from "@/constants/config";
 import { CustomerData, CustomerVehicleData } from "@/interfaces/customer";
 import { VehicleData } from "@/interfaces/vehicle";
 import useCustomerStore from "@/stores/accounts/useCustomerStore";

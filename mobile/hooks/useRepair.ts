@@ -1,5 +1,5 @@
 import useAuthStore from "@/stores/accounts/useAuthStore";
-import { API_BASE_URL } from "@/constants/Config";
+import { API_BASE_URL } from "@/constants/config";
 import useRepairStore from "@/stores/useRepairStore";
 import { RepairData } from "@/interfaces/repair";
 
