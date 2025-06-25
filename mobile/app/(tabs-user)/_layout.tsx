@@ -3,10 +3,20 @@ import { Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useAnimatedTheme } from "@/hooks/utils/useAnimatedTheme";
+import { useEffect } from "react";
+import { usePushNotification } from "@/hooks/utils/usePushNotification";
+import useUserStore from "@/stores/accounts/useUserStore";
 
 export default function TabLayout() {
   const pathName = usePathname();
   const { staticColors } = useAnimatedTheme();
+
+  const { currentUser } = useUserStore();
+  const { initializeNotifications } = usePushNotification();
+
+  useEffect(() => {
+    initializeNotifications();
+  }, [currentUser]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

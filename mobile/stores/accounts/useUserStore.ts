@@ -28,6 +28,7 @@ const initialState = {
         smallRepair: null,
         tyreChange: null,
       },
+      workHours: null,
     },
   },
   firstLogin: true,

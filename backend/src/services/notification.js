@@ -17,6 +17,25 @@ const notificationService = {
 
     return true;
   },
+
+  async sendPushNotification(expoPushToken) {
+    const expoAccessToken = process.env.EXPO_PUBLIC_ACCESS_TOKEN;
+
+    await fetch("https://exp.host/--/api/v2/push/send", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + expoAccessToken,
+      },
+      body: JSON.stringify({
+        to: expoPushToken,
+        sound: "default",
+        title: "Original Title",
+        body: "And here is the body!",
+        data: { someData: "goes here" },
+      }),
+    });
+  },
 };
 
 module.exports = notificationService;
