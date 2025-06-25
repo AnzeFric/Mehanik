@@ -59,7 +59,7 @@ export default function HomeUserScreen() {
         status: "hidden",
       };
 
-      const success = await updateAppointment(newAppointment);
+      const success = await updateAppointment(newAppointment, "user");
       if (success) {
         await fetchUserAppointments();
       } else {
@@ -87,7 +87,7 @@ export default function HomeUserScreen() {
           ...selectedAppointment,
           status: "accepted",
         };
-        var success = await updateAppointment(newAppointment);
+        var success = await updateAppointment(newAppointment, "user");
       } else {
         // Change the mechanic changes
         const newAppointment: AppointmentData = {
@@ -97,7 +97,7 @@ export default function HomeUserScreen() {
           userMessage: message,
           status: "pending",
         };
-        var success = await updateAppointment(newAppointment);
+        var success = await updateAppointment(newAppointment, "user");
       }
 
       if (success) {

@@ -2,6 +2,8 @@ import { AppointmentData } from "@/interfaces/appointment";
 import { API_BASE_URL } from "@/constants/config";
 import useAuthStore from "@/stores/accounts/useAuthStore";
 
+type SentFromType = "user" | "mechanic";
+
 export function useAppointment() {
   const { jwt } = useAuthStore();
 
@@ -131,7 +133,10 @@ export function useAppointment() {
     }
   };
 
-  const updateAppointment = async (appointmentData: AppointmentData) => {
+  const updateAppointment = async (
+    appointmentData: AppointmentData,
+    sentFrom: SentFromType
+  ) => {
     try {
       const response = await fetch(`${API_BASE_URL}/appointments/`, {
         method: "PATCH",
@@ -139,7 +144,10 @@ export function useAppointment() {
           "Content-Type": "application/json",
           Authorization: "Bearer " + jwt,
         },
-        body: JSON.stringify({ appointmentData: appointmentData }),
+        body: JSON.stringify({
+          appointmentData: appointmentData,
+          sentFrom: sentFrom,
+        }),
       });
 
       const data = await response.json();

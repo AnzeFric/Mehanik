@@ -102,6 +102,36 @@ const appointmentService = {
 
     return true;
   },
+
+  async getMechanicUserUuidByAppointmentUuid(appointmentUuid) {
+    const { data, error } = await supabase
+      .from("appointments")
+      .select("uuid, mechanics(users(uuid))")
+      .eq("uuid", appointmentUuid)
+      .maybeSingle();
+
+    if (error)
+      throw new Error(
+        `(Get appointment mechanic user uuid) Database error: ${error.message}`
+      );
+
+    return data?.mechanics?.users?.uuid || null;
+  },
+
+  async getUserUserUuidByAppointmentUuid(appointmentUuid) {
+    const { data, error } = await supabase
+      .from("appointments")
+      .select("uuid, vehicles!fk_user(uuid)")
+      .eq("uuid", appointmentUuid)
+      .maybeSingle();
+
+    if (error)
+      throw new Error(
+        `(Get appointment user user uuid) Database error: ${error.message}`
+      );
+
+    return data?.vehicles?.users?.uuid || null;
+  },
 };
 
 module.exports = appointmentService;

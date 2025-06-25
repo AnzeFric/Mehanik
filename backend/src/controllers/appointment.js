@@ -168,10 +168,35 @@ const appointmentController = {
       console.log("Body: ", req.body);
 
       const appointmentData = req.body.appointmentData;
+      const sentFrom = req.body.sentFrom; // user or mechanic
 
       if (!appointmentData) throw new Error("Appointment data not provided!");
+      if (!sentFrom) throw new Error("Sent from data not provided!");
 
       await appointmentService.updateAppointmentByUuid(appointmentData);
+
+      if (sentFrom === "user") {
+        // Get mechanic userUuid by vehicle uuid
+        var userUuid =
+          await appointmentService.getMechanicUserUuidByAppointmentUuid(
+            appointmentData.uuid
+          );
+      } else if (sentFrom === "mechanic") {
+        // Get user userUuid by mechanic uuid
+        var userUuid =
+          await appointmentService.getUserUserUuidByAppointmentUuid(
+            appointmentData.uuid
+          );
+      }
+
+      const token = await notificationService.getPushTokenByUserUuid(userUuid);
+      if (token) {
+        await notificationService.sendPushNotification(
+          token,
+          "Nov termin",
+          "Stranka je rezervirala nov termin"
+        );
+      }
 
       return res.status(200).json({
         success: true,
