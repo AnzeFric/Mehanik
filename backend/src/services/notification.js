@@ -18,7 +18,7 @@ const notificationService = {
     return true;
   },
 
-  async sendPushNotification(expoPushToken) {
+  async sendPushNotification(expoPushToken, title, body) {
     const expoAccessToken = process.env.EXPO_PUBLIC_ACCESS_TOKEN;
 
     await fetch("https://exp.host/--/api/v2/push/send", {
@@ -30,9 +30,8 @@ const notificationService = {
       body: JSON.stringify({
         to: expoPushToken,
         sound: "default",
-        title: "Original Title",
-        body: "And here is the body!",
-        data: { someData: "goes here" },
+        title: title,
+        body: body,
       }),
     });
   },
