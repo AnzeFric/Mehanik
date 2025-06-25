@@ -10,8 +10,6 @@ export function usePushNotification() {
 
   const savePushToken = async (pushToken: string) => {
     try {
-      console.log("savePushToken: ", pushToken);
-      console.log("Platform: ", Platform.OS);
       const response = await fetch(`${API_BASE_URL}/notifications`, {
         method: "POST",
         headers: {
@@ -25,7 +23,7 @@ export function usePushNotification() {
       });
 
       const data = await response.json();
-      console.log("Finish: ", JSON.stringify(data));
+
       if (data.success) {
         return true;
       }
