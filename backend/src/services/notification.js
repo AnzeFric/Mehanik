@@ -35,6 +35,22 @@ const notificationService = {
       }),
     });
   },
+
+  async getPushTokenByUserUuid(userUuid) {
+    const { data, error } = await supabase
+      .from("notifications")
+      .select("token")
+      .eq("fk_user", userUuid)
+      .maybeSingle();
+
+    if (error)
+      throw new Error(
+        `(Fetch notification token) Database error: ${error.message}`
+      );
+    if (!data) return false;
+
+    return data.token;
+  },
 };
 
 module.exports = notificationService;

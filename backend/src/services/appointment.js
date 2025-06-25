@@ -72,7 +72,7 @@ const appointmentService = {
     return uuid;
   },
 
-  async updateAppointmentByMechanicUuid(appointmentData) {
+  async updateAppointmentByUuid(appointmentData) {
     const { error } = await supabase
       .from("appointments")
       .update({

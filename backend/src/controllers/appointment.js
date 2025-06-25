@@ -1,5 +1,6 @@
 const appointmentService = require("../services/appointment");
 const userService = require("../services/accounts/user");
+const notificationService = require("../services/notification");
 
 const appointmentController = {
   async getMechanicAppointments(req, res, next) {
@@ -140,6 +141,18 @@ const appointmentController = {
         appointmentData
       );
 
+      // Send notification to mechanic
+      const token = await notificationService.getPushTokenByUserUuid(
+        mechanic.uuid
+      );
+      if (token) {
+        await notificationService.sendPushNotification(
+          token,
+          "Nov termin",
+          "Stranka je rezervirala nov termin"
+        );
+      }
+
       return res.status(200).json({
         success: true,
         message: "User appointment saved successfully",
@@ -158,7 +171,7 @@ const appointmentController = {
 
       if (!appointmentData) throw new Error("Appointment data not provided!");
 
-      await appointmentService.updateAppointmentByMechanicUuid(appointmentData);
+      await appointmentService.updateAppointmentByUuid(appointmentData);
 
       return res.status(200).json({
         success: true,
