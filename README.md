@@ -36,6 +36,8 @@ Mehanik is a comprehensive mobile solution that digitizes and optimizes auto rep
 - **Framework**: Express.js
 - **Database**: Supabase
 - **Authentication**: JWT
+- **Rate limiting**: Express rate limiting
+- **Response headers**: Helmet
 
 ## Installation
 

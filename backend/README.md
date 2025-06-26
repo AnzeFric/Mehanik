@@ -1,5 +1,7 @@
 # Mehanik - Backend
 
+Uses JWT authentication to authenticate the request. Only /auth/login and /auth/register are exposed to the public.
+
 ## API endpoints
 
 #### Authentication
