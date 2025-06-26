@@ -38,7 +38,7 @@ export default function AppointmentsScreen() {
     <ThemedView type={"background"} style={styles.container}>
       <TitleRow title={"Novi termini"} hasBackButton={false} />
       <DisplayItems
-        list={getUserAppointments(["changed", "pending"])}
+        list={getUserAppointments(["pending"])}
         renderItem={(appointment, index) => (
           <Appointment appointmentData={appointment} key={index} />
         )}
