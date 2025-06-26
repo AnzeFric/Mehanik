@@ -78,7 +78,7 @@ export function usePushNotification() {
       });
       return pushToken.data;
     } catch (error) {
-      console.log(`${error}`);
+      console.error("Error while registering push token: ", error);
     }
   };
 

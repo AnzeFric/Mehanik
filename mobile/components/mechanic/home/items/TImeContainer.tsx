@@ -62,7 +62,6 @@ export default function TimeContainer({
 
   const reserveAppointmentPress = async (appointment: AppointmentData) => {
     if (mechanicEmail && selectedVehicle) {
-      console.log("Sending appointment: ", appointment);
       const success = await saveAppointment(
         selectedVehicle.uuid,
         mechanicEmail,
