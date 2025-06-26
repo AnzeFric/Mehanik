@@ -1,9 +1,9 @@
-import { Tabs, usePathname } from "expo-router";
 import { Pressable } from "react-native";
+import { useEffect } from "react";
+import { Tabs, usePathname } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useAnimatedTheme } from "@/hooks/utils/useAnimatedTheme";
-import { useEffect } from "react";
 import { usePushNotification } from "@/hooks/utils/usePushNotification";
 import useUserStore from "@/stores/accounts/useUserStore";
 
@@ -33,9 +33,8 @@ export default function TabLayout() {
           },
 
           // Disables android default onClick ripple effect
-          tabBarButton: (props) => (
+          tabBarButton: () => (
             <Pressable
-              {...props}
               style={{
                 flex: 1,
                 alignItems: "center",

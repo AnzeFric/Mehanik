@@ -7,12 +7,12 @@ import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedIcon from "@/components/global/themed/ThemedIcon";
 import ModalAppointment from "@/components/shared/modals/ModalAppointment";
 import ModalPrompt from "@/components/shared/modals/ModalPrompt";
+import { useAppointment } from "@/hooks/useAppointment";
+import DisplayItems from "@/components/global/DisplayItems";
 import {
   AppointmentData,
   MechanicAppointmentData,
 } from "@/interfaces/appointment";
-import { useAppointment } from "@/hooks/useAppointment";
-import DisplayItems from "@/components/global/DisplayItems";
 
 export default function HomeUserScreen() {
   const { getUserAppointments, deleteAppointment, updateAppointment } =

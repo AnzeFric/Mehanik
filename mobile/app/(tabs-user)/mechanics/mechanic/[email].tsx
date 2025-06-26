@@ -1,6 +1,5 @@
 import { View, ScrollView, StyleSheet } from "react-native";
 import { useState, useEffect, useCallback, useRef } from "react";
-import { Colors } from "@/constants/Colors";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { DayType, MechanicData } from "@/interfaces/user";
 import useMechanicStore from "@/stores/accounts/useMechanicStore";
