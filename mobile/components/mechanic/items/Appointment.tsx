@@ -29,6 +29,7 @@ export default function Appointment({ appointmentData }: Props) {
   ) => {
     setIsChangeOpen(false);
     const newAppointment: AppointmentData = {
+      uuid: appointmentData.uuid,
       startDate: startDate,
       endDate: endDate,
       mechanicResponse: message,

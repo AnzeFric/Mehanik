@@ -9,6 +9,9 @@ const app = express();
 app.use(helmet());
 app.use(cors());
 
+// For local testing via ngrok
+app.set("trust proxy", "127.0.0.1");
+
 // Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 min

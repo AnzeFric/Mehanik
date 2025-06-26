@@ -7,7 +7,7 @@
     "icon": "./assets/logo-main.png",
     "scheme": "mehanik",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
+    "newArchEnabled": false,
     "ios": {
       "supportsTablet": true
     },

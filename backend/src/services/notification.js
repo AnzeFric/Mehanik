@@ -21,6 +21,8 @@ const notificationService = {
   async sendPushNotification(expoPushToken, title, body) {
     const expoAccessToken = process.env.EXPO_PUBLIC_ACCESS_TOKEN;
 
+    console.log("Send notification: ", expoPushToken);
+
     await fetch("https://exp.host/--/api/v2/push/send", {
       method: "POST",
       headers: {

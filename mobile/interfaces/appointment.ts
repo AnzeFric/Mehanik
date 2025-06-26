@@ -1,4 +1,5 @@
 export interface AppointmentData {
+  uuid: string;
   startDate: Date;
   endDate: Date;
   userMessage?: string;

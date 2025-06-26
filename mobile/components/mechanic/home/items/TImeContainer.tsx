@@ -14,7 +14,7 @@ import { router } from "expo-router";
 import ModalAppointment from "@/components/shared/modals/ModalAppointment";
 
 interface Props {
-  time: string;
+  time: string; // 11:00
   date: Date;
   itemHeight: number;
   mechanicEmail?: string;
@@ -43,7 +43,17 @@ export default function TimeContainer({
   const [isAppointmentVisible, setIsAppointmentVisible] = useState(false);
 
   const hour = parseInt(time.split(":")[0]);
-  const appointment = getAppointmentAtHour(groupedAppointments, hour);
+  const appointmentAtHour = getAppointmentAtHour(groupedAppointments, hour);
+
+  const modalAppointmentDate = new Date(
+    date.getFullYear(),
+    date.getMonth() + 1,
+    date.getDate(),
+    hour,
+    0,
+    0,
+    0
+  );
 
   // Find any appointment that spans this hour, start or any time in between
   const spanningAppointment = groupedAppointments.find((apt) =>
@@ -74,6 +84,7 @@ export default function TimeContainer({
     userMessage: string
   ) => {
     const appointment: AppointmentData = {
+      uuid: appointmentAtHour?.uuid || "",
       startDate: startDate,
       endDate: endDate,
       userMessage: userMessage,
@@ -97,17 +108,17 @@ export default function TimeContainer({
 
   return (
     <View style={{ flex: 1 }}>
-      {appointment && isAppointmentStartHour(hour, appointment) ? (
+      {appointmentAtHour && isAppointmentStartHour(hour, appointmentAtHour) ? (
         currentUser.accountType === "mechanic" ? (
           <TimeItem
-            appointment={appointment}
-            itemHeight={getAppointmentHeight(appointment, itemHeight)}
+            appointment={appointmentAtHour}
+            itemHeight={getAppointmentHeight(appointmentAtHour, itemHeight)}
           />
         ) : (
           <PrivateTimeItem
-            startDate={appointment.startDate}
-            endDate={appointment.endDate}
-            itemHeight={getAppointmentHeight(appointment, itemHeight)}
+            startDate={appointmentAtHour.startDate}
+            endDate={appointmentAtHour.endDate}
+            itemHeight={getAppointmentHeight(appointmentAtHour, itemHeight)}
           />
         )
       ) : spanningAppointment ? null : ( // This hour is part of an ongoing appointment, render nothing
@@ -123,8 +134,8 @@ export default function TimeContainer({
         isVisible={isAppointmentVisible}
         title={"Izberite termin"}
         firstScreen={0}
-        startDate={date}
-        endDate={date}
+        startDate={modalAppointmentDate}
+        endDate={modalAppointmentDate}
         onConfirm={handleAppointmentConfirm}
         onCancel={() => setIsAppointmentVisible(false)}
       />

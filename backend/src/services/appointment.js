@@ -106,7 +106,7 @@ const appointmentService = {
   async getMechanicUserUuidByAppointmentUuid(appointmentUuid) {
     const { data, error } = await supabase
       .from("appointments")
-      .select("uuid, mechanics(users(uuid))")
+      .select("uuid, mechanics!fk_mechanic(users!fk_user(uuid))")
       .eq("uuid", appointmentUuid)
       .maybeSingle();
 
@@ -119,9 +119,11 @@ const appointmentService = {
   },
 
   async getUserUserUuidByAppointmentUuid(appointmentUuid) {
+    console.log("Appt uuid: ", appointmentUuid);
+
     const { data, error } = await supabase
       .from("appointments")
-      .select("uuid, vehicles!fk_user(uuid)")
+      .select("uuid, vehicles!fk_vehicle(users!fk_user(uuid))")
       .eq("uuid", appointmentUuid)
       .maybeSingle();
 
@@ -129,6 +131,7 @@ const appointmentService = {
       throw new Error(
         `(Get appointment user user uuid) Database error: ${error.message}`
       );
+    console.log("Data: ", data);
 
     return data?.vehicles?.users?.uuid || null;
   },

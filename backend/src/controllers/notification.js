@@ -18,11 +18,16 @@ const notificationController = {
         throw new Error("Platform data is not allowed");
       }
 
-      await notificationService.savePushTokenByUserUuid(
-        userUuid,
-        token,
-        platform
-      );
+      const foundToken =
+        await notificationService.getPushTokenByUserUuid(userUuid);
+
+      if (!foundToken) {
+        await notificationService.savePushTokenByUserUuid(
+          userUuid,
+          token,
+          platform
+        );
+      }
 
       return res.status(200).json({
         success: true,
