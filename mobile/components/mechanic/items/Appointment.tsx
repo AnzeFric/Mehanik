@@ -44,7 +44,11 @@ export default function Appointment({ appointmentData }: Props) {
     }
   };
 
-  const handleAcceptConfirm = async () => {
+  const handleAcceptConfirm = async (
+    startDate: Date,
+    endDate: Date,
+    userMessage: string
+  ) => {
     setIsConfirmOpen(false);
     const newAppointment: UserAppointmentData = {
       ...appointmentData,
@@ -121,28 +125,34 @@ export default function Appointment({ appointmentData }: Props) {
         />
       </View>
 
-      <ModalPrompt
-        isVisible={isRejectOpen}
-        message={"Ste prepričani, da želite zavrniti termin?"}
-        onCancel={() => setIsRejectOpen(false)}
-        onConfirm={handleRejectConfirm}
-      />
-      <ModalAppointment
-        isVisible={isConfirmOpen}
-        title={"Potrditev termina"}
-        firstScreen={2}
-        onCancel={() => setIsConfirmOpen(false)}
-        onConfirm={handleAcceptConfirm}
-      />
-      <ModalAppointment
-        isVisible={isChangeOpen}
-        title={"Sprememba termina"}
-        firstScreen={0}
-        startDate={appointmentData.startDate}
-        endDate={appointmentData.endDate}
-        onCancel={() => setIsChangeOpen(false)}
-        onConfirm={handleChangeConfirm}
-      />
+      {isRejectOpen && (
+        <ModalPrompt
+          isVisible={true}
+          message={"Ste prepričani, da želite zavrniti termin?"}
+          onCancel={() => setIsRejectOpen(false)}
+          onConfirm={handleRejectConfirm}
+        />
+      )}
+      {isConfirmOpen && (
+        <ModalAppointment
+          isVisible={true}
+          title={"Potrditev termina"}
+          firstScreen={2}
+          onCancel={() => setIsConfirmOpen(false)}
+          onConfirm={handleAcceptConfirm}
+        />
+      )}
+      {isChangeOpen && (
+        <ModalAppointment
+          isVisible={true}
+          title={"Sprememba termina"}
+          firstScreen={0}
+          startDate={appointmentData.startDate}
+          endDate={appointmentData.endDate}
+          onCancel={() => setIsChangeOpen(false)}
+          onConfirm={handleChangeConfirm}
+        />
+      )}
     </ThemedView>
   );
 }

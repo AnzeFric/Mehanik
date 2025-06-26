@@ -21,8 +21,15 @@ const notificationController = {
       const foundToken =
         await notificationService.getPushTokenByUserUuid(userUuid);
 
-      // If user has not token or if the user changed phone
-      if (!foundToken || token != foundToken) {
+      // If user has no token or if the user changed phone
+      if (!foundToken) {
+        await notificationService.savePushTokenByUserUuid(
+          userUuid,
+          token,
+          platform
+        );
+      } else if (token != foundToken) {
+        await notificationService.deletePushTokenByUserUuid(userUuid);
         await notificationService.savePushTokenByUserUuid(
           userUuid,
           token,

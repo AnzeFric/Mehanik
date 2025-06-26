@@ -47,7 +47,7 @@ export default function TimeContainer({
 
   const modalAppointmentDate = new Date(
     date.getFullYear(),
-    date.getMonth() + 1,
+    date.getMonth(),
     date.getDate(),
     hour,
     0,
@@ -62,6 +62,7 @@ export default function TimeContainer({
 
   const reserveAppointmentPress = async (appointment: AppointmentData) => {
     if (mechanicEmail && selectedVehicle) {
+      console.log("Sending appointment: ", appointment);
       const success = await saveAppointment(
         selectedVehicle.uuid,
         mechanicEmail,

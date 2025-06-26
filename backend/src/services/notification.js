@@ -21,8 +21,6 @@ const notificationService = {
   async sendPushNotification(expoPushToken, title, body) {
     const expoAccessToken = process.env.EXPO_PUBLIC_ACCESS_TOKEN;
 
-    console.log("Send notification: ", expoPushToken);
-
     await fetch("https://exp.host/--/api/v2/push/send", {
       method: "POST",
       headers: {
@@ -52,6 +50,20 @@ const notificationService = {
     if (!data) return false;
 
     return data.token;
+  },
+
+  async deletePushTokenByUserUuid(userUuid) {
+    const { error } = await supabase
+      .from("notifications")
+      .delete()
+      .eq("fk_user", userUuid);
+
+    if (error)
+      throw new Error(
+        `(Delete notification token) Database error: ${error.message}`
+      );
+
+    return true;
   },
 };
 

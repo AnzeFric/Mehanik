@@ -1,5 +1,5 @@
 import { View, Modal, StyleSheet } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Colors } from "@/constants/Colors";
 import ThemedIcon from "@/components/global/themed/ThemedIcon";
 import ThemedView from "@/components/global/themed/ThemedView";
@@ -31,9 +31,14 @@ export default function ModalAppointment({
   const inputScreenNumber = Math.min(Math.max(firstScreen, 0), 2);
 
   const [newStartDate, setNewStartDate] = useState(startDate);
-  const [mewEndDate, setNewEndDate] = useState(endDate);
+  const [newEndDate, setNewEndDate] = useState(endDate);
   const [message, setMessage] = useState("");
   const [screenNumber, setScreenNumber] = useState(inputScreenNumber);
+
+  useEffect(() => {
+    setNewStartDate(startDate);
+    setNewEndDate(endDate);
+  }, [startDate, endDate]);
 
   const cleanup = () => {
     setScreenNumber(inputScreenNumber);
@@ -49,7 +54,7 @@ export default function ModalAppointment({
   const handleNextPress = () => {
     if (screenNumber === 2) {
       cleanup();
-      onConfirm(newStartDate, mewEndDate, message);
+      onConfirm(newStartDate, newEndDate, message);
     } else {
       setScreenNumber((prevScreenNumber) => prevScreenNumber + 1);
     }
@@ -84,7 +89,7 @@ export default function ModalAppointment({
                   Izberite začetni datum
                 </ThemedText>
                 <ThemedDatePicker
-                  date={startDate}
+                  date={newStartDate}
                   onDateChange={(newDate: Date) => {
                     setNewStartDate(newDate);
                   }}
@@ -100,7 +105,7 @@ export default function ModalAppointment({
                   Izberite končni datum
                 </ThemedText>
                 <ThemedDatePicker
-                  date={endDate}
+                  date={newEndDate}
                   onDateChange={(newDate: Date) => {
                     setNewEndDate(newDate);
                   }}
