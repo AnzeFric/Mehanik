@@ -36,7 +36,10 @@ export default function Appointment({ appointmentData }: Props) {
       status: "changed",
     };
     const success = await updateAppointment(newAppointment, "mechanic");
-    if (!success) {
+    if (success) {
+      const fetchedAppointments = await getMechanicAppointments();
+      setUserAppointments(fetchedAppointments);
+    } else {
       Alert.alert("Napaka", "Prišlo je do napake pri spreminjanju termina");
     }
   };
