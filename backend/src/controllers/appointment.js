@@ -189,24 +189,23 @@ const appointmentController = {
           );
       }
 
-      const statusToText = {
-        accepted: "Termin je bil potrjen",
-        changed: "Mehanik je spremenil termin",
-        pending: "Stranka je spremenila termin",
-        rejected: "Termin je bil zavrjen",
-      };
+      if (appointmentData.status != "hidden") {
+        const statusToText = {
+          accepted: "Termin je bil potrjen",
+          changed: "Mehanik je spremenil termin",
+          pending: "Stranka je spremenila termin",
+          rejected: "Termin je bil zavrjen",
+        };
 
-      console.log("Status to Text: ", statusToText[appointmentData.status]);
-      console.log("User uuid: ", userUuid);
-      const token = await notificationService.getPushTokenByUserUuid(userUuid);
-      console.log("Token: ", token);
-      if (token) {
-        console.log("Token is set, sending");
-        await notificationService.sendPushNotification(
-          token,
-          "Nov termin",
-          statusToText[appointmentData.status]
-        );
+        const token =
+          await notificationService.getPushTokenByUserUuid(userUuid);
+        if (token) {
+          await notificationService.sendPushNotification(
+            token,
+            "Nov termin",
+            statusToText[appointmentData.status]
+          );
+        }
       }
 
       return res.status(200).json({
