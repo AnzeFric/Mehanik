@@ -18,7 +18,6 @@ export default function SettingsScreen() {
 
   const { selectedTheme, setSelectedTheme } = useTheme();
 
-  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [deleteModal, setDeleteModal] = useState(false);
 
   const handleEditMechanic = () => {
@@ -60,26 +59,6 @@ export default function SettingsScreen() {
               buttonText={"Temna"}
               onPress={() => setSelectedTheme("dark")}
               selected={selectedTheme === "dark"}
-              buttonStyle={styles.optionButton}
-            />
-          </View>
-        </View>
-
-        <View style={styles.itemContainer}>
-          <ThemedText type={"normal"}>Obvestila</ThemedText>
-          <View style={styles.optionContainer}>
-            <ThemedButton
-              buttonType={"small"}
-              buttonText={"Vklopljeno"}
-              onPress={() => setNotificationsEnabled(true)}
-              selected={notificationsEnabled}
-              buttonStyle={styles.optionButton}
-            />
-            <ThemedButton
-              buttonType={"small"}
-              buttonText={"Izklopljeno"}
-              onPress={() => setNotificationsEnabled(false)}
-              selected={!notificationsEnabled}
               buttonStyle={styles.optionButton}
             />
           </View>
