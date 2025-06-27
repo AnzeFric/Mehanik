@@ -1,16 +1,10 @@
-import {
-  View,
-  StyleSheet,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import { View, StyleSheet } from "react-native";
 import { BrandPrice } from "@/interfaces/user";
 import { Colors } from "@/constants/Colors";
 import { vehicleBrands } from "@/interfaces/vehicle";
 import { useEffect, useMemo, useState } from "react";
 import ThemedTextInput from "@/components/global/themed/ThemedTextInput";
-import { useAnimatedTheme } from "@/hooks/utils/useAnimatedTheme";
+import ThemedDropDown from "@/components/global/themed/ThemedDropDown";
 
 interface Props {
   brandPrice: BrandPrice;
@@ -18,8 +12,6 @@ interface Props {
 }
 
 export default function BrandPriceItem({ brandPrice, setBrandPrice }: Props) {
-  const { staticColors } = useAnimatedTheme();
-
   const [name, setName] = useState(brandPrice.name);
   const [optionsFocus, setOptionsFocus] = useState(false);
 
@@ -66,31 +58,7 @@ export default function BrandPriceItem({ brandPrice, setBrandPrice }: Props) {
         />
       </View>
       {optionsFocus && (
-        <ScrollView
-          style={styles.optionsContainer}
-          nestedScrollEnabled
-          keyboardShouldPersistTaps={"handled"}
-        >
-          {filteredBrands.map((brand, index) => (
-            <TouchableOpacity
-              style={[
-                styles.option,
-                { backgroundColor: staticColors.primaryBackground },
-                index !== 0 && { paddingTop: 15 },
-              ]}
-              onPress={() => {
-                handleNameChange(brand);
-              }}
-              key={index}
-            >
-              <Text
-                style={[styles.optionText, { color: staticColors.primaryText }]}
-              >
-                {brand}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
+        <ThemedDropDown items={filteredBrands} onPress={handleNameChange} />
       )}
     </View>
   );
@@ -113,18 +81,5 @@ const styles = StyleSheet.create({
   inputPhone: {
     width: 80,
     textAlign: "right",
-  },
-  optionsContainer: {
-    borderWidth: 0.5,
-    borderRadius: 8,
-    maxHeight: 200,
-  },
-  option: {
-    borderBottomWidth: 0.8,
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-  },
-  optionText: {
-    fontSize: 18,
   },
 });
