@@ -27,6 +27,7 @@ Mehanik is a comprehensive mobile solution that digitizes and optimizes auto rep
 ### Mobile App (React Native)
 
 - **Framework**: React Native
+- **Platform/Toolset**: Expo
 - **Navigation**: Expo router
 - **State Management**: Zustand
 
@@ -38,6 +39,7 @@ Mehanik is a comprehensive mobile solution that digitizes and optimizes auto rep
 - **Authentication**: JWT
 - **Rate limiting**: Express rate limiting
 - **Response headers**: Helmet
+- **Local hosting**: Ngrok
 
 ## Installation
 
