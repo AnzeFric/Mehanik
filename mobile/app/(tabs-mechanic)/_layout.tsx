@@ -33,9 +33,8 @@ export default function TabLayout() {
           },
 
           // Disables android default onClick ripple effect
-          tabBarButton: (props) => (
+          tabBarButton: () => (
             <Pressable
-              {...props}
               style={{
                 flex: 1,
                 alignItems: "center",
