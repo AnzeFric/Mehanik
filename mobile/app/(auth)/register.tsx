@@ -168,7 +168,7 @@ export default function LoginScreen() {
             buttonText={"Registracija"}
           />
 
-          <View style={styles.loginContainer}>
+          <View style={styles.contentContainer}>
             <ThemedText type={"small"}>Že imate račun? </ThemedText>
             <TouchableOpacity onPress={() => router.replace("/(auth)/login")}>
               <ThemedText
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     gap: 10,
   },
-  loginContainer: {
+  contentContainer: {
     flexDirection: "row",
     justifyContent: "center",
   },

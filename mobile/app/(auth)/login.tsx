@@ -100,7 +100,7 @@ export default function LoginScreen() {
             buttonText={"Prijava"}
           />
 
-          <View style={styles.registerContainer}>
+          <View style={styles.contentContainer}>
             <ThemedText type={"small"}>Nimate računa? </ThemedText>
             <TouchableOpacity
               onPress={() => router.replace("/(auth)/register")}
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   headerContainer: {
     paddingVertical: 35,
   },
-  registerContainer: {
+  contentContainer: {
     flexDirection: "row",
     justifyContent: "center",
   },

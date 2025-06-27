@@ -11,9 +11,9 @@ export default function EditRepairScreen() {
   const { uuid } = useLocalSearchParams(); // Vehicle uuid
 
   const { setShouldRefetch } = useCustomerStore();
+  const { currentRepairFocus, updateVehicleRepair } = useRepair();
 
   const [currentRepair, setCurrentRepair] = useState<RepairData | null>(null);
-  const { currentRepairFocus, updateVehicleRepair } = useRepair();
 
   useFocusEffect(
     useCallback(() => {

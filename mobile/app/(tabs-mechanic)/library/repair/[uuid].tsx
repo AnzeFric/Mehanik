@@ -29,8 +29,8 @@ import { Ionicons } from "@expo/vector-icons";
 export default function DetailRepairScreen() {
   const { uuid } = useLocalSearchParams(); // Vehicle uuid
 
-  const { staticColors } = useAnimatedTheme();
   const { setShouldRefetch } = useCustomerStore();
+  const { staticColors } = useAnimatedTheme();
   const { currentRepairFocus, deleteVehicleRepair } = useRepair();
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);

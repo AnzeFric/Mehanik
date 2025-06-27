@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, View } from "react-native";
 import { useState } from "react";
 import RepairForm from "@/components/mechanic/library/forms/RepairForm";
 import { RepairData } from "@/interfaces/repair";
@@ -9,15 +9,17 @@ import useCustomerStore from "@/stores/accounts/useCustomerStore";
 
 export default function AddRepairScreen() {
   const { uuid } = useLocalSearchParams(); // Vehicle uuid
-  const [repairData, setRepairData] = useState<RepairData | null>(null);
-  const { saveVehicleRepairs } = useRepair();
+
   const { setShouldRefetch } = useCustomerStore();
+  const { saveVehicleRepairs } = useRepair();
+
+  const [repairData, setRepairData] = useState<RepairData | null>(null);
 
   const handleSaveRepair = async () => {
     if (repairData) {
-      const result = await saveVehicleRepairs(uuid.toString(), repairData);
+      const success = await saveVehicleRepairs(uuid.toString(), repairData);
 
-      if (result) {
+      if (success) {
         setShouldRefetch(true);
       } else {
         Alert.alert(
@@ -36,15 +38,9 @@ export default function AddRepairScreen() {
       buttonText={"Shrani"}
       onButtonPress={handleSaveRepair}
     >
-      <View style={styles.container}>
+      <View style={{ paddingHorizontal: 25 }}>
         <RepairForm repair={null} setRepair={setRepairData} />
       </View>
     </TemplateView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 25,
-  },
-});

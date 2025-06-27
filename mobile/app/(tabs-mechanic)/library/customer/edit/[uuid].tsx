@@ -12,6 +12,7 @@ import useCustomerStore from "@/stores/accounts/useCustomerStore";
 
 export default function EditCustomerScreen() {
   const { uuid } = useLocalSearchParams(); // Vehicle uuid
+
   const { updateCustomerVehicle } = useCustomer();
   const { customers } = useCustomerStore();
 

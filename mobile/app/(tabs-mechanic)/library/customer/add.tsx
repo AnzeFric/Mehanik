@@ -17,6 +17,8 @@ import ThemedButton from "@/components/global/themed/ThemedButton";
 export default function AddCustomerScreen() {
   const { saveCustomerVehicleRepair } = useCustomer();
 
+  const [repairData, setRepairData] = useState<RepairData | null>(null);
+  const [vehicleImage, setVehicleImage] = useState("");
   const [customerData, setCustomerData] = useState<CustomerData>({
     uuid: "",
     firstName: "",
@@ -33,8 +35,6 @@ export default function AddCustomerScreen() {
     buildYear: null,
     description: null,
   });
-  const [repairData, setRepairData] = useState<RepairData | null>(null);
-  const [vehicleImage, setVehicleImage] = useState<string>("");
 
   const scrollRef = useRef<ScrollView>(null);
 
