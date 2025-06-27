@@ -20,8 +20,9 @@ export default function BrandPriceItem({ brandPrice, setBrandPrice }: Props) {
   }, [brandPrice]);
 
   const filteredBrands = useMemo(() => {
+    if (!name) return vehicleBrands; // Show all when empty
     return vehicleBrands.filter((item) =>
-      item.toLowerCase().includes(name.toLowerCase())
+      item.toLowerCase().startsWith(name.toLowerCase())
     );
   }, [name]);
 
