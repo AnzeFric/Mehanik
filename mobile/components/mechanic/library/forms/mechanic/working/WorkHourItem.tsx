@@ -1,11 +1,4 @@
-import {
-  View,
-  StyleSheet,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  Switch,
-} from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity, Switch } from "react-native";
 import { WorkHour, DayType, TimeSlot, PickerType } from "@/interfaces/user";
 import { Colors } from "@/constants/Colors";
 import { useEffect, useMemo, useState } from "react";
@@ -15,6 +8,7 @@ import { useAnimatedTheme } from "@/hooks/utils/useAnimatedTheme";
 import ThemedDatePicker from "@/components/global/themed/ThemedDatePicker";
 import { formatTime } from "@/constants/util";
 import ThemedText from "@/components/global/themed/ThemedText";
+import ThemedDropDown from "@/components/global/themed/ThemedDropDown";
 
 const dayLabels: Record<DayType, string> = {
   pon: "Ponedeljek",
@@ -51,15 +45,15 @@ export default function WorkHourItem({ workHour, setWorkHour }: Props) {
   }, [workHour.day]);
 
   const filteredDays = useMemo(() => {
+    if (!daySearch) return days; // Show all when empty
     return days.filter((dayKey) =>
-      dayLabels[dayKey].toLowerCase().includes(daySearch.toLowerCase())
+      dayLabels[dayKey].toLowerCase().startsWith(daySearch.toLowerCase())
     );
   }, [daySearch]);
 
   const handleDayChange = (selectedDay: DayType) => {
     setDaySearch(dayLabels[selectedDay]);
     setWorkHour({ ...workHour, day: selectedDay });
-    setDaysFocus(false);
   };
 
   const updateTimeSlot = (
@@ -140,31 +134,7 @@ export default function WorkHourItem({ workHour, setWorkHour }: Props) {
         onBlur={() => setDaysFocus(false)}
       />
       {daysFocus && (
-        <ScrollView
-          style={styles.optionsContainer}
-          nestedScrollEnabled
-          keyboardShouldPersistTaps={"handled"}
-        >
-          {filteredDays.map((day, index) => (
-            <TouchableOpacity
-              style={[
-                styles.option,
-                { backgroundColor: staticColors.secondaryBackground },
-                index !== 0 && { paddingTop: 15 },
-              ]}
-              onPress={() => {
-                handleDayChange(day);
-              }}
-              key={index}
-            >
-              <Text
-                style={[styles.optionText, { color: staticColors.primaryText }]}
-              >
-                {dayLabels[day]}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
+        <ThemedDropDown items={filteredDays} onPress={handleDayChange} />
       )}
 
       <View style={styles.toggleContainer}>
@@ -245,19 +215,6 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.light.inactiveBorder,
     marginBottom: 15,
     paddingVertical: 8,
-  },
-  optionsContainer: {
-    borderWidth: 0.5,
-    borderRadius: 8,
-    maxHeight: 200,
-  },
-  option: {
-    borderBottomWidth: 0.8,
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-  },
-  optionText: {
-    fontSize: 18,
   },
   toggleContainer: {
     flexDirection: "row",
