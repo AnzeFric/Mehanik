@@ -9,16 +9,14 @@ export function useRepair() {
 
   const getVehicleRepairs = async (vehicleUuid: string) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/repairs/get`, {
+      const data = await fetch(`${API_BASE_URL}/repairs/get`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + jwt,
         },
         body: JSON.stringify({ vehicleUuid: vehicleUuid }),
-      });
-
-      const data = await response.json();
+      }).then((response) => response.json());
 
       if (data.success) {
         const repairsWithDates = data.repairs.map((repair: any) => ({
@@ -45,7 +43,7 @@ export function useRepair() {
         date: repairData.date.toISOString(),
       };
 
-      const response = await fetch(`${API_BASE_URL}/repairs/save`, {
+      const data = await fetch(`${API_BASE_URL}/repairs/save`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -55,9 +53,8 @@ export function useRepair() {
           vehicleUuid: vehicleUuid,
           repairData: formattedData,
         }),
-      });
+      }).then((response) => response.json());
 
-      const data = await response.json();
       if (data.success) {
         return true;
       }
@@ -70,16 +67,14 @@ export function useRepair() {
 
   const deleteVehicleRepair = async (repairUuid: string) => {
     try {
-      const reponse = await fetch(`${API_BASE_URL}/repairs/`, {
+      const data = await fetch(`${API_BASE_URL}/repairs/`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + jwt,
         },
         body: JSON.stringify({ repairUuid: repairUuid }),
-      });
-
-      const data = await reponse.json();
+      }).then((response) => response.json());
 
       if (data.success) {
         return true;
@@ -93,7 +88,7 @@ export function useRepair() {
 
   const updateVehicleRepair = async (repairData: RepairData) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/repairs/`, {
+      const data = await fetch(`${API_BASE_URL}/repairs/`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -102,9 +97,7 @@ export function useRepair() {
         body: JSON.stringify({
           repairData: repairData,
         }),
-      });
-
-      const data = await response.json();
+      }).then((response) => response.json());
 
       if (data.success) {
         return true;

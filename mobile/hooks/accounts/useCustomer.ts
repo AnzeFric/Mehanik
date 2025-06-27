@@ -26,16 +26,14 @@ export function useCustomer() {
         ...(repairDataCheck && { repairData }),
       };
 
-      const response = await fetch(`${API_BASE_URL}/customers/`, {
+      const data = await fetch(`${API_BASE_URL}/customers/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + jwt,
         },
         body: JSON.stringify(body),
-      });
-
-      const data = await response.json();
+      }).then((response) => response.json());
 
       if (data.success) {
         await updateStoredCustomerData(data.customers);
@@ -59,7 +57,7 @@ export function useCustomer() {
     vehicleData: VehicleData
   ) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/customers/`, {
+      const data = await fetch(`${API_BASE_URL}/customers/`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -69,9 +67,7 @@ export function useCustomer() {
           customerData,
           vehicleData,
         }),
-      });
-
-      const data = await response.json();
+      }).then((response) => response.json());
 
       if (data.success) {
         await updateStoredCustomerData(data.customers);
@@ -94,16 +90,14 @@ export function useCustomer() {
         return false;
       }
 
-      const response = await fetch(`${API_BASE_URL}/customers/`, {
+      const data = await fetch(`${API_BASE_URL}/customers/`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + jwt,
         },
         body: JSON.stringify({ customerUuid: customerUuid }),
-      });
-
-      const data = await response.json();
+      }).then((response) => response.json());
 
       if (data.success) {
         await updateStoredCustomerData(data.customers);
@@ -118,15 +112,14 @@ export function useCustomer() {
 
   const getMechanicCustomers = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/customers/`, {
+      const data = await fetch(`${API_BASE_URL}/customers/`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + jwt,
         },
-      });
+      }).then((response) => response.json());
 
-      const data = await response.json();
       if (data.success) {
         return data.customers;
       }

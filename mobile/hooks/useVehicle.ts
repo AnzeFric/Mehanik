@@ -7,20 +7,18 @@ export function useVehicle() {
 
   const fetchVehicles = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/vehicles/`, {
+      const data = await fetch(`${API_BASE_URL}/vehicles/`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + jwt,
         },
-      });
-
-      const data = await response.json();
+      }).then((response) => response.json());
 
       if (data.success) {
         return data.vehicles;
       }
-      console.error("Error fetching vehicles: ", data.message);
+      console.log("Error fetching vehicles: ", data.message);
       return [];
     } catch (error) {
       console.error("Error while fetching vehicles: ", error);
@@ -29,21 +27,19 @@ export function useVehicle() {
 
   const saveVehicle = async (vehicle: VehicleData) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/vehicles/`, {
+      const data = await fetch(`${API_BASE_URL}/vehicles/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + jwt,
         },
         body: JSON.stringify({ vehicleData: vehicle }),
-      });
-
-      const data = await response.json();
+      }).then((response) => response.json());
 
       if (data.success) {
         return true;
       }
-      console.error("Error saving vehicle: ", data.message);
+      console.log("Error saving vehicle: ", data.message);
       return false;
     } catch (error) {
       console.error("Error while saving vehicle: ", error);
@@ -52,21 +48,19 @@ export function useVehicle() {
 
   const updateVehicle = async (vehicle: VehicleData) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/vehicles/`, {
+      const data = await fetch(`${API_BASE_URL}/vehicles/`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + jwt,
         },
         body: JSON.stringify({ vehicleData: vehicle }),
-      });
-
-      const data = await response.json();
+      }).then((response) => response.json());
 
       if (data.success) {
         return true;
       }
-      console.error("Error patching vehicle: ", data.message);
+      console.log("Error patching vehicle: ", data.message);
       return false;
     } catch (error) {
       console.error("Error while patching vehicle: ", error);
@@ -75,21 +69,19 @@ export function useVehicle() {
 
   const deleteVehicle = async (vehicleUuid: string) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/vehicles/`, {
+      const data = await fetch(`${API_BASE_URL}/vehicles/`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + jwt,
         },
         body: JSON.stringify({ vehicleUuid: vehicleUuid }),
-      });
-
-      const data = await response.json();
+      }).then((response) => response.json());
 
       if (data.success) {
         return true;
       }
-      console.error("Error deleting vehicle: ", data.message);
+      console.log("Error deleting vehicle: ", data.message);
       return false;
     } catch (error) {
       console.error("Error while deleting vehicle: ", error);

@@ -20,7 +20,7 @@ export function useAuth() {
     accountType: AccountType
   ) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/register`, {
+      const data = await fetch(`${API_BASE_URL}/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -32,9 +32,7 @@ export function useAuth() {
           password: password,
           accountType: accountType,
         }),
-      });
-
-      const data = await response.json();
+      }).then((response) => response.json());
 
       if (data.success) {
         return true;
@@ -48,7 +46,7 @@ export function useAuth() {
 
   const handleLogin = async (email: string, password: string) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/login`, {
+      const data = await fetch(`${API_BASE_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -57,9 +55,7 @@ export function useAuth() {
           email: email,
           password: password,
         }),
-      });
-
-      const data = await response.json();
+      }).then((response) => response.json());
 
       if (data.success) {
         const jwt = data.token;

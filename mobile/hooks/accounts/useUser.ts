@@ -13,15 +13,13 @@ export function useUser() {
 
   const getUser = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/users/`, {
+      const data = await fetch(`${API_BASE_URL}/users/`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + jwt,
         },
-      });
-
-      const data = await response.json();
+      }).then((response) => response.json());
 
       if (data.success) {
         let user: MechanicData = {
@@ -45,7 +43,7 @@ export function useUser() {
         setCurrentUser(user);
         return true;
       }
-      console.error("Failed to get user: ", data.message);
+      console.log("Failed to get user: ", data.message);
       return false;
     } catch (error) {
       console.error("Error fetching user: ", error);
@@ -68,7 +66,7 @@ export function useUser() {
         workHours: newUserData.info.workHours,
       };
 
-      const response = await fetch(`${API_BASE_URL}/users/`, {
+      const data = await fetch(`${API_BASE_URL}/users/`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -78,15 +76,13 @@ export function useUser() {
           userData: userData,
           mechanicData: mechanicData,
         }),
-      });
-
-      const data = await response.json();
+      }).then((response) => response.json());
 
       if (data.success) {
         setCurrentUser(newUserData);
         return true;
       }
-      console.error("Error updating user: ", data.message);
+      console.log("Error updating user: ", data.message);
       return false;
     } catch (error) {
       console.error("Error ehile updating user: ", error);
@@ -96,15 +92,13 @@ export function useUser() {
 
   const deleteUser = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/users/`, {
+      const data = await fetch(`${API_BASE_URL}/users/`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + jwt,
         },
-      });
-
-      const data = await response.json();
+      }).then((response) => response.json());
 
       if (data.success) {
         resetAllStores();
@@ -119,20 +113,19 @@ export function useUser() {
 
   const getMechanics = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/users/mechanics`, {
+      const data = await fetch(`${API_BASE_URL}/users/mechanics`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + jwt,
         },
-      });
-      const data = await response.json();
+      }).then((response) => response.json());
 
       if (data.success) {
         setMechanics(data.mechanics);
         return true;
       }
-      console.error("Error fetching mechanics: ", data.message);
+      console.log("Error fetching mechanics: ", data.message);
       return false;
     } catch (error) {
       console.error("Error while fetching mechanics: ", error);

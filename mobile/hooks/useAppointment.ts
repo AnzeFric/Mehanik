@@ -13,7 +13,7 @@ export function useAppointment() {
     appointmentData: AppointmentData
   ) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/appointments`, {
+      const data = await fetch(`${API_BASE_URL}/appointments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -24,9 +24,7 @@ export function useAppointment() {
           mechanicEmail: mechanicEmail,
           appointmentData: appointmentData,
         }),
-      });
-
-      const data = await response.json();
+      }).then((response) => response.json());
 
       if (data.success) {
         return true;
@@ -40,15 +38,13 @@ export function useAppointment() {
 
   const getMechanicAppointments = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/appointments/get`, {
+      const data = await fetch(`${API_BASE_URL}/appointments/get`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + jwt,
         },
-      });
-
-      const data = await response.json();
+      }).then((response) => response.json());
 
       if (data.success) {
         // Convert date strings to Date objects
@@ -71,16 +67,14 @@ export function useAppointment() {
 
   const getPrivateMechanicAppointments = async (mechanicEmail: string) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/appointments/get`, {
+      const data = await fetch(`${API_BASE_URL}/appointments/get`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + jwt,
         },
         body: JSON.stringify({ mechanicEmail }),
-      });
-
-      const data = await response.json();
+      }).then((response) => response.json());
 
       if (data.success) {
         // Convert date strings to Date objects
@@ -104,15 +98,13 @@ export function useAppointment() {
 
   const getUserAppointments = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/appointments/`, {
+      const data = await fetch(`${API_BASE_URL}/appointments/`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + jwt,
         },
-      });
-
-      const data = await response.json();
+      }).then((response) => response.json());
 
       if (data.success) {
         // Convert date strings to Date objects
@@ -138,7 +130,7 @@ export function useAppointment() {
     sentFrom: SentFromType
   ) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/appointments/`, {
+      const data = await fetch(`${API_BASE_URL}/appointments/`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -148,9 +140,7 @@ export function useAppointment() {
           appointmentData: appointmentData,
           sentFrom: sentFrom,
         }),
-      });
-
-      const data = await response.json();
+      }).then((response) => response.json());
 
       if (data.success) {
         return true;
@@ -164,16 +154,14 @@ export function useAppointment() {
 
   const deleteAppointment = async (appointmentUuid: string) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/appointments/`, {
+      const data = await fetch(`${API_BASE_URL}/appointments/`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + jwt,
         },
         body: JSON.stringify({ appointmentUuid: appointmentUuid }),
-      });
-
-      const data = await response.json();
+      }).then((response) => response.json());
 
       if (data.success) {
         return true;

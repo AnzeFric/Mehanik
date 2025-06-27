@@ -10,7 +10,7 @@ export function usePushNotification() {
 
   const savePushToken = async (pushToken: string) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/notifications`, {
+      const data = await fetch(`${API_BASE_URL}/notifications`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -20,9 +20,7 @@ export function usePushNotification() {
           pushToken: pushToken,
           platform: Platform.OS,
         }),
-      });
-
-      const data = await response.json();
+      }).then((response) => response.json());
 
       if (data.success) {
         return true;
@@ -94,9 +92,10 @@ export function usePushNotification() {
     });
     const pushToken = await registerForPushNotificationsAsync();
     if (pushToken) {
-      const success = await savePushToken(pushToken);
+      await savePushToken(pushToken);
     }
   };
+
   return {
     savePushToken,
     initializeNotifications,
