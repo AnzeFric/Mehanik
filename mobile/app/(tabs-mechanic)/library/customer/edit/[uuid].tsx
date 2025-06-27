@@ -1,5 +1,5 @@
 import { View, Alert } from "react-native";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import CustomerForm from "@/components/mechanic/library/forms/CustomerForm";
 import TemplateView from "@/components/mechanic/library/TemplateView";
 import { CustomerData } from "@/interfaces/customer";
@@ -33,26 +33,38 @@ export default function EditCustomerScreen() {
     }, [customers, uuid])
   );
 
+  const canSave: boolean = useMemo(() => {
+    return Boolean(
+      currentCustomer &&
+        currentVehicle &&
+        currentCustomer.firstName &&
+        currentCustomer.lastName &&
+        currentVehicle.brand &&
+        currentVehicle.model &&
+        currentVehicle.vin
+    );
+  }, [currentCustomer, currentVehicle]);
+
   const handleSaveEdit = async () => {
-    if (currentCustomer && currentVehicle) {
-      const finalVehicleData = {
-        ...currentVehicle,
-        image: currentImage || null,
-      };
-
-      var result = await updateCustomerVehicle(
-        currentCustomer,
-        finalVehicleData
-      );
-
-      if (!result) {
-        Alert.alert(
-          "Napaka",
-          "Prišlo je do napake pri posodabljanju podatkov. Poskusite ponovno kasneje"
-        );
-      }
-      router.replace("/(tabs-mechanic)/library");
+    if (!canSave || !currentCustomer || !currentVehicle) {
+      Alert.alert("Napaka", "Izpolniti morate vsa obvezna polja");
+      return;
     }
+
+    const finalVehicleData = {
+      ...currentVehicle,
+      image: currentImage || null,
+    };
+
+    var result = await updateCustomerVehicle(currentCustomer, finalVehicleData);
+
+    if (!result) {
+      Alert.alert(
+        "Napaka",
+        "Prišlo je do napake pri posodabljanju podatkov. Poskusite ponovno kasneje"
+      );
+    }
+    router.replace("/(tabs-mechanic)/library");
   };
 
   return (
