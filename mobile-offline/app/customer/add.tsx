@@ -73,12 +73,8 @@ export default function AddCustomerScreen() {
 
   return (
     <ThemedView type={"background"} style={{ flex: 1 }}>
-      <TitleRow title={"Dodaj stranko"} hasBackButton={true} />
-      <ScrollView
-        style={styles.childrenContainer}
-        contentContainerStyle={{ gap: 25 }}
-        ref={scrollRef}
-      >
+      <ScrollView contentContainerStyle={styles.container} ref={scrollRef}>
+        <TitleRow title={"Dodaj stranko"} hasBackButton={true} />
         <ImageForm setImage={setVehicleImage} />
         <View>
           <ThemedText type={"title"} bold>
@@ -115,8 +111,9 @@ export default function AddCustomerScreen() {
 }
 
 const styles = StyleSheet.create({
-  childrenContainer: {
+  container: {
+    gap: 25,
+    paddingVertical: 20,
     paddingHorizontal: 25,
-    marginTop: 20,
   },
 });
