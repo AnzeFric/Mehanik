@@ -1,20 +1,20 @@
 import { View, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { router } from "expo-router";
-import { CustomerVehicleData } from "@/interfaces/customer";
+import { CustomerFormData } from "@/interfaces/customer";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedText from "@/components/global/themed/ThemedText";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 
 interface Props {
-  customerData: CustomerVehicleData;
+  customer: CustomerFormData;
 }
 
-export default function Customer({ customerData }: Props) {
+export default function Customer({ customer }: Props) {
   const { staticColors } = useAnimatedTheme();
 
   const handlePress = () => {
     router.push(
-      `/customer/${customerData.vehicle.uuid}?firstName=${customerData.customer.firstName}`
+      `/customer/${customer.customer.id}?firstName=${customer.customer.firstName}`
     );
   };
 
@@ -28,9 +28,9 @@ export default function Customer({ customerData }: Props) {
         activeOpacity={0.7}
         onPress={handlePress}
       >
-        {customerData.vehicle.image ? (
+        {customer.vehicle.image ? (
           <Image
-            source={{ uri: customerData.vehicle.image }}
+            source={{ uri: customer.vehicle.image }}
             style={styles.image}
           />
         ) : (
@@ -41,20 +41,18 @@ export default function Customer({ customerData }: Props) {
         )}
         <View style={{ flex: 1 }}>
           <ThemedText type={"small"} bold>
-            {customerData.customer.firstName} {customerData.customer.lastName}
+            {customer.customer.firstName} {customer.customer.lastName}
           </ThemedText>
           <ThemedText type={"extraSmall"}>
-            {customerData.vehicle.brand} {customerData.vehicle.model}
-            {customerData.vehicle.buildYear && (
+            {customer.vehicle.brand} {customer.vehicle.model}
+            {customer.vehicle.buildYear && (
               <>
                 {", "}
-                {customerData.vehicle.buildYear}
+                {customer.vehicle.buildYear}
               </>
             )}
           </ThemedText>
-          <ThemedText type={"extraSmall"}>
-            {customerData.vehicle.vin}
-          </ThemedText>
+          <ThemedText type={"extraSmall"}>{customer.vehicle.vin}</ThemedText>
         </View>
       </TouchableOpacity>
     </ThemedView>

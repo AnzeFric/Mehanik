@@ -51,7 +51,7 @@ export default function HomeScreen() {
       <DisplayItems
         list={filteredData}
         renderItem={(customer, index) => (
-          <Customer customerData={customer} key={index} />
+          <Customer customer={customer} key={index} />
         )}
         emptyMessage="Stranke ne obstajajo."
       />
