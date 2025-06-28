@@ -66,14 +66,12 @@ export default function EditCustomerScreen() {
       buttonText={"Uredi"}
       onButtonPress={handleSaveEdit}
     >
-      <View style={{ paddingHorizontal: 25 }}>
-        <ImageForm image={currentImage} setImage={setCurrentImage} />
-        <CustomerForm
-          customer={currentCustomer}
-          setCustomer={setCurrentCustomer}
-        />
-        <VehicleForm vehicle={currentVehicle} setVehicle={setCurrentVehicle} />
-      </View>
+      <ImageForm image={currentImage} setImage={setCurrentImage} />
+      <CustomerForm
+        customer={currentCustomer}
+        setCustomer={setCurrentCustomer}
+      />
+      <VehicleForm vehicle={currentVehicle} setVehicle={setCurrentVehicle} />
     </TemplateView>
   );
 }

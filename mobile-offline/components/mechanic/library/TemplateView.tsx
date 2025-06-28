@@ -47,17 +47,17 @@ export default function TemplateView({
         menuButton={menuIcon}
       />
       <View>{isMenuVisible && menu}</View>
-      <ScrollView ref={scrollRef}>
+      <ScrollView ref={scrollRef} showsVerticalScrollIndicator={false}>
         {children}
         {buttonText ? (
           <ThemedButton
             buttonType={"small"}
             buttonText={buttonText}
             onPress={onButtonPress}
-            buttonStyle={styles.button}
+            buttonStyle={{ marginVertical: 20 }}
           />
         ) : (
-          <View style={styles.button} />
+          <View style={{ marginVertical: 20 }} />
         )}
       </ScrollView>
     </ThemedView>
@@ -70,8 +70,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     paddingVertical: 20,
     gap: 15,
-  },
-  button: {
-    margin: 25,
   },
 });
