@@ -4,6 +4,9 @@ import { CustomerFormData } from "@/interfaces/customer";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedText from "@/components/global/themed/ThemedText";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import { useState } from "react";
+import ModalPrompt from "@/components/global/modals/ModalPrompt";
+import useDataStore from "@/stores/useDataStore";
 
 interface Props {
   customer: CustomerFormData;
@@ -11,12 +14,19 @@ interface Props {
 
 export default function Customer({ customer }: Props) {
   const { staticColors } = useAnimatedTheme();
+  const { deleteCustomer } = useDataStore();
 
-  const handlePress = () => {
-    console.log("Sending: ", customer);
+  const [showDelete, setShowDelete] = useState(false);
+
+  const toCustomerDetails = () => {
     router.push(
       `/customer/${customer.id}?firstName=${customer.customer.firstName}`
     );
+  };
+
+  const handleDeleteCustomer = () => {
+    deleteCustomer(customer.id);
+    setShowDelete(false);
   };
 
   return (
@@ -27,7 +37,10 @@ export default function Customer({ customer }: Props) {
           { borderLeftColor: staticColors.specialBlue },
         ]}
         activeOpacity={0.7}
-        onPress={handlePress}
+        onPress={toCustomerDetails}
+        onLongPress={() => {
+          setShowDelete(true);
+        }}
       >
         {customer.vehicle.image ? (
           <Image
@@ -56,6 +69,17 @@ export default function Customer({ customer }: Props) {
           <ThemedText type={"extraSmall"}>{customer.vehicle.vin}</ThemedText>
         </View>
       </TouchableOpacity>
+
+      {showDelete && (
+        <ModalPrompt
+          isVisible={true}
+          message={"Stranka bo trajno izbrisana"}
+          onConfirm={handleDeleteCustomer}
+          onCancel={() => {
+            setShowDelete(false);
+          }}
+        />
+      )}
     </ThemedView>
   );
 }

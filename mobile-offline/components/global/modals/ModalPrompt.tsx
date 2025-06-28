@@ -17,7 +17,12 @@ export default function ModalPrompt({
   onCancel,
 }: Props) {
   return (
-    <Modal transparent={true} visible={isVisible} onRequestClose={onCancel}>
+    <Modal
+      transparent={true}
+      visible={isVisible}
+      onRequestClose={onCancel}
+      animationType={"fade"}
+    >
       <View style={styles.centeredView}>
         <ThemedView type={"primary"} style={styles.modalView}>
           <ThemedText type={"normal"} style={styles.modalText}>

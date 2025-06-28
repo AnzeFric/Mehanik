@@ -32,7 +32,7 @@ export default function HomeScreen() {
           .toLowerCase()
           .includes(search.toLowerCase())
     );
-  }, [search]);
+  }, [search, customers]);
 
   useFocusEffect(
     useCallback(() => {
