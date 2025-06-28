@@ -5,6 +5,7 @@ import TemplateView from "@/components/mechanic/library/TemplateView";
 import { router, useLocalSearchParams } from "expo-router";
 import useDataStore from "@/stores/useDataStore";
 import { CustomerFormData } from "@/interfaces/customer";
+import uuid from "react-native-uuid";
 
 export default function AddRepairScreen() {
   const { id } = useLocalSearchParams(); // Customer id
@@ -15,14 +16,18 @@ export default function AddRepairScreen() {
 
   const handleSaveRepair = async () => {
     if (repairData) {
+      const newRepair: RepairData = {
+        ...repairData,
+        uuid: uuid.v4(),
+      };
       const updatedCustomers: Array<CustomerFormData> = customers.map(
         (customer) =>
           customer.id === parseInt(id.toString())
             ? {
                 ...customer,
                 repair: customer.repair
-                  ? [...customer.repair, repairData]
-                  : [repairData],
+                  ? [...customer.repair, newRepair]
+                  : [newRepair],
               }
             : customer
       );
