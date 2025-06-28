@@ -60,7 +60,7 @@ export default function AddCustomerScreen() {
         ...vehicleData,
         image: vehicleImage,
       },
-      repair: repairData,
+      repair: repairData ? [repairData] : null,
     };
 
     const newCustomers = customers;

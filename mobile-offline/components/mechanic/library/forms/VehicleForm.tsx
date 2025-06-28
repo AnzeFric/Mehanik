@@ -13,7 +13,7 @@ interface Props {
 export default function VehicleForm({ vehicle, setVehicle }: Props) {
   const [brand, setBrand] = useState("");
   const [model, setModel] = useState("");
-  const [vin, setVin] = useState("");
+  const [vin, setVin] = useState<string | null>("");
   const [buildYear, setBuildYear] = useState<string | null>("");
   const [description, setDescription] = useState<string | null>("");
 
@@ -22,7 +22,7 @@ export default function VehicleForm({ vehicle, setVehicle }: Props) {
     if (vehicle) {
       setBrand(vehicle.brand);
       setModel(vehicle.model);
-      setVin(vehicle.vin);
+      setVin(vehicle.vin ? vehicle.vin : null);
       setBuildYear(vehicle.buildYear ? vehicle.buildYear.toString() : null);
       setDescription(vehicle.description);
     }
@@ -32,7 +32,6 @@ export default function VehicleForm({ vehicle, setVehicle }: Props) {
   const updateParent = useCallback(
     (updates: Partial<VehicleData>) => {
       const vehicleData: VehicleData = {
-        uuid: vehicle?.uuid || "",
         brand: brand,
         model: model,
         buildYear: buildYear ? parseInt(buildYear, 10) : null,
@@ -126,8 +125,8 @@ export default function VehicleForm({ vehicle, setVehicle }: Props) {
       />
       <ThemedTextInput
         style={styles.input}
-        placeholder={"VIN"}
-        value={vin}
+        placeholder={"VIN (ni obvezno)"}
+        value={vin || ""}
         onChangeText={handleVinChange}
         autoCapitalize={"characters"}
       />

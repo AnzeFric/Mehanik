@@ -43,8 +43,7 @@ export default function EditCustomerScreen() {
         currentCustomer.firstName &&
         currentCustomer.lastName &&
         currentVehicle.brand &&
-        currentVehicle.model &&
-        currentVehicle.vin
+        currentVehicle.model
     );
   }, [currentCustomer, currentVehicle]);
 

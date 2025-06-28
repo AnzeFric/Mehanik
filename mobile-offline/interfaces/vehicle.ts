@@ -2,7 +2,7 @@ export interface VehicleData {
   brand: string;
   model: string;
   buildYear: number | null;
-  vin: string;
+  vin: string | null;
   image: string | null;
   description: string | null;
 }
