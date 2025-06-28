@@ -26,7 +26,7 @@ export default function HomeScreen() {
           .includes(search.toLowerCase()) ||
         customer.vehicle.brand.toLowerCase().includes(search.toLowerCase()) ||
         customer.vehicle.model.toLowerCase().includes(search.toLowerCase()) ||
-        customer.vehicle.vin.toLowerCase().includes(search.toLowerCase()) ||
+        customer.vehicle.vin?.toLowerCase().includes(search.toLowerCase()) ||
         customer.vehicle.buildYear
           ?.toString()
           .toLowerCase()
