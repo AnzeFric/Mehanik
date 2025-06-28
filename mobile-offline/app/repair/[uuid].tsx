@@ -13,9 +13,9 @@ import {
   formatRepairItems,
   formatCurrency,
 } from "@/constants/util";
-import ModalPrompt from "@/components/shared/modals/ModalPrompt";
+import ModalPrompt from "@/components/global/modals/ModalPrompt";
 import LoadingScreen from "@/components/global/LoadingScreen";
-import TitleRow from "@/components/shared/TitleRow";
+import TitleRow from "@/components/global/TitleRow";
 import useCustomerStore from "@/stores/accounts/useCustomerStore";
 import ImageView from "react-native-image-viewing";
 import ThemedView from "@/components/global/themed/ThemedView";

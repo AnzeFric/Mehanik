@@ -1,6 +1,6 @@
 import ThemedText from "@/components/global/themed/ThemedText";
 import ThemedView from "@/components/global/themed/ThemedView";
-import TitleRow from "@/components/shared/TitleRow";
+import TitleRow from "@/components/global/TitleRow";
 import { Link } from "expo-router";
 import { View, StyleSheet } from "react-native";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
