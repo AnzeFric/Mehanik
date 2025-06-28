@@ -13,7 +13,7 @@ import {
   formatRepairItems,
   formatCurrency,
 } from "@/constants/util";
-import ModalPrompt from "@/components/global/modals/ModalPrompt";
+import ModalPrompt from "@/components/global/ModalPrompt";
 import LoadingScreen from "@/components/global/LoadingScreen";
 import TitleRow from "@/components/global/TitleRow";
 import ImageView from "react-native-image-viewing";

@@ -5,7 +5,7 @@ import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedText from "@/components/global/themed/ThemedText";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 import { useState } from "react";
-import ModalPrompt from "@/components/global/modals/ModalPrompt";
+import ModalPrompt from "@/components/global/ModalPrompt";
 import useDataStore from "@/stores/useDataStore";
 
 interface Props {

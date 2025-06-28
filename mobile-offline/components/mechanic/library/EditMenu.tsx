@@ -6,14 +6,14 @@ import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 
 interface Props {
   onEditPress: () => void;
-  onDeleteClose: () => void;
+  onExportPress: () => void;
 }
 
-export default function EditMenu({ onEditPress, onDeleteClose }: Props) {
+export default function EditMenu({ onEditPress, onExportPress }: Props) {
   const { staticColors } = useAnimatedTheme();
 
   return (
-    <ThemedView type={"secondary"} style={styles.menuContainer}>
+    <ThemedView type={"background"} style={styles.menuContainer}>
       <TouchableOpacity
         style={[
           styles.menuItemContainer,
@@ -22,7 +22,11 @@ export default function EditMenu({ onEditPress, onDeleteClose }: Props) {
         ]}
         onPress={onEditPress}
       >
-        <Ionicons name="create" size={18} color={staticColors.blueIcon} />
+        <Ionicons
+          name={"create-outline"}
+          size={18}
+          color={staticColors.blueIcon}
+        />
         <ThemedText type={"small"} bold style={styles.menuItem}>
           UREDI
         </ThemedText>
@@ -30,15 +34,15 @@ export default function EditMenu({ onEditPress, onDeleteClose }: Props) {
 
       <TouchableOpacity
         style={styles.menuItemContainer}
-        onPress={onDeleteClose}
+        onPress={onExportPress}
       >
         <Ionicons
-          name="trash-outline"
+          name={"download-outline"}
           size={18}
           color={staticColors.iconDestroy}
         />
         <ThemedText type={"small"} bold style={styles.menuItem}>
-          IZBRIŠI
+          IZVOZI
         </ThemedText>
       </TouchableOpacity>
     </ThemedView>
@@ -48,8 +52,8 @@ export default function EditMenu({ onEditPress, onDeleteClose }: Props) {
 const styles = StyleSheet.create({
   menuContainer: {
     position: "absolute",
-    right: 20,
-    top: -10,
+    right: 0,
+    top: -15,
     width: 180,
     borderRadius: 12,
     shadowColor: "#000",

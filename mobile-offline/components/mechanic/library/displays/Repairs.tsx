@@ -4,14 +4,14 @@ import { RepairData } from "@/interfaces/repair";
 import ThemedText from "@/components/global/themed/ThemedText";
 
 interface Props {
-  repairList: RepairData[];
+  repairList: RepairData[] | null;
   vehicleId: number;
 }
 
 export default function RepairsDisplay({ repairList, vehicleId }: Props) {
   return (
     <View style={styles.container}>
-      {repairList.length > 0 ? (
+      {repairList && repairList.length > 0 ? (
         repairList.map((repair, index) => (
           <Repair repairData={repair} vehicleId={vehicleId} key={index} />
         ))

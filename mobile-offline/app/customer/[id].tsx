@@ -4,10 +4,8 @@ import { useLocalSearchParams, router, useFocusEffect } from "expo-router";
 import VehicleDisplay from "@/components/mechanic/library/displays/Vehicle";
 import RepairsDisplay from "@/components/mechanic/library/displays/Repairs";
 import TemplateView from "@/components/mechanic/library/TemplateView";
-import ModalPrompt from "@/components/global/modals/ModalPrompt";
 import PlusButton from "@/components/global/PlusButton";
 import CustomerDisplay from "@/components/mechanic/library/displays/Customer";
-import { RepairData } from "@/interfaces/repair";
 import useDataStore from "@/stores/useDataStore";
 import ThemedIcon from "@/components/global/themed/ThemedIcon";
 import ThemedText from "@/components/global/themed/ThemedText";
@@ -19,10 +17,8 @@ export default function DetailCustomerScreen() {
 
   const { customers } = useDataStore();
 
-  const [repairList, setRepairList] = useState<Array<RepairData>>([]);
   const [customer, setCustomer] = useState<CustomerFormData>();
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const intId = parseInt(id.toString());
@@ -33,7 +29,6 @@ export default function DetailCustomerScreen() {
   useFocusEffect(
     useCallback(() => {
       setIsMenuVisible(false);
-      setIsModalOpen(false);
     }, [])
   );
 
@@ -41,10 +36,8 @@ export default function DetailCustomerScreen() {
     router.push(`/repair/add/${id}`);
   };
 
-  const handleDeleteCustomer = async () => {
-    setIsModalOpen(false);
-
-    router.back();
+  const exportCustomer = () => {
+    // TODO: export customer to gmail
   };
 
   return (
@@ -56,7 +49,7 @@ export default function DetailCustomerScreen() {
         menu={
           <EditMenu
             onEditPress={() => router.push(`/customer/edit/${id}`)}
-            onDeleteClose={() => setIsModalOpen(true)}
+            onExportPress={exportCustomer}
           />
         }
         menuIcon={
@@ -76,17 +69,10 @@ export default function DetailCustomerScreen() {
           )}
         </View>
         <ThemedText type={"title"}>Narejeni servisi</ThemedText>
-
-        {customer?.vehicle && (
-          <RepairsDisplay repairList={repairList} vehicleId={customer.id} />
-        )}
-
-        {isModalOpen && (
-          <ModalPrompt
-            isVisible={isModalOpen}
-            message={"Trajno boste izbrisali uporabnika. Ste prepričani?"}
-            onCancel={() => setIsModalOpen(false)}
-            onConfirm={handleDeleteCustomer}
+        {customer && (
+          <RepairsDisplay
+            repairList={customer.repair}
+            vehicleId={customer.id}
           />
         )}
       </TemplateView>

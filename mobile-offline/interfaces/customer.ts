@@ -12,5 +12,5 @@ export interface CustomerFormData {
   id: number;
   customer: CustomerData;
   vehicle: VehicleData;
-  repair: RepairData | null;
+  repair: Array<RepairData> | null;
 }
