@@ -20,7 +20,7 @@ export default function Repair({ repairData, vehicleId }: Props) {
   };
 
   return (
-    <ThemedView type={"primary"} style={{ borderRadius: 4 }}>
+    <ThemedView type={"secondary"} style={{ borderRadius: 4 }}>
       <TouchableOpacity
         style={styles.container}
         activeOpacity={0.7}

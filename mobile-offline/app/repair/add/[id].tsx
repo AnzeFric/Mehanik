@@ -1,18 +1,34 @@
-import { View } from "react-native";
 import { useState } from "react";
 import RepairForm from "@/components/mechanic/library/forms/RepairForm";
 import { RepairData } from "@/interfaces/repair";
 import TemplateView from "@/components/mechanic/library/TemplateView";
 import { router, useLocalSearchParams } from "expo-router";
+import useDataStore from "@/stores/useDataStore";
+import { CustomerFormData } from "@/interfaces/customer";
 
 export default function AddRepairScreen() {
-  const { uuid } = useLocalSearchParams(); // Vehicle uuid
+  const { id } = useLocalSearchParams(); // Customer id
+
+  const { customers, setCustomers } = useDataStore();
 
   const [repairData, setRepairData] = useState<RepairData | null>(null);
 
   const handleSaveRepair = async () => {
-    // TODO: Save
-    router.back();
+    if (repairData) {
+      const updatedCustomers: Array<CustomerFormData> = customers.map(
+        (customer) =>
+          customer.id === parseInt(id.toString())
+            ? {
+                ...customer,
+                repair: customer.repair
+                  ? [...customer.repair, repairData]
+                  : [repairData],
+              }
+            : customer
+      );
+      setCustomers(updatedCustomers);
+      router.back();
+    }
   };
 
   return (
@@ -22,9 +38,7 @@ export default function AddRepairScreen() {
       buttonText={"Shrani"}
       onButtonPress={handleSaveRepair}
     >
-      <View style={{ paddingHorizontal: 25 }}>
-        <RepairForm repair={null} setRepair={setRepairData} />
-      </View>
+      <RepairForm repair={null} setRepair={setRepairData} />
     </TemplateView>
   );
 }
