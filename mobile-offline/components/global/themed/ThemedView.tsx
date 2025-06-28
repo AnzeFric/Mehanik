@@ -1,45 +1,22 @@
-import { View, ViewProps, Animated } from "react-native";
+import { View, ViewProps } from "react-native";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 
 type ViewTypes = "background" | "primary" | "secondary";
 
 type Props = ViewProps & {
   type: ViewTypes;
-  animatedTheme?: boolean;
 };
 
-export default function ThemedView({
-  type,
-  animatedTheme = false,
-  style,
-  ...props
-}: Props) {
-  const { animated, staticColors } = useAnimatedTheme();
+export default function ThemedView({ type, style, ...props }: Props) {
+  const { staticColors } = useAnimatedTheme();
 
-  const animatedTypeToColor: Record<
-    ViewTypes,
-    Animated.AnimatedInterpolation<string | number>
-  > = {
-    background: animated.backgroundColor,
-    primary: animated.primaryBackground,
-    secondary: animated.secondaryBackground,
-  };
-
-  const staticTypeToColor: Record<ViewTypes, string> = {
+  const typeToColor: Record<ViewTypes, string> = {
     background: staticColors.background,
     primary: staticColors.primaryBackground,
     secondary: staticColors.secondaryBackground,
   };
 
-  return animatedTheme ? (
-    <Animated.View
-      style={[style, { backgroundColor: animatedTypeToColor[type] }]}
-      {...props}
-    />
-  ) : (
-    <View
-      style={[style, { backgroundColor: staticTypeToColor[type] }]}
-      {...props}
-    />
+  return (
+    <View style={[style, { backgroundColor: typeToColor[type] }]} {...props} />
   );
 }
