@@ -1,7 +1,7 @@
 import { View, ScrollView, StyleSheet } from "react-native";
 import { useState, useCallback, useRef, useMemo } from "react";
 import { router, useFocusEffect } from "expo-router";
-import { CustomerData } from "@/interfaces/customer";
+import { CustomerData, CustomerFormData } from "@/interfaces/customer";
 import { VehicleData } from "@/interfaces/vehicle";
 import { RepairData } from "@/interfaces/repair";
 import TitleRow from "@/components/global/TitleRow";
@@ -12,8 +12,11 @@ import VehicleForm from "@/components/mechanic/library/forms/VehicleForm";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedText from "@/components/global/themed/ThemedText";
 import ThemedButton from "@/components/global/themed/ThemedButton";
+import useDataStore from "@/stores/useDataStore";
 
 export default function AddCustomerScreen() {
+  const { customers, setCustomers } = useDataStore();
+
   const [repairData, setRepairData] = useState<RepairData | null>(null);
   const [vehicleImage, setVehicleImage] = useState("");
   const [customerData, setCustomerData] = useState<CustomerData>({
@@ -47,17 +50,24 @@ export default function AddCustomerScreen() {
     );
   }, [customerData, vehicleData]);
 
-  const handlePress = async () => {
+  const saveCustomer = async () => {
     if (!canSave) {
       return;
     }
 
-    const finalVehicleData = {
-      ...vehicleData,
-      image: vehicleImage || null,
+    const newCustomer: CustomerFormData = {
+      customer: customerData,
+      vehicle: {
+        ...vehicleData,
+        image: vehicleImage,
+      },
+      repair: repairData,
     };
 
-    // TODO: Save data
+    const newCustomers = customers;
+    newCustomers.push(newCustomer);
+
+    setCustomers(newCustomers);
     router.push(`/`);
   };
 
@@ -100,10 +110,9 @@ export default function AddCustomerScreen() {
         <ThemedButton
           buttonType={"small"}
           buttonText={"Dodaj"}
-          onPress={handlePress}
+          onPress={saveCustomer}
           selected={canSave}
           disabled={!canSave}
-          buttonStyle={{ marginBottom: 20 }}
         />
       </ScrollView>
     </ThemedView>
