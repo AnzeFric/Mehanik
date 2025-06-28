@@ -9,14 +9,14 @@ import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 
 interface Props {
   repairData: RepairData;
-  vehicleUuid: string;
+  vehicleId: number;
 }
 
-export default function Repair({ repairData, vehicleUuid }: Props) {
+export default function Repair({ repairData, vehicleId }: Props) {
   const { staticColors } = useAnimatedTheme();
 
   const handleRedirect = () => {
-    router.push(`/repair/${vehicleUuid}`);
+    router.push(`/repair/${vehicleId}`);
   };
 
   return (

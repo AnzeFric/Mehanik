@@ -4,7 +4,6 @@ import RepairForm from "@/components/mechanic/library/forms/RepairForm";
 import { RepairData } from "@/interfaces/repair";
 import TemplateView from "@/components/mechanic/library/TemplateView";
 import { router, useLocalSearchParams } from "expo-router";
-import useDataStore from "@/stores/useDataStore";
 
 export default function AddRepairScreen() {
   const { uuid } = useLocalSearchParams(); // Vehicle uuid

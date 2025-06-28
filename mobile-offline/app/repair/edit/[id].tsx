@@ -1,19 +1,14 @@
 import { View } from "react-native";
 import TemplateView from "@/components/mechanic/library/TemplateView";
 import RepairForm from "@/components/mechanic/library/forms/RepairForm";
-import { useCallback, useState } from "react";
-import { RepairData } from "@/interfaces/repair";
-import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
-import useDataStore from "@/stores/useDataStore";
+import { useLocalSearchParams } from "expo-router";
 
 export default function EditRepairScreen() {
   const { id } = useLocalSearchParams(); // Customer id
 
-  const { customers } = useDataStore();
-
   const handleEditRepair = async () => {
     // TODO: Update
-    router.replace(`/(tabs)`);
+    console.log("Edit repair");
   };
 
   return (

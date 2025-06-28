@@ -1,5 +1,5 @@
 export interface RepairData {
-  uuid: string;
+  id: number;
   type: "small" | "large" | "other";
   price: number | null;
   date: Date;

@@ -2,7 +2,7 @@ import { RepairData } from "./repair";
 import { VehicleData } from "./vehicle";
 
 export interface CustomerData {
-  uuid: string;
+  id: number;
   firstName: string;
   lastName: string;
   email: string | null;

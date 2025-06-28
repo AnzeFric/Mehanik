@@ -16,7 +16,7 @@ import EditMenu from "@/components/mechanic/library/EditMenu";
 import { CustomerFormData } from "@/interfaces/customer";
 
 export default function DetailCustomerScreen() {
-  const { id, firstName } = useLocalSearchParams(); // Vehicle uuid
+  const { id, firstName } = useLocalSearchParams(); // Customer id
 
   const { customers } = useDataStore();
 
@@ -87,7 +87,7 @@ export default function DetailCustomerScreen() {
               ) : (
                 <RepairsDisplay
                   repairList={repairList}
-                  vehicleUuid={customer.vehicle.uuid}
+                  vehicleId={customer.vehicle.id}
                 />
               )}
 

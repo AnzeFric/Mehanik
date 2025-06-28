@@ -6,11 +6,11 @@ import { CustomerData } from "@/interfaces/customer";
 import { VehicleData } from "@/interfaces/vehicle";
 import VehicleForm from "@/components/mechanic/library/forms/VehicleForm";
 import ImageForm from "@/components/mechanic/library/forms/ImageForm";
-import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
+import { useFocusEffect, useLocalSearchParams } from "expo-router";
 import useDataStore from "@/stores/useDataStore";
 
 export default function EditCustomerScreen() {
-  const { uuid } = useLocalSearchParams(); // Vehicle uuid
+  const { id } = useLocalSearchParams(); // Customer id
 
   const { customers } = useDataStore();
 
@@ -21,7 +21,7 @@ export default function EditCustomerScreen() {
   useFocusEffect(
     useCallback(() => {
       const foundCustomerVehicle = customers.find(
-        (item) => item.vehicle.uuid === uuid
+        (item) => item.customer.id === parseInt(id.toString())
       );
 
       if (foundCustomerVehicle) {
@@ -29,7 +29,7 @@ export default function EditCustomerScreen() {
         setCurrentVehicle(foundCustomerVehicle.vehicle);
         setCurrentImage(foundCustomerVehicle.vehicle.image || "");
       }
-    }, [customers, uuid])
+    }, [customers, id])
   );
 
   const canSave: boolean = useMemo(() => {
@@ -56,8 +56,7 @@ export default function EditCustomerScreen() {
     };
 
     // TODO: Update
-
-    router.replace("/(tabs)");
+    console.log("Save edit");
   };
 
   return (
