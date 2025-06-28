@@ -46,11 +46,7 @@ export default function HomeScreen() {
     <ThemedView type={"background"} style={{ flex: 1 }}>
       <View style={styles.header}>
         <TitleRow title={"Knjižnica servisov"} hasBackButton={false} />
-        <ThemedSearchInput
-          value={search}
-          onChangeText={setSearch}
-          viewStyle={{ marginHorizontal: 25 }}
-        />
+        <ThemedSearchInput value={search} onChangeText={setSearch} />
       </View>
       <DisplayItems
         list={filteredCustomers}
@@ -70,7 +66,8 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   header: {
-    paddingBottom: 10,
-    gap: 15,
+    paddingVertical: 25,
+    paddingHorizontal: 20,
+    gap: 20,
   },
 });
