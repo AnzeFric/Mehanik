@@ -4,29 +4,15 @@ import RepairForm from "@/components/mechanic/library/forms/RepairForm";
 import { useCallback, useState } from "react";
 import { RepairData } from "@/interfaces/repair";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
-import useCustomerStore from "@/stores/accounts/useCustomerStore";
-import useRepairStore from "@/stores/useRepairStore";
+import useDataStore from "@/stores/useDataStore";
 
 export default function EditRepairScreen() {
-  const { uuid } = useLocalSearchParams(); // Vehicle uuid
+  const { id } = useLocalSearchParams(); // Customer id
 
-  const { setShouldRefetch } = useCustomerStore();
-  const { currentRepairFocus } = useRepairStore();
-
-  const [currentRepair, setCurrentRepair] = useState<RepairData | null>(null);
-
-  useFocusEffect(
-    useCallback(() => {
-      setCurrentRepair(currentRepairFocus);
-    }, [uuid, currentRepairFocus])
-  );
+  const { customers } = useDataStore();
 
   const handleEditRepair = async () => {
-    if (currentRepair) {
-      // TODO: Update
-
-      setShouldRefetch(true);
-    }
+    // TODO: Update
     router.replace(`/(tabs)`);
   };
 
@@ -38,7 +24,7 @@ export default function EditRepairScreen() {
       onButtonPress={handleEditRepair}
     >
       <View style={{ paddingHorizontal: 25 }}>
-        <RepairForm repair={currentRepair} setRepair={setCurrentRepair} />
+        <RepairForm repair={null} setRepair={() => {}} />
       </View>
     </TemplateView>
   );

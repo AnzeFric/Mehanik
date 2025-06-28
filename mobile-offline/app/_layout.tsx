@@ -11,21 +11,18 @@ export default function RootLayout() {
         <Stack>
           <Stack.Screen name="index" options={{ headerShown: false }} />
           <Stack.Screen name="customer/add" options={{ headerShown: false }} />
+          <Stack.Screen name="customer/[id]" options={{ headerShown: false }} />
           <Stack.Screen
-            name="customer/[uuid]"
+            name="customer/edit/[id]"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen name="repair/[id]" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="repair/add/[id]"
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="customer/edit/[uuid]"
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen name="repair/[uuid]" options={{ headerShown: false }} />
-          <Stack.Screen
-            name="repair/add/[uuid]"
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="repair/edit/[uuid]"
+            name="repair/edit/[id]"
             options={{ headerShown: false }}
           />
           <Stack.Screen name="+not-found" options={{ headerShown: false }} />

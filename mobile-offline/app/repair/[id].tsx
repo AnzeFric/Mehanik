@@ -16,7 +16,6 @@ import {
 import ModalPrompt from "@/components/global/modals/ModalPrompt";
 import LoadingScreen from "@/components/global/LoadingScreen";
 import TitleRow from "@/components/global/TitleRow";
-import useCustomerStore from "@/stores/accounts/useCustomerStore";
 import ImageView from "react-native-image-viewing";
 import ThemedView from "@/components/global/themed/ThemedView";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
@@ -24,19 +23,20 @@ import ThemedIcon from "@/components/global/themed/ThemedIcon";
 import EditMenu from "@/components/mechanic/library/EditMenu";
 import ThemedText from "@/components/global/themed/ThemedText";
 import { Ionicons } from "@expo/vector-icons";
-import useRepairStore from "@/stores/useRepairStore";
+import useDataStore from "@/stores/useDataStore";
 
 export default function DetailRepairScreen() {
-  const { uuid } = useLocalSearchParams(); // Vehicle uuid
+  const { id } = useLocalSearchParams(); // Customer id
 
-  const { setShouldRefetch } = useCustomerStore();
-  const { currentRepairFocus } = useRepairStore();
+  const { customers } = useDataStore();
 
   const { staticColors } = useAnimatedTheme();
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
   const [imageViewVisible, setImageViewVisible] = useState(false);
+
+  const currentRepairFocus = customers[0].repair;
 
   const viewImages = useMemo(() => {
     if (currentRepairFocus?.images) {
@@ -54,14 +54,11 @@ export default function DetailRepairScreen() {
   );
 
   const handleDeleteRepairPress = async () => {
-    if (currentRepairFocus) {
-      // TODO: Delete repair
-      setIsMenuVisible(false);
-      setIsModalOpen(false);
+    // TODO: Delete repair
+    setIsMenuVisible(false);
+    setIsModalOpen(false);
 
-      setShouldRefetch(true);
-      router.back();
-    }
+    router.back();
   };
 
   return (
@@ -86,7 +83,7 @@ export default function DetailRepairScreen() {
       <View>
         {isMenuVisible && currentRepairFocus && (
           <EditMenu
-            onEditPress={() => router.push(`/repair/edit/${uuid}`)}
+            onEditPress={() => router.push(`/repair/edit/${id}`)}
             onDeleteClose={() => setIsModalOpen(true)}
           />
         )}

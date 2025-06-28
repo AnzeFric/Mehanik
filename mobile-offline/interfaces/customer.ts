@@ -9,11 +9,6 @@ export interface CustomerData {
   phone: string | null;
 }
 
-export interface CustomerVehicleData {
-  customer: CustomerData;
-  vehicle: VehicleData;
-}
-
 export interface CustomerFormData {
   customer: CustomerData;
   vehicle: VehicleData;

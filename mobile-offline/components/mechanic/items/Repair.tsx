@@ -6,7 +6,6 @@ import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedText from "@/components/global/themed/ThemedText";
 import ThemedIcon from "@/components/global/themed/ThemedIcon";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
-import useRepairStore from "@/stores/useRepairStore";
 
 interface Props {
   repairData: RepairData;
@@ -14,11 +13,9 @@ interface Props {
 }
 
 export default function Repair({ repairData, vehicleUuid }: Props) {
-  const { setCurrentRepairFocus } = useRepairStore();
   const { staticColors } = useAnimatedTheme();
 
   const handleRedirect = () => {
-    setCurrentRepairFocus(repairData);
     router.push(`/repair/${vehicleUuid}`);
   };
 

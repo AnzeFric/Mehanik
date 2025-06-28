@@ -1,30 +1,35 @@
-import { View, StyleSheet, Alert } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useState, useCallback, useEffect } from "react";
 import { useLocalSearchParams, router, useFocusEffect } from "expo-router";
 import VehicleDisplay from "@/components/mechanic/library/displays/Vehicle";
 import RepairsDisplay from "@/components/mechanic/library/displays/Repairs";
-import { CustomerVehicleData } from "@/interfaces/customer";
 import TemplateView from "@/components/mechanic/library/TemplateView";
 import ModalPrompt from "@/components/global/modals/ModalPrompt";
 import PlusButton from "@/components/global/PlusButton";
 import LoadingScreen from "@/components/global/LoadingScreen";
 import CustomerDisplay from "@/components/mechanic/library/displays/Customer";
 import { RepairData } from "@/interfaces/repair";
-import useCustomerStore from "@/stores/accounts/useCustomerStore";
+import useDataStore from "@/stores/useDataStore";
 import ThemedIcon from "@/components/global/themed/ThemedIcon";
 import ThemedText from "@/components/global/themed/ThemedText";
 import EditMenu from "@/components/mechanic/library/EditMenu";
+import { CustomerFormData } from "@/interfaces/customer";
 
 export default function DetailCustomerScreen() {
-  const { uuid, firstName } = useLocalSearchParams(); // Vehicle uuid
+  const { id, firstName } = useLocalSearchParams(); // Vehicle uuid
 
-  const { customers, shouldRefetch, setShouldRefetch } = useCustomerStore();
+  const { customers } = useDataStore();
 
   const [repairList, setRepairList] = useState<Array<RepairData>>([]);
-  const [customer, setCustomer] = useState<CustomerVehicleData>();
+  const [customer, setCustomer] = useState<CustomerFormData>();
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const index = parseInt(id.toString());
+    setCustomer(customers[index]);
+  }, [customers]);
 
   useFocusEffect(
     useCallback(() => {
@@ -34,8 +39,7 @@ export default function DetailCustomerScreen() {
   );
 
   const handleAddRepair = () => {
-    setShouldRefetch(true);
-    router.push(`/repair/add/${uuid}`);
+    router.push(`/repair/add/${id}`);
   };
 
   const handleDeleteCustomer = async () => {
@@ -52,7 +56,7 @@ export default function DetailCustomerScreen() {
         isMenuVisible={isMenuVisible}
         menu={
           <EditMenu
-            onEditPress={() => router.push(`/customer/edit/${uuid}`)}
+            onEditPress={() => router.push(`/customer/edit/${id}`)}
             onDeleteClose={() => setIsModalOpen(true)}
           />
         }

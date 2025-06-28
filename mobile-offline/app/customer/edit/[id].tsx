@@ -7,12 +7,12 @@ import { VehicleData } from "@/interfaces/vehicle";
 import VehicleForm from "@/components/mechanic/library/forms/VehicleForm";
 import ImageForm from "@/components/mechanic/library/forms/ImageForm";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
-import useCustomerStore from "@/stores/accounts/useCustomerStore";
+import useDataStore from "@/stores/useDataStore";
 
 export default function EditCustomerScreen() {
   const { uuid } = useLocalSearchParams(); // Vehicle uuid
 
-  const { customers } = useCustomerStore();
+  const { customers } = useDataStore();
 
   const [currentCustomer, setCurrentCustomer] = useState<CustomerData>();
   const [currentVehicle, setCurrentVehicle] = useState<VehicleData>();
