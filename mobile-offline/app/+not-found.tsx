@@ -9,10 +9,10 @@ export default function NotFoundScreen() {
   const { staticColors } = useAnimatedTheme();
 
   return (
-    <ThemedView type={"background"} style={{ flex: 1 }}>
-      <TitleRow title={"Screen does not exist"} hasBackButton={true} />
-      <View style={styles.container}>
-        <ThemedText type={"normal"}>This screen doesn't exist</ThemedText>
+    <ThemedView type={"background"} style={styles.container}>
+      <TitleRow title={"Not found"} hasBackButton={false} />
+      <View style={styles.contentContainer}>
+        <ThemedText type={"normal"}>This screen does not exist</ThemedText>
         <Link href="/" style={styles.link}>
           <ThemedText
             type={"normal"}
@@ -28,6 +28,11 @@ export default function NotFoundScreen() {
 
 const styles = StyleSheet.create({
   container: {
+    paddingVertical: 25,
+    paddingHorizontal: 20,
+    flex: 1,
+  },
+  contentContainer: {
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
