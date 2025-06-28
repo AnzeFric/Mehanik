@@ -13,8 +13,9 @@ export default function Customer({ customer }: Props) {
   const { staticColors } = useAnimatedTheme();
 
   const handlePress = () => {
+    console.log("Sending: ", customer);
     router.push(
-      `/customer/${customer.customer.id}?firstName=${customer.customer.firstName}`
+      `/customer/${customer.id}?firstName=${customer.customer.firstName}`
     );
   };
 

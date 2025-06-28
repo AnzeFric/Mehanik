@@ -21,7 +21,7 @@ export default function EditCustomerScreen() {
   useFocusEffect(
     useCallback(() => {
       const foundCustomerVehicle = customers.find(
-        (item) => item.customer.id === parseInt(id.toString())
+        (item) => item.id === parseInt(id.toString())
       );
 
       if (foundCustomerVehicle) {

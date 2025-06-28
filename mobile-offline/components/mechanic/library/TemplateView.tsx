@@ -67,6 +67,8 @@ export default function TemplateView({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingHorizontal: 25,
+    paddingVertical: 20,
     gap: 15,
   },
   button: {

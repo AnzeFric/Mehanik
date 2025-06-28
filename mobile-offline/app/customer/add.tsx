@@ -20,14 +20,12 @@ export default function AddCustomerScreen() {
   const [repairData, setRepairData] = useState<RepairData | null>(null);
   const [vehicleImage, setVehicleImage] = useState("");
   const [customerData, setCustomerData] = useState<CustomerData>({
-    id: 0,
     firstName: "",
     lastName: "",
     email: null,
     phone: null,
   });
   const [vehicleData, setVehicleData] = useState<VehicleData>({
-    id: 0,
     brand: "",
     model: "",
     vin: "",
@@ -56,6 +54,7 @@ export default function AddCustomerScreen() {
     }
 
     const newCustomer: CustomerFormData = {
+      id: customers.length + 1,
       customer: customerData,
       vehicle: {
         ...vehicleData,

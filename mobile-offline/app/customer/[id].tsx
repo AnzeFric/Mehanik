@@ -6,7 +6,6 @@ import RepairsDisplay from "@/components/mechanic/library/displays/Repairs";
 import TemplateView from "@/components/mechanic/library/TemplateView";
 import ModalPrompt from "@/components/global/modals/ModalPrompt";
 import PlusButton from "@/components/global/PlusButton";
-import LoadingScreen from "@/components/global/LoadingScreen";
 import CustomerDisplay from "@/components/mechanic/library/displays/Customer";
 import { RepairData } from "@/interfaces/repair";
 import useDataStore from "@/stores/useDataStore";
@@ -24,11 +23,11 @@ export default function DetailCustomerScreen() {
   const [customer, setCustomer] = useState<CustomerFormData>();
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const index = parseInt(id.toString());
-    setCustomer(customers[index]);
+    const intId = parseInt(id.toString());
+    const foundCustomer = customers.find((customer) => customer.id === intId);
+    setCustomer(foundCustomer);
   }, [customers]);
 
   useFocusEffect(
@@ -70,40 +69,26 @@ export default function DetailCustomerScreen() {
           />
         }
       >
-        <View style={styles.container}>
-          {customer ? (
-            <>
-              <View style={styles.contentContainer}>
-                <VehicleDisplay vehicle={customer.vehicle} />
-                <CustomerDisplay customer={customer.customer} />
-              </View>
-              <ThemedText type={"title"}>Narejeni servisi</ThemedText>
-              {loading ? (
-                <LoadingScreen
-                  type={"partial"}
-                  text={"Nalaganje..."}
-                  style={{ paddingVertical: 30 }}
-                />
-              ) : (
-                <RepairsDisplay
-                  repairList={repairList}
-                  vehicleId={customer.vehicle.id}
-                />
-              )}
-
-              {isModalOpen && (
-                <ModalPrompt
-                  isVisible={isModalOpen}
-                  message={"Trajno boste izbrisali uporabnika. Ste prepričani?"}
-                  onCancel={() => setIsModalOpen(false)}
-                  onConfirm={handleDeleteCustomer}
-                />
-              )}
-            </>
-          ) : (
-            <LoadingScreen type={"full"} text={"Nalaganje..."} />
+        <View style={styles.contentContainer}>
+          {customer?.vehicle && <VehicleDisplay vehicle={customer.vehicle} />}
+          {customer?.customer && (
+            <CustomerDisplay customer={customer.customer} />
           )}
         </View>
+        <ThemedText type={"title"}>Narejeni servisi</ThemedText>
+
+        {customer?.vehicle && (
+          <RepairsDisplay repairList={repairList} vehicleId={customer.id} />
+        )}
+
+        {isModalOpen && (
+          <ModalPrompt
+            isVisible={isModalOpen}
+            message={"Trajno boste izbrisali uporabnika. Ste prepričani?"}
+            onCancel={() => setIsModalOpen(false)}
+            onConfirm={handleDeleteCustomer}
+          />
+        )}
       </TemplateView>
       <PlusButton onPress={handleAddRepair} />
     </>
