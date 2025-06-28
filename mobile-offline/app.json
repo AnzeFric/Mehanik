@@ -1,0 +1,49 @@
+{
+  "expo": {
+    "name": "Mehanik",
+    "slug": "mehanik",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/logo-main.png",
+    "scheme": "mehanik",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": false,
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/logo-main.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.anzefric.mehanik"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/logo2.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/logo-splash-screen.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff"
+        }
+      ],
+      "expo-font"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "owner": "anzefric",
+    "extra": {
+      "router": {
+        "origin": false
+      }
+    }
+  }
+}
