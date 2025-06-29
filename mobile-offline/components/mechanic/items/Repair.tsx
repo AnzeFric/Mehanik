@@ -6,17 +6,39 @@ import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedText from "@/components/global/themed/ThemedText";
 import ThemedIcon from "@/components/global/themed/ThemedIcon";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import useDataStore from "@/stores/useDataStore";
+import ModalPrompt from "@/components/global/ModalPrompt";
+import { useState } from "react";
 
 interface Props {
   repairData: RepairData;
-  vehicleId: number;
+  customerId: number;
 }
 
-export default function Repair({ repairData, vehicleId }: Props) {
+export default function Repair({ repairData, customerId }: Props) {
+  const { customers, setCustomers } = useDataStore();
+
   const { staticColors } = useAnimatedTheme();
 
+  const [showDelete, setShowDelete] = useState(false);
+
   const handleRedirect = () => {
-    router.push(`/repair/${vehicleId}`);
+    router.push(`/repair/${customerId}`);
+  };
+
+  const deleteRepair = () => {
+    const updatedCustomers = customers.map((customer) =>
+      customer.id === customerId && customer.repair
+        ? {
+            ...customer,
+            repair: customer.repair.filter(
+              (repair) => repair.uuid !== repairData.uuid
+            ),
+          }
+        : customer
+    );
+    setCustomers(updatedCustomers);
+    setShowDelete(false);
   };
 
   return (
@@ -25,6 +47,9 @@ export default function Repair({ repairData, vehicleId }: Props) {
         style={styles.container}
         activeOpacity={0.7}
         onPress={handleRedirect}
+        onLongPress={() => {
+          setShowDelete(true);
+        }}
       >
         <View
           style={[
@@ -61,6 +86,17 @@ export default function Repair({ repairData, vehicleId }: Props) {
           style={{ paddingLeft: 6 }}
         />
       </TouchableOpacity>
+
+      {showDelete && (
+        <ModalPrompt
+          isVisible={true}
+          message={"Servis bo trajno izbrisan"}
+          onConfirm={deleteRepair}
+          onCancel={() => {
+            setShowDelete(false);
+          }}
+        />
+      )}
     </ThemedView>
   );
 }
@@ -74,7 +110,6 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     flex: 1,
   },
-
   contentContainer: {
     flex: 1,
     borderRightWidth: 1,

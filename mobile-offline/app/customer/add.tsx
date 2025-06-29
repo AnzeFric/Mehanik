@@ -43,8 +43,7 @@ export default function AddCustomerScreen() {
         customerData.firstName &&
         customerData.lastName &&
         vehicleData.brand &&
-        vehicleData.model &&
-        vehicleData.vin
+        vehicleData.model
     );
   }, [customerData, vehicleData]);
 

@@ -72,7 +72,7 @@ export default function DetailCustomerScreen() {
         {customer && (
           <RepairsDisplay
             repairList={customer.repair}
-            vehicleId={customer.id}
+            customerId={customer.id}
           />
         )}
       </TemplateView>
