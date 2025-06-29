@@ -1,14 +1,73 @@
-import { View } from "react-native";
+import { Alert } from "react-native";
 import TemplateView from "@/components/mechanic/library/TemplateView";
 import RepairForm from "@/components/mechanic/library/forms/RepairForm";
-import { useLocalSearchParams } from "expo-router";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
+import useDataStore from "@/stores/useDataStore";
+import { useCallback, useMemo, useState } from "react";
+import { CustomerFormData } from "@/interfaces/customer";
+import { RepairData } from "@/interfaces/repair";
 
 export default function EditRepairScreen() {
-  const { id } = useLocalSearchParams(); // Customer id
+  const { customerId, repairUuid } = useLocalSearchParams();
+  const { customers, setCustomers } = useDataStore();
+
+  const parsedCustomerId = parseInt(customerId.toString());
+
+  const [repair, setRepair] = useState<RepairData | null>(null);
+
+  const repairData = useMemo(() => {
+    const foundCustomer: CustomerFormData | undefined = customers.find(
+      (customer) => customer.id === parsedCustomerId
+    );
+
+    if (foundCustomer) {
+      const foundRepair = foundCustomer.repair?.find(
+        (repair) => repair.uuid === repairUuid
+      );
+
+      if (foundRepair) {
+        // Ensure date is a proper Date object
+        return {
+          ...foundRepair,
+          date:
+            foundRepair.date instanceof Date
+              ? foundRepair.date
+              : new Date(foundRepair.date || Date.now()),
+        };
+      }
+    }
+
+    Alert.alert("Napaka", "Servisa ni bilo mogoče najti");
+    router.back();
+    return null;
+  }, [customers, customerId, repairUuid]);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (repairData) {
+        setRepair(repairData);
+      }
+    }, [repairData])
+  );
 
   const handleEditRepair = async () => {
-    // TODO: Update
-    console.log("Edit repair");
+    if (repair) {
+      const updatedCustomers: Array<CustomerFormData> = customers.map(
+        (customer) => {
+          if (customer.id === parsedCustomerId) {
+            return {
+              ...customer,
+              repair: customer.repair?.map((existingRepair) =>
+                existingRepair.uuid === repairUuid ? repair : existingRepair
+              ) || [repair],
+            };
+          }
+          return customer;
+        }
+      );
+      setCustomers(updatedCustomers);
+      router.back();
+    }
   };
 
   return (
@@ -18,9 +77,7 @@ export default function EditRepairScreen() {
       buttonText={"Shrani"}
       onButtonPress={handleEditRepair}
     >
-      <View style={{ paddingHorizontal: 25 }}>
-        <RepairForm repair={null} setRepair={() => {}} />
-      </View>
+      <RepairForm repair={repairData} setRepair={setRepair} />
     </TemplateView>
   );
 }
