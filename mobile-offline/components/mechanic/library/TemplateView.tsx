@@ -47,7 +47,11 @@ export default function TemplateView({
         menuButton={menuIcon}
       />
       <View>{isMenuVisible && menu}</View>
-      <ScrollView ref={scrollRef} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        ref={scrollRef}
+        contentContainerStyle={{ paddingVertical: 20 }}
+        showsVerticalScrollIndicator={false}
+      >
         {children}
         {buttonText ? (
           <ThemedButton
@@ -68,7 +72,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 25,
-    paddingVertical: 20,
+    paddingTop: 20,
     gap: 15,
   },
 });

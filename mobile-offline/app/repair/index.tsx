@@ -97,8 +97,8 @@ export default function DetailRepairScreen() {
       </View>
       {repairData ? (
         <ScrollView
-          style={styles.container}
           contentContainerStyle={styles.contentContainer}
+          showsVerticalScrollIndicator={false}
         >
           <ThemedView type={"primary"} style={styles.itemContainer}>
             <ThemedText type={"normal"} bold>
@@ -202,10 +202,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     gap: 15,
+    paddingHorizontal: 25,
+    paddingTop: 20,
   },
   contentContainer: {
     gap: 15,
-    paddingHorizontal: 25,
+    paddingVertical: 20,
   },
   itemContainer: {
     paddingHorizontal: 20,

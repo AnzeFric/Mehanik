@@ -82,13 +82,8 @@ export default function DetailCustomerScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 25,
-    paddingBottom: 20,
-  },
   contentContainer: {
     gap: 15,
-    paddingBottom: 15,
   },
   menuContainer: {
     position: "absolute",
