@@ -40,8 +40,10 @@ export function formatRepairType(type: string): string {
       return "Mali servis";
     case "large":
       return "Veliki servis";
-    default:
+    case "other":
       return "Drugo";
+    default:
+      return "Servis ne obstaja";
   }
 }
 

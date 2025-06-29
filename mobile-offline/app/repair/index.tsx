@@ -13,7 +13,6 @@ import {
   formatRepairItems,
   formatCurrency,
 } from "@/constants/util";
-import ModalPrompt from "@/components/global/ModalPrompt";
 import LoadingScreen from "@/components/global/LoadingScreen";
 import TitleRow from "@/components/global/TitleRow";
 import ImageView from "react-native-image-viewing";
@@ -24,26 +23,34 @@ import EditMenu from "@/components/mechanic/library/EditMenu";
 import ThemedText from "@/components/global/themed/ThemedText";
 import { Ionicons } from "@expo/vector-icons";
 import useDataStore from "@/stores/useDataStore";
+import { CustomerFormData } from "@/interfaces/customer";
 
 export default function DetailRepairScreen() {
-  const { id } = useLocalSearchParams(); // Customer id
-
+  const { customerId, repairUuid } = useLocalSearchParams();
   const { customers } = useDataStore();
-
   const { staticColors } = useAnimatedTheme();
 
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
   const [imageViewVisible, setImageViewVisible] = useState(false);
 
-  const currentRepairFocus = customers[0].repair;
+  const repairData = useMemo(() => {
+    const foundCustomer: CustomerFormData | undefined = customers.find(
+      (customer) => customer.id === parseInt(customerId.toString())
+    );
+    if (foundCustomer) {
+      return foundCustomer.repair?.find((repair) => repair.uuid === repairUuid);
+    }
+    Alert.alert("Napaka", "Servisa ni bilo mogoče najti");
+    router.back();
+    return;
+  }, [customers, customerId]);
 
   const viewImages = useMemo(() => {
-    if (currentRepairFocus?.images) {
-      return currentRepairFocus.images.map((uri) => ({ uri }));
+    if (repairData?.images) {
+      return repairData.images.map((uri) => ({ uri }));
     }
     return [];
-  }, [currentRepairFocus]);
+  }, [repairData]);
 
   useFocusEffect(
     useCallback(() => {
@@ -53,22 +60,14 @@ export default function DetailRepairScreen() {
     }, [])
   );
 
-  const handleDeleteRepairPress = async () => {
-    // TODO: Delete repair
-    setIsMenuVisible(false);
-    setIsModalOpen(false);
-
-    router.back();
+  const exportRepair = () => {
+    // TODO: export repair
   };
 
   return (
     <ThemedView type={"background"} style={styles.container}>
       <TitleRow
-        title={
-          currentRepairFocus
-            ? formatRepairType(currentRepairFocus.type)
-            : "Servis ne obstaja"
-        }
+        title={formatRepairType(repairData?.type || "")}
         hasBackButton={true}
         menuButton={
           <ThemedIcon
@@ -81,14 +80,22 @@ export default function DetailRepairScreen() {
         }
       />
       <View>
-        {isMenuVisible && currentRepairFocus && (
+        {isMenuVisible && repairData && (
           <EditMenu
-            onEditPress={() => router.push(`/repair/edit/${id}`)}
-            onDeleteClose={() => setIsModalOpen(true)}
+            onEditPress={() =>
+              router.push({
+                pathname: "/repair/edit",
+                params: {
+                  customerId: customerId,
+                  repairUuid: repairData.uuid,
+                },
+              })
+            }
+            onExportPress={exportRepair}
           />
         )}
       </View>
-      {currentRepairFocus ? (
+      {repairData ? (
         <ScrollView
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
@@ -100,7 +107,7 @@ export default function DetailRepairScreen() {
             <View style={styles.itemContent}>
               <ThemedIcon name={"cash-outline"} size={15} />
               <ThemedText type={"small"}>
-                {formatCurrency(currentRepairFocus.price)}
+                {formatCurrency(repairData.price)}
               </ThemedText>
             </View>
           </ThemedView>
@@ -112,7 +119,7 @@ export default function DetailRepairScreen() {
             <View style={styles.itemContent}>
               <ThemedIcon name="calendar" size={16} />
               <ThemedText type={"small"}>
-                {formatDate(new Date(currentRepairFocus.date))}
+                {formatDate(new Date(repairData.date))}
               </ThemedText>
             </View>
           </ThemedView>
@@ -122,8 +129,8 @@ export default function DetailRepairScreen() {
               Izvedena popravila
             </ThemedText>
             <View style={{ gap: 10 }}>
-              {currentRepairFocus.options &&
-                Object.entries(currentRepairFocus.options)
+              {repairData.options &&
+                Object.entries(repairData.options)
                   .filter(([_, value]) => value)
                   .map(([key], index) => (
                     <View key={key} style={styles.repairItem}>
@@ -144,52 +151,43 @@ export default function DetailRepairScreen() {
                       </ThemedText>
                     </View>
                   ))}
-              {currentRepairFocus.description && (
-                <ThemedText type={"small"}>
-                  {currentRepairFocus.description}
-                </ThemedText>
+              {repairData.description && (
+                <ThemedText type={"small"}>{repairData.description}</ThemedText>
               )}
             </View>
           </ThemedView>
 
-          {currentRepairFocus.note && (
+          {repairData.note && (
             <ThemedView type={"primary"} style={styles.itemContainer}>
               <ThemedText type={"normal"} bold>
                 Dodatne opombe
               </ThemedText>
-              <ThemedText type={"small"}>{currentRepairFocus.note}</ThemedText>
+              <ThemedText type={"small"}>{repairData.note}</ThemedText>
             </ThemedView>
           )}
 
-          {currentRepairFocus.images &&
-            currentRepairFocus.images.length > 0 && (
-              <ThemedView type={"primary"} style={styles.itemContainer}>
-                <ThemedText type={"normal"} bold>
-                  Slike servisa
-                </ThemedText>
-                <ThemedView type={"secondary"} style={{ borderRadius: 12 }}>
-                  <TouchableOpacity
-                    style={styles.imageButton}
-                    onPress={() => setImageViewVisible(true)}
-                  >
-                    <ThemedIcon name="images-outline" size={24} />
-                    <ThemedText type={"small"}>
-                      {currentRepairFocus.images.length} slik
-                    </ThemedText>
-                  </TouchableOpacity>
-                </ThemedView>
+          {repairData.images && repairData.images.length > 0 && (
+            <ThemedView type={"primary"} style={styles.itemContainer}>
+              <ThemedText type={"normal"} bold>
+                Slike servisa
+              </ThemedText>
+              <ThemedView type={"secondary"} style={{ borderRadius: 12 }}>
+                <TouchableOpacity
+                  style={styles.imageButton}
+                  onPress={() => setImageViewVisible(true)}
+                >
+                  <ThemedIcon name="images-outline" size={24} />
+                  <ThemedText type={"small"}>
+                    {repairData.images.length} slik
+                  </ThemedText>
+                </TouchableOpacity>
               </ThemedView>
-            )}
+            </ThemedView>
+          )}
         </ScrollView>
       ) : (
         <LoadingScreen type={"full"} text={"Nalaganje..."} />
       )}
-      <ModalPrompt
-        isVisible={isModalOpen}
-        message={"Trajno boste izbrisali servis. Ste prepričani?"}
-        onCancel={() => setIsModalOpen(false)}
-        onConfirm={handleDeleteRepairPress}
-      />
       <ImageView
         images={viewImages}
         imageIndex={0}

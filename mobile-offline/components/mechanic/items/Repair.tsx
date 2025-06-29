@@ -23,7 +23,13 @@ export default function Repair({ repairData, customerId }: Props) {
   const [showDelete, setShowDelete] = useState(false);
 
   const handleRedirect = () => {
-    router.push(`/repair/${customerId}`);
+    router.push({
+      pathname: "/repair",
+      params: {
+        customerId: customerId,
+        repairUuid: repairData.uuid,
+      },
+    });
   };
 
   const deleteRepair = () => {
