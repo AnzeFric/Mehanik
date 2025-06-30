@@ -16,7 +16,7 @@ export default function RootLayout() {
             name="customer/edit/[id]"
             options={{ headerShown: false }}
           />
-          <Stack.Screen name="repair/index" options={{ headerShown: false }} />
+          <Stack.Screen name="repair/detail" options={{ headerShown: false }} />
           <Stack.Screen name="repair/edit" options={{ headerShown: false }} />
           <Stack.Screen
             name="repair/add/[id]"

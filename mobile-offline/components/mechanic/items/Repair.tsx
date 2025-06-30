@@ -24,7 +24,7 @@ export default function Repair({ repairData, customerId }: Props) {
 
   const handleRedirect = () => {
     router.push({
-      pathname: "/repair",
+      pathname: "/repair/detail",
       params: {
         customerId: customerId,
         repairUuid: repairData.uuid,
