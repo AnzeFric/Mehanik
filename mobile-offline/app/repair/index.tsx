@@ -24,11 +24,13 @@ import ThemedText from "@/components/global/themed/ThemedText";
 import { Ionicons } from "@expo/vector-icons";
 import useDataStore from "@/stores/useDataStore";
 import { CustomerFormData } from "@/interfaces/customer";
+import { usePdf } from "@/hooks/usePdf";
 
 export default function DetailRepairScreen() {
   const { customerId, repairUuid } = useLocalSearchParams();
   const { customers } = useDataStore();
   const { staticColors } = useAnimatedTheme();
+  const { generatePdf } = usePdf();
 
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
   const [imageViewVisible, setImageViewVisible] = useState(false);
@@ -61,7 +63,7 @@ export default function DetailRepairScreen() {
   );
 
   const exportRepair = () => {
-    // TODO: export repair
+    generatePdf();
   };
 
   return (

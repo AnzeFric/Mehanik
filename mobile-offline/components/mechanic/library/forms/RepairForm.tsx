@@ -71,6 +71,7 @@ export default function RepairForm({ repair, setRepair }: Props) {
     }
   };
 
+  // Initialize form data when repair prop changes
   useEffect(() => {
     if (repair) {
       setType(repair.type);
@@ -83,111 +84,78 @@ export default function RepairForm({ repair, setRepair }: Props) {
     }
   }, [repair]);
 
-  // Helper function to update parent
-  const updateParent = useCallback(
-    (updates: Partial<RepairData>) => {
-      const repairData: RepairData = {
-        uuid: repair?.uuid || "",
-        type: type,
-        price: parseFloat(price) || null,
-        date: date,
-        options: options,
-        description: description || null,
-        images: repairImages || null,
-        note: note || null,
-        ...updates,
-      };
-      setRepair(repairData);
-    },
-    [
-      repair,
-      type,
-      description,
-      price,
-      note,
-      repairImages,
-      date,
-      options,
-      setRepair,
-    ]
-  );
+  // Update parent whenever form data changes
+  useEffect(() => {
+    const repairData: RepairData = {
+      uuid: repair?.uuid || "",
+      type: type,
+      price: parseFloat(price) || null,
+      date: date,
+      options: options,
+      description: description || null,
+      images: repairImages.length > 0 ? repairImages : null,
+      note: note || null,
+    };
+    setRepair(repairData);
+  }, [
+    type,
+    description,
+    price,
+    note,
+    repairImages,
+    date,
+    options,
+    repair?.uuid,
+    setRepair,
+  ]);
 
-  const handleDescriptionChange = useCallback(
-    (value: string) => {
-      setDescription(value);
-      updateParent({ description: value });
-    },
-    [updateParent]
-  );
+  const handleDescriptionChange = useCallback((value: string) => {
+    setDescription(value);
+  }, []);
 
-  const handleNoteChange = useCallback(
-    (value: string) => {
-      setNote(value);
-      updateParent({ note: value });
-    },
-    [updateParent]
-  );
+  const handleNoteChange = useCallback((value: string) => {
+    setNote(value);
+  }, []);
 
-  const handlePriceChange = useCallback(
-    (value: string) => {
-      setPrice(value);
-      updateParent({ price: parseFloat(value) });
-    },
-    [updateParent]
-  );
+  const handlePriceChange = useCallback((value: string) => {
+    setPrice(value);
+  }, []);
 
-  const handleDateChange = useCallback(
-    (value: Date) => {
-      setDate(value);
-      setShowDatePicker(false);
-      updateParent({ date: value });
-    },
-    [updateParent]
-  );
+  const handleDateChange = useCallback((value: Date) => {
+    setDate(value);
+    setShowDatePicker(false);
+  }, []);
 
   const handleTypeChange = useCallback(
     (newType: "small" | "large" | "other") => {
       setType(newType);
       setOptions(defaultOptions);
       setDescription("");
-      updateParent({ type: newType, options: defaultOptions, description: "" });
     },
-    [updateParent]
+    []
   );
 
   const handleChange = useCallback(
     (key: keyof typeof options, value: boolean) => {
-      setOptions((prev) => {
-        const newOptions = { ...prev, [key]: value };
-        updateParent({ options: newOptions });
-        return newOptions;
-      });
+      setOptions((prev) => ({
+        ...prev,
+        [key]: value,
+      }));
     },
-    [updateParent]
+    []
   );
 
-  const handleImageAdd = useCallback(
-    (base64WithPrefix: string) => {
-      setRepairImages((prev) => {
-        const newImages = [...prev, base64WithPrefix];
-        updateParent({ images: newImages });
-        return newImages;
-      });
-    },
-    [updateParent]
-  );
+  const handleImageAdd = useCallback((base64WithPrefix: string) => {
+    setRepairImages((prev) => [...prev, base64WithPrefix]);
+  }, []);
 
-  const handleImageRemove = useCallback(
-    (index: number) => {
-      setRepairImages((prev) => {
-        const newImages = [...prev];
-        newImages.splice(index, 1);
-        updateParent({ images: newImages });
-        return newImages;
-      });
-    },
-    [updateParent]
-  );
+  const handleImageRemove = useCallback((index: number) => {
+    setRepairImages((prev) => {
+      const newImages = [...prev];
+      newImages.splice(index, 1);
+      return newImages;
+    });
+  }, []);
 
   useFocusEffect(
     useCallback(() => {

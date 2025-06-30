@@ -16,7 +16,12 @@
         "foregroundImage": "./assets/logo-main.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anzefric.mehanik"
+      "package": "com.anzefric.mehanik",
+      "permissions": [
+        "android.permission.READ_MEDIA_IMAGES",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
     },
     "web": {
       "bundler": "metro",
