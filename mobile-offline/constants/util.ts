@@ -1,3 +1,5 @@
+import { RepairOptions } from "@/interfaces/repair";
+
 export function formatDate(date: Date | string): string {
   const dateObj = date instanceof Date ? date : new Date(date);
 
@@ -43,7 +45,7 @@ export function formatRepairType(type: string): string {
     case "other":
       return "Drugo";
     default:
-      return "Servis ne obstaja";
+      return "Servis";
   }
 }
 
@@ -83,4 +85,25 @@ export function formatCurrency(price: number | undefined | null): string {
     return `${price.toFixed(2)} €`;
   }
   return "0.00 €";
+}
+
+export function getServiceTranslation(options: RepairOptions) {
+  const serviceMap: Record<keyof RepairOptions, string> = {
+    oilChange: "Menjava olja",
+    filterChange: "Menjava filtra",
+    brakeCheck: "Pregled zavor",
+    tireRotation: "Rotacija pnevmatik",
+    fluidCheck: "Pregled tekočin",
+    batteryCheck: "Pregled baterije",
+    sparkPlugs: "Svečke",
+    airFilter: "Zračni filter",
+    cabinFilter: "Kabinski filter",
+    suspension: "Vzmetenje",
+    timing: "Jermen/veriga",
+    coolant: "Hladilna tekočina",
+  };
+
+  return Object.entries(options)
+    .filter(([_, value]) => value)
+    .map(([key, _]) => serviceMap[key as keyof RepairOptions]);
 }

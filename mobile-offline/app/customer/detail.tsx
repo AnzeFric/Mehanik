@@ -11,11 +11,13 @@ import ThemedIcon from "@/components/global/themed/ThemedIcon";
 import ThemedText from "@/components/global/themed/ThemedText";
 import EditMenu from "@/components/mechanic/library/EditMenu";
 import { CustomerFormData } from "@/interfaces/customer";
+import { usePdf } from "@/hooks/usePdf";
 
 export default function DetailCustomerScreen() {
   const { customerUuid, firstName } = useLocalSearchParams();
 
   const { customers } = useDataStore();
+  const { generateCustomerPdf } = usePdf();
 
   const [customer, setCustomer] = useState<CustomerFormData>();
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
@@ -43,7 +45,9 @@ export default function DetailCustomerScreen() {
   };
 
   const exportCustomer = () => {
-    // TODO: export customer to gmail
+    if (customer) {
+      generateCustomerPdf(customer);
+    }
   };
 
   return (
@@ -56,7 +60,7 @@ export default function DetailCustomerScreen() {
           <EditMenu
             onEditPress={() =>
               router.push({
-                pathname: `/repair/edit`,
+                pathname: `/customer/edit`,
                 params: {
                   customerUuid: customerUuid,
                 },

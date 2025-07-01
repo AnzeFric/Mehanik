@@ -30,7 +30,7 @@ export default function DetailRepairScreen() {
   const { customerUuid, repairUuid } = useLocalSearchParams();
   const { customers } = useDataStore();
   const { staticColors } = useAnimatedTheme();
-  const { generatePdf } = usePdf();
+  const { generateRepairPdf } = usePdf();
 
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
   const [imageViewVisible, setImageViewVisible] = useState(false);
@@ -63,7 +63,9 @@ export default function DetailRepairScreen() {
   );
 
   const exportRepair = () => {
-    generatePdf();
+    if (repairData) {
+      generateRepairPdf(repairData);
+    }
   };
 
   return (
