@@ -1,7 +1,7 @@
 import { View, StyleSheet } from "react-native";
 import DaySchedule from "@/components/mechanic/home/DaySchedule";
 import { router, useFocusEffect } from "expo-router";
-import TitleRow from "@/components/shared/TitleRow";
+import TitleRow from "@/components/global/TitleRow";
 import ThemedIcon from "@/components/global/themed/ThemedIcon";
 import ThemedView from "@/components/global/themed/ThemedView";
 import useAppointmentStore from "@/stores/useAppointmentStore";

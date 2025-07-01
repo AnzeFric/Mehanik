@@ -1,5 +1,5 @@
 import { View, StyleSheet } from "react-native";
-import TitleRow from "@/components/shared/TitleRow";
+import TitleRow from "@/components/global/TitleRow";
 import { useLocalSearchParams } from "expo-router";
 import { useMemo } from "react";
 import { items } from "@/constants/data/terms.json";

@@ -1,8 +1,8 @@
 import { View, StyleSheet } from "react-native";
 import { useState, useMemo, useCallback } from "react";
 import { useFocusEffect } from "expo-router";
-import TitleRow from "@/components/shared/TitleRow";
-import TermsItem from "@/components/shared/terms/TermsItem";
+import TitleRow from "@/components/global/TitleRow";
+import TermsItem from "@/components/global/terms/TermsItem";
 import { items } from "@/constants/data/terms.json";
 import ThemedScrollView from "@/components/global/themed/ThemedScrollView";
 import ThemedSearchInput from "@/components/global/themed/ThemedSearchInput";

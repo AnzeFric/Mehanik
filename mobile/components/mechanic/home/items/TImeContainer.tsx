@@ -7,11 +7,11 @@ import EmptyTimeItem from "./EmptyTimeItem";
 import { AppointmentData, UserAppointmentData } from "@/interfaces/appointment";
 import useUserStore from "@/stores/accounts/useUserStore";
 import useVehicleStore from "@/stores/useVehicleStore";
-import ModalSelectVehicle from "@/components/shared/modals/ModalSelectVehicle";
+import ModalSelectVehicle from "@/components/global/modals/ModalSelectVehicle";
 import { VehicleData } from "@/interfaces/vehicle";
 import { useState } from "react";
 import { router } from "expo-router";
-import ModalAppointment from "@/components/shared/modals/ModalAppointment";
+import ModalAppointment from "@/components/global/modals/ModalAppointment";
 
 interface Props {
   time: string; // 11:00

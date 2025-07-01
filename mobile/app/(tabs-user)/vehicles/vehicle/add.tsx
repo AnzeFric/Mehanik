@@ -1,7 +1,7 @@
 import { Alert, StyleSheet, View } from "react-native";
 import { useCallback, useState } from "react";
 import VehicleForm from "@/components/mechanic/library/forms/VehicleForm";
-import TitleRow from "@/components/shared/TitleRow";
+import TitleRow from "@/components/global/TitleRow";
 import { VehicleData } from "@/interfaces/vehicle";
 import { router, useFocusEffect } from "expo-router";
 import ImageForm from "@/components/mechanic/library/forms/ImageForm";

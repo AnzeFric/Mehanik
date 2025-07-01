@@ -2,11 +2,11 @@ import { Alert } from "react-native";
 import { useState, useEffect } from "react";
 import { router } from "expo-router";
 import Appointment from "@/components/user/items/Appointment";
-import TitleRow from "@/components/shared/TitleRow";
+import TitleRow from "@/components/global/TitleRow";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedIcon from "@/components/global/themed/ThemedIcon";
-import ModalAppointment from "@/components/shared/modals/ModalAppointment";
-import ModalPrompt from "@/components/shared/modals/ModalPrompt";
+import ModalAppointment from "@/components/global/modals/ModalAppointment";
+import ModalPrompt from "@/components/global/modals/ModalPrompt";
 import { useAppointment } from "@/hooks/useAppointment";
 import DisplayItems from "@/components/global/DisplayItems";
 import {

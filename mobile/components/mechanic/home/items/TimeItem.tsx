@@ -6,7 +6,7 @@ import ThemedView from "@/components/global/themed/ThemedView";
 import { useAnimatedTheme } from "@/hooks/utils/useAnimatedTheme";
 import { AppointmentStatus } from "@/interfaces/appointment";
 import useUserStore from "@/stores/accounts/useUserStore";
-import ModalInfo, { SectionData } from "@/components/shared/modals/ModalInfo";
+import ModalInfo, { SectionData } from "@/components/global/modals/ModalInfo";
 import { useState } from "react";
 import { formatDateTime } from "@/constants/util";
 

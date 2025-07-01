@@ -4,7 +4,7 @@ import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedText from "@/components/global/themed/ThemedText";
 import { useAnimatedTheme } from "@/hooks/utils/useAnimatedTheme";
 import { VehicleData } from "@/interfaces/vehicle";
-import ModalPrompt from "@/components/shared/modals/ModalPrompt";
+import ModalPrompt from "@/components/global/modals/ModalPrompt";
 import { useVehicle } from "@/hooks/useVehicle";
 import useVehicleStore from "@/stores/useVehicleStore";
 

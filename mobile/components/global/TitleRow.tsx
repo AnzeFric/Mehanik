@@ -1,8 +1,8 @@
 import { View, StyleSheet, StyleProp, ViewStyle } from "react-native";
 import { router } from "expo-router";
-import ThemedView from "../global/themed/ThemedView";
-import ThemedText from "../global/themed/ThemedText";
-import ThemedIcon from "../global/themed/ThemedIcon";
+import ThemedView from "./themed/ThemedView";
+import ThemedText from "./themed/ThemedText";
+import ThemedIcon from "./themed/ThemedIcon";
 
 interface Props {
   title: string;

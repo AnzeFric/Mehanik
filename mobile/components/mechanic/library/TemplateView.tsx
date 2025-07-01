@@ -1,7 +1,7 @@
 import { View, StyleSheet, ScrollView } from "react-native";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useRef } from "react";
-import TitleRow from "@/components/shared/TitleRow";
+import TitleRow from "@/components/global/TitleRow";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedButton from "@/components/global/themed/ThemedButton";
 

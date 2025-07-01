@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from "react";
 import Vehicle from "@/components/user/items/Vehicle";
-import TitleRow from "@/components/shared/TitleRow";
+import TitleRow from "@/components/global/TitleRow";
 import DisplayItems from "@/components/global/DisplayItems";
 import ThemedView from "@/components/global/themed/ThemedView";
 import PlusButton from "@/components/global/PlusButton";

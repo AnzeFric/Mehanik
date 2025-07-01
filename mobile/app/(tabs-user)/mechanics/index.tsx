@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useFocusEffect } from "expo-router";
 import Mechanic from "@/components/user/items/Mechanic";
 import DisplayItems from "@/components/global/DisplayItems";
-import TitleRow from "@/components/shared/TitleRow";
+import TitleRow from "@/components/global/TitleRow";
 import useMechanicStore from "@/stores/accounts/useMechanicStore";
 import { useUser } from "@/hooks/accounts/useUser";
 import ThemedView from "@/components/global/themed/ThemedView";

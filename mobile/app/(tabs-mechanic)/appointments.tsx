@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import { useCallback } from "react";
 import DisplayItems from "@/components/global/DisplayItems";
 import Appointment from "@/components/mechanic/items/Appointment";
-import TitleRow from "@/components/shared/TitleRow";
+import TitleRow from "@/components/global/TitleRow";
 import ThemedView from "@/components/global/themed/ThemedView";
 import { useAppointment } from "@/hooks/useAppointment";
 import useAppointmentStore from "@/stores/useAppointmentStore";

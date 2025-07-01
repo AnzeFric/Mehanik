@@ -4,7 +4,7 @@ import MechanicForm from "@/components/mechanic/library/forms/mechanic/MechanicF
 import { MechanicData } from "@/interfaces/user";
 import useUserStore from "@/stores/accounts/useUserStore";
 import { useUser } from "@/hooks/accounts/useUser";
-import TitleRow from "@/components/shared/TitleRow";
+import TitleRow from "@/components/global/TitleRow";
 import { useFocusEffect } from "expo-router";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedButton from "@/components/global/themed/ThemedButton";

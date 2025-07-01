@@ -1,7 +1,7 @@
 import { View, StyleSheet, Alert } from "react-native";
 import { useState } from "react";
-import ModalPrompt from "../../shared/modals/ModalPrompt";
-import ModalAppointment from "../../shared/modals/ModalAppointment";
+import ModalPrompt from "../../global/modals/ModalPrompt";
+import ModalAppointment from "../../global/modals/ModalAppointment";
 import { formatDateTime } from "@/constants/util";
 import { AppointmentData, UserAppointmentData } from "@/interfaces/appointment";
 import ThemedView from "@/components/global/themed/ThemedView";

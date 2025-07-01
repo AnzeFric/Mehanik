@@ -4,7 +4,7 @@ import DisplayItems from "@/components/global/DisplayItems";
 import Customer from "@/components/mechanic/items/Customer";
 import { router, useFocusEffect } from "expo-router";
 import PlusButton from "@/components/global/PlusButton";
-import TitleRow from "@/components/shared/TitleRow";
+import TitleRow from "@/components/global/TitleRow";
 import { useCustomer } from "@/hooks/accounts/useCustomer";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedSearchInput from "@/components/global/themed/ThemedSearchInput";

@@ -5,7 +5,7 @@ import VehicleDisplay from "@/components/mechanic/library/displays/Vehicle";
 import RepairsDisplay from "@/components/mechanic/library/displays/Repairs";
 import { CustomerVehicleData } from "@/interfaces/customer";
 import TemplateView from "@/components/mechanic/library/TemplateView";
-import ModalPrompt from "@/components/shared/modals/ModalPrompt";
+import ModalPrompt from "@/components/global/modals/ModalPrompt";
 import PlusButton from "@/components/global/PlusButton";
 import { useCustomer } from "@/hooks/accounts/useCustomer";
 import { useRepair } from "@/hooks/useRepair";

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import DaySchedule from "@/components/mechanic/home/DaySchedule";
 import { useLocalSearchParams } from "expo-router";
 import ThemedView from "@/components/global/themed/ThemedView";
-import TitleRow from "@/components/shared/TitleRow";
+import TitleRow from "@/components/global/TitleRow";
 import { useAppointment } from "@/hooks/useAppointment";
 import { UserAppointmentData } from "@/interfaces/appointment";
 

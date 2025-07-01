@@ -5,7 +5,7 @@ import { useCustomer } from "@/hooks/accounts/useCustomer";
 import { CustomerData } from "@/interfaces/customer";
 import { VehicleData } from "@/interfaces/vehicle";
 import { RepairData } from "@/interfaces/repair";
-import TitleRow from "@/components/shared/TitleRow";
+import TitleRow from "@/components/global/TitleRow";
 import ImageForm from "@/components/mechanic/library/forms/ImageForm";
 import RepairForm from "@/components/mechanic/library/forms/RepairForm";
 import CustomerForm from "@/components/mechanic/library/forms/CustomerForm";

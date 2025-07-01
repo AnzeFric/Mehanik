@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { DayType, MechanicData } from "@/interfaces/user";
 import useMechanicStore from "@/stores/accounts/useMechanicStore";
-import TitleRow from "@/components/shared/TitleRow";
+import TitleRow from "@/components/global/TitleRow";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedText from "@/components/global/themed/ThemedText";
 import BrandPrices from "@/components/user/items/BrandPrices";

@@ -3,13 +3,13 @@ import { useState } from "react";
 import { router } from "expo-router";
 import { useAuth } from "@/hooks/accounts/useAuth";
 import { useUser } from "@/hooks/accounts/useUser";
-import TitleRow from "@/components/shared/TitleRow";
+import TitleRow from "@/components/global/TitleRow";
 import useUserStore from "@/stores/accounts/useUserStore";
 import { useTheme } from "@/context/ThemeContext";
 import ThemedScrollView from "@/components/global/themed/ThemedScrollView";
 import ThemedText from "@/components/global/themed/ThemedText";
 import ThemedButton from "@/components/global/themed/ThemedButton";
-import ModalPrompt from "@/components/shared/modals/ModalPrompt";
+import ModalPrompt from "@/components/global/modals/ModalPrompt";
 
 export default function SettingsScreen() {
   const { handleLogout } = useAuth();
