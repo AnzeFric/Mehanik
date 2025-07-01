@@ -81,7 +81,11 @@ export default function AddCustomerScreen() {
 
   return (
     <ThemedView type={"background"} style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={styles.container} ref={scrollRef}>
+      <ScrollView
+        contentContainerStyle={styles.container}
+        keyboardShouldPersistTaps={"handled"}
+        ref={scrollRef}
+      >
         <TitleRow title={"Dodaj stranko"} hasBackButton={true} />
         <ImageForm setImage={setVehicleImage} />
         <View>
