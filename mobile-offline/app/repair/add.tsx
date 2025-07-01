@@ -8,7 +8,7 @@ import { CustomerFormData } from "@/interfaces/customer";
 import uuid from "react-native-uuid";
 
 export default function AddRepairScreen() {
-  const { id } = useLocalSearchParams(); // Customer id
+  const { customerUuid } = useLocalSearchParams();
 
   const { customers, setCustomers } = useDataStore();
 
@@ -22,7 +22,7 @@ export default function AddRepairScreen() {
       };
       const updatedCustomers: Array<CustomerFormData> = customers.map(
         (customer) =>
-          customer.id === parseInt(id.toString())
+          customer.uuid === customerUuid.toString()
             ? {
                 ...customer,
                 repair: customer.repair

@@ -10,7 +10,7 @@ import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import useDataStore from "@/stores/useDataStore";
 
 export default function EditCustomerScreen() {
-  const { id } = useLocalSearchParams(); // Customer id
+  const { customerUuid } = useLocalSearchParams();
 
   const { customers, setCustomers } = useDataStore();
 
@@ -19,13 +19,13 @@ export default function EditCustomerScreen() {
   const [currentImage, setCurrentImage] = useState<string | null>();
 
   const foundCustomer = useMemo(() => {
-    return customers.find((item) => item.id === parseInt(id.toString()));
-  }, [customers, id]);
+    return customers.find((item) => item.uuid === customerUuid.toString());
+  }, [customers, customerUuid]);
 
   useFocusEffect(
     useCallback(() => {
       const foundCustomer = customers.find(
-        (item) => item.id === parseInt(id.toString())
+        (item) => item.uuid === customerUuid.toString()
       );
 
       if (foundCustomer) {
@@ -33,7 +33,7 @@ export default function EditCustomerScreen() {
         setCurrentVehicle(foundCustomer.vehicle);
         setCurrentImage(foundCustomer.vehicle.image || "");
       }
-    }, [customers, id])
+    }, [customers, customerUuid])
   );
 
   const canSave: boolean = useMemo(() => {
@@ -53,13 +53,13 @@ export default function EditCustomerScreen() {
       return;
     }
     const updatedCustomer: CustomerFormData = {
-      id: foundCustomer.id,
+      uuid: foundCustomer.uuid,
       customer: currentCustomer,
       vehicle: { ...currentVehicle, image: currentImage || null },
       repair: foundCustomer.repair || null,
     };
     const updatedCustomers = customers.map((customer) =>
-      customer.id === foundCustomer.id ? updatedCustomer : customer
+      customer.uuid === foundCustomer.uuid ? updatedCustomer : customer
     );
     setCustomers(updatedCustomers);
     router.replace("/");

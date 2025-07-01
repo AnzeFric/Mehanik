@@ -12,10 +12,10 @@ import { useState } from "react";
 
 interface Props {
   repairData: RepairData;
-  customerId: number;
+  customerUuid: string;
 }
 
-export default function Repair({ repairData, customerId }: Props) {
+export default function Repair({ repairData, customerUuid }: Props) {
   const { customers, setCustomers } = useDataStore();
 
   const { staticColors } = useAnimatedTheme();
@@ -26,7 +26,7 @@ export default function Repair({ repairData, customerId }: Props) {
     router.push({
       pathname: "/repair/detail",
       params: {
-        customerId: customerId,
+        customerUuid: customerUuid,
         repairUuid: repairData.uuid,
       },
     });
@@ -34,7 +34,7 @@ export default function Repair({ repairData, customerId }: Props) {
 
   const deleteRepair = () => {
     const updatedCustomers = customers.map((customer) =>
-      customer.id === customerId && customer.repair
+      customer.uuid === customerUuid && customer.repair
         ? {
             ...customer,
             repair: customer.repair.filter(

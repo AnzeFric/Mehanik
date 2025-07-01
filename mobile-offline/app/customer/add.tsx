@@ -13,6 +13,7 @@ import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedText from "@/components/global/themed/ThemedText";
 import ThemedButton from "@/components/global/themed/ThemedButton";
 import useDataStore from "@/stores/useDataStore";
+import uuid from "react-native-uuid";
 
 export default function AddCustomerScreen() {
   const { customers, setCustomers } = useDataStore();
@@ -53,7 +54,7 @@ export default function AddCustomerScreen() {
     }
 
     const newCustomer: CustomerFormData = {
-      id: customers.length + 1,
+      uuid: uuid.v4(),
       customer: customerData,
       vehicle: {
         ...vehicleData,

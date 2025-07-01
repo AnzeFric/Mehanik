@@ -13,7 +13,7 @@ import EditMenu from "@/components/mechanic/library/EditMenu";
 import { CustomerFormData } from "@/interfaces/customer";
 
 export default function DetailCustomerScreen() {
-  const { id, firstName } = useLocalSearchParams(); // Customer id
+  const { customerUuid, firstName } = useLocalSearchParams();
 
   const { customers } = useDataStore();
 
@@ -21,8 +21,9 @@ export default function DetailCustomerScreen() {
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
 
   useEffect(() => {
-    const intId = parseInt(id.toString());
-    const foundCustomer = customers.find((customer) => customer.id === intId);
+    const foundCustomer = customers.find(
+      (customer) => customer.uuid === customerUuid.toString()
+    );
     setCustomer(foundCustomer);
   }, [customers]);
 
@@ -33,7 +34,12 @@ export default function DetailCustomerScreen() {
   );
 
   const handleAddRepair = () => {
-    router.push(`/repair/add/${id}`);
+    router.push({
+      pathname: `/repair/add`,
+      params: {
+        customerUuid: customerUuid,
+      },
+    });
   };
 
   const exportCustomer = () => {
@@ -48,7 +54,14 @@ export default function DetailCustomerScreen() {
         isMenuVisible={isMenuVisible}
         menu={
           <EditMenu
-            onEditPress={() => router.push(`/customer/edit/${id}`)}
+            onEditPress={() =>
+              router.push({
+                pathname: `/repair/edit`,
+                params: {
+                  customerUuid: customerUuid,
+                },
+              })
+            }
             onExportPress={exportCustomer}
           />
         }
@@ -72,7 +85,7 @@ export default function DetailCustomerScreen() {
         {customer && (
           <RepairsDisplay
             repairList={customer.repair}
-            customerId={customer.id}
+            customerUuid={customer.uuid}
           />
         )}
       </TemplateView>

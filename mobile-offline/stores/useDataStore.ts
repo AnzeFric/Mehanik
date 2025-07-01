@@ -6,7 +6,7 @@ import { CustomerFormData } from "@/interfaces/customer";
 interface DataStore {
   customers: Array<CustomerFormData>;
   setCustomers: (customers: Array<CustomerFormData>) => void;
-  deleteCustomer: (customerId: number) => void;
+  deleteCustomer: (customerUuid: string) => void;
   reset: () => void;
 }
 
@@ -21,16 +21,11 @@ const useDataStore = create(
       setCustomers: (customers: Array<CustomerFormData>) => {
         set({ customers: customers });
       },
-      deleteCustomer: (customerId: number) => {
-        // Exclude the customer we want to delete
+      deleteCustomer: (customerUuid: string) => {
         const excludedCustomers = get().customers.filter(
-          (customer) => customer.id != customerId
+          (customer) => customer.uuid != customerUuid
         );
-        // Update the ids
-        const newIdCustomers = excludedCustomers.map((customer, index) => {
-          return { ...customer, id: index };
-        });
-        set({ customers: newIdCustomers });
+        set({ customers: excludedCustomers });
       },
       reset: async () => {
         set(() => ({ ...initialState }));

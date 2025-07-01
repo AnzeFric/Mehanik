@@ -27,7 +27,7 @@ import { CustomerFormData } from "@/interfaces/customer";
 import { usePdf } from "@/hooks/usePdf";
 
 export default function DetailRepairScreen() {
-  const { customerId, repairUuid } = useLocalSearchParams();
+  const { customerUuid, repairUuid } = useLocalSearchParams();
   const { customers } = useDataStore();
   const { staticColors } = useAnimatedTheme();
   const { generatePdf } = usePdf();
@@ -37,7 +37,7 @@ export default function DetailRepairScreen() {
 
   const repairData = useMemo(() => {
     const foundCustomer: CustomerFormData | undefined = customers.find(
-      (customer) => customer.id === parseInt(customerId.toString())
+      (customer) => customer.uuid === customerUuid.toString()
     );
     if (foundCustomer) {
       return foundCustomer.repair?.find((repair) => repair.uuid === repairUuid);
@@ -45,7 +45,7 @@ export default function DetailRepairScreen() {
     Alert.alert("Napaka", "Servisa ni bilo mogoče najti");
     router.back();
     return;
-  }, [customers, customerId]);
+  }, [customers, customerUuid]);
 
   const viewImages = useMemo(() => {
     if (repairData?.images) {
@@ -88,7 +88,7 @@ export default function DetailRepairScreen() {
               router.push({
                 pathname: "/repair/edit",
                 params: {
-                  customerId: customerId,
+                  customerUuid: customerUuid,
                   repairUuid: repairData.uuid,
                 },
               })

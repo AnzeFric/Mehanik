@@ -8,16 +8,14 @@ import { CustomerFormData } from "@/interfaces/customer";
 import { RepairData } from "@/interfaces/repair";
 
 export default function EditRepairScreen() {
-  const { customerId, repairUuid } = useLocalSearchParams();
+  const { customerUuid, repairUuid } = useLocalSearchParams();
   const { customers, setCustomers } = useDataStore();
-
-  const parsedCustomerId = parseInt(customerId.toString());
 
   const [repair, setRepair] = useState<RepairData | null>(null);
 
   const repairData = useMemo(() => {
     const foundCustomer: CustomerFormData | undefined = customers.find(
-      (customer) => customer.id === parsedCustomerId
+      (customer) => customer.uuid === customerUuid.toString()
     );
 
     if (foundCustomer) {
@@ -40,7 +38,7 @@ export default function EditRepairScreen() {
     Alert.alert("Napaka", "Servisa ni bilo mogoče najti");
     router.back();
     return null;
-  }, [customers, customerId, repairUuid]);
+  }, [customers, customerUuid, repairUuid]);
 
   useFocusEffect(
     useCallback(() => {
@@ -54,7 +52,7 @@ export default function EditRepairScreen() {
     if (repair) {
       const updatedCustomers: Array<CustomerFormData> = customers.map(
         (customer) => {
-          if (customer.id === parsedCustomerId) {
+          if (customer.uuid === customerUuid.toString()) {
             return {
               ...customer,
               repair: customer.repair?.map((existingRepair) =>

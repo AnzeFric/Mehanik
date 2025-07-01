@@ -19,13 +19,17 @@ export default function Customer({ customer }: Props) {
   const [showDelete, setShowDelete] = useState(false);
 
   const toCustomerDetails = () => {
-    router.push(
-      `/customer/${customer.id}?firstName=${customer.customer.firstName}`
-    );
+    router.push({
+      pathname: "/customer/detail",
+      params: {
+        customerUuid: customer.uuid,
+        firstName: customer.customer.firstName,
+      },
+    });
   };
 
   const handleDeleteCustomer = () => {
-    deleteCustomer(customer.id);
+    deleteCustomer(customer.uuid);
     setShowDelete(false);
   };
 

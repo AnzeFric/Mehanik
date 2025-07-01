@@ -9,7 +9,7 @@ export interface CustomerData {
 }
 
 export interface CustomerFormData {
-  id: number;
+  uuid: string;
   customer: CustomerData;
   vehicle: VehicleData;
   repair: Array<RepairData> | null;
