@@ -33,15 +33,26 @@ export default function TabLayout() {
           },
 
           // Disables android default onClick ripple effect
-          tabBarButton: () => (
+          tabBarButton: (props) => (
             <Pressable
-              style={{
-                flex: 1,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
+              onPress={props.onPress}
+              onLongPress={props.onLongPress}
+              testID={props.testID}
+              accessibilityLabel={props.accessibilityLabel}
+              accessibilityRole={props.accessibilityRole}
+              accessibilityState={props.accessibilityState}
+              style={[
+                props.style,
+                {
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                },
+              ]}
               android_ripple={{ borderless: false, color: "transparent" }}
-            />
+            >
+              {props.children}
+            </Pressable>
           ),
         })}
         backBehavior="history"
