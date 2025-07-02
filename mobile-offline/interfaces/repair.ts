@@ -1,6 +1,6 @@
 export interface RepairData {
   uuid: string;
-  type: "small" | "large" | "other";
+  type: RepairType;
   price: number | null;
   date: Date;
   options: RepairOptions;
@@ -8,6 +8,8 @@ export interface RepairData {
   images: string[] | null;
   note: string | null; // Note used in all types
 }
+
+export type RepairType = "small" | "large" | "other";
 
 export interface RepairOptions {
   oilChange: boolean;

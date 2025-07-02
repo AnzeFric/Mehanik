@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "~14.0.4",
+    "@nozbe/watermelondb": "^0.28.0",
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-navigation/native": "^7.0.14",
     "expo": "~52.0.47",
@@ -28,6 +29,7 @@
     "expo-status-bar": "~2.0.1",
     "expo-system-ui": "~4.0.9",
     "expo-web-browser": "~14.0.2",
+    "metro-react-native-babel-preset": "^0.77.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.54.2",
@@ -48,6 +50,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.26.9",
+    "@babel/plugin-proposal-decorators": "^7.28.0",
     "@types/jest": "^29.5.14",
     "@types/react": "^18.2.0",
     "@types/react-native-html-to-pdf": "^0.8.3",
