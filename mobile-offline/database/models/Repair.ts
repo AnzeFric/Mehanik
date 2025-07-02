@@ -1,6 +1,5 @@
 import { Model, Relation } from "@nozbe/watermelondb";
-import field from "@nozbe/watermelondb/decorators/field";
-import { date, relation, json } from "@nozbe/watermelondb/decorators";
+import { field, date, relation, json } from "@nozbe/watermelondb/decorators";
 import { RepairOptions, RepairType } from "@/interfaces/repair";
 import Customer from "./Customer";
 
@@ -26,7 +25,7 @@ export default class Repair extends Model {
   static table = "repairs";
 
   static associations = {
-    customer: { type: "belongs_to" as const, key: "customer_uuid" },
+    customer: { type: "belongs_to" as const, key: "customer_id" },
   };
 
   @field("uuid") uuid!: string;
@@ -37,6 +36,6 @@ export default class Repair extends Model {
   @field("description") description!: string | null;
   @json("images", sanitizeImages) images!: Array<string>;
   @field("note") note!: string | null;
-  @field("fk_customer") customerUuid!: string;
-  @relation("customers", "customer_uuid") customer!: Relation<Customer>;
+  @field("customer_id") customerId!: string;
+  @relation("customers", "customer_id") customer!: Relation<Customer>;
 }
