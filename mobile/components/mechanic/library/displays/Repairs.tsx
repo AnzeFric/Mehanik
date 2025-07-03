@@ -5,15 +5,14 @@ import ThemedText from "@/components/global/themed/ThemedText";
 
 interface Props {
   repairList: RepairData[];
-  vehicleUuid: string;
 }
 
-export default function RepairsDisplay({ repairList, vehicleUuid }: Props) {
+export default function RepairsDisplay({ repairList }: Props) {
   return (
     <View style={styles.container}>
       {repairList.length > 0 ? (
         repairList.map((repair, index) => (
-          <Repair repairData={repair} vehicleUuid={vehicleUuid} key={index} />
+          <Repair repairData={repair} key={index} />
         ))
       ) : (
         <ThemedText type={"small"} style={{ textAlign: "center" }}>

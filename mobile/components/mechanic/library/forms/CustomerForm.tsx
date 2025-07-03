@@ -37,7 +37,7 @@ export default function CustomerForm({ customer, setCustomer }: Props) {
       };
       setCustomer(customerData);
     },
-    [customer, firstName, lastName, phone, email, setCustomer]
+    [firstName, lastName, phone, email]
   );
 
   const handleFirstNameChange = useCallback(

@@ -99,17 +99,7 @@ export default function RepairForm({ repair, setRepair }: Props) {
       };
       setRepair(repairData);
     },
-    [
-      repair,
-      type,
-      description,
-      price,
-      note,
-      repairImages,
-      date,
-      options,
-      setRepair,
-    ]
+    [type, description, price, note, repairImages, date, options]
   );
 
   const handleDescriptionChange = useCallback(
@@ -367,7 +357,7 @@ export default function RepairForm({ repair, setRepair }: Props) {
       <ThemedDatePicker
         modal
         open={showDatePicker}
-        date={date}
+        date={new Date(date)}
         onConfirm={handleDateChange}
         onCancel={() => setShowDatePicker(false)}
         mode="date"

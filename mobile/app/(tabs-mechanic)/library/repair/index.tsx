@@ -6,7 +6,7 @@ import {
   Alert,
 } from "react-native";
 import { useState, useCallback, useMemo } from "react";
-import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import {
   formatDate,
   formatRepairType,
@@ -25,13 +25,13 @@ import ThemedIcon from "@/components/global/themed/ThemedIcon";
 import EditMenu from "@/components/mechanic/library/EditMenu";
 import ThemedText from "@/components/global/themed/ThemedText";
 import { Ionicons } from "@expo/vector-icons";
+import useRepairStore from "@/stores/useRepairStore";
 
 export default function DetailRepairScreen() {
-  const { uuid } = useLocalSearchParams(); // Vehicle uuid
-
   const { setShouldRefetch } = useCustomerStore();
   const { staticColors } = useAnimatedTheme();
-  const { currentRepairFocus, deleteVehicleRepair } = useRepair();
+  const { deleteVehicleRepair } = useRepair();
+  const { currentRepairFocus } = useRepairStore();
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
@@ -92,7 +92,7 @@ export default function DetailRepairScreen() {
       <View>
         {isMenuVisible && currentRepairFocus && (
           <EditMenu
-            onEditPress={() => router.push(`/library/repair/edit/${uuid}`)}
+            onEditPress={() => router.push(`/library/repair/edit`)}
             onDeleteClose={() => setIsModalOpen(true)}
           />
         )}

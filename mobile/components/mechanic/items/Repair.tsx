@@ -10,16 +10,15 @@ import { useAnimatedTheme } from "@/hooks/utils/useAnimatedTheme";
 
 interface Props {
   repairData: RepairData;
-  vehicleUuid: string;
 }
 
-export default function Repair({ repairData, vehicleUuid }: Props) {
+export default function Repair({ repairData }: Props) {
   const { setCurrentRepairFocus } = useRepair();
   const { staticColors } = useAnimatedTheme();
 
   const handleRedirect = () => {
     setCurrentRepairFocus(repairData);
-    router.push(`/(tabs-mechanic)/library/repair/${vehicleUuid}`);
+    router.push(`/(tabs-mechanic)/library/repair`);
   };
 
   return (

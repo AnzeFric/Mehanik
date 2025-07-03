@@ -3,27 +3,29 @@ import TemplateView from "@/components/mechanic/library/TemplateView";
 import RepairForm from "@/components/mechanic/library/forms/RepairForm";
 import { useCallback, useState } from "react";
 import { RepairData } from "@/interfaces/repair";
-import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import { useRepair } from "@/hooks/useRepair";
 import useCustomerStore from "@/stores/accounts/useCustomerStore";
+import useRepairStore from "@/stores/useRepairStore";
 
 export default function EditRepairScreen() {
-  const { uuid } = useLocalSearchParams(); // Vehicle uuid
-
   const { setShouldRefetch } = useCustomerStore();
-  const { currentRepairFocus, updateVehicleRepair } = useRepair();
+  const { updateVehicleRepair } = useRepair();
+  const { currentRepairFocus, setCurrentRepairFocus } = useRepairStore();
 
-  const [currentRepair, setCurrentRepair] = useState<RepairData | null>(null);
+  const [repair, setRepair] = useState<RepairData | null>(null);
 
   useFocusEffect(
     useCallback(() => {
-      setCurrentRepair(currentRepairFocus);
-    }, [uuid, currentRepairFocus])
+      if (currentRepairFocus) {
+        setRepair(currentRepairFocus);
+      }
+    }, [currentRepairFocus])
   );
 
   const handleEditRepair = async () => {
-    if (currentRepair) {
-      const result = await updateVehicleRepair(currentRepair);
+    if (repair) {
+      const result = await updateVehicleRepair(repair);
 
       if (result) {
         setShouldRefetch(true);
@@ -34,6 +36,7 @@ export default function EditRepairScreen() {
         );
       }
     }
+    setCurrentRepairFocus(null);
     router.replace(`/(tabs-mechanic)/library`);
   };
 
@@ -45,7 +48,7 @@ export default function EditRepairScreen() {
       onButtonPress={handleEditRepair}
     >
       <View style={{ paddingHorizontal: 25 }}>
-        <RepairForm repair={currentRepair} setRepair={setCurrentRepair} />
+        <RepairForm repair={repair} setRepair={setRepair} />
       </View>
     </TemplateView>
   );

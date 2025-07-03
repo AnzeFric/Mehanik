@@ -117,10 +117,7 @@ export default function DetailCustomerScreen() {
                   style={{ paddingVertical: 30 }}
                 />
               ) : (
-                <RepairsDisplay
-                  repairList={repairList}
-                  vehicleUuid={customer.vehicle.uuid}
-                />
+                <RepairsDisplay repairList={repairList} />
               )}
 
               {isModalOpen && (

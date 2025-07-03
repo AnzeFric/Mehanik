@@ -115,7 +115,7 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="library/repair/[uuid]"
+          name="library/repair/index"
           options={{
             href: null,
           }}
@@ -127,7 +127,7 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="library/repair/edit/[uuid]"
+          name="library/repair/edit"
           options={{
             href: null,
           }}
