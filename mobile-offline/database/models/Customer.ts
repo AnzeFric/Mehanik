@@ -7,7 +7,7 @@ export default class Customer extends Model {
   static table = "customers";
 
   static associations = {
-    vehicle: { type: "belongs_to" as const, key: "customer_id" },
+    vehicles: { type: "has_many" as const, foreignKey: "customer_id" },
     repairs: { type: "has_many" as const, foreignKey: "customer_id" },
   };
 
@@ -17,6 +17,6 @@ export default class Customer extends Model {
   @field("email") email!: string | null;
   @field("phone") phone!: string | null;
 
-  @relation("vehicles", "customer_id") vehicle!: Vehicle;
+  @children("vehicles") vehicles!: Query<Vehicle>;
   @children("repairs") repairs!: Query<Repair>;
 }

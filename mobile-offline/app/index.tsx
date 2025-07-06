@@ -7,88 +7,35 @@ import PlusButton from "@/components/global/PlusButton";
 import TitleRow from "@/components/global/TitleRow";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedSearchInput from "@/components/global/themed/ThemedSearchInput";
-import { CustomerFormData } from "@/interfaces/customer";
-import { database } from "@/database/index";
-import Customer from "@/database/models/Customer";
-import { RepairData } from "@/interfaces/repair";
+import { useCustomers } from "@/hooks/useCustomers";
+import LoadingScreen from "@/components/global/LoadingScreen";
+import useDataStore from "@/stores/useDataStore";
 
 export default function HomeScreen() {
-  const [customers, setCustomers] = useState<Array<CustomerFormData>>([]);
+  const { customers, setCustomers } = useDataStore();
+  const { fetchCustomers } = useCustomers();
   const [search, setSearch] = useState<string>("");
-
-  const transformCustomerData = async (
-    customer: Customer
-  ): Promise<CustomerFormData> => {
-    const vehicle = customer.vehicle;
-    const repairs = await customer.repairs.fetch();
-
-    return {
-      uuid: customer.uuid,
-      customer: {
-        firstName: customer.firstName,
-        lastName: customer.lastName,
-        email: customer.email,
-        phone: customer.phone,
-      },
-      vehicle: vehicle
-        ? {
-            brand: vehicle.brand,
-            model: vehicle.model,
-            buildYear: vehicle.buildYear,
-            vin: vehicle.vin,
-            image: vehicle.image,
-            description: vehicle.description,
-          }
-        : {
-            brand: "",
-            model: "",
-            buildYear: null,
-            vin: null,
-            image: null,
-            description: null,
-          },
-      repair: repairs.map(
-        (repair): RepairData => ({
-          uuid: repair.uuid,
-          type: repair.type,
-          price: repair.price,
-          date: repair.repairDate,
-          options: repair.options,
-          description: repair.description,
-          images: repair.images,
-          note: repair.note,
-        })
-      ),
-    };
-  };
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const subscription = database
-      .get<Customer>("customers")
-      .query()
-      .observe()
-      .subscribe(async (customerModels) => {
-        try {
-          const transformedCustomers = await Promise.all(
-            customerModels.map(transformCustomerData)
-          );
-          setCustomers(transformedCustomers);
-        } catch (error) {
-          console.error("Error transforming customer data:", error);
-          setCustomers([]);
-        }
-      });
+    const initializeCustomers = async () => {
+      const customers = await fetchCustomers();
+      if (customers) {
+        setCustomers(customers);
+      }
+    };
+    setLoading(true);
+    initializeCustomers();
+    setLoading(false);
+  }, [customers]);
 
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const filteredData: Array<CustomerFormData> = useMemo(() => {
+  const filteredData = useMemo(() => {
     if (search.trim() === "") return customers;
 
     return customers.filter((customer) => {
       const searchLower = search.toLowerCase();
 
-      // Customer name search
+      // Customer search
       const customerMatch =
         customer.customer.firstName?.toLowerCase().includes(searchLower) ||
         customer.customer.lastName?.toLowerCase().includes(searchLower) ||
@@ -108,11 +55,16 @@ export default function HomeScreen() {
 
   useFocusEffect(
     useCallback(() => {
+      fetchCustomers();
       return () => {
         setSearch("");
       };
     }, [])
   );
+
+  if (loading) {
+    return <LoadingScreen type={"full"} text={"Nalaganje podatkov..."} />;
+  }
 
   return (
     <ThemedView type={"background"} style={{ flex: 1 }}>

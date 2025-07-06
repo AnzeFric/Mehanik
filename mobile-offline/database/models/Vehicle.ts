@@ -16,5 +16,6 @@ export default class Vehicle extends Model {
   @field("image") image!: string | null;
   @field("description") description!: string | null;
   @field("customer_id") customerId!: string;
+
   @relation("customers", "customer_id") customer!: Relation<Customer>;
 }

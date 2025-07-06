@@ -29,7 +29,7 @@ export default class Repair extends Model {
   };
 
   @field("uuid") uuid!: string;
-  @field("type") type!: RepairType; // "small" | "large" | "other"
+  @field("type") type!: RepairType;
   @field("price") price!: number | null;
   @date("repair_date") repairDate!: Date;
   @json("options", sanitizeRepairOptions) options!: RepairOptions;
@@ -37,5 +37,6 @@ export default class Repair extends Model {
   @json("images", sanitizeImages) images!: Array<string>;
   @field("note") note!: string | null;
   @field("customer_id") customerId!: string;
+
   @relation("customers", "customer_id") customer!: Relation<Customer>;
 }
