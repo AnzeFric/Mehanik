@@ -202,7 +202,7 @@ const appointmentController = {
         if (token) {
           await notificationService.sendPushNotification(
             token,
-            "Nov termin",
+            "Spremenjen termin",
             statusToText[appointmentData.status]
           );
         }
