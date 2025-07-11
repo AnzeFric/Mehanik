@@ -27,7 +27,7 @@ export default function HomeScreen() {
     setLoading(true);
     initializeCustomers();
     setLoading(false);
-  }, [customers]);
+  }, []);
 
   const filteredData = useMemo(() => {
     if (search.trim() === "") return customers;
@@ -51,11 +51,10 @@ export default function HomeScreen() {
 
       return customerMatch || vehicleMatch;
     });
-  }, [search, customers]);
+  }, [customers, search]);
 
   useFocusEffect(
     useCallback(() => {
-      fetchCustomers();
       return () => {
         setSearch("");
       };

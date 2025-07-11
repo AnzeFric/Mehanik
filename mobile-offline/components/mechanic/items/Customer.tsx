@@ -1,4 +1,4 @@
-import { View, Image, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Image, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import { router } from "expo-router";
 import { CustomerFormData } from "@/interfaces/customer";
 import ThemedView from "@/components/global/themed/ThemedView";
@@ -7,6 +7,7 @@ import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 import { useState } from "react";
 import ModalPrompt from "@/components/global/ModalPrompt";
 import { useCustomers } from "@/hooks/useCustomers";
+import useDataStore from "@/stores/useDataStore";
 
 interface Props {
   customer: CustomerFormData;
@@ -14,7 +15,8 @@ interface Props {
 
 export default function Customer({ customer }: Props) {
   const { staticColors } = useAnimatedTheme();
-  const { deleteCustomer } = useCustomers();
+  const { fetchCustomers, deleteCustomer } = useCustomers();
+  const { setCustomers } = useDataStore();
 
   const [showDelete, setShowDelete] = useState(false);
 
@@ -28,8 +30,17 @@ export default function Customer({ customer }: Props) {
     });
   };
 
-  const handleDeleteCustomer = () => {
-    deleteCustomer(customer.customer.uuid);
+  const handleDeleteCustomer = async () => {
+    const success = await deleteCustomer(customer.customer.uuid);
+    if (success) {
+      const newCustomers = await fetchCustomers();
+      if (newCustomers) setCustomers(newCustomers);
+    } else {
+      Alert.alert(
+        "Napaka",
+        "Prišlo je do napake pri brisanju stranke. Kliči Anžeta."
+      );
+    }
     setShowDelete(false);
   };
 

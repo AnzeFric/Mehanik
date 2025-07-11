@@ -3,7 +3,7 @@ import { useState, useCallback, useRef, useMemo } from "react";
 import { router, useFocusEffect } from "expo-router";
 import { CustomerData } from "@/interfaces/customer";
 import { VehicleData } from "@/interfaces/vehicle";
-import { RepairData, RepairOptions } from "@/interfaces/repair";
+import { RepairData } from "@/interfaces/repair";
 import TitleRow from "@/components/global/TitleRow";
 import ImageForm from "@/components/mechanic/library/forms/ImageForm";
 import RepairForm from "@/components/mechanic/library/forms/RepairForm";
