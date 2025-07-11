@@ -15,8 +15,8 @@ import ThemedIcon from "@/components/global/themed/ThemedIcon";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 
 interface Props {
-  repair?: RepairData | null;
-  setRepair: (repairData: RepairData | null) => void;
+  repair?: RepairData;
+  setRepair: (repairData: RepairData) => void;
 }
 
 const defaultOptions = {

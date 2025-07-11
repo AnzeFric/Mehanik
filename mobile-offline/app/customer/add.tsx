@@ -12,14 +12,15 @@ import VehicleForm from "@/components/mechanic/library/forms/VehicleForm";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedText from "@/components/global/themed/ThemedText";
 import ThemedButton from "@/components/global/themed/ThemedButton";
-import { database } from "@/database/index";
-import Customer from "@/database/models/Customer";
-import Vehicle from "@/database/models/Vehicle";
-import Repair from "@/database/models/Repair";
-import uuid from "react-native-uuid";
+import { useCustomers } from "@/hooks/useCustomers";
+import useDataStore from "@/stores/useDataStore";
 
 export default function AddCustomerScreen() {
-  const [repairData, setRepairData] = useState<RepairData | null>(null);
+  const { setCustomers } = useDataStore();
+
+  const { addCustomer, fetchCustomers } = useCustomers();
+
+  const [repairData, setRepairData] = useState<RepairData>();
   const [vehicleImage, setVehicleImage] = useState("");
   const [saving, setSaving] = useState(false);
   const [customerData, setCustomerData] = useState<CustomerData>({
@@ -53,83 +54,24 @@ export default function AddCustomerScreen() {
     );
   }, [customerData, vehicleData, saving]);
 
-  const repairExists = (): boolean => {
-    // If user follows instructions
-    if (repairData?.type === "other" && repairData.description === null) {
-      return false;
-    }
-
-    let allOptionsFalse = true;
-    // If user selected "small" or "large" option and did not select an option
-    Object.values(repairData?.options || {}).map((option) => {
-      if (option === true) {
-        allOptionsFalse = false;
-      }
-    });
-    if (allOptionsFalse) return false;
-
-    return true;
-  };
-
   const saveCustomer = async () => {
     if (!canSave) {
       return;
     }
     setSaving(true);
 
-    try {
-      await database.write(async () => {
-        const customerUuid = uuid.v4();
-
-        // Create customer
-        const customer = await database
-          .get<Customer>("customers")
-          .create((customer) => {
-            customer.uuid = customerUuid;
-            customer.firstName = customerData.firstName.trim();
-            customer.lastName = customerData.lastName.trim();
-            customer.email = customerData.email?.trim() || null;
-            customer.phone = customerData.phone?.trim() || null;
-          });
-
-        // Create vehicle
-        await database.get<Vehicle>("vehicles").create((vehicle) => {
-          vehicle.brand = vehicleData.brand.trim();
-          vehicle.model = vehicleData.model.trim();
-          vehicle.buildYear = vehicleData.buildYear;
-          vehicle.vin = vehicleData.vin?.trim() || null;
-          vehicle.image = vehicleImage || vehicleData.image;
-          vehicle.description = vehicleData.description?.trim() || null;
-          vehicle.customerId = customer.id; // WatermelonDB auto-generates id
-        });
-
-        // Create repair if provided
-        if (repairExists() && repairData) {
-          await database.get<Repair>("repairs").create((repair) => {
-            repair.uuid = repairData.uuid || uuid.v4();
-            repair.type = repairData.type;
-            repair.price = repairData.price;
-            repair.repairDate = repairData.repairDate;
-            repair.options = repairData.options;
-            repair.description = repairData.description?.trim() || null;
-            repair.images = repairData.images || [];
-            repair.note = repairData.note?.trim() || null;
-            repair.customerId = customer.id; // WatermelonDB auto generates id
-          });
-        }
-      });
-
-      router.push("/");
-    } catch (error) {
-      console.error("Error saving customer:", error);
+    const success = await addCustomer(customerData, vehicleData, repairData);
+    if (success) {
+      const newCustomers = await fetchCustomers();
+      if (newCustomers) setCustomers(newCustomers);
+    } else {
       Alert.alert(
         "Napaka",
-        "Prišlo je do napake pri shranjevanju stranke. Poskusite znova.",
-        [{ text: "V redu" }]
+        "Prišlo je do napake pri shranjevanju stranke. Kliči Anžeta."
       );
-    } finally {
-      setSaving(false);
     }
+    setSaving(false);
+    router.push("/");
   };
 
   useFocusEffect(

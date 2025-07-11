@@ -3,6 +3,10 @@ import Customer from "@/database/models/Customer";
 import { CustomerData, CustomerFormData } from "@/interfaces/customer";
 import { VehicleData } from "@/interfaces/vehicle";
 import { Q } from "@nozbe/watermelondb";
+import uuid from "react-native-uuid";
+import { RepairData } from "@/interfaces/repair";
+import Vehicle from "@/database/models/Vehicle";
+import Repair from "@/database/models/Repair";
 
 export function useCustomers() {
   const fetchCustomers = async () => {
@@ -68,6 +72,60 @@ export function useCustomers() {
       return customerData;
     } catch (error) {
       console.error("Error while fetching customers: ", error);
+    }
+  };
+
+  const addCustomer = async (
+    customerData: CustomerData,
+    vehicleData: VehicleData,
+    repairData: RepairData | undefined
+  ) => {
+    try {
+      await database.write(async () => {
+        const customerUuid = uuid.v4();
+
+        // Create customer
+        const customer = await database
+          .get<Customer>("customers")
+          .create((customer) => {
+            customer.uuid = customerUuid;
+            customer.firstName = customerData.firstName.trim();
+            customer.lastName = customerData.lastName.trim();
+            customer.email = customerData.email?.trim() || null;
+            customer.phone = customerData.phone?.trim() || null;
+          });
+
+        // Create vehicle
+        await database.get<Vehicle>("vehicles").create((vehicle) => {
+          vehicle.brand = vehicleData.brand.trim();
+          vehicle.model = vehicleData.model.trim();
+          vehicle.buildYear = vehicleData.buildYear;
+          vehicle.vin = vehicleData.vin?.trim() || null;
+          vehicle.image = vehicleData.image || null;
+          vehicle.description = vehicleData.description?.trim() || null;
+          vehicle.customerId = customer.id; // WatermelonDB auto-generates id
+        });
+
+        // Create repair if provided
+        if (repairExists(repairData) && repairData) {
+          await database.get<Repair>("repairs").create((repair) => {
+            repair.uuid = repairData.uuid || uuid.v4();
+            repair.type = repairData.type;
+            repair.price = repairData.price;
+            repair.repairDate = repairData.repairDate;
+            repair.options = repairData.options;
+            repair.description = repairData.description?.trim() || null;
+            repair.images = repairData.images || [];
+            repair.note = repairData.note?.trim() || null;
+            repair.customerId = customer.id; // WatermelonDB auto generates id
+          });
+        }
+      });
+
+      return true;
+    } catch (error) {
+      console.error("Error while saving customer:", error);
+      throw error;
     }
   };
 
@@ -156,8 +214,27 @@ export function useCustomers() {
     }
   };
 
+  const repairExists = (repair: RepairData | undefined): boolean => {
+    // If user follows instructions
+    if (repair?.type === "other" && repair.description === null) {
+      return false;
+    }
+
+    let allOptionsFalse = true;
+    // If user selected "small" or "large" option and did not select an option
+    Object.values(repair?.options || {}).map((option) => {
+      if (option === true) {
+        allOptionsFalse = false;
+      }
+    });
+    if (allOptionsFalse) return false;
+
+    return true;
+  };
+
   return {
     fetchCustomers,
+    addCustomer,
     deleteCustomer,
     updateCustomer,
   };
