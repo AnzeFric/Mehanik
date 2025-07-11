@@ -53,7 +53,10 @@ export default function DetailRepairScreen() {
 
   const viewImages = useMemo(() => {
     if (repairData?.images) {
-      return repairData.images.map((uri) => ({ uri }));
+      return repairData.images.map((uri, index) => ({
+        uri: uri,
+        key: `image-${Date.now()}-${index}-${Math.random()}`,
+      }));
     }
     return [];
   }, [repairData]);
@@ -202,6 +205,7 @@ export default function DetailRepairScreen() {
       )}
       <ImageView
         images={viewImages}
+        keyExtractor={(uri, index) => `${index}`}
         imageIndex={0}
         visible={imageViewVisible}
         onRequestClose={() => setImageViewVisible(false)}

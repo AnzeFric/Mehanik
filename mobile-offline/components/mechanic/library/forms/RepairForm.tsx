@@ -22,16 +22,18 @@ interface Props {
 const defaultOptions = {
   oilChange: false,
   filterChange: false,
-  brakeCheck: false,
-  tireRotation: false,
-  fluidCheck: false,
-  batteryCheck: false,
-  sparkPlugs: false,
   airFilter: false,
   cabinFilter: false,
-  suspension: false,
-  timing: false,
+  frontBrakes: false,
+  backBrakes: false,
+  batteryCheck: false,
+  brakeFluid: false,
+
+  // large
   coolant: false,
+  sparkPlugs: false,
+  outerTiming: false,
+  timingChain: false,
 };
 
 export default function RepairForm({ repair, setRepair }: Props) {
@@ -196,7 +198,6 @@ export default function RepairForm({ repair, setRepair }: Props) {
           selected={type === "other"}
         />
       </View>
-
       {(type === "small" || type === "large") && (
         <View style={styles.repairItemsContainer}>
           <CustomCheckBox
@@ -220,9 +221,14 @@ export default function RepairForm({ repair, setRepair }: Props) {
             onChange={(val) => handleChange("cabinFilter", val)}
           />
           <CustomCheckBox
-            text="Preverjanje tekočin"
-            value={options.fluidCheck}
-            onChange={(val) => handleChange("fluidCheck", val)}
+            text="Sprednje zavore"
+            value={options.frontBrakes}
+            onChange={(val) => handleChange("frontBrakes", val)}
+          />
+          <CustomCheckBox
+            text="Zadnje zavore"
+            value={options.backBrakes}
+            onChange={(val) => handleChange("backBrakes", val)}
           />
           <CustomCheckBox
             text="Preverjanje akumulatorja"
@@ -230,37 +236,32 @@ export default function RepairForm({ repair, setRepair }: Props) {
             onChange={(val) => handleChange("batteryCheck", val)}
           />
           <CustomCheckBox
-            text="Zavore"
-            value={options.brakeCheck}
-            onChange={(val) => handleChange("brakeCheck", val)}
-          />
-          <CustomCheckBox
-            text="Dolitje hladilne tekočine"
-            value={options.coolant}
-            onChange={(val) => handleChange("coolant", val)}
+            text="Zavorna tekočina"
+            value={options.brakeFluid}
+            onChange={(val) => handleChange("brakeFluid", val)}
           />
           {type === "large" && (
             <>
+              <CustomCheckBox
+                text="Dolitje hladilne tekočine"
+                value={options.coolant}
+                onChange={(val) => handleChange("coolant", val)}
+              />
               <CustomCheckBox
                 text="Svečke"
                 value={options.sparkPlugs}
                 onChange={(val) => handleChange("sparkPlugs", val)}
               />
               <CustomCheckBox
-                text="Jermen/Veriga"
-                value={options.timing}
-                onChange={(val) => handleChange("timing", val)}
+                text="Zunanji jermen"
+                value={options.outerTiming}
+                onChange={(val) => handleChange("outerTiming", val)}
               />
 
               <CustomCheckBox
-                text="Centriranje gum"
-                value={options.tireRotation}
-                onChange={(val) => handleChange("tireRotation", val)}
-              />
-              <CustomCheckBox
-                text="Vzmetje"
-                value={options.suspension}
-                onChange={(val) => handleChange("suspension", val)}
+                text="Zobati jermen/Veriga kpl."
+                value={options.timingChain}
+                onChange={(val) => handleChange("timingChain", val)}
               />
             </>
           )}

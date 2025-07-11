@@ -52,29 +52,29 @@ export function formatRepairType(type: string): string {
 export function formatRepairItems(item: string): string {
   switch (item) {
     case "oilChange":
-      return "Menjava olja";
+      return "Olje";
     case "filterChange":
-      return "Menjava filtra za olje";
-    case "brakeCheck":
-      return "Preveranje bremz";
-    case "tireRotation":
-      return "Centriranje gum";
-    case "fluidCheck":
-      return "Preverjanje tekočin";
-    case "batteryCheck":
-      return "Preverjanje akumulatorja";
-    case "sparkPlugs":
-      return "Svečke";
+      return "Oljni filter";
     case "airFilter":
       return "Zračni filter";
     case "cabinFilter":
       return "Kabinski filter";
-    case "suspension":
-      return "Vzmetje";
-    case "timing":
-      return "Jermen ali veriga";
+    case "frontBrakes":
+      return "Sprednje zavore";
+    case "backBrakes":
+      return "Zadnje zavore";
+    case "batteryCheck":
+      return "Preverjanje akumulatorja";
+    case "brakeFluid":
+      return "Zavorna tekočina";
     case "coolant":
-      return "Hladilna tekočina";
+      return "Dolitje hladilne tekočine";
+    case "sparkPlugs":
+      return "Svečke";
+    case "outerTiming":
+      return "Zunanji jermen";
+    case "timingChain":
+      return "Zobati jermen/Veriga kpl.";
     default:
       return "";
   }
@@ -89,18 +89,18 @@ export function formatCurrency(price: number | undefined | null): string {
 
 export function getServiceTranslation(options: RepairOptions) {
   const serviceMap: Record<keyof RepairOptions, string> = {
-    oilChange: "Menjava olja",
-    filterChange: "Menjava filtra",
-    brakeCheck: "Pregled zavor",
-    tireRotation: "Rotacija pnevmatik",
-    fluidCheck: "Pregled tekočin",
-    batteryCheck: "Pregled baterije",
-    sparkPlugs: "Svečke",
+    oilChange: "Olje",
+    filterChange: "Oljni filter",
     airFilter: "Zračni filter",
     cabinFilter: "Kabinski filter",
-    suspension: "Vzmetenje",
-    timing: "Jermen/veriga",
-    coolant: "Hladilna tekočina",
+    frontBrakes: "Sprednje zavore",
+    backBrakes: "Zadnje zavore",
+    batteryCheck: "Preverjanje akumulatorja",
+    brakeFluid: "Zavorna tekočina",
+    coolant: "Dolitje hladilne tekočine",
+    sparkPlugs: "Svečke",
+    outerTiming: "Zunanji jermen",
+    timingChain: "Zobati jermen/Veriga kpl.",
   };
 
   return Object.entries(options)
