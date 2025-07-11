@@ -28,10 +28,6 @@ export default function EditCustomerScreen() {
 
   useFocusEffect(
     useCallback(() => {
-      const foundCustomer = customers.find(
-        (customer) => customer.customer.uuid === customerUuid.toString()
-      );
-
       if (foundCustomer) {
         setCurrentCustomer(foundCustomer.customer);
         setCurrentVehicle(foundCustomer.vehicle);

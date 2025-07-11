@@ -4,20 +4,27 @@ import RepairForm from "@/components/mechanic/library/forms/RepairForm";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import useDataStore from "@/stores/useDataStore";
 import { useCallback, useMemo, useState } from "react";
-import { CustomerFormData } from "@/interfaces/customer";
 import { RepairData } from "@/interfaces/repair";
+import { useRepairs } from "@/hooks/useRepairs";
+import { useCustomers } from "@/hooks/useCustomers";
 
 export default function EditRepairScreen() {
   const { customerUuid, repairUuid } = useLocalSearchParams();
+
   const { customers, setCustomers } = useDataStore();
+  const { editRepair } = useRepairs();
+  const { fetchCustomers } = useCustomers();
 
-  const [repair, setRepair] = useState<RepairData | null>(null);
+  const [repair, setRepair] = useState<RepairData>();
+  const [updating, setUpdating] = useState(false);
 
-  const repairData = useMemo(() => {
-    const foundCustomer: CustomerFormData | undefined = customers.find(
+  const foundCustomer = useMemo(() => {
+    return customers.find(
       (customer) => customer.customer.uuid === customerUuid.toString()
     );
+  }, [customers, customerUuid]);
 
+  const repairData = useMemo(() => {
     if (foundCustomer) {
       const foundRepair = foundCustomer.repairs?.find(
         (repair) => repair.uuid === repairUuid
@@ -37,8 +44,8 @@ export default function EditRepairScreen() {
 
     Alert.alert("Napaka", "Servisa ni bilo mogoče najti");
     router.back();
-    return null;
-  }, [customers, customerUuid, repairUuid]);
+    return undefined;
+  }, [foundCustomer, repairUuid]);
 
   useFocusEffect(
     useCallback(() => {
@@ -50,20 +57,18 @@ export default function EditRepairScreen() {
 
   const handleEditRepair = async () => {
     if (repair) {
-      const updatedCustomers: Array<CustomerFormData> = customers.map(
-        (customer) => {
-          if (customer.customer.uuid === customerUuid.toString()) {
-            return {
-              ...customer,
-              repair: customer.repairs?.map((repair) =>
-                repair.uuid === repairUuid ? repair : repair
-              ) || [repair],
-            };
-          }
-          return customer;
-        }
-      );
-      setCustomers(updatedCustomers);
+      setUpdating(true);
+      const success = await editRepair(repair);
+      if (success) {
+        const newCustomers = await fetchCustomers();
+        if (newCustomers) setCustomers(newCustomers);
+      } else {
+        Alert.alert(
+          "Napaka",
+          "Prišlo je do napake pri posodabljanju servisa. Kliči Anžeta."
+        );
+      }
+      setUpdating(false);
       router.back();
     }
   };
@@ -72,7 +77,7 @@ export default function EditRepairScreen() {
     <TemplateView
       title={"Uredi servis"}
       backButton={true}
-      buttonText={"Shrani"}
+      buttonText={updating ? "Urejanje..." : "Uredi"}
       onButtonPress={handleEditRepair}
     >
       <RepairForm repair={repairData} setRepair={setRepair} />

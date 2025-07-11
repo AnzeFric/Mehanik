@@ -40,15 +40,15 @@ export function useRepairs() {
     }
   };
 
-  const editRepair = async (repairUuid: string, repairData: RepairData) => {
+  const editRepair = async (repairData: RepairData) => {
     try {
       const repairRecords = await database
         .get<Repair>("repairs")
-        .query(Q.where("uuid", repairUuid))
+        .query(Q.where("uuid", repairData.uuid))
         .fetch();
 
       if (repairRecords.length === 0) {
-        throw new Error(`Repair with UUID ${repairUuid} not found`);
+        throw new Error(`Repair with UUID ${repairData.uuid} not found`);
       }
 
       const repair = repairRecords[0];
