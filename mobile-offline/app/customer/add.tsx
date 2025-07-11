@@ -3,7 +3,7 @@ import { useState, useCallback, useRef, useMemo } from "react";
 import { router, useFocusEffect } from "expo-router";
 import { CustomerData } from "@/interfaces/customer";
 import { VehicleData } from "@/interfaces/vehicle";
-import { RepairData } from "@/interfaces/repair";
+import { RepairData, RepairOptions } from "@/interfaces/repair";
 import TitleRow from "@/components/global/TitleRow";
 import ImageForm from "@/components/mechanic/library/forms/ImageForm";
 import RepairForm from "@/components/mechanic/library/forms/RepairForm";
@@ -53,6 +53,24 @@ export default function AddCustomerScreen() {
     );
   }, [customerData, vehicleData, saving]);
 
+  const repairExists = (): boolean => {
+    // If user follows instructions
+    if (repairData?.type === "other" && repairData.description === null) {
+      return false;
+    }
+
+    let allOptionsFalse = true;
+    // If user selected "small" or "large" option and did not select an option
+    Object.values(repairData?.options || {}).map((option) => {
+      if (option === true) {
+        allOptionsFalse = false;
+      }
+    });
+    if (allOptionsFalse) return false;
+
+    return true;
+  };
+
   const saveCustomer = async () => {
     if (!canSave) {
       return;
@@ -61,7 +79,7 @@ export default function AddCustomerScreen() {
 
     try {
       await database.write(async () => {
-        const customerUuid = uuid.v4() as string;
+        const customerUuid = uuid.v4();
 
         // Create customer
         const customer = await database
@@ -86,9 +104,9 @@ export default function AddCustomerScreen() {
         });
 
         // Create repair if provided
-        if (repairData) {
+        if (repairExists() && repairData) {
           await database.get<Repair>("repairs").create((repair) => {
-            repair.uuid = repairData.uuid || (uuid.v4() as string);
+            repair.uuid = repairData.uuid || uuid.v4();
             repair.type = repairData.type;
             repair.price = repairData.price;
             repair.repairDate = repairData.repairDate;
@@ -112,28 +130,6 @@ export default function AddCustomerScreen() {
     } finally {
       setSaving(false);
     }
-  };
-
-  // Reset form function
-  const resetForm = () => {
-    setCustomerData({
-      uuid: "",
-      firstName: "",
-      lastName: "",
-      email: null,
-      phone: null,
-    });
-    setVehicleData({
-      brand: "",
-      model: "",
-      vin: null,
-      image: null,
-      buildYear: null,
-      description: null,
-      customerId: "",
-    });
-    setRepairData(null);
-    setVehicleImage("");
   };
 
   useFocusEffect(
@@ -183,13 +179,6 @@ export default function AddCustomerScreen() {
             onPress={saveCustomer}
             selected={canSave}
             disabled={!canSave}
-          />
-          <ThemedButton
-            buttonType={"small"}
-            buttonText="Počisti"
-            onPress={resetForm}
-            selected={false}
-            disabled={saving}
           />
         </View>
       </ScrollView>
