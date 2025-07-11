@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, StyleSheet } from "react-native";
+import { View, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import { router } from "expo-router";
 import { formatDate, formatRepairType, formatCurrency } from "@/constants/util";
 import { RepairData } from "@/interfaces/repair";
@@ -9,6 +9,8 @@ import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 import useDataStore from "@/stores/useDataStore";
 import ModalPrompt from "@/components/global/ModalPrompt";
 import { useState } from "react";
+import { useRepairs } from "@/hooks/useRepairs";
+import { useCustomers } from "@/hooks/useCustomers";
 
 interface Props {
   repairData: RepairData;
@@ -16,9 +18,11 @@ interface Props {
 }
 
 export default function Repair({ repairData, customerUuid }: Props) {
-  const { customers, setCustomers } = useDataStore();
+  const { setCustomers } = useDataStore();
 
   const { staticColors } = useAnimatedTheme();
+  const { deleteRepair } = useRepairs();
+  const { fetchCustomers } = useCustomers();
 
   const [showDelete, setShowDelete] = useState(false);
 
@@ -32,18 +36,17 @@ export default function Repair({ repairData, customerUuid }: Props) {
     });
   };
 
-  const deleteRepair = () => {
-    const updatedCustomers = customers.map((customer) =>
-      customer.customer.uuid === customerUuid && customer.repairs
-        ? {
-            ...customer,
-            repairs: customer.repairs.filter(
-              (repairs) => repairs.uuid !== repairData.uuid
-            ),
-          }
-        : customer
-    );
-    setCustomers(updatedCustomers);
+  const handleDeleteRepair = async () => {
+    const success = await deleteRepair(repairData.uuid);
+    if (success) {
+      const newCustomers = await fetchCustomers();
+      if (newCustomers) setCustomers(newCustomers);
+    } else {
+      Alert.alert(
+        "Napaka",
+        "Prišlo je do napake pri brisanju stranke. Kliči Anžeta."
+      );
+    }
     setShowDelete(false);
   };
 
@@ -97,7 +100,7 @@ export default function Repair({ repairData, customerUuid }: Props) {
         <ModalPrompt
           isVisible={true}
           message={"Servis bo trajno izbrisan"}
-          onConfirm={deleteRepair}
+          onConfirm={handleDeleteRepair}
           onCancel={() => {
             setShowDelete(false);
           }}
