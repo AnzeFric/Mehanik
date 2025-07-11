@@ -26,7 +26,7 @@ export default function AddRepairScreen() {
       } else {
         Alert.alert(
           "Napaka",
-          "Prišlo je do napake pri shranjevanju stranke. Kliči Anžeta."
+          "Prišlo je do napake pri shranjevanju servisa. Kliči Anžeta."
         );
       }
       router.back();

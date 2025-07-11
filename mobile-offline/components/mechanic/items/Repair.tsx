@@ -44,7 +44,7 @@ export default function Repair({ repairData, customerUuid }: Props) {
     } else {
       Alert.alert(
         "Napaka",
-        "Prišlo je do napake pri brisanju stranke. Kliči Anžeta."
+        "Prišlo je do napake pri brisanju servisa. Kliči Anžeta."
       );
     }
     setShowDelete(false);
