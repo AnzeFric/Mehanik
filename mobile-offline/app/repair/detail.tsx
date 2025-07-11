@@ -68,7 +68,11 @@ export default function DetailRepairScreen() {
 
   const exportRepair = () => {
     if (repairData && foundCustomer) {
-      generateRepairPdf(repairData, foundCustomer.customer);
+      generateRepairPdf(
+        repairData,
+        foundCustomer.customer,
+        foundCustomer.vehicle
+      );
     }
   };
 
