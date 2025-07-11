@@ -3,35 +3,32 @@ import RepairForm from "@/components/mechanic/library/forms/RepairForm";
 import { RepairData } from "@/interfaces/repair";
 import TemplateView from "@/components/mechanic/library/TemplateView";
 import { router, useLocalSearchParams } from "expo-router";
+import { useRepairs } from "@/hooks/useRepairs";
+import { useCustomers } from "@/hooks/useCustomers";
+import { Alert } from "react-native";
 import useDataStore from "@/stores/useDataStore";
-import { CustomerFormData } from "@/interfaces/customer";
-import uuid from "react-native-uuid";
 
 export default function AddRepairScreen() {
   const { customerUuid } = useLocalSearchParams();
+  const { setCustomers } = useDataStore();
 
-  const { customers, setCustomers } = useDataStore();
+  const { addRepair } = useRepairs();
+  const { fetchCustomers } = useCustomers();
 
   const [repairData, setRepairData] = useState<RepairData | null>(null);
 
   const handleSaveRepair = async () => {
     if (repairData) {
-      const newRepair: RepairData = {
-        ...repairData,
-        uuid: uuid.v4(),
-      };
-      const updatedCustomers: Array<CustomerFormData> = customers.map(
-        (customer) =>
-          customer.customer.uuid === customerUuid.toString()
-            ? {
-                ...customer,
-                repair: customer.repairs
-                  ? [...customer.repairs, newRepair]
-                  : [newRepair],
-              }
-            : customer
-      );
-      setCustomers(updatedCustomers);
+      const success = await addRepair(customerUuid.toString(), repairData);
+      if (success) {
+        const newCustomers = await fetchCustomers();
+        if (newCustomers) setCustomers(newCustomers);
+      } else {
+        Alert.alert(
+          "Napaka",
+          "Prišlo je do napake pri shranjevanju stranke. Kliči Anžeta."
+        );
+      }
       router.back();
     }
   };
@@ -43,7 +40,7 @@ export default function AddRepairScreen() {
       buttonText={"Shrani"}
       onButtonPress={handleSaveRepair}
     >
-      <RepairForm repair={null} setRepair={setRepairData} />
+      <RepairForm repair={undefined} setRepair={setRepairData} />
     </TemplateView>
   );
 }

@@ -27,7 +27,7 @@ export default function DetailCustomerScreen() {
       (customer) => customer.customer.uuid === customerUuid.toString()
     );
     setCustomer(foundCustomer);
-  }, []);
+  }, [customers]);
 
   useFocusEffect(
     useCallback(() => {
