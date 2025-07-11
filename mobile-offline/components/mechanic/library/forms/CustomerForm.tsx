@@ -28,6 +28,7 @@ export default function CustomerForm({ customer, setCustomer }: Props) {
   const updateParent = useCallback(
     (updates: Partial<CustomerData>) => {
       const customerData: CustomerData = {
+        uuid: customer?.uuid || "",
         firstName: firstName,
         lastName: lastName,
         phone: phone || null,

@@ -15,11 +15,11 @@ export default function EditRepairScreen() {
 
   const repairData = useMemo(() => {
     const foundCustomer: CustomerFormData | undefined = customers.find(
-      (customer) => customer.uuid === customerUuid.toString()
+      (customer) => customer.customer.uuid === customerUuid.toString()
     );
 
     if (foundCustomer) {
-      const foundRepair = foundCustomer.repair?.find(
+      const foundRepair = foundCustomer.repairs?.find(
         (repair) => repair.uuid === repairUuid
       );
 
@@ -28,9 +28,9 @@ export default function EditRepairScreen() {
         return {
           ...foundRepair,
           date:
-            foundRepair.date instanceof Date
-              ? foundRepair.date
-              : new Date(foundRepair.date || Date.now()),
+            foundRepair.repairDate instanceof Date
+              ? foundRepair.repairDate
+              : new Date(foundRepair.repairDate || Date.now()),
         };
       }
     }
@@ -52,11 +52,11 @@ export default function EditRepairScreen() {
     if (repair) {
       const updatedCustomers: Array<CustomerFormData> = customers.map(
         (customer) => {
-          if (customer.uuid === customerUuid.toString()) {
+          if (customer.customer.uuid === customerUuid.toString()) {
             return {
               ...customer,
-              repair: customer.repair?.map((existingRepair) =>
-                existingRepair.uuid === repairUuid ? repair : existingRepair
+              repair: customer.repairs?.map((repair) =>
+                repair.uuid === repairUuid ? repair : repair
               ) || [repair],
             };
           }

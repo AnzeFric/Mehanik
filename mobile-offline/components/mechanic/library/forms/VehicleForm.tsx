@@ -38,6 +38,7 @@ export default function VehicleForm({ vehicle, setVehicle }: Props) {
         vin: vin,
         description: description,
         image: vehicle?.image || null,
+        customerId: vehicle?.customerId || "",
         ...updates, // Apply the specific update
       };
       setVehicle(vehicleData);

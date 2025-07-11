@@ -19,13 +19,15 @@ export default function EditCustomerScreen() {
   const [currentImage, setCurrentImage] = useState<string | null>();
 
   const foundCustomer = useMemo(() => {
-    return customers.find((item) => item.uuid === customerUuid.toString());
+    return customers.find(
+      (customer) => customer.customer.uuid === customerUuid.toString()
+    );
   }, [customers, customerUuid]);
 
   useFocusEffect(
     useCallback(() => {
       const foundCustomer = customers.find(
-        (item) => item.uuid === customerUuid.toString()
+        (customer) => customer.customer.uuid === customerUuid.toString()
       );
 
       if (foundCustomer) {
@@ -53,13 +55,14 @@ export default function EditCustomerScreen() {
       return;
     }
     const updatedCustomer: CustomerFormData = {
-      uuid: foundCustomer.uuid,
-      customer: currentCustomer,
+      customer: { ...currentCustomer, uuid: currentCustomer.uuid },
       vehicle: { ...currentVehicle, image: currentImage || null },
-      repair: foundCustomer.repair || null,
+      repairs: foundCustomer.repairs || undefined,
     };
     const updatedCustomers = customers.map((customer) =>
-      customer.uuid === foundCustomer.uuid ? updatedCustomer : customer
+      customer.customer.uuid === foundCustomer.customer.uuid
+        ? updatedCustomer
+        : customer
     );
     setCustomers(updatedCustomers);
     router.replace("/");

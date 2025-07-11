@@ -34,11 +34,11 @@ export default function Repair({ repairData, customerUuid }: Props) {
 
   const deleteRepair = () => {
     const updatedCustomers = customers.map((customer) =>
-      customer.uuid === customerUuid && customer.repair
+      customer.customer.uuid === customerUuid && customer.repairs
         ? {
             ...customer,
-            repair: customer.repair.filter(
-              (repair) => repair.uuid !== repairData.uuid
+            repairs: customer.repairs.filter(
+              (repairs) => repairs.uuid !== repairData.uuid
             ),
           }
         : customer
@@ -75,7 +75,7 @@ export default function Repair({ repairData, customerUuid }: Props) {
           <View style={styles.dateContainer}>
             <ThemedIcon name={"calendar-outline"} size={16} />
             <ThemedText type={"extraSmall"} bold>
-              {formatDate(new Date(repairData.date))}
+              {formatDate(new Date(repairData.repairDate))}
             </ThemedText>
           </View>
 

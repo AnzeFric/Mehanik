@@ -37,10 +37,12 @@ export default function DetailRepairScreen() {
 
   const repairData = useMemo(() => {
     const foundCustomer: CustomerFormData | undefined = customers.find(
-      (customer) => customer.uuid === customerUuid.toString()
+      (customer) => customer.customer.uuid === customerUuid.toString()
     );
     if (foundCustomer) {
-      return foundCustomer.repair?.find((repair) => repair.uuid === repairUuid);
+      return foundCustomer.repairs?.find(
+        (repair) => repair.uuid === repairUuid
+      );
     }
     Alert.alert("Napaka", "Servisa ni bilo mogoče najti");
     router.back();
@@ -123,7 +125,7 @@ export default function DetailRepairScreen() {
             <View style={styles.itemContent}>
               <ThemedIcon name="calendar" size={16} />
               <ThemedText type={"small"}>
-                {formatDate(new Date(repairData.date))}
+                {formatDate(new Date(repairData.repairDate))}
               </ThemedText>
             </View>
           </ThemedView>

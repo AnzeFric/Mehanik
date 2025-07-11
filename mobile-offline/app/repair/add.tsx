@@ -22,11 +22,11 @@ export default function AddRepairScreen() {
       };
       const updatedCustomers: Array<CustomerFormData> = customers.map(
         (customer) =>
-          customer.uuid === customerUuid.toString()
+          customer.customer.uuid === customerUuid.toString()
             ? {
                 ...customer,
-                repair: customer.repair
-                  ? [...customer.repair, newRepair]
+                repair: customer.repairs
+                  ? [...customer.repairs, newRepair]
                   : [newRepair],
               }
             : customer

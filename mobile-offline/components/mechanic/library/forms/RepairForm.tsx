@@ -78,7 +78,7 @@ export default function RepairForm({ repair, setRepair }: Props) {
       setDescription(repair.description || "");
       setPrice(repair.price?.toString() || "");
       setNote(repair.note || "");
-      setDate(repair.date || new Date());
+      setDate(repair.repairDate || new Date());
       setRepairImages(repair.images || []);
       setOptions(repair.options || defaultOptions);
     }
@@ -90,11 +90,12 @@ export default function RepairForm({ repair, setRepair }: Props) {
       uuid: repair?.uuid || "",
       type: type,
       price: parseFloat(price) || null,
-      date: date,
+      repairDate: date,
       options: options,
       description: description || null,
-      images: repairImages.length > 0 ? repairImages : null,
+      images: repairImages.length > 0 ? repairImages : [],
       note: note || null,
+      customerId: repair?.customerId || "",
     };
     setRepair(repairData);
   }, [
