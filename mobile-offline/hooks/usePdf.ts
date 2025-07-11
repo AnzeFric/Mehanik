@@ -195,6 +195,15 @@ export const usePdf = () => {
                 padding: 20px;
               }
 
+              .thank-you {
+                text-align: center;
+                margin-top: 15px;
+                font-size: 14px;
+                font-weight: bold;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+              }
+
               .footer {
                 margin-top: 20px;
                 padding-top: 15px;
@@ -271,15 +280,6 @@ export const usePdf = () => {
                   <div class="info-item">
                     <div class="info-label">Opis:</div>
                     <div class="info-value">${customer.vehicle.description}</div>
-                  </div>
-                  `
-                      : ""
-                  }
-                  ${
-                    customer.vehicle.image
-                      ? `
-                  <div class="info-item">
-                    <img src="${customer.vehicle.image}" alt="Slika vozila" class="vehicle-image">
                   </div>
                   `
                       : ""
@@ -382,6 +382,8 @@ export const usePdf = () => {
                 }
               </div>
               
+              <div class="thank-you">HVALA ZA ZAUPANJE!</div>
+
               <div class="footer">
                 <p>ID stranke: ${customer.customer.uuid}</p>
                 <p>Dokument generiran: ${new Date().toLocaleDateString("sl-SI")} ob ${new Date().toLocaleTimeString("sl-SI")}</p>
@@ -592,6 +594,15 @@ export const usePdf = () => {
                 object-fit: cover;
               }
 
+              .thank-you {
+                text-align: center;
+                margin-top: 15px;
+                font-size: 14px;
+                font-weight: bold;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+              }
+
               .footer {
                 margin-top: 20px;
                 padding-top: 15px;
@@ -668,15 +679,6 @@ export const usePdf = () => {
                   <div class="info-item">
                     <div class="info-label">Opis:</div>
                     <div class="info-value">${vehicle.description}</div>
-                  </div>
-                  `
-                      : ""
-                  }
-                  ${
-                    vehicle.image
-                      ? `
-                  <div class="info-item">
-                    <img src="${vehicle.image}" alt="Slika vozila" class="vehicle-image">
                   </div>
                   `
                       : ""
@@ -763,6 +765,8 @@ export const usePdf = () => {
                 </div>
               </div>
               
+              <div class="thank-you">HVALA ZA ZAUPANJE!</div>
+
               <div class="footer">
                 <p>ID stranke: ${customer.uuid}</p>
                 <p>Dokument generiran: ${new Date().toLocaleDateString("sl-SI")} ob ${new Date().toLocaleTimeString("sl-SI")}</p>
