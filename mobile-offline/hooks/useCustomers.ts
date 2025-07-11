@@ -1,6 +1,7 @@
 import { database } from "@/database/index";
 import Customer from "@/database/models/Customer";
 import { CustomerFormData } from "@/interfaces/customer";
+import { Q } from "@nozbe/watermelondb";
 
 export function useCustomers() {
   const fetchCustomers = async () => {
@@ -69,7 +70,40 @@ export function useCustomers() {
     }
   };
 
-  const deleteCustomer = async (customerUuid: string) => {};
+  const deleteCustomer = async (customerUuid: string) => {
+    try {
+      const customerRecord = await database
+        .get<Customer>("customers")
+        .query(Q.where("uuid", customerUuid))
+        .fetch();
+
+      if (customerRecord.length === 0) {
+        throw new Error(`Customer with UUID ${customerUuid} not found`);
+      }
+
+      const customer = customerRecord[0];
+
+      // Delete in a transaction to ensure data consistency
+      await database.write(async () => {
+        const repairRecords = await customer.repairs.fetch();
+        for (const repair of repairRecords) {
+          await repair.destroyPermanently();
+        }
+
+        const vehicleRecords = await customer.vehicles.fetch();
+        for (const vehicle of vehicleRecords) {
+          await vehicle.destroyPermanently();
+        }
+
+        await customer.destroyPermanently();
+      });
+
+      return true;
+    } catch (error) {
+      console.error("Error while deleting customer: ", error);
+      throw error;
+    }
+  };
 
   return {
     fetchCustomers,
