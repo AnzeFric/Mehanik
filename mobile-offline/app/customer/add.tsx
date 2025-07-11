@@ -101,13 +101,7 @@ export default function AddCustomerScreen() {
         }
       });
 
-      // Show success message
-      Alert.alert("Uspešno", "Stranka je bila uspešno dodana.", [
-        {
-          text: "V redu",
-          onPress: () => router.push("/"),
-        },
-      ]);
+      router.push("/");
     } catch (error) {
       console.error("Error saving customer:", error);
       Alert.alert(

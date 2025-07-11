@@ -6,7 +6,7 @@ import ThemedText from "@/components/global/themed/ThemedText";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 import { useState } from "react";
 import ModalPrompt from "@/components/global/ModalPrompt";
-import useDataStore from "@/stores/useDataStore";
+import { useCustomers } from "@/hooks/useCustomers";
 
 interface Props {
   customer: CustomerFormData;
@@ -14,7 +14,7 @@ interface Props {
 
 export default function Customer({ customer }: Props) {
   const { staticColors } = useAnimatedTheme();
-  const { deleteCustomer } = useDataStore();
+  const { deleteCustomer } = useCustomers();
 
   const [showDelete, setShowDelete] = useState(false);
 
@@ -22,14 +22,14 @@ export default function Customer({ customer }: Props) {
     router.push({
       pathname: "/customer/detail",
       params: {
-        customerUuid: customer.uuid,
+        customerUuid: customer.customer.uuid,
         firstName: customer.customer.firstName,
       },
     });
   };
 
   const handleDeleteCustomer = () => {
-    deleteCustomer(customer.uuid);
+    deleteCustomer(customer.customer.uuid);
     setShowDelete(false);
   };
 

@@ -69,7 +69,10 @@ export function useCustomers() {
     }
   };
 
+  const deleteCustomer = async (customerUuid: string) => {};
+
   return {
     fetchCustomers,
+    deleteCustomer,
   };
 }

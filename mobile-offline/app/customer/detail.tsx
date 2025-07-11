@@ -24,7 +24,7 @@ export default function DetailCustomerScreen() {
 
   useEffect(() => {
     const foundCustomer = customers.find(
-      (customer) => customer.uuid === customerUuid.toString()
+      (customer) => customer.customer.uuid === customerUuid.toString()
     );
     setCustomer(foundCustomer);
   }, [customers]);
@@ -86,10 +86,10 @@ export default function DetailCustomerScreen() {
           )}
         </View>
         <ThemedText type={"title"}>Narejeni servisi</ThemedText>
-        {customer && (
+        {customer?.repairs && (
           <RepairsDisplay
-            repairList={customer.repair}
-            customerUuid={customer.uuid}
+            repairList={customer.repairs}
+            customerUuid={customer.customer.uuid}
           />
         )}
       </TemplateView>
