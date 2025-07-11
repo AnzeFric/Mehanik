@@ -101,7 +101,6 @@ export const usePdf = () => {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
                 gap: 20px;
-                margin-bottom: 20px;
               }
 
               .info-item {
@@ -174,31 +173,6 @@ export const usePdf = () => {
                 font-size: 12px;
               }
 
-              .summary-grid {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 15px;
-                text-align: center;
-                margin-bottom: 20px;
-              }
-
-              .summary-item {
-                padding: 10px;
-                background: white;
-                border: 1px solid #ddd;
-              }
-
-              .summary-number {
-                font-size: 20px;
-                font-weight: bold;
-              }
-
-              .summary-label {
-                font-size: 12px;
-                text-transform: uppercase;
-                margin-top: 5px;
-              }
-                
               .image-container {
                   display: grid;
                   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -316,23 +290,7 @@ export const usePdf = () => {
                   }
                 </div>
               </div>
-                
-              <div class="section-title">Povzetek servisov</div>
-              <div class="summary-grid">
-                <div class="summary-item">
-                  <div class="summary-number">${totalRepairs}</div>
-                  <div class="summary-label">Skupaj servisov</div>
-                </div>
-                <div class="summary-item">
-                  <div class="summary-number">${formatCurrency(totalCost)}</div>
-                  <div class="summary-label">Skupni stroški</div>
-                </div>
-                <div class="summary-item">
-                  <div class="summary-number">${totalRepairs > 0 ? formatCurrency(totalCost / totalRepairs) : "€0,00"}</div>
-                  <div class="summary-label">Povprečni stroški</div>
-                </div>
-              </div>
-                
+
               <div class="section">
                 <div class="section-title">Seznam servisov</div>
                 ${
