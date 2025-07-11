@@ -23,7 +23,6 @@ import EditMenu from "@/components/mechanic/library/EditMenu";
 import ThemedText from "@/components/global/themed/ThemedText";
 import { Ionicons } from "@expo/vector-icons";
 import useDataStore from "@/stores/useDataStore";
-import { CustomerFormData } from "@/interfaces/customer";
 import { usePdf } from "@/hooks/usePdf";
 
 export default function DetailRepairScreen() {
@@ -35,10 +34,13 @@ export default function DetailRepairScreen() {
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
   const [imageViewVisible, setImageViewVisible] = useState(false);
 
-  const repairData = useMemo(() => {
-    const foundCustomer: CustomerFormData | undefined = customers.find(
+  const foundCustomer = useMemo(() => {
+    return customers.find(
       (customer) => customer.customer.uuid === customerUuid.toString()
     );
+  }, [customers, customerUuid]);
+
+  const repairData = useMemo(() => {
     if (foundCustomer) {
       return foundCustomer.repairs?.find(
         (repair) => repair.uuid === repairUuid
@@ -47,7 +49,7 @@ export default function DetailRepairScreen() {
     Alert.alert("Napaka", "Servisa ni bilo mogoče najti");
     router.back();
     return;
-  }, [customers, customerUuid]);
+  }, [foundCustomer]);
 
   const viewImages = useMemo(() => {
     if (repairData?.images) {
@@ -65,8 +67,8 @@ export default function DetailRepairScreen() {
   );
 
   const exportRepair = () => {
-    if (repairData) {
-      generateRepairPdf(repairData);
+    if (repairData && foundCustomer) {
+      generateRepairPdf(repairData, foundCustomer.customer);
     }
   };
 

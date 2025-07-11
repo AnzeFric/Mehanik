@@ -9,7 +9,7 @@ import {
   formatCurrency,
   getServiceTranslation,
 } from "@/constants/util";
-import { CustomerFormData } from "@/interfaces/customer";
+import { CustomerData, CustomerFormData } from "@/interfaces/customer";
 
 export const usePdf = () => {
   const requestStoragePermission = async () => {
@@ -32,7 +32,7 @@ export const usePdf = () => {
         return;
       }
 
-      const repairs = customer.repair || [];
+      const repairs = customer.repairs || [];
       const totalRepairs = repairs.length;
       const totalCost = repairs.reduce(
         (sum, repair) => sum + (repair.price || 0),
@@ -347,7 +347,7 @@ export const usePdf = () => {
                       <div class="repair-header">
                         <div>
                           <div class="repair-type">${formatRepairType(repair.type)}</div>
-                          <div class="repair-date">${formatDate(repair.date)}</div>
+                          <div class="repair-date">${formatDate(repair.repairDate)}</div>
                         </div>
                         <div class="repair-price">${formatCurrency(repair.price)}</div>
                       </div>
@@ -429,7 +429,7 @@ export const usePdf = () => {
               </div>
               
               <div class="footer">
-                <p>ID stranke: ${customer.uuid}</p>
+                <p>ID stranke: ${customer.customer.uuid}</p>
                 <p>Dokument generiran: ${new Date().toLocaleDateString("sl-SI")} ob ${new Date().toLocaleTimeString("sl-SI")}</p>
               </div>
             </div>
@@ -458,14 +458,21 @@ export const usePdf = () => {
         return;
       }
 
-      await copyToPublicAndShare(file.filePath, false);
+      await copyToPublicAndShare(
+        file.filePath,
+        false,
+        customer.customer.email || undefined
+      );
     } catch (error) {
       console.log("PDF failed to generate customer pdf: ", error);
       Alert.alert("Napaka", "Prišlo je do napake pri generiranju PDF datoteke");
     }
   };
 
-  const generateRepairPdf = async (repair: RepairData) => {
+  const generateRepairPdf = async (
+    repair: RepairData,
+    customer: CustomerData
+  ) => {
     try {
       if (!(await requestStoragePermission())) {
         return;
@@ -644,7 +651,7 @@ export const usePdf = () => {
                 <div class="receipt-title">SERVISNO POROČILO</div>
                 <div class="receipt-info">
                   Tip: ${formatRepairType(repair.type)}<br>
-                  Datum: ${formatDate(repair.date)}
+                  Datum: ${formatDate(repair.repairDate)}
                 </div>
               </div>
 
@@ -743,7 +750,11 @@ export const usePdf = () => {
         return;
       }
 
-      await copyToPublicAndShare(file.filePath, true);
+      await copyToPublicAndShare(
+        file.filePath,
+        true,
+        customer.email || undefined
+      );
     } catch (error) {
       console.log("PDF failed to generate repair pdf: ", error);
       Alert.alert("Napaka", "Prišlo je do napake pri generiranju PDF datoteke");
@@ -752,7 +763,8 @@ export const usePdf = () => {
 
   const copyToPublicAndShare = async (
     originalPath: string,
-    isRepair: boolean
+    isRepair: boolean,
+    recipient?: string
   ) => {
     try {
       const fileName = `document_${Date.now()}.pdf`;
@@ -760,13 +772,17 @@ export const usePdf = () => {
 
       await RNFS.copyFile(originalPath, publicPath);
 
-      await sharePdf(publicPath, isRepair);
+      await sharePdf(publicPath, isRepair, recipient);
     } catch (error) {
       console.log("PDF failed to copy: ", error);
     }
   };
 
-  const sharePdf = async (filePath: string, isRepair: boolean) => {
+  const sharePdf = async (
+    filePath: string,
+    isRepair: boolean,
+    recipient?: string
+  ) => {
     const fileExists = await RNFS.exists(filePath);
     if (!fileExists) {
       Alert.alert("Napaka", "PDF datoteka ni bila najdena");
@@ -780,6 +796,7 @@ export const usePdf = () => {
       : `V prilogi so izvoženi servisi za vaše vozilo\n\nLp,\n${process.env.EXPO_PUBLIC_AUTO_MECHANIC}`;
 
     const shareOptions: ShareOptions = {
+      email: recipient, // Customer email
       title: titleStr,
       subject: subjectStr,
       message: messageStr,
