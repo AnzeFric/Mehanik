@@ -1,6 +1,7 @@
 import { database } from "@/database/index";
 import Customer from "@/database/models/Customer";
-import { CustomerFormData } from "@/interfaces/customer";
+import { CustomerData, CustomerFormData } from "@/interfaces/customer";
+import { VehicleData } from "@/interfaces/vehicle";
 import { Q } from "@nozbe/watermelondb";
 
 export function useCustomers() {
@@ -105,8 +106,59 @@ export function useCustomers() {
     }
   };
 
+  const updateCustomer = async (
+    customerUuid: string,
+    customerData: CustomerData,
+    vehicleData: VehicleData
+  ) => {
+    try {
+      // Find the customer by UUID
+      const customerRecords = await database
+        .get<Customer>("customers")
+        .query(Q.where("uuid", customerUuid))
+        .fetch();
+
+      if (customerRecords.length === 0) {
+        throw new Error(`Customer with UUID ${customerUuid} not found`);
+      }
+
+      const customer = customerRecords[0];
+
+      // Update in a transaction to ensure data consistency
+      await database.write(async () => {
+        await customer.update((customerRecord) => {
+          customerRecord.firstName = customerData.firstName;
+          customerRecord.lastName = customerData.lastName;
+          customerRecord.email = customerData.email;
+          customerRecord.phone = customerData.phone;
+        });
+
+        // Update vehicle record if it exists
+        const vehicleRecords = await customer.vehicles.fetch();
+
+        if (vehicleRecords.length > 0) {
+          const vehicle = vehicleRecords[0];
+          await vehicle.update((vehicleRecord) => {
+            vehicleRecord.brand = vehicleData.brand;
+            vehicleRecord.model = vehicleData.model;
+            vehicleRecord.buildYear = vehicleData.buildYear;
+            vehicleRecord.vin = vehicleData.vin;
+            vehicleRecord.image = vehicleData.image;
+            vehicleRecord.description = vehicleData.description;
+          });
+        }
+      });
+
+      return true;
+    } catch (error) {
+      console.error("Error while updating customer: ", error);
+      throw error;
+    }
+  };
+
   return {
     fetchCustomers,
     deleteCustomer,
+    updateCustomer,
   };
 }

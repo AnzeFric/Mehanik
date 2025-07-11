@@ -15,6 +15,7 @@ export interface RepairOptions {
   coolant: boolean;
 }
 
+// TODO: Dodaj Ure delanja
 export interface RepairData {
   uuid: string;
   type: RepairType;

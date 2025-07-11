@@ -2,21 +2,23 @@ import { Alert } from "react-native";
 import { useCallback, useMemo, useState } from "react";
 import CustomerForm from "@/components/mechanic/library/forms/CustomerForm";
 import TemplateView from "@/components/mechanic/library/TemplateView";
-import { CustomerData, CustomerFormData } from "@/interfaces/customer";
+import { CustomerData } from "@/interfaces/customer";
 import { VehicleData } from "@/interfaces/vehicle";
 import VehicleForm from "@/components/mechanic/library/forms/VehicleForm";
 import ImageForm from "@/components/mechanic/library/forms/ImageForm";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import useDataStore from "@/stores/useDataStore";
+import { useCustomers } from "@/hooks/useCustomers";
 
 export default function EditCustomerScreen() {
   const { customerUuid } = useLocalSearchParams();
-
+  const { updateCustomer, fetchCustomers } = useCustomers();
   const { customers, setCustomers } = useDataStore();
 
   const [currentCustomer, setCurrentCustomer] = useState<CustomerData>();
   const [currentVehicle, setCurrentVehicle] = useState<VehicleData>();
   const [currentImage, setCurrentImage] = useState<string | null>();
+  const [updating, setUpdating] = useState(false);
 
   const foundCustomer = useMemo(() => {
     return customers.find(
@@ -54,17 +56,34 @@ export default function EditCustomerScreen() {
       Alert.alert("Napaka", "Izpolniti morate vsa obvezna polja");
       return;
     }
-    const updatedCustomer: CustomerFormData = {
-      customer: { ...currentCustomer, uuid: currentCustomer.uuid },
-      vehicle: { ...currentVehicle, image: currentImage || null },
-      repairs: foundCustomer.repairs || undefined,
+    setUpdating(true);
+
+    const updatedCustomer: CustomerData = {
+      ...currentCustomer,
+      uuid: currentCustomer.uuid,
     };
-    const updatedCustomers = customers.map((customer) =>
-      customer.customer.uuid === foundCustomer.customer.uuid
-        ? updatedCustomer
-        : customer
+    const updatedVehicle: VehicleData = {
+      ...currentVehicle,
+      image: currentImage || null,
+    };
+
+    const success = await updateCustomer(
+      customerUuid.toString(),
+      updatedCustomer,
+      updatedVehicle
     );
-    setCustomers(updatedCustomers);
+
+    if (success) {
+      const newCustomers = await fetchCustomers();
+      if (newCustomers) setCustomers(newCustomers);
+    } else {
+      Alert.alert(
+        "Napaka",
+        "Prišlo je do napake pri posodabljanju stranke. Kliči Anžeta."
+      );
+    }
+
+    setUpdating(false);
     router.replace("/");
   };
 
@@ -72,7 +91,7 @@ export default function EditCustomerScreen() {
     <TemplateView
       title={"Uredi stranko"}
       backButton={true}
-      buttonText={"Uredi"}
+      buttonText={updating ? "Urejanje..." : "Uredi"}
       onButtonPress={handleSaveEdit}
     >
       <ImageForm image={currentImage} setImage={setCurrentImage} />

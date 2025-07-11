@@ -175,7 +175,7 @@ export default function AddCustomerScreen() {
         <View style={styles.buttonContainer}>
           <ThemedButton
             buttonType={"small"}
-            buttonText={saving ? "Shranjujem..." : "Dodaj"}
+            buttonText={saving ? "Shranjevanje..." : "Dodaj"}
             onPress={saveCustomer}
             selected={canSave}
             disabled={!canSave}
