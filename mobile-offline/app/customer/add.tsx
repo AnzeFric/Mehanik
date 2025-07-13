@@ -60,7 +60,17 @@ export default function AddCustomerScreen() {
     }
     setSaving(true);
 
-    const success = await addCustomer(customerData, vehicleData, repairData);
+    const combinedVehicleData: VehicleData = {
+      ...vehicleData,
+      image: vehicleImage,
+    };
+
+    console.log("Saving: ", repairData);
+    const success = await addCustomer(
+      customerData,
+      combinedVehicleData,
+      repairData
+    );
     if (success) {
       const newCustomers = await fetchCustomers();
       if (newCustomers) setCustomers(newCustomers);

@@ -158,9 +158,16 @@ class DatabaseBackupService {
                     record.repairDate = recordData.repair_date
                       ? new Date(recordData.repair_date)
                       : null;
-                    record.options = recordData.options;
+                    record.options = JSON.parse(JSON.parse(recordData.options));
                     record.description = recordData.description;
-                    record.images = recordData.images;
+                    if (Array.isArray(recordData.images)) {
+                      record.images = recordData.images;
+                    } else {
+                      const parsedImages = JSON.parse(recordData.images);
+                      record.images = Array.isArray(parsedImages)
+                        ? parsedImages
+                        : [];
+                    }
                     record.note = recordData.note;
                     record.customerId = recordData.customer_id;
                   }

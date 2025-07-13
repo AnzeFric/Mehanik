@@ -108,6 +108,7 @@ export function useCustomers() {
 
         // Create repair if provided
         if (repairExists(repairData) && repairData) {
+          console.log("Repair exists");
           await database.get<Repair>("repairs").create((repair) => {
             repair.uuid = repairData.uuid || uuid.v4();
             repair.type = repairData.type;
@@ -219,15 +220,6 @@ export function useCustomers() {
     if (repair?.type === "other" && repair.description === null) {
       return false;
     }
-
-    let allOptionsFalse = true;
-    // If user selected "small" or "large" option and did not select an option
-    Object.values(repair?.options || {}).map((option) => {
-      if (option === true) {
-        allOptionsFalse = false;
-      }
-    });
-    if (allOptionsFalse) return false;
 
     return true;
   };
