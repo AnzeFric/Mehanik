@@ -10,6 +10,7 @@ export default function RootLayout() {
         <ThemedStatusBar />
         <Stack>
           <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="settings" options={{ headerShown: false }} />
           <Stack.Screen name="customer/add" options={{ headerShown: false }} />
           <Stack.Screen
             name="customer/detail"

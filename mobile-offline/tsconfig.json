@@ -5,14 +5,16 @@
     "experimentalDecorators": true,
     "useDefineForClassFields": false,
     "paths": {
-      "@/*": ["./*"]
+      "@/*": [
+        "./*"
+      ]
     }
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    ".expo/types/**/*.ts",
     "expo-env.d.ts",
-    "database/services/customerService.js"
+    "database/services/customerService.js",
+    ".expo/types/**/*.ts"
   ]
 }

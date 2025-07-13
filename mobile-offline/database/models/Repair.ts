@@ -7,16 +7,18 @@ const sanitizeRepairOptions = (obj: RepairOptions) =>
   obj || {
     oilChange: false,
     filterChange: false,
-    brakeCheck: false,
-    tireRotation: false,
-    fluidCheck: false,
-    batteryCheck: false,
-    sparkPlugs: false,
     airFilter: false,
     cabinFilter: false,
-    suspension: false,
-    timing: false,
+    frontBrakes: false,
+    backBrakes: false,
+    batteryCheck: false,
+    brakeFluid: false,
+
+    // large
     coolant: false,
+    sparkPlugs: false,
+    outerTiming: false,
+    timingChain: false,
   };
 
 const sanitizeImages = (arr: Array<string>) => arr || [];

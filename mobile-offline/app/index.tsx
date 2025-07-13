@@ -10,6 +10,7 @@ import ThemedSearchInput from "@/components/global/themed/ThemedSearchInput";
 import { useCustomers } from "@/hooks/useCustomers";
 import LoadingScreen from "@/components/global/LoadingScreen";
 import useDataStore from "@/stores/useDataStore";
+import ThemedIcon from "@/components/global/themed/ThemedIcon";
 
 export default function HomeScreen() {
   const { customers, setCustomers } = useDataStore();
@@ -68,7 +69,19 @@ export default function HomeScreen() {
   return (
     <ThemedView type={"background"} style={{ flex: 1 }}>
       <View style={styles.header}>
-        <TitleRow title={"Knjižnica servisov"} hasBackButton={false} />
+        <TitleRow
+          title={"Knjižnica servisov"}
+          hasBackButton={false}
+          menuButton={
+            <ThemedIcon
+              name={"menu"}
+              size={30}
+              onPress={() => {
+                router.push("/settings");
+              }}
+            />
+          }
+        />
         <ThemedSearchInput value={search} onChangeText={setSearch} />
       </View>
       <DisplayItems
