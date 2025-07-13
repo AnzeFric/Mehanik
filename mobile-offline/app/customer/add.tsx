@@ -65,7 +65,6 @@ export default function AddCustomerScreen() {
       image: vehicleImage,
     };
 
-    console.log("Saving: ", repairData);
     const success = await addCustomer(
       customerData,
       combinedVehicleData,

@@ -158,15 +158,39 @@ class DatabaseBackupService {
                     record.repairDate = recordData.repair_date
                       ? new Date(recordData.repair_date)
                       : null;
-                    record.options = JSON.parse(JSON.parse(recordData.options));
+                    try {
+                      let parsedOptions = JSON.parse(recordData.options);
+                      if (typeof parsedOptions === "string") {
+                        parsedOptions = JSON.parse(parsedOptions);
+                      }
+                      record.options = parsedOptions;
+                    } catch {
+                      record.options = {
+                        oilChange: false,
+                        filterChange: false,
+                        airFilter: false,
+                        cabinFilter: false,
+                        frontBrakes: false,
+                        backBrakes: false,
+                        batteryCheck: false,
+                        brakeFluid: false,
+                        coolant: false,
+                        sparkPlugs: false,
+                        outerTiming: false,
+                        timingChain: false,
+                      };
+                    }
                     record.description = recordData.description;
-                    if (Array.isArray(recordData.images)) {
-                      record.images = recordData.images;
-                    } else {
-                      const parsedImages = JSON.parse(recordData.images);
+                    try {
+                      let parsedImages = JSON.parse(recordData.images);
+                      if (typeof parsedImages === "string") {
+                        parsedImages = JSON.parse(parsedImages);
+                      }
                       record.images = Array.isArray(parsedImages)
                         ? parsedImages
                         : [];
+                    } catch {
+                      record.images = [];
                     }
                     record.note = recordData.note;
                     record.customerId = recordData.customer_id;
