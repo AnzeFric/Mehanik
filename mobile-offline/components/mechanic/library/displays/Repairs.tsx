@@ -9,10 +9,16 @@ interface Props {
 }
 
 export default function RepairsDisplay({ repairList, customerUuid }: Props) {
+  const sortedRepairs = repairList?.sort((a, b) => {
+    const dateA = new Date(a.repairDate);
+    const dateB = new Date(b.repairDate);
+    return dateB.getTime() - dateA.getTime(); // newest first
+  });
+
   return (
     <View style={styles.container}>
-      {repairList && repairList.length > 0 ? (
-        repairList.map((repair, index) => (
+      {sortedRepairs && sortedRepairs.length > 0 ? (
+        sortedRepairs.map((repair, index) => (
           <Repair repairData={repair} customerUuid={customerUuid} key={index} />
         ))
       ) : (
