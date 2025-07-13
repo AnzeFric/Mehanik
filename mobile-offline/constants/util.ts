@@ -97,7 +97,7 @@ export function getServiceTranslation(options: RepairOptions) {
     backBrakes: "Zadnje zavore",
     batteryCheck: "Preverjanje akumulatorja",
     brakeFluid: "Zavorna tekočina",
-    coolant: "Dolitje hladilne tekočine",
+    coolant: "Menjava hladilne tekočine",
     sparkPlugs: "Svečke",
     outerTiming: "Zunanji jermen",
     timingChain: "Zobati jermen/Veriga kpl.",

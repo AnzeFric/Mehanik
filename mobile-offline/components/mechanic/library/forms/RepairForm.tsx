@@ -243,7 +243,7 @@ export default function RepairForm({ repair, setRepair }: Props) {
           {type === "large" && (
             <>
               <CustomCheckBox
-                text="Dolitje hladilne tekočine"
+                text="Menjava hladilne tekočine"
                 value={options.coolant}
                 onChange={(val) => handleChange("coolant", val)}
               />

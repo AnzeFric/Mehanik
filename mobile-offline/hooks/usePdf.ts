@@ -1,5 +1,5 @@
 import RNHTMLtoPDF from "react-native-html-to-pdf";
-import { Alert, PermissionsAndroid } from "react-native";
+import { Alert, PermissionsAndroid, Platform } from "react-native";
 import RNFS from "react-native-fs";
 import Share, { ShareOptions } from "react-native-share";
 import { RepairData } from "@/interfaces/repair";
@@ -14,17 +14,23 @@ import { VehicleData } from "@/interfaces/vehicle";
 
 export const usePdf = () => {
   const requestStoragePermission = async () => {
-    const granted = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-      {
-        title: "Storage Permission Required",
-        message: "This app needs access to storage to save PDF files",
-        buttonNeutral: "Ask Me Later",
-        buttonNegative: "Cancel",
-        buttonPositive: "OK",
-      }
-    );
-    return granted === PermissionsAndroid.RESULTS.GRANTED;
+    // Only request permission on Android 9 and below
+    if (Platform.OS === "android" && Platform.Version <= 28) {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+        {
+          title: "Storage Permission Required",
+          message: "This app needs access to storage to save PDF files",
+          buttonNeutral: "Ask Me Later",
+          buttonNegative: "Cancel",
+          buttonPositive: "OK",
+        }
+      );
+      return granted === PermissionsAndroid.RESULTS.GRANTED;
+    }
+
+    // On Android 10+, permission is automatically granted
+    return true;
   };
 
   const generateCustomerPdf = async (customer: CustomerFormData) => {
