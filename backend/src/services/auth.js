@@ -63,7 +63,8 @@ const authService = {
 
     if (accountType === "mechanic") {
       const data = await userService.getMechanicByUserUuidAndEnabled(userUuid);
-      if (!data) await mechanicService.saveMechanicByUserUuid(userUuid);
+      if (data.mechanics.length === 0)
+        await mechanicService.saveMechanicByUserUuid(userUuid);
     }
 
     return email;
