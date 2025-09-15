@@ -1,5 +1,5 @@
 import { Model, Query } from "@nozbe/watermelondb";
-import { field, children, relation } from "@nozbe/watermelondb/decorators";
+import { field, children } from "@nozbe/watermelondb/decorators";
 import Vehicle from "./Vehicle";
 import Repair from "./Repair";
 

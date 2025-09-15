@@ -154,6 +154,7 @@ class DatabaseBackupService {
                   } else if (collectionName === "repairs") {
                     record.uuid = recordData.uuid;
                     record.type = recordData.type;
+                    record.kilometers = recordData.kilometers;
                     record.price = recordData.price;
                     record.repairDate = recordData.repair_date
                       ? new Date(recordData.repair_date)

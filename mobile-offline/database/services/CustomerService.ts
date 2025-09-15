@@ -82,6 +82,7 @@ export class CustomerService {
       const repair = await database.get<Repair>("repairs").create((repair) => {
         repair.uuid = repairData.uuid;
         repair.type = repairData.type;
+        repair.kilometers = repairData.kilometers;
         repair.price = repairData.price;
         repair.repairDate = repairData.repairDate;
         repair.options = repairData.options;

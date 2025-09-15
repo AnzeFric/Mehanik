@@ -41,6 +41,7 @@ export default function RepairForm({ repair, setRepair }: Props) {
 
   const [type, setType] = useState<"small" | "large" | "other">("small");
   const [description, setDescription] = useState("");
+  const [kilometers, setKilometers] = useState("");
   const [price, setPrice] = useState("");
   const [note, setNote] = useState("");
   const [repairImages, setRepairImages] = useState<string[]>([]);
@@ -78,6 +79,7 @@ export default function RepairForm({ repair, setRepair }: Props) {
     if (repair) {
       setType(repair.type);
       setDescription(repair.description || "");
+      setKilometers(repair.kilometers?.toString() || "");
       setPrice(repair.price?.toString() || "");
       setNote(repair.note || "");
       setDate(repair.repairDate || new Date());
@@ -91,6 +93,7 @@ export default function RepairForm({ repair, setRepair }: Props) {
     const repairData: RepairData = {
       uuid: repair?.uuid || "",
       type: type,
+      kilometers: parseInt(kilometers) || null,
       price: parseFloat(price) || null,
       repairDate: date,
       options: options,
@@ -103,6 +106,7 @@ export default function RepairForm({ repair, setRepair }: Props) {
   }, [
     type,
     description,
+    kilometers,
     price,
     note,
     repairImages,
@@ -118,6 +122,10 @@ export default function RepairForm({ repair, setRepair }: Props) {
 
   const handleNoteChange = useCallback((value: string) => {
     setNote(value);
+  }, []);
+
+  const handleKilometersChange = useCallback((value: string) => {
+    setKilometers(value);
   }, []);
 
   const handlePriceChange = useCallback((value: string) => {
@@ -166,6 +174,7 @@ export default function RepairForm({ repair, setRepair }: Props) {
         if (!repair) {
           setType("small");
           setDescription("");
+          setKilometers("");
           setPrice("");
           setNote("");
           setDate(new Date());
@@ -285,6 +294,14 @@ export default function RepairForm({ repair, setRepair }: Props) {
         value={note}
         onChangeText={handleNoteChange}
         autoCapitalize={"sentences"}
+      />
+      <ThemedTextInput
+        style={styles.input}
+        placeholder={"Kilometri (ni obvezno)"}
+        value={kilometers}
+        onChangeText={handleKilometersChange}
+        autoCapitalize={"none"}
+        keyboardType={"numeric"}
       />
       <ThemedTextInput
         style={styles.input}

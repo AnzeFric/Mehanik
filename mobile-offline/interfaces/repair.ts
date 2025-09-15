@@ -20,6 +20,7 @@ export interface RepairOptions {
 export interface RepairData {
   uuid: string;
   type: RepairType;
+  kilometers: number | null;
   price: number | null;
   repairDate: Date;
   options: RepairOptions;

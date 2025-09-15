@@ -32,6 +32,7 @@ export default class Repair extends Model {
 
   @field("uuid") uuid!: string;
   @field("type") type!: RepairType;
+  @field("kilometers") kilometers!: number | null;
   @field("price") price!: number | null;
   @date("repair_date") repairDate!: Date;
   @json("options", sanitizeRepairOptions) options!: RepairOptions;

@@ -35,6 +35,7 @@ export default appSchema({
         { name: "uuid", type: "string" },
         { name: "type", type: "string" },
         { name: "price", type: "number", isOptional: true },
+        { name: "kilometers", type: "number", isOptional: true },
         { name: "repair_date", type: "number" },
         { name: "options", type: "string" }, // JSON string
         { name: "description", type: "string", isOptional: true },
