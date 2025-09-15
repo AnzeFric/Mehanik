@@ -55,6 +55,7 @@ export function useCustomers() {
             repairs: repairRecords.map((repair) => ({
               uuid: repair.uuid,
               type: repair.type,
+              kilometers: repair.kilometers,
               price: repair.price,
               repairDate: repair.repairDate,
               options: repair.options,
@@ -112,6 +113,7 @@ export function useCustomers() {
           await database.get<Repair>("repairs").create((repair) => {
             repair.uuid = repairData.uuid || uuid.v4();
             repair.type = repairData.type;
+            repair.kilometers = repairData.kilometers;
             repair.price = repairData.price;
             repair.repairDate = repairData.repairDate;
             repair.options = repairData.options;

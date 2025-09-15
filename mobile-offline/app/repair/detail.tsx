@@ -129,6 +129,18 @@ export default function DetailRepairScreen() {
 
           <ThemedView type={"primary"} style={styles.itemContainer}>
             <ThemedText type={"normal"} bold>
+              Kilometri
+            </ThemedText>
+            <View style={styles.itemContent}>
+              <ThemedIcon name={"speedometer-outline"} size={15} />
+              <ThemedText type={"small"}>
+                {repairData.kilometers ?? 0} km
+              </ThemedText>
+            </View>
+          </ThemedView>
+
+          <ThemedView type={"primary"} style={styles.itemContainer}>
+            <ThemedText type={"normal"} bold>
               Datum izvedbe
             </ThemedText>
             <View style={styles.itemContent}>

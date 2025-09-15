@@ -23,6 +23,7 @@ export function useRepairs() {
         return await database.get<Repair>("repairs").create((repair) => {
           repair.uuid = uuid.v4();
           repair.type = repairData.type;
+          repair.kilometers = repairData.kilometers;
           repair.price = repairData.price;
           repair.repairDate = repairData.repairDate;
           repair.options = repairData.options;
@@ -56,6 +57,7 @@ export function useRepairs() {
       await database.write(async () => {
         await repair.update((repairRecord) => {
           repairRecord.type = repairData.type;
+          repairRecord.kilometers = repairData.kilometers;
           repairRecord.price = repairData.price;
           repairRecord.repairDate = repairData.repairDate;
           repairRecord.options = repairData.options;
@@ -114,6 +116,7 @@ export function useRepairs() {
       return repairs.map((repair) => ({
         uuid: repair.uuid,
         type: repair.type,
+        kilometers: repair.kilometers,
         price: repair.price,
         repairDate: repair.repairDate,
         options: repair.options,
@@ -144,6 +147,7 @@ export function useRepairs() {
       return {
         uuid: repair.uuid,
         type: repair.type,
+        kilometers: repair.kilometers,
         price: repair.price,
         repairDate: repair.repairDate,
         options: repair.options,

@@ -91,7 +91,6 @@ export class CustomerService {
         repair.note = repairData.note;
         repair.customerId = repairData.customerId;
       });
-
       return repair.id;
     });
   }

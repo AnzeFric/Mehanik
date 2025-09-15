@@ -93,7 +93,7 @@ export default function RepairForm({ repair, setRepair }: Props) {
     const repairData: RepairData = {
       uuid: repair?.uuid || "",
       type: type,
-      kilometers: parseInt(kilometers) || null,
+      kilometers: parseFloat(kilometers) || null,
       price: parseFloat(price) || null,
       repairDate: date,
       options: options,

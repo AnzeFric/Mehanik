@@ -309,7 +309,10 @@ export const usePdf = () => {
                           <div class="repair-type">${formatRepairType(repair.type)}</div>
                           <div class="repair-date">${formatDate(repair.repairDate)}</div>
                         </div>
-                        <div class="repair-price">${formatCurrency(repair.price)}</div>
+                        <div>
+                          <div class="repair-price">${formatCurrency(repair.price)}</div>
+                          <div class="repair-price">${repair.kilometers ?? 0} km</div>
+                        </div>
                       </div>
                         
                       ${
@@ -550,7 +553,6 @@ export const usePdf = () => {
               .repair-price {
                 font-weight: bold;
                 font-size: 18px;
-                color: #2c5530;
               }
 
               .services-list {
@@ -567,7 +569,6 @@ export const usePdf = () => {
               .service-check {
                 margin-right: 8px;
                 font-weight: bold;
-                color: #2c5530;
               }
 
               .repair-description, .repair-note {
@@ -700,7 +701,10 @@ export const usePdf = () => {
                       <div class="repair-type">${formatRepairType(repair.type)}</div>
                       <div class="repair-date">${formatDate(repair.repairDate)}</div>
                     </div>
-                    <div class="repair-price">${formatCurrency(repair.price)}</div>
+                    <div>
+                      <div class="repair-price">${formatCurrency(repair.price)}</div>
+                      <div class="repair-price">${repair.kilometers ?? 0} km</div>
+                    </div>
                   </div>
                     
                   ${
