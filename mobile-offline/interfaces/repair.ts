@@ -13,8 +13,13 @@ export interface RepairOptions {
   // large
   coolant: boolean;
   sparkPlugs: boolean;
-  outerTiming: boolean;
-  timingChain: boolean;
+  outerTiming: boolean; // Zunanji jermen
+  outerTimingComplete: boolean; // Zunanji jermen komplet
+  timingChain: boolean; // Zobati jermen/Veriga kpl.
+  transmissionFluid: boolean;
+  transmissionFilter: boolean;
+  gearFluid: boolean;
+  waterPump: boolean;
 }
 
 export interface RepairData {

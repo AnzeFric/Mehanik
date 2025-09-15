@@ -18,7 +18,12 @@ const sanitizeRepairOptions = (obj: RepairOptions) =>
     coolant: false,
     sparkPlugs: false,
     outerTiming: false,
+    outerTimingComplete: false,
     timingChain: false,
+    transmissionFluid: false,
+    transmissionFilter: false,
+    gearFluid: false,
+    waterPump: false,
   };
 
 const sanitizeImages = (arr: Array<string>) => arr || [];

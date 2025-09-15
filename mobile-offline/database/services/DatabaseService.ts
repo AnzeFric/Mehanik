@@ -178,7 +178,12 @@ class DatabaseBackupService {
                         coolant: false,
                         sparkPlugs: false,
                         outerTiming: false,
+                        outerTimingComplete: false,
                         timingChain: false,
+                        transmissionFluid: false,
+                        transmissionFilter: false,
+                        gearFluid: false,
+                        waterPump: false,
                       };
                     }
                     record.description = recordData.description;

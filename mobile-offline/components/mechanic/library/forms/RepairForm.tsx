@@ -33,7 +33,12 @@ const defaultOptions = {
   coolant: false,
   sparkPlugs: false,
   outerTiming: false,
+  outerTimingComplete: false,
   timingChain: false,
+  transmissionFluid: false,
+  transmissionFilter: false,
+  gearFluid: false,
+  waterPump: false,
 };
 
 export default function RepairForm({ repair, setRepair }: Props) {
@@ -266,11 +271,35 @@ export default function RepairForm({ repair, setRepair }: Props) {
                 value={options.outerTiming}
                 onChange={(val) => handleChange("outerTiming", val)}
               />
-
+              <CustomCheckBox
+                text="Zunanji jermen kpl."
+                value={options.outerTimingComplete}
+                onChange={(val) => handleChange("outerTimingComplete", val)}
+              />
               <CustomCheckBox
                 text="Zobati jermen/Veriga kpl."
                 value={options.timingChain}
                 onChange={(val) => handleChange("timingChain", val)}
+              />
+              <CustomCheckBox
+                text="Menjava olja menjalnika"
+                value={options.transmissionFluid}
+                onChange={(val) => handleChange("transmissionFluid", val)}
+              />
+              <CustomCheckBox
+                text="Filter menjalnika"
+                value={options.transmissionFilter}
+                onChange={(val) => handleChange("transmissionFilter", val)}
+              />
+              <CustomCheckBox
+                text="Olje pogonov"
+                value={options.gearFluid}
+                onChange={(val) => handleChange("gearFluid", val)}
+              />
+              <CustomCheckBox
+                text="Vodna črpalka"
+                value={options.waterPump}
+                onChange={(val) => handleChange("waterPump", val)}
               />
             </>
           )}

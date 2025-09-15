@@ -68,13 +68,23 @@ export function formatRepairItems(item: string): string {
     case "brakeFluid":
       return "Menjava zavorne tekočine";
     case "coolant":
-      return "Dolitje hladilne tekočine";
+      return "Menjava hladilne tekočine";
     case "sparkPlugs":
       return "Svečke";
     case "outerTiming":
       return "Zunanji jermen";
     case "timingChain":
       return "Zobati jermen/Veriga kpl.";
+    case "outerTimingComplete":
+      return "Zunanji jermen kpl.";
+    case "transmissionFluid":
+      return "Menjava olja menjalnika";
+    case "transmissionFilter":
+      return "Filter menjalnika";
+    case "gearFluid":
+      return "Olje pogonov";
+    case "waterPump":
+      return "Vodna črpalka";
     default:
       return "";
   }
@@ -99,8 +109,13 @@ export function getServiceTranslation(options: RepairOptions) {
     brakeFluid: "Menjava zavorne tekočine",
     coolant: "Menjava hladilne tekočine",
     sparkPlugs: "Svečke",
-    outerTiming: "Zunanji jermen",
     timingChain: "Zobati jermen/Veriga kpl.",
+    outerTiming: "Zunanji jermen",
+    outerTimingComplete: "Zunanji jermen kpl.",
+    transmissionFluid: "Menjava olja menjalnika",
+    transmissionFilter: "Filter menjalnika",
+    gearFluid: "Olje pogonov",
+    waterPump: "Vodna črpalka",
   };
 
   return Object.entries(options)
