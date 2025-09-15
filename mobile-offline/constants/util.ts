@@ -66,7 +66,7 @@ export function formatRepairItems(item: string): string {
     case "batteryCheck":
       return "Preverjanje akumulatorja";
     case "brakeFluid":
-      return "Zavorna tekočina";
+      return "Menjava zavorne tekočine";
     case "coolant":
       return "Dolitje hladilne tekočine";
     case "sparkPlugs":
@@ -96,7 +96,7 @@ export function getServiceTranslation(options: RepairOptions) {
     frontBrakes: "Sprednje zavore",
     backBrakes: "Zadnje zavore",
     batteryCheck: "Preverjanje akumulatorja",
-    brakeFluid: "Zavorna tekočina",
+    brakeFluid: "Menjava zavorne tekočine",
     coolant: "Menjava hladilne tekočine",
     sparkPlugs: "Svečke",
     outerTiming: "Zunanji jermen",

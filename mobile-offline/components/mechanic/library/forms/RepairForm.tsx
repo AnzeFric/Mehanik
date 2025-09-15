@@ -245,7 +245,7 @@ export default function RepairForm({ repair, setRepair }: Props) {
             onChange={(val) => handleChange("batteryCheck", val)}
           />
           <CustomCheckBox
-            text="Zavorna tekočina"
+            text="Menjava zavorne tekočine"
             value={options.brakeFluid}
             onChange={(val) => handleChange("brakeFluid", val)}
           />
