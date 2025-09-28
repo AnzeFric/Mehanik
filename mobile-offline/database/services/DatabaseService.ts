@@ -17,6 +17,26 @@ interface ExportRecord {
   [key: string]: any;
 }
 
+const defaultOptions = {
+  oilChange: false,
+  filterChange: false,
+  airFilter: false,
+  cabinFilter: false,
+  frontBrakes: false,
+  backBrakes: false,
+  batteryCheck: false,
+  brakeFluid: false,
+  coolant: false,
+  sparkPlugs: false,
+  outerTiming: false,
+  outerTimingComplete: false,
+  timingChain: false,
+  transmissionFluid: false,
+  transmissionFilter: false,
+  gearFluid: false,
+  waterPump: false,
+};
+
 class DatabaseBackupService {
   static COLLECTIONS = ["customers", "vehicles", "repairs"];
 
@@ -154,8 +174,8 @@ class DatabaseBackupService {
                   } else if (collectionName === "repairs") {
                     record.uuid = recordData.uuid;
                     record.type = recordData.type;
-                    record.kilometers = recordData.kilometers;
-                    record.price = recordData.price;
+                    record.kilometers = recordData.kilometers || null;
+                    record.price = recordData.price || null;
                     record.repairDate = recordData.repair_date
                       ? new Date(recordData.repair_date)
                       : null;
@@ -164,29 +184,14 @@ class DatabaseBackupService {
                       if (typeof parsedOptions === "string") {
                         parsedOptions = JSON.parse(parsedOptions);
                       }
-                      record.options = parsedOptions;
-                    } catch {
                       record.options = {
-                        oilChange: false,
-                        filterChange: false,
-                        airFilter: false,
-                        cabinFilter: false,
-                        frontBrakes: false,
-                        backBrakes: false,
-                        batteryCheck: false,
-                        brakeFluid: false,
-                        coolant: false,
-                        sparkPlugs: false,
-                        outerTiming: false,
-                        outerTimingComplete: false,
-                        timingChain: false,
-                        transmissionFluid: false,
-                        transmissionFilter: false,
-                        gearFluid: false,
-                        waterPump: false,
+                        ...defaultOptions,
+                        ...parsedOptions,
                       };
+                    } catch {
+                      record.options = defaultOptions;
                     }
-                    record.description = recordData.description;
+                    record.description = recordData.description || null;
                     try {
                       let parsedImages = JSON.parse(recordData.images);
                       if (typeof parsedImages === "string") {
@@ -198,7 +203,7 @@ class DatabaseBackupService {
                     } catch {
                       record.images = [];
                     }
-                    record.note = recordData.note;
+                    record.note = recordData.note || null;
                     record.customerId = recordData.customer_id;
                   }
                 });
