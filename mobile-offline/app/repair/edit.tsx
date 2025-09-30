@@ -7,11 +7,14 @@ import { useCallback, useMemo, useState } from "react";
 import { RepairData } from "@/interfaces/repair";
 import { useRepairs } from "@/hooks/useRepairs";
 import { useCustomers } from "@/hooks/useCustomers";
+import { useTranslation } from "react-i18next";
 
 export default function EditRepairScreen() {
   const { customerUuid, repairUuid } = useLocalSearchParams();
 
   const { customers, setCustomers } = useDataStore();
+
+  const { t } = useTranslation();
   const { editRepair } = useRepairs();
   const { fetchCustomers } = useCustomers();
 
@@ -42,7 +45,10 @@ export default function EditRepairScreen() {
       }
     }
 
-    Alert.alert("Napaka", "Servisa ni bilo mogoče najti");
+    Alert.alert(
+      t("screens.repairEdit.text.repairFetchFailTitle"),
+      t("screens.repairEdit.text.repairFetchFailText")
+    );
     router.back();
     return undefined;
   }, [foundCustomer, repairUuid]);
@@ -64,8 +70,8 @@ export default function EditRepairScreen() {
         if (newCustomers) setCustomers(newCustomers);
       } else {
         Alert.alert(
-          "Napaka",
-          "Prišlo je do napake pri posodabljanju servisa. Kliči Anžeta."
+          t("screens.repairEdit.text.repairEditFailTitle"),
+          t("screens.repairEdit.text.repairEditFailText")
         );
       }
       setUpdating(false);
@@ -75,9 +81,13 @@ export default function EditRepairScreen() {
 
   return (
     <TemplateView
-      title={"Uredi servis"}
+      title={t("screens.repairEdit.text.title")}
       backButton={true}
-      buttonText={updating ? "Urejanje..." : "Uredi"}
+      buttonText={
+        updating
+          ? t("screens.repairEdit.text.editing")
+          : t("screens.repairEdit.text.edit")
+      }
       onButtonPress={handleEditRepair}
     >
       <RepairForm repair={repairData} setRepair={setRepair} />

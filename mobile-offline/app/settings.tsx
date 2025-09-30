@@ -8,18 +8,31 @@ import DatabaseBackupService from "@/database/services/DatabaseService";
 import { router } from "expo-router";
 import { useCustomers } from "@/hooks/useCustomers";
 import useDataStore from "@/stores/useDataStore";
+import { useTranslation } from "react-i18next";
+import useTranslationStore from "@/stores/useTranslationStore";
+import i18n from "@/assets/i18n/i18n";
+import { Translation } from "@/interfaces/translation";
 
 export default function SettingsScreen() {
+  const { setCustomers } = useDataStore();
+  const { selectedTranslation, setSelectedTranslation } = useTranslationStore();
+
   const { selectedTheme, setSelectedTheme } = useTheme();
   const { fetchCustomers } = useCustomers();
-  const { setCustomers } = useDataStore();
+  const { t } = useTranslation();
 
   const exportDatabase = async () => {
     const result = await DatabaseBackupService.exportDatabase();
     if (result) {
-      Alert.alert("Uspeh", "Uspešno izvožena podatkovna baza.");
+      Alert.alert(
+        t("screens.settings.text.exportSuccessTitle"),
+        t("screens.settings.text.exportSuccessText")
+      );
     } else {
-      Alert.alert("Napaka", "Pri izvozu je prišlo do napake. Kliči anžeta.");
+      Alert.alert(
+        t("screens.settings.text.exportFailTitle"),
+        t("screens.settings.text.exportFailText")
+      );
     }
     router.back();
   };
@@ -27,35 +40,69 @@ export default function SettingsScreen() {
   const importDatabase = async () => {
     const result = await DatabaseBackupService.importDatabase();
     if (result) {
-      Alert.alert("Uspeh", "Uspešno uvožena podatkovna baza.");
+      Alert.alert(
+        t("screens.settings.text.importSuccessTitle"),
+        t("screens.settings.text.importSuccessText")
+      );
       const customers = await fetchCustomers();
       if (customers) {
         setCustomers(customers);
       }
     } else {
-      Alert.alert("Napaka", "Pri uvozu je prišlo do napake. Kliči anžeta.");
+      Alert.alert(
+        t("screens.settings.text.importFailTitle"),
+        t("screens.settings.text.importFailText")
+      );
     }
     router.back();
   };
 
+  const changeTranslation = (translation: Translation) => {
+    setSelectedTranslation(translation);
+    i18n.changeLanguage(translation);
+  };
+
   return (
     <ThemedView type={"background"} style={styles.container}>
-      <TitleRow title={"Nastavitve"} hasBackButton={true} />
+      <TitleRow title={t("screens.settings.text.title")} hasBackButton={true} />
       <View style={styles.itemContainer}>
-        <ThemedText type={"normal"}>Tema aplikacije</ThemedText>
+        <ThemedText type={"normal"}>
+          {t("screens.settings.text.themeLabel")}
+        </ThemedText>
         <View style={styles.optionContainer}>
           <ThemedButton
             buttonType={"small"}
-            buttonText={"Svetla"}
+            buttonText={t("screens.settings.text.themeLight")}
             onPress={() => setSelectedTheme("light")}
             selected={selectedTheme === "light"}
             buttonStyle={styles.optionButton}
           />
           <ThemedButton
             buttonType={"small"}
-            buttonText={"Temna"}
+            buttonText={t("screens.settings.text.themeDark")}
             onPress={() => setSelectedTheme("dark")}
             selected={selectedTheme === "dark"}
+            buttonStyle={styles.optionButton}
+          />
+        </View>
+      </View>
+      <View style={styles.itemContainer}>
+        <ThemedText type={"normal"}>
+          {t("screens.settings.text.languageLabel")}
+        </ThemedText>
+        <View style={styles.optionContainer}>
+          <ThemedButton
+            buttonType={"small"}
+            buttonText={"Slo"}
+            onPress={() => changeTranslation("sl")}
+            selected={selectedTranslation === "sl"}
+            buttonStyle={styles.optionButton}
+          />
+          <ThemedButton
+            buttonType={"small"}
+            buttonText={"Eng"}
+            onPress={() => changeTranslation("en")}
+            selected={selectedTranslation === "en"}
             buttonStyle={styles.optionButton}
           />
         </View>
@@ -63,12 +110,12 @@ export default function SettingsScreen() {
       <View style={styles.exportImportContainer}>
         <ThemedButton
           buttonType={"small"}
-          buttonText={"Izvoz podatkov"}
+          buttonText={t("screens.settings.text.export")}
           onPress={exportDatabase}
         />
         <ThemedButton
           buttonType={"small"}
-          buttonText={"Uvoz podatkov"}
+          buttonText={t("screens.settings.text.import")}
           onPress={importDatabase}
         />
       </View>

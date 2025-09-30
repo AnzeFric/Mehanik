@@ -12,12 +12,14 @@ import ThemedText from "@/components/global/themed/ThemedText";
 import EditMenu from "@/components/mechanic/library/EditMenu";
 import { CustomerFormData } from "@/interfaces/customer";
 import { usePdf } from "@/hooks/usePdf";
+import { useTranslation } from "react-i18next";
 
 export default function DetailCustomerScreen() {
   const { customerUuid, firstName } = useLocalSearchParams();
 
   const { customers } = useDataStore();
   const { generateCustomerPdf } = usePdf();
+  const { t } = useTranslation();
 
   const [customer, setCustomer] = useState<CustomerFormData>();
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
@@ -85,7 +87,9 @@ export default function DetailCustomerScreen() {
             <CustomerDisplay customer={customer.customer} />
           )}
         </View>
-        <ThemedText type={"title"}>Narejeni servisi</ThemedText>
+        <ThemedText type={"title"}>
+          {t("screens.customerDetail.text.title")}
+        </ThemedText>
         {customer?.repairs && (
           <RepairsDisplay
             repairList={customer.repairs}

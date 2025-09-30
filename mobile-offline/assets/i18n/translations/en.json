@@ -1,0 +1,108 @@
+{
+  "language": "English",
+  "screens": {
+    "index": {
+      "title": "Index screen",
+      "text": {
+        "loading": "Loading data...",
+        "title": "Service library",
+        "empty": "Customers do not exist."
+      }
+    },
+    "settings": {
+      "title": "Settings screen",
+      "text": {
+        "title": "Settings",
+        "themeLabel": "App Theme",
+        "themeLight": "Light",
+        "themeDark": "Dark",
+        "languageLabel": "Language",
+        "export": "Export Data",
+        "import": "Import Data",
+        "exportSuccessTitle": "Success",
+        "exportSuccessText": "Database exported successfully.",
+        "exportFailTitle": "Error",
+        "exportFailText": "An error occurred during export.",
+        "importSuccessTitle": "Success",
+        "importSuccessText": "Database imported successfully.",
+        "importFailTitle": "Error",
+        "importFailText": "An error occurred during import."
+      }
+    },
+    "notFound": {
+      "title": "Not found screen",
+      "text": {
+        "text": "This screen does not exist",
+        "link": "Go to home screen"
+      }
+    },
+    "customerAdd": {
+      "title": "Customer add",
+      "text": {
+        "customerFailTitle": "Error",
+        "customerFailText": "An error occurred while saving the customer.",
+        "title": "Add Customer",
+        "customerSection": "Customer",
+        "vehicleSection": "Vehicle",
+        "repairSection": "Service",
+        "emptyRepairNotice": "If no service was performed, select \"Other\" and leave it blank.",
+        "buttonSavingText": "Saving...",
+        "buttonAddText": "Add"
+      }
+    },
+    "customerDetail": {
+      "title": "Customer detail",
+      "text": {
+        "title": "Narejeni servisi"
+      }
+    },
+    "customerEdit": {
+      "title": "Customer edit",
+      "text": {
+        "customerSaveEditFailTitle": "Error",
+        "customerSaveEditFailText": "You must fill in all required fields.",
+        "fetchNewCustomersFailTitle": "Error",
+        "fetchNewCustomersFailText": "An error occurred while updating the customer.",
+        "title": "Edit Customer",
+        "editing": "Editing...",
+        "edit": "Edit"
+      }
+    },
+    "repairAdd": {
+      "title": "Repair add",
+      "text": {
+        "repairSaveFailTitle": "Error",
+        "repairSaveFailText": "An error occurred while saving the service.",
+        "title": "Save Service",
+        "save": "Save"
+      }
+    },
+    "repairDetail": {
+      "title": "Repair detail",
+      "text": {
+        "repairFetchFailTitle": "Error",
+        "repairFetchFailText": "The service could not be found.",
+        "priceLabel": "Repair Price",
+        "kilometersLabel": "Kilometers",
+        "repairDateLabel": "Date of Service",
+        "doneRepairsLabel": "Completed Repairs",
+        "noteLabel": "Additional Notes",
+        "repairImages": "Service Images",
+        "image": "images",
+        "loading": "Loading..."
+      }
+    },
+    "repairEdit": {
+      "title": "Repair edit",
+      "text": {
+        "repairFetchFailTitle": "Error",
+        "repairFetchFailText": "The service could not be found.",
+        "repairEditFailTitle": "Error",
+        "repairEditFailText": "An error occurred while updating the service.",
+        "title": "Edit Service",
+        "editing": "Editing...",
+        "edit": "Edit"
+      }
+    }
+  }
+}

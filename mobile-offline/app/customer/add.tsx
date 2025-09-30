@@ -14,11 +14,13 @@ import ThemedText from "@/components/global/themed/ThemedText";
 import ThemedButton from "@/components/global/themed/ThemedButton";
 import { useCustomers } from "@/hooks/useCustomers";
 import useDataStore from "@/stores/useDataStore";
+import { useTranslation } from "react-i18next";
 
 export default function AddCustomerScreen() {
   const { setCustomers } = useDataStore();
 
   const { addCustomer, fetchCustomers } = useCustomers();
+  const { t } = useTranslation();
 
   const [repairData, setRepairData] = useState<RepairData>();
   const [vehicleImage, setVehicleImage] = useState("");
@@ -75,8 +77,8 @@ export default function AddCustomerScreen() {
       if (newCustomers) setCustomers(newCustomers);
     } else {
       Alert.alert(
-        "Napaka",
-        "Prišlo je do napake pri shranjevanju stranke. Kliči Anžeta."
+        t("screens.customerAdd.text.customerFailTitle"),
+        t("screens.customerAdd.text.customerFailText")
       );
     }
     setSaving(false);
@@ -100,33 +102,40 @@ export default function AddCustomerScreen() {
         keyboardShouldPersistTaps={"handled"}
         ref={scrollRef}
       >
-        <TitleRow title={"Dodaj stranko"} hasBackButton={true} />
+        <TitleRow
+          title={t("screens.customerAdd.text.title")}
+          hasBackButton={true}
+        />
         <ImageForm setImage={setVehicleImage} />
         <View>
           <ThemedText type={"title"} bold>
-            Stranka
+            {t("screens.customerAdd.text.customerSection")}
           </ThemedText>
           <CustomerForm setCustomer={setCustomerData} />
         </View>
         <View>
           <ThemedText type={"title"} bold>
-            Vozilo
+            {t("screens.customerAdd.text.vehicleSection")}
           </ThemedText>
           <VehicleForm setVehicle={setVehicleData} />
         </View>
         <View>
           <ThemedText type={"title"} bold>
-            Servis
+            {t("screens.customerAdd.text.repairSection")}
           </ThemedText>
           <ThemedText type={"small"} style={{ paddingBottom: 15 }}>
-            Če servis ni bil izveden izberite "Drugo" in pustite prazno.
+            {t("screens.customerAdd.text.emptyRepairNotice")}
           </ThemedText>
           <RepairForm setRepair={setRepairData} />
         </View>
         <View style={styles.buttonContainer}>
           <ThemedButton
             buttonType={"small"}
-            buttonText={saving ? "Shranjevanje..." : "Dodaj"}
+            buttonText={
+              saving
+                ? t("screens.customerAdd.text.buttonSavingText")
+                : t("screens.customerAdd.text.buttonAddText")
+            }
             onPress={saveCustomer}
             selected={canSave}
             disabled={!canSave}

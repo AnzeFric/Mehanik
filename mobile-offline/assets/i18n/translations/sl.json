@@ -1,0 +1,108 @@
+{
+  "language": "Slovenian",
+  "screens": {
+    "index": {
+      "title": "Index screen",
+      "text": {
+        "loading": "Nalaganje podatkov...",
+        "title": "Knjižnica servisov",
+        "empty": "Stranke ne obstajajo."
+      }
+    },
+    "settings": {
+      "title": "Settings screen",
+      "text": {
+        "title": "Nastavitve",
+        "themeLabel": "Tema aplikacije",
+        "themeLight": "Svetla",
+        "themeDark": "Temna",
+        "languageLabel": "Jezik",
+        "export": "Izvoz podatkov",
+        "import": "Uvoz podatkov",
+        "exportSuccessTitle": "Uspeh",
+        "exportSuccessText": "Uspešno izvožena podatkovna baza.",
+        "exportFailTitle": "Napaka",
+        "exportFailText": "Pri izvozu je prišlo do napake.",
+        "importSuccessTitle": "Uspeh",
+        "importSuccessText": "Uspešno uvožena podatkovna baza.",
+        "importFailTitle": "Napaka",
+        "importFailText": "Pri uvozu je prišlo do napake."
+      }
+    },
+    "notFound": {
+      "title": "Not found screen",
+      "text": {
+        "text": "Ta stran ne obstaja",
+        "link": "Na začetno stran"
+      }
+    },
+    "customerAdd": {
+      "title": "Customer add",
+      "text": {
+        "customerFailTitle": "Napaka",
+        "customerFailText": "Prišlo je do napake pri shranjevanju stranke.",
+        "title": "Dodaj stranko",
+        "customerSection": "Stranka",
+        "vehicleSection": "Vozilo",
+        "repairSection": "Servis",
+        "emptyRepairNotice": "Če servis ni bil izveden izberite \"Drugo\" in pustite prazno.",
+        "buttonSavingText": "Shranjevanje...",
+        "buttonAddText": "Dodaj"
+      }
+    },
+    "customerDetail": {
+      "title": "Customer detail",
+      "text": {
+        "title": "Narejeni servisi"
+      }
+    },
+    "customerEdit": {
+      "title": "Customer edit",
+      "text": {
+        "customerSaveEditFailTitle": "Napaka",
+        "customerSaveEditFailText": "Izpolniti morate vsa obvezna polja",
+        "fetchNewCustomersFailTitle": "Napaka",
+        "fetchNewCustomersFailText": "Prišlo je do napake pri posodabljanju stranke.",
+        "title": "Uredi stranko",
+        "editing": "Urejanje...",
+        "edit": "Uredi"
+      }
+    },
+    "repairAdd": {
+      "title": "Repair add",
+      "text": {
+        "repairSaveFailTitle": "Napaka",
+        "repairSaveFailText": "Prišlo je do napake pri shranjevanju servisa.",
+        "title": "Shrani servis",
+        "save": "Shrani"
+      }
+    },
+    "repairDetail": {
+      "title": "Repair detail",
+      "text": {
+        "repairFetchFailTitle": "Napaka",
+        "repairFetchFailText": "Servisa ni bilo mogoče najti.",
+        "priceLabel": "Cena popravila",
+        "kilometersLabel": "Kilometri",
+        "repairDateLabel": "Datum izvedbe",
+        "doneRepairsLabel": "Izvedena popravila",
+        "noteLabel": "Dodatne opombe",
+        "repairImages": "Slike servisa",
+        "image": "slik",
+        "loading": "Nalaganje..."
+      }
+    },
+    "repairEdit": {
+      "title": "Repair edit",
+      "text": {
+        "repairFetchFailTitle": "Napaka",
+        "repairFetchFailText": "Servisa ni bilo mogoče najti.",
+        "repairEditFailTitle": "Napaka",
+        "repairEditFailText": "Prišlo je do napake pri posodabljanju servisa.",
+        "title": "Uredi servis",
+        "editing": "Urejanje...",
+        "edit": "Uredi"
+      }
+    }
+  }
+}

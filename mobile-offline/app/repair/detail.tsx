@@ -24,10 +24,13 @@ import ThemedText from "@/components/global/themed/ThemedText";
 import { Ionicons } from "@expo/vector-icons";
 import useDataStore from "@/stores/useDataStore";
 import { usePdf } from "@/hooks/usePdf";
+import { useTranslation } from "react-i18next";
 
 export default function DetailRepairScreen() {
   const { customerUuid, repairUuid } = useLocalSearchParams();
   const { customers } = useDataStore();
+
+  const { t } = useTranslation();
   const { staticColors } = useAnimatedTheme();
   const { generateRepairPdf } = usePdf();
 
@@ -46,7 +49,10 @@ export default function DetailRepairScreen() {
         (repair) => repair.uuid === repairUuid
       );
     }
-    Alert.alert("Napaka", "Servisa ni bilo mogoče najti");
+    Alert.alert(
+      t("screens.repairDetail.text.repairFetchFailTitle"),
+      t("screens.repairDetail.text.repairFetchFailText")
+    );
     router.back();
     return;
   }, [foundCustomer]);
@@ -117,7 +123,7 @@ export default function DetailRepairScreen() {
         >
           <ThemedView type={"primary"} style={styles.itemContainer}>
             <ThemedText type={"normal"} bold>
-              Cena popravila
+              {t("screens.repairDetail.text.priceLabel")}
             </ThemedText>
             <View style={styles.itemContent}>
               <ThemedIcon name={"cash-outline"} size={15} />
@@ -129,7 +135,7 @@ export default function DetailRepairScreen() {
 
           <ThemedView type={"primary"} style={styles.itemContainer}>
             <ThemedText type={"normal"} bold>
-              Kilometri
+              {t("screens.repairDetail.text.kilometersLabel")}
             </ThemedText>
             <View style={styles.itemContent}>
               <ThemedIcon name={"speedometer-outline"} size={15} />
@@ -141,7 +147,7 @@ export default function DetailRepairScreen() {
 
           <ThemedView type={"primary"} style={styles.itemContainer}>
             <ThemedText type={"normal"} bold>
-              Datum izvedbe
+              {t("screens.repairDetail.text.repairDateLabel")}
             </ThemedText>
             <View style={styles.itemContent}>
               <ThemedIcon name="calendar" size={16} />
@@ -153,7 +159,7 @@ export default function DetailRepairScreen() {
 
           <ThemedView type={"primary"} style={styles.itemContainer}>
             <ThemedText type={"normal"} bold>
-              Izvedena popravila
+              {t("screens.repairDetail.text.doneRepairsLabel")}
             </ThemedText>
             <View style={{ gap: 10 }}>
               {repairData.options &&
@@ -187,7 +193,7 @@ export default function DetailRepairScreen() {
           {repairData.note && (
             <ThemedView type={"primary"} style={styles.itemContainer}>
               <ThemedText type={"normal"} bold>
-                Dodatne opombe
+                {t("screens.repairDetail.text.noteLabel")}
               </ThemedText>
               <ThemedText type={"small"}>{repairData.note}</ThemedText>
             </ThemedView>
@@ -196,7 +202,7 @@ export default function DetailRepairScreen() {
           {repairData.images && repairData.images.length > 0 && (
             <ThemedView type={"primary"} style={styles.itemContainer}>
               <ThemedText type={"normal"} bold>
-                Slike servisa
+                {t("screens.repairDetail.text.repairImages")}
               </ThemedText>
               <ThemedView type={"secondary"} style={{ borderRadius: 12 }}>
                 <TouchableOpacity
@@ -205,7 +211,8 @@ export default function DetailRepairScreen() {
                 >
                   <ThemedIcon name="images-outline" size={24} />
                   <ThemedText type={"small"}>
-                    {repairData.images.length} slik
+                    {repairData.images.length}{" "}
+                    {t("screens.repairDetail.text.image")}
                   </ThemedText>
                 </TouchableOpacity>
               </ThemedView>
@@ -213,7 +220,10 @@ export default function DetailRepairScreen() {
           )}
         </ScrollView>
       ) : (
-        <LoadingScreen type={"full"} text={"Nalaganje..."} />
+        <LoadingScreen
+          type={"full"}
+          text={t("screens.repairDetail.text.loading")}
+        />
       )}
       <ImageView
         images={viewImages}

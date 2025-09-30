@@ -9,11 +9,14 @@ import ImageForm from "@/components/mechanic/library/forms/ImageForm";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import useDataStore from "@/stores/useDataStore";
 import { useCustomers } from "@/hooks/useCustomers";
+import { useTranslation } from "react-i18next";
 
 export default function EditCustomerScreen() {
   const { customerUuid } = useLocalSearchParams();
-  const { updateCustomer, fetchCustomers } = useCustomers();
   const { customers, setCustomers } = useDataStore();
+
+  const { updateCustomer, fetchCustomers } = useCustomers();
+  const { t } = useTranslation();
 
   const [currentCustomer, setCurrentCustomer] = useState<CustomerData>();
   const [currentVehicle, setCurrentVehicle] = useState<VehicleData>();
@@ -49,7 +52,10 @@ export default function EditCustomerScreen() {
 
   const handleSaveEdit = async () => {
     if (!canSave || !currentCustomer || !currentVehicle || !foundCustomer) {
-      Alert.alert("Napaka", "Izpolniti morate vsa obvezna polja");
+      Alert.alert(
+        t("screens.customerEdit.text.customerSaveEditFailTitle"),
+        t("screens.customerEdit.text.customerSaveEditFailText")
+      );
       return;
     }
     setUpdating(true);
@@ -74,8 +80,8 @@ export default function EditCustomerScreen() {
       if (newCustomers) setCustomers(newCustomers);
     } else {
       Alert.alert(
-        "Napaka",
-        "Prišlo je do napake pri posodabljanju stranke. Kliči Anžeta."
+        t("screens.customerEdit.text.fetchNewCustomersFailTitle"),
+        t("screens.customerEdit.text.fetchNewCustomersFailText")
       );
     }
 
@@ -85,9 +91,13 @@ export default function EditCustomerScreen() {
 
   return (
     <TemplateView
-      title={"Uredi stranko"}
+      title={t("screens.customerEdit.text.title")}
       backButton={true}
-      buttonText={updating ? "Urejanje..." : "Uredi"}
+      buttonText={
+        updating
+          ? t("screens.customerEdit.text.editing")
+          : t("screens.customerEdit.text.edit")
+      }
       onButtonPress={handleSaveEdit}
     >
       <ImageForm image={currentImage} setImage={setCurrentImage} />

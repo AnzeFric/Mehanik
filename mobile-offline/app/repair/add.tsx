@@ -7,11 +7,13 @@ import { useRepairs } from "@/hooks/useRepairs";
 import { useCustomers } from "@/hooks/useCustomers";
 import { Alert } from "react-native";
 import useDataStore from "@/stores/useDataStore";
+import { useTranslation } from "react-i18next";
 
 export default function AddRepairScreen() {
   const { customerUuid } = useLocalSearchParams();
   const { setCustomers } = useDataStore();
 
+  const { t } = useTranslation();
   const { addRepair } = useRepairs();
   const { fetchCustomers } = useCustomers();
 
@@ -25,8 +27,8 @@ export default function AddRepairScreen() {
         if (newCustomers) setCustomers(newCustomers);
       } else {
         Alert.alert(
-          "Napaka",
-          "Prišlo je do napake pri shranjevanju servisa. Kliči Anžeta."
+          t("screens.repairAdd.text.repairSaveFailTitle"),
+          t("screens.repairAdd.text.repairSaveFailText")
         );
       }
       router.back();
@@ -35,9 +37,9 @@ export default function AddRepairScreen() {
 
   return (
     <TemplateView
-      title={"Shrani servis"}
+      title={t("screens.repairAdd.text.title")}
       backButton={true}
-      buttonText={"Shrani"}
+      buttonText={t("screens.repairAdd.text.save")}
       onButtonPress={handleSaveRepair}
     >
       <RepairForm repair={undefined} setRepair={setRepairData} />

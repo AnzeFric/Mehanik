@@ -11,10 +11,17 @@ import { useCustomers } from "@/hooks/useCustomers";
 import LoadingScreen from "@/components/global/LoadingScreen";
 import useDataStore from "@/stores/useDataStore";
 import ThemedIcon from "@/components/global/themed/ThemedIcon";
+import { useTranslation } from "react-i18next";
+import i18n from "../assets/i18n/i18n";
+import useTranslationStore from "@/stores/useTranslationStore";
 
 export default function HomeScreen() {
   const { customers, setCustomers } = useDataStore();
+  const { selectedTranslation } = useTranslationStore();
+
   const { fetchCustomers } = useCustomers();
+  const { t } = useTranslation();
+
   const [search, setSearch] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
@@ -27,6 +34,8 @@ export default function HomeScreen() {
     };
     setLoading(true);
     initializeCustomers();
+
+    i18n.changeLanguage(selectedTranslation);
     setLoading(false);
   }, []);
 
@@ -63,14 +72,16 @@ export default function HomeScreen() {
   );
 
   if (loading) {
-    return <LoadingScreen type={"full"} text={"Nalaganje podatkov..."} />;
+    return (
+      <LoadingScreen type={"full"} text={t("screens.index.text.loading")} />
+    );
   }
 
   return (
     <ThemedView type={"background"} style={{ flex: 1 }}>
       <View style={styles.header}>
         <TitleRow
-          title={"Knjižnica servisov"}
+          title={t("screens.index.text.title")}
           hasBackButton={false}
           menuButton={
             <ThemedIcon
@@ -89,7 +100,7 @@ export default function HomeScreen() {
         renderItem={(customer, index) => (
           <CustomerItem customer={customer} key={index} />
         )}
-        emptyMessage="Stranke ne obstajajo."
+        emptyMessage={t("screens.index.text.empty")}
       />
       <PlusButton
         onPress={() => {
