@@ -13,6 +13,7 @@ import ThemedDatePicker from "@/components/global/themed/ThemedDatePicker";
 import ThemedButton from "@/components/global/themed/ThemedButton";
 import ThemedIcon from "@/components/global/themed/ThemedIcon";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   repair?: RepairData;
@@ -43,6 +44,8 @@ const defaultOptions = {
 
 export default function RepairForm({ repair, setRepair }: Props) {
   const { staticColors } = useAnimatedTheme();
+
+  const { t } = useTranslation();
 
   const [type, setType] = useState<"small" | "large" | "other">("small");
   const [description, setDescription] = useState("");
@@ -195,19 +198,19 @@ export default function RepairForm({ repair, setRepair }: Props) {
       <View style={styles.typeSelectContainer}>
         <ThemedButton
           buttonType={"option"}
-          buttonText={"mali"}
+          buttonText={t("components.mechanic.forms.smallService")}
           onPress={() => handleTypeChange("small")}
           selected={type === "small"}
         />
         <ThemedButton
           buttonType={"option"}
-          buttonText={"veliki"}
+          buttonText={t("components.mechanic.forms.largeService")}
           onPress={() => handleTypeChange("large")}
           selected={type === "large"}
         />
         <ThemedButton
           buttonType={"option"}
-          buttonText={"drugo"}
+          buttonText={t("components.mechanic.forms.otherService")}
           onPress={() => handleTypeChange("other")}
           selected={type === "other"}
         />
@@ -215,89 +218,89 @@ export default function RepairForm({ repair, setRepair }: Props) {
       {(type === "small" || type === "large") && (
         <View style={styles.repairItemsContainer}>
           <CustomCheckBox
-            text="Olje"
+            text={t("components.mechanic.forms.oilChange")}
             value={options.oilChange}
             onChange={(val) => handleChange("oilChange", val)}
           />
           <CustomCheckBox
-            text="Oljni filter"
+            text={t("components.mechanic.forms.filterChange")}
             value={options.filterChange}
             onChange={(val) => handleChange("filterChange", val)}
           />
           <CustomCheckBox
-            text="Zračni filter"
+            text={t("components.mechanic.forms.airFilter")}
             value={options.airFilter}
             onChange={(val) => handleChange("airFilter", val)}
           />
           <CustomCheckBox
-            text="Kabinski filter"
+            text={t("components.mechanic.forms.cabinFilter")}
             value={options.cabinFilter}
             onChange={(val) => handleChange("cabinFilter", val)}
           />
           <CustomCheckBox
-            text="Sprednje zavore"
+            text={t("components.mechanic.forms.frontBrakes")}
             value={options.frontBrakes}
             onChange={(val) => handleChange("frontBrakes", val)}
           />
           <CustomCheckBox
-            text="Zadnje zavore"
+            text={t("components.mechanic.forms.backBrakes")}
             value={options.backBrakes}
             onChange={(val) => handleChange("backBrakes", val)}
           />
           <CustomCheckBox
-            text="Preverjanje akumulatorja"
+            text={t("components.mechanic.forms.batteryCheck")}
             value={options.batteryCheck}
             onChange={(val) => handleChange("batteryCheck", val)}
           />
           <CustomCheckBox
-            text="Menjava zavorne tekočine"
+            text={t("components.mechanic.forms.brakeFluid")}
             value={options.brakeFluid}
             onChange={(val) => handleChange("brakeFluid", val)}
           />
           {type === "large" && (
             <>
               <CustomCheckBox
-                text="Menjava hladilne tekočine"
+                text={t("components.mechanic.forms.coolant")}
                 value={options.coolant}
                 onChange={(val) => handleChange("coolant", val)}
               />
               <CustomCheckBox
-                text="Svečke"
+                text={t("components.mechanic.forms.sparkPlugs")}
                 value={options.sparkPlugs}
                 onChange={(val) => handleChange("sparkPlugs", val)}
               />
               <CustomCheckBox
-                text="Zunanji jermen"
+                text={t("components.mechanic.forms.outerTiming")}
                 value={options.outerTiming}
                 onChange={(val) => handleChange("outerTiming", val)}
               />
               <CustomCheckBox
-                text="Zunanji jermen kpl."
+                text={t("components.mechanic.forms.outerTimingComplete")}
                 value={options.outerTimingComplete}
                 onChange={(val) => handleChange("outerTimingComplete", val)}
               />
               <CustomCheckBox
-                text="Zobati jermen/Veriga kpl."
+                text={t("components.mechanic.forms.timingChain")}
                 value={options.timingChain}
                 onChange={(val) => handleChange("timingChain", val)}
               />
               <CustomCheckBox
-                text="Menjava olja menjalnika"
+                text={t("components.mechanic.forms.transmissionFluid")}
                 value={options.transmissionFluid}
                 onChange={(val) => handleChange("transmissionFluid", val)}
               />
               <CustomCheckBox
-                text="Filter menjalnika"
+                text={t("components.mechanic.forms.transmissionFilter")}
                 value={options.transmissionFilter}
                 onChange={(val) => handleChange("transmissionFilter", val)}
               />
               <CustomCheckBox
-                text="Olje pogonov"
+                text={t("components.mechanic.forms.gearFluid")}
                 value={options.gearFluid}
                 onChange={(val) => handleChange("gearFluid", val)}
               />
               <CustomCheckBox
-                text="Vodna črpalka"
+                text={t("components.mechanic.forms.waterPump")}
                 value={options.waterPump}
                 onChange={(val) => handleChange("waterPump", val)}
               />
@@ -309,7 +312,7 @@ export default function RepairForm({ repair, setRepair }: Props) {
       {type === "other" && (
         <ThemedTextInput
           style={[styles.input, styles.textArea]}
-          placeholder={"Opišite izveden servis"}
+          placeholder={t("components.mechanic.forms.repairDescription")}
           value={description}
           onChangeText={handleDescriptionChange}
           autoCapitalize={"sentences"}
@@ -319,14 +322,14 @@ export default function RepairForm({ repair, setRepair }: Props) {
       )}
       <ThemedTextInput
         style={styles.input}
-        placeholder={"Opombe za servis (ni obvezno)"}
+        placeholder={t("components.mechanic.forms.repairNote")}
         value={note}
         onChangeText={handleNoteChange}
         autoCapitalize={"sentences"}
       />
       <ThemedTextInput
         style={styles.input}
-        placeholder={"Kilometri (ni obvezno)"}
+        placeholder={t("components.mechanic.forms.repairKilometers")}
         value={kilometers}
         onChangeText={handleKilometersChange}
         autoCapitalize={"none"}
@@ -334,7 +337,7 @@ export default function RepairForm({ repair, setRepair }: Props) {
       />
       <ThemedTextInput
         style={styles.input}
-        placeholder={"Cena (ni obvezno)"}
+        placeholder={t("components.mechanic.forms.repairPrice")}
         value={price}
         onChangeText={handlePriceChange}
         autoCapitalize={"none"}
@@ -342,7 +345,9 @@ export default function RepairForm({ repair, setRepair }: Props) {
       />
 
       <View style={styles.dateContainer}>
-        <ThemedText type={"small"}>Datum servisa:</ThemedText>
+        <ThemedText type={"small"}>
+          {t("components.mechanic.forms.repairDateLabel")}
+        </ThemedText>
         <TouchableOpacity
           style={styles.dateButton}
           onPress={() => setShowDatePicker(true)}
@@ -351,7 +356,9 @@ export default function RepairForm({ repair, setRepair }: Props) {
         </TouchableOpacity>
       </View>
 
-      <ThemedText type={"small"}>Slike servisa (ni obvezno):</ThemedText>
+      <ThemedText type={"small"}>
+        {t("components.mechanic.forms.repairImagesLabel")}
+      </ThemedText>
       <View style={styles.repairImagesContainer}>
         {repairImages.map((uri, index) => (
           <View key={index} style={styles.repairImageContainer}>

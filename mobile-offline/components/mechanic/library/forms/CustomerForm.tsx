@@ -4,6 +4,7 @@ import { CustomerData } from "@/interfaces/customer";
 import { Colors } from "@/constants/Colors";
 import { useFocusEffect } from "expo-router";
 import ThemedTextInput from "@/components/global/themed/ThemedTextInput";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   customer?: CustomerData;
@@ -11,6 +12,8 @@ interface Props {
 }
 
 export default function CustomerForm({ customer, setCustomer }: Props) {
+  const { t } = useTranslation();
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState<string | null>("");
@@ -89,21 +92,21 @@ export default function CustomerForm({ customer, setCustomer }: Props) {
     <>
       <ThemedTextInput
         style={styles.input}
-        placeholder={"Ime"}
+        placeholder={t("components.mechanic.forms.customerName")}
         value={firstName}
         onChangeText={handleFirstNameChange}
         autoCapitalize={"words"}
       />
       <ThemedTextInput
         style={styles.input}
-        placeholder={"Priimek"}
+        placeholder={t("components.mechanic.forms.customerSurname")}
         value={lastName}
         onChangeText={handleLastNameChange}
         autoCapitalize={"words"}
       />
       <ThemedTextInput
         style={styles.input}
-        placeholder={"Telefonska št. (ni obvezno)"}
+        placeholder={t("components.mechanic.forms.customerPhone")}
         value={phone || ""}
         onChangeText={handlePhoneChange}
         autoCapitalize={"none"}
@@ -111,7 +114,7 @@ export default function CustomerForm({ customer, setCustomer }: Props) {
       />
       <ThemedTextInput
         style={styles.input}
-        placeholder={"Email (ni obvezno)"}
+        placeholder={t("components.mechanic.forms.customerMail")}
         value={email || ""}
         onChangeText={handleEmailChange}
         autoCapitalize={"none"}

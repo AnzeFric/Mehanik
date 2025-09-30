@@ -1,12 +1,15 @@
 import { View, Image, StyleSheet } from "react-native";
 import { VehicleData } from "@/interfaces/vehicle";
 import ThemedText from "@/components/global/themed/ThemedText";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   vehicle: VehicleData;
 }
 
 export default function VehicleDisplay({ vehicle }: Props) {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.container}>
       {vehicle.image ? (
@@ -18,7 +21,9 @@ export default function VehicleDisplay({ vehicle }: Props) {
         />
       )}
 
-      <ThemedText type={"title"}>Podatki o vozilu</ThemedText>
+      <ThemedText type={"title"}>
+        {t("components.mechanic.displays.vehicleTitle")}
+      </ThemedText>
       <View>
         <ThemedText type={"normal"}>
           {vehicle.brand} {vehicle.model}

@@ -2,6 +2,7 @@ import { View, Modal, StyleSheet } from "react-native";
 import ThemedView from "@/components/global/themed/ThemedView";
 import ThemedButton from "@/components/global/themed/ThemedButton";
 import ThemedText from "@/components/global/themed/ThemedText";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   isVisible: boolean;
@@ -16,6 +17,8 @@ export default function ModalPrompt({
   onConfirm,
   onCancel,
 }: Props) {
+  const { t } = useTranslation();
+
   return (
     <Modal
       transparent={true}
@@ -31,12 +34,12 @@ export default function ModalPrompt({
           <View style={styles.buttonContainer}>
             <ThemedButton
               buttonType={"option-destroy"}
-              buttonText={"Prekliči"}
+              buttonText={t("components.global.cancel")}
               onPress={onCancel}
             />
             <ThemedButton
               buttonType={"option"}
-              buttonText={"Potrdi"}
+              buttonText={t("components.global.confirm")}
               onPress={onConfirm}
             />
           </View>

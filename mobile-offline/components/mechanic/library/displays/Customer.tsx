@@ -1,15 +1,20 @@
 import { View, StyleSheet } from "react-native";
 import { CustomerData } from "@/interfaces/customer";
 import ThemedText from "@/components/global/themed/ThemedText";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   customer: CustomerData;
 }
 
 export default function CustomerDisplay({ customer }: Props) {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.container}>
-      <ThemedText type={"title"}>Podatki o stranki</ThemedText>
+      <ThemedText type={"title"}>
+        {t("components.mechanic.displays.customerTitle")}
+      </ThemedText>
       <View>
         <ThemedText type={"small"}>
           {customer.firstName} {customer.lastName}

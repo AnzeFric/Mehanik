@@ -4,6 +4,7 @@ import { VehicleData } from "@/interfaces/vehicle";
 import { Colors } from "@/constants/Colors";
 import { useFocusEffect } from "expo-router";
 import ThemedTextInput from "@/components/global/themed/ThemedTextInput";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   vehicle?: VehicleData;
@@ -11,6 +12,8 @@ interface Props {
 }
 
 export default function VehicleForm({ vehicle, setVehicle }: Props) {
+  const { t } = useTranslation();
+
   const [brand, setBrand] = useState("");
   const [model, setModel] = useState("");
   const [vin, setVin] = useState<string | null>("");
@@ -104,21 +107,21 @@ export default function VehicleForm({ vehicle, setVehicle }: Props) {
     <>
       <ThemedTextInput
         style={styles.input}
-        placeholder={"Znamka"}
+        placeholder={t("components.mechanic.forms.vehicleBrand")}
         value={brand}
         onChangeText={handleBrandChange}
         autoCapitalize={"words"}
       />
       <ThemedTextInput
         style={styles.input}
-        placeholder={"Model"}
+        placeholder={t("components.mechanic.forms.vehicleModel")}
         value={model}
         onChangeText={handleModelChange}
         autoCapitalize={"words"}
       />
       <ThemedTextInput
         style={styles.input}
-        placeholder={"Leto izdelave (ni obvezno)"}
+        placeholder={t("components.mechanic.forms.vehicleYear")}
         value={buildYear || ""}
         onChangeText={handleBuildYearChange}
         autoCapitalize={"none"}
@@ -126,14 +129,14 @@ export default function VehicleForm({ vehicle, setVehicle }: Props) {
       />
       <ThemedTextInput
         style={styles.input}
-        placeholder={"VIN (ni obvezno)"}
+        placeholder={t("components.mechanic.forms.vehicleVin")}
         value={vin || ""}
         onChangeText={handleVinChange}
         autoCapitalize={"characters"}
       />
       <ThemedTextInput
         style={[styles.input, { textAlignVertical: "top" }]}
-        placeholder={"Dodaten opis vozila (ni obvezno)"}
+        placeholder={t("components.mechanic.forms.vehicleDescription")}
         value={description || ""}
         onChangeText={handleDescriptionChange}
         autoCapitalize={"sentences"}

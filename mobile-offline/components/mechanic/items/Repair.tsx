@@ -11,6 +11,7 @@ import ModalPrompt from "@/components/global/ModalPrompt";
 import { useState } from "react";
 import { useRepairs } from "@/hooks/useRepairs";
 import { useCustomers } from "@/hooks/useCustomers";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   repairData: RepairData;
@@ -18,9 +19,11 @@ interface Props {
 }
 
 export default function Repair({ repairData, customerUuid }: Props) {
+  const { staticColors } = useAnimatedTheme();
+
   const { setCustomers } = useDataStore();
 
-  const { staticColors } = useAnimatedTheme();
+  const { t } = useTranslation();
   const { deleteRepair } = useRepairs();
   const { fetchCustomers } = useCustomers();
 
@@ -43,8 +46,8 @@ export default function Repair({ repairData, customerUuid }: Props) {
       if (newCustomers) setCustomers(newCustomers);
     } else {
       Alert.alert(
-        "Napaka",
-        "Prišlo je do napake pri brisanju servisa. Kliči Anžeta."
+        t("components.mechanic.items.repairDeleteFailTitle"),
+        t("components.mechanic.items.repairDeleteFailText")
       );
     }
     setShowDelete(false);
@@ -99,7 +102,7 @@ export default function Repair({ repairData, customerUuid }: Props) {
       {showDelete && (
         <ModalPrompt
           isVisible={true}
-          message={"Servis bo trajno izbrisan"}
+          message={t("components.mechanic.items.repairModalDeleteMessage")}
           onConfirm={handleDeleteRepair}
           onCancel={() => {
             setShowDelete(false);

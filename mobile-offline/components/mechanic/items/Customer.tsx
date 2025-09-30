@@ -8,6 +8,7 @@ import { useState } from "react";
 import ModalPrompt from "@/components/global/ModalPrompt";
 import { useCustomers } from "@/hooks/useCustomers";
 import useDataStore from "@/stores/useDataStore";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   customer: CustomerFormData;
@@ -15,8 +16,11 @@ interface Props {
 
 export default function Customer({ customer }: Props) {
   const { staticColors } = useAnimatedTheme();
-  const { fetchCustomers, deleteCustomer } = useCustomers();
+
   const { setCustomers } = useDataStore();
+
+  const { t } = useTranslation();
+  const { fetchCustomers, deleteCustomer } = useCustomers();
 
   const [showDelete, setShowDelete] = useState(false);
 
@@ -37,8 +41,8 @@ export default function Customer({ customer }: Props) {
       if (newCustomers) setCustomers(newCustomers);
     } else {
       Alert.alert(
-        "Napaka",
-        "Prišlo je do napake pri brisanju stranke. Kliči Anžeta."
+        t("components.mechanic.items.customerDeleteFailTitle"),
+        t("components.mechanic.items.customerDeleteFailText")
       );
     }
     setShowDelete(false);
@@ -88,7 +92,7 @@ export default function Customer({ customer }: Props) {
       {showDelete && (
         <ModalPrompt
           isVisible={true}
-          message={"Stranka bo trajno izbrisana"}
+          message={t("components.mechanic.items.customerModalDeleteMessage")}
           onConfirm={handleDeleteCustomer}
           onCancel={() => {
             setShowDelete(false);

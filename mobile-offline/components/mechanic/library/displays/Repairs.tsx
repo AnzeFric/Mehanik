@@ -2,6 +2,7 @@ import { View, StyleSheet } from "react-native";
 import Repair from "@/components/mechanic/items/Repair";
 import { RepairData } from "@/interfaces/repair";
 import ThemedText from "@/components/global/themed/ThemedText";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   repairList: RepairData[] | null;
@@ -9,6 +10,8 @@ interface Props {
 }
 
 export default function RepairsDisplay({ repairList, customerUuid }: Props) {
+  const { t } = useTranslation();
+
   const sortedRepairs = repairList?.sort((a, b) => {
     const dateA = new Date(a.repairDate);
     const dateB = new Date(b.repairDate);
@@ -23,7 +26,7 @@ export default function RepairsDisplay({ repairList, customerUuid }: Props) {
         ))
       ) : (
         <ThemedText type={"small"} style={{ textAlign: "center" }}>
-          Nimate vnešenih servisov.
+          {t("components.mechanic.displays.repairEmptyList")}
         </ThemedText>
       )}
     </View>

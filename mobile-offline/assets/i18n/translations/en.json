@@ -53,7 +53,7 @@
     "customerDetail": {
       "title": "Customer detail",
       "text": {
-        "title": "Narejeni servisi"
+        "title": "Finished repairs"
       }
     },
     "customerEdit": {
@@ -85,7 +85,7 @@
         "priceLabel": "Repair Price",
         "kilometersLabel": "Kilometers",
         "repairDateLabel": "Date of Service",
-        "doneRepairsLabel": "Completed Repairs",
+        "doneRepairsLabel": "Repairs",
         "noteLabel": "Additional Notes",
         "repairImages": "Service Images",
         "image": "images",
@@ -102,6 +102,67 @@
         "title": "Edit Service",
         "editing": "Editing...",
         "edit": "Edit"
+      }
+    }
+  },
+  "components": {
+    "global": {
+      "search": "Search",
+      "confirm": "Confirm",
+      "cancel": "Cancel"
+    },
+    "mechanic": {
+      "items": {
+        "customerDeleteFailTitle": "Error",
+        "customerDeleteFailText": "An error occurred while deleting the customer.",
+        "customerModalDeleteMessage": "The customer will be permanently deleted.",
+        "repairDeleteFailTitle": "Error",
+        "repairDeleteFailText": "An error occurred while deleting the service.",
+        "repairModalDeleteMessage": "The service will be permanently deleted."
+      },
+      "displays": {
+        "customerTitle": "Customer Information",
+        "repairEmptyList": "You have no recorded services.",
+        "vehicleTitle": "Vehicle Information"
+      },
+      "forms": {
+        "customerName": "Name",
+        "customerSurname": "Surname",
+        "customerPhone": "Phone Number (optional)",
+        "customerMail": "Email (optional)",
+        "smallService": "small",
+        "largeService": "large",
+        "otherService": "other",
+        "oilChange": "Oil",
+        "filterChange": "Oil filter",
+        "airFilter": "Air filter",
+        "cabinFilter": "Cabin filter",
+        "frontBrakes": "Front brakes",
+        "backBrakes": "Back brakes",
+        "batteryCheck": "Battery check",
+        "brakeFluid": "Brake fluid change",
+        "coolant": "Coolant change",
+        "sparkPlugs": "Spark plugs",
+        "outerTiming": "Outer timing belt",
+        "outerTimingComplete": "Outer timing belt complete",
+        "timingChain": "Timing chaing",
+        "transmissionFluid": "Transmission fluid",
+        "transmissionFilter": "Transmission filter",
+        "gearFluid": "Gear fluid",
+        "waterPump": "Water pump",
+        "repairDescription": "Describe the repair",
+        "repairNote": "Notes (optional)",
+        "repairKilometers": "Kilometers (optional)",
+        "repairPrice": "Price (optional)",
+        "repairDateLabel": "Repair date:",
+        "repairImagesLabel": "Repair images (optional):",
+        "vehicleBrand": "Brand",
+        "vehicleModel": "Model",
+        "vehicleYear": "Year (optional)",
+        "vehicleVin": "VIN (optional)",
+        "vehicleDescription": "Description (optional)",
+        "menuEdit": "EDIT",
+        "menuExport": "EXPORT"
       }
     }
   }

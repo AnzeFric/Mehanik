@@ -3,6 +3,7 @@ import ThemedView from "@/components/global/themed/ThemedView";
 import { Ionicons } from "@expo/vector-icons";
 import ThemedText from "@/components/global/themed/ThemedText";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   onEditPress: () => void;
@@ -11,6 +12,8 @@ interface Props {
 
 export default function EditMenu({ onEditPress, onExportPress }: Props) {
   const { staticColors } = useAnimatedTheme();
+
+  const { t } = useTranslation();
 
   return (
     <ThemedView type={"background"} style={styles.menuContainer}>
@@ -28,7 +31,7 @@ export default function EditMenu({ onEditPress, onExportPress }: Props) {
           color={staticColors.blueIcon}
         />
         <ThemedText type={"small"} bold style={styles.menuItem}>
-          UREDI
+          {t("components.mechanic.forms.menuEdit")}
         </ThemedText>
       </TouchableOpacity>
 
@@ -42,7 +45,7 @@ export default function EditMenu({ onEditPress, onExportPress }: Props) {
           color={staticColors.iconDestroy}
         />
         <ThemedText type={"small"} bold style={styles.menuItem}>
-          IZVOZI
+          {t("components.mechanic.forms.menuExport")}
         </ThemedText>
       </TouchableOpacity>
     </ThemedView>

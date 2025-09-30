@@ -9,6 +9,7 @@ import {
 import { useRef } from "react";
 import { useAnimatedTheme } from "@/hooks/useAnimatedTheme";
 import ThemedIcon from "./ThemedIcon";
+import { useTranslation } from "react-i18next";
 
 type Props = TextInputProps & {
   viewStyle?: StyleProp<ViewStyle>;
@@ -16,6 +17,9 @@ type Props = TextInputProps & {
 
 export default function ThemedSearchInput({ viewStyle = {}, ...props }: Props) {
   const { staticColors } = useAnimatedTheme();
+
+  const { t } = useTranslation();
+
   const inputRef = useRef<TextInput>(null);
 
   const viewStyles = [
@@ -31,7 +35,7 @@ export default function ThemedSearchInput({ viewStyle = {}, ...props }: Props) {
     <View style={viewStyles}>
       <TextInput
         ref={inputRef}
-        placeholder={"Iskanje"}
+        placeholder={t("components.global.search")}
         placeholderTextColor={staticColors.inputText}
         style={[styles.input, { color: staticColors.inputText }]}
         {...props}

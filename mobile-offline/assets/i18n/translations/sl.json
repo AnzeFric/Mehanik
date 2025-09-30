@@ -104,5 +104,66 @@
         "edit": "Uredi"
       }
     }
+  },
+  "components": {
+    "global": {
+      "search": "Iskanje",
+      "confirm": "Potrdi",
+      "cancel": "Prekliči"
+    },
+    "mechanic": {
+      "items": {
+        "customerDeleteFailTitle": "Napaka",
+        "customerDeleteFailText": "Prišlo je do napake pri brisanju stranke.",
+        "customerModalDeleteMessage": "Stranka bo trajno izbrisana.",
+        "repairDeleteFailTitle": "Napaka",
+        "repairDeleteFailText": "Prišlo je do napake pri brisanju servisa.",
+        "repairModalDeleteMessage": "Servis bo trajno izbrisan."
+      },
+      "displays": {
+        "customerTitle": "Podatki o stranki",
+        "repairEmptyList": "Nimate vnešenih servisov.",
+        "vehicleTitle": "Podatki o vozilu"
+      },
+      "forms": {
+        "customerName": "Ime",
+        "customerSurname": "Priimek",
+        "customerPhone": "Telefonska št. (ni obvezno)",
+        "customerMail": "Email (ni obvezno)",
+        "smallService": "mali",
+        "largeService": "veliki",
+        "otherService": "drugo",
+        "oilChange": "Olje",
+        "filterChange": "Oljni filter",
+        "airFilter": "Zračni filter",
+        "cabinFilter": "Kabinski filter",
+        "frontBrakes": "Sprednje zavore",
+        "backBrakes": "Zadnje zavore",
+        "batteryCheck": "Preverjanje akumulatorja",
+        "brakeFluid": "Menjava zavorne tekočine",
+        "coolant": "Menjava hladilne tekočine",
+        "sparkPlugs": "Svečke",
+        "outerTiming": "Zunanji jermen",
+        "outerTimingComplete": "Zunanji jermne kpl.",
+        "timingChain": "Zobati jermen/Veriga kpl.",
+        "transmissionFluid": "Menjava olja menjalnika",
+        "transmissionFilter": "Filter menjalnika",
+        "gearFluid": "Olje pogonov",
+        "waterPump": "Vodna črpalka",
+        "repairDescription": "Opišite izveden servis",
+        "repairNote": "Opombe za servis (ni obvezno)",
+        "repairKilometers": "Kilometri (ni obvezno)",
+        "repairPrice": "Cena (ni obvezno)",
+        "repairDateLabel": "Datum servisa:",
+        "repairImagesLabel": "Slike servisa (ni obvezno):",
+        "vehicleBrand": "Znamka",
+        "vehicleModel": "Model",
+        "vehicleYear": "Leto izdelave (ni obvezno)",
+        "vehicleVin": "VIN (ni obvezno)",
+        "vehicleDescription": "Dodaten opis vozila (ni obvezno)",
+        "menuEdit": "UREDI",
+        "menuExport": "IZVOZI"
+      }
+    }
   }
 }
