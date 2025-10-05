@@ -170,5 +170,75 @@
         "menuExport": "EXPORT"
       }
     }
+  },
+  "hooks": {
+    "pdf": {
+      "generate": {
+        "customerDocumentTitle": "CUSTOMER REPORT",
+        "customerSectionTitle": "Customer Information",
+        "noData": "No data",
+        "name": "Name:",
+        "surname": "Surname:",
+        "email": "Email:",
+        "phone": "Phone:",
+        "vehicleSectionTitle": "Vehicle Information",
+        "brand": "Brand:",
+        "model": "Model:",
+        "buildYear": "Year:",
+        "vin": "VIN:",
+        "description": "Description:",
+        "repairSectionTitle": "Service Records",
+        "repairDescription": "Additional Work Description",
+        "repairNote": "Notes:",
+        "repairImages": "Service Images",
+        "repairImageAlt": "Service Image",
+        "repairId": "Service ID:",
+        "noRepairs": "No recorded services for this customer.",
+        "thankYouNote": "THANK YOU FOR YOUR TRUST!",
+        "customerId": "Customer ID:",
+        "documentGenerated": "Document generated:",
+        "at": "at",
+        "generatePdfFailTitle": "Error",
+        "generatePdfFailText": "PDF file for the customer was not generated",
+        "repairDocumentTitle": "REPAIR REPORT",
+        "repairInfo": "Repair details",
+        "repairsDone": "Completed services",
+        "generateRepairPdfFailTitle": "Error",
+        "generateRepairPdfFailText": "PDF file for the repair was not generated"
+      },
+      "share": {
+        "shareFailTitle": "Error",
+        "shareFailText": "PDF file was not found",
+        "exportRepairTitle": "Export repair",
+        "exportCustomerTitle": "Export customer",
+        "exportRepairSubject": "Repair for vehicle",
+        "exportCustomerSubject": "Repairs for vehicle",
+        "exportRepairText": "Attached is the exported repair for your vehicle.\n\nBest regards,\n",
+        "exportCustomerText": "Attached are the exported repairs for your vehicle.\n\nBest regards,\n"
+      }
+    }
+  },
+  "utils": {
+    "small": "Small repair",
+    "large": "Large repair",
+    "other": "Other",
+    "default": "Repair",
+    "oilChange": "Oil",
+    "filterChange": "Oil filter",
+    "airFilter": "Air filter",
+    "cabinFilter": "Cabin filter",
+    "frontBrakes": "Front brakes",
+    "backBrakes": "Back brakes",
+    "batteryCheck": "Battery check",
+    "brakeFluid": "Brake fluid change",
+    "coolant": "Coolant change",
+    "sparkPlugs": "Spark plugs",
+    "outerTiming": "Outer timing belt",
+    "outerTimingComplete": "Outer timing belt complete",
+    "timingChain": "Timing chaing",
+    "transmissionFluid": "Transmission fluid",
+    "transmissionFilter": "Transmission filter",
+    "gearFluid": "Gear fluid",
+    "waterPump": "Water pump"
   }
 }

@@ -36,60 +36,6 @@ export function formatTime(date: Date) {
   );
 }
 
-export function formatRepairType(type: string): string {
-  switch (type) {
-    case "small":
-      return "Mali servis";
-    case "large":
-      return "Veliki servis";
-    case "other":
-      return "Drugo";
-    default:
-      return "Servis";
-  }
-}
-
-export function formatRepairItems(item: string): string {
-  switch (item) {
-    case "oilChange":
-      return "Olje";
-    case "filterChange":
-      return "Oljni filter";
-    case "airFilter":
-      return "Zračni filter";
-    case "cabinFilter":
-      return "Kabinski filter";
-    case "frontBrakes":
-      return "Sprednje zavore";
-    case "backBrakes":
-      return "Zadnje zavore";
-    case "batteryCheck":
-      return "Preverjanje akumulatorja";
-    case "brakeFluid":
-      return "Menjava zavorne tekočine";
-    case "coolant":
-      return "Menjava hladilne tekočine";
-    case "sparkPlugs":
-      return "Svečke";
-    case "outerTiming":
-      return "Zunanji jermen";
-    case "timingChain":
-      return "Zobati jermen/Veriga kpl.";
-    case "outerTimingComplete":
-      return "Zunanji jermen kpl.";
-    case "transmissionFluid":
-      return "Menjava olja menjalnika";
-    case "transmissionFilter":
-      return "Filter menjalnika";
-    case "gearFluid":
-      return "Olje pogonov";
-    case "waterPump":
-      return "Vodna črpalka";
-    default:
-      return "";
-  }
-}
-
 export function formatCurrency(price: number | undefined | null): string {
   if (price && typeof price === "number") {
     return `${price.toFixed(2)} €`;
@@ -97,28 +43,36 @@ export function formatCurrency(price: number | undefined | null): string {
   return "0.00 €";
 }
 
-export function getServiceTranslation(options: RepairOptions) {
-  const serviceMap: Record<keyof RepairOptions, string> = {
-    oilChange: "Olje",
-    filterChange: "Oljni filter",
-    airFilter: "Zračni filter",
-    cabinFilter: "Kabinski filter",
-    frontBrakes: "Sprednje zavore",
-    backBrakes: "Zadnje zavore",
-    batteryCheck: "Preverjanje akumulatorja",
-    brakeFluid: "Menjava zavorne tekočine",
-    coolant: "Menjava hladilne tekočine",
-    sparkPlugs: "Svečke",
-    timingChain: "Zobati jermen/Veriga kpl.",
-    outerTiming: "Zunanji jermen",
-    outerTimingComplete: "Zunanji jermen kpl.",
-    transmissionFluid: "Menjava olja menjalnika",
-    transmissionFilter: "Filter menjalnika",
-    gearFluid: "Olje pogonov",
-    waterPump: "Vodna črpalka",
-  };
+export function formatRepairType(
+  type: string,
+  t: (key: string) => string
+): string {
+  switch (type) {
+    case "small":
+      return t("utils.small");
+    case "large":
+      return t("utils.large");
+    case "other":
+      return t("utils.other");
+    default:
+      return t("utils.default");
+  }
+}
 
+// look up translation from i18n, fallback "" if key not found
+export function formatRepairItems(
+  item: string,
+  t: (key: string) => string
+): string {
+  const translation = t(`utils.${item}`);
+  return translation === `utils.${item}` ? "" : translation;
+}
+
+export function getServiceTranslation(
+  options: RepairOptions,
+  t: (key: string) => string
+): string[] {
   return Object.entries(options)
     .filter(([_, value]) => value)
-    .map(([key, _]) => serviceMap[key as keyof RepairOptions]);
+    .map(([key]) => t(`utils.${key}`));
 }

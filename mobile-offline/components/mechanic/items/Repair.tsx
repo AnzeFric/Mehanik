@@ -71,7 +71,7 @@ export default function Repair({ repairData, customerUuid }: Props) {
         >
           <View style={styles.header}>
             <ThemedText type={"small"} bold>
-              {formatRepairType(repairData.type)}
+              {formatRepairType(repairData.type, t)}
             </ThemedText>
             <ThemedText type={"small"} bold>
               {formatCurrency(repairData.price || 0)}

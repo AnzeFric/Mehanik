@@ -11,8 +11,12 @@ import {
 } from "@/constants/util";
 import { CustomerData, CustomerFormData } from "@/interfaces/customer";
 import { VehicleData } from "@/interfaces/vehicle";
+import useUserStore from "@/stores/useUserStore";
+import { useTranslation } from "react-i18next";
 
 export const usePdf = () => {
+  const { t } = useTranslation();
+
   const requestStoragePermission = async () => {
     // Only request permission on Android 9 and below
     if (Platform.OS === "android" && Platform.Version <= 28) {
@@ -238,53 +242,53 @@ export const usePdf = () => {
           <body>
             <div class="document">
               <div class="header">
-                <div class="document-title">POROČILO STRANKE</div>
+                <div class="document-title">${t("hooks.pdf.generate.customerDocumentTitle")}</div>
               </div>
 
               <div class="info-grid">
                 <div class="section">
-                  <div class="section-title">Podatki stranke</div>
+                  <div class="section-title">${t("hooks.pdf.generate.customerSectionTitle")}</div>
                   <div class="info-item">
-                    <div class="info-label">Ime:</div>
+                    <div class="info-label">${t("hooks.pdf.generate.name")}</div>
                     <div class="info-value">${customer.customer.firstName}</div>
                   </div>
                   <div class="info-item">
-                    <div class="info-label">Priimek:</div>
+                    <div class="info-label">${t("hooks.pdf.generate.surname")}</div>
                     <div class="info-value">${customer.customer.lastName}</div>
                   </div>
                   <div class="info-item">
-                    <div class="info-label">Email:</div>
-                    <div class="info-value">${customer.customer.email || "Ni podatka"}</div>
+                    <div class="info-label">${t("hooks.pdf.generate.email")}</div>
+                    <div class="info-value">${customer.customer.email || t("hooks.pdf.generate.noData")}</div>
                   </div>
                   <div class="info-item">
-                    <div class="info-label">Telefon:</div>
-                    <div class="info-value">${customer.customer.phone || "Ni podatka"}</div>
+                    <div class="info-label">${t("hooks.pdf.generate.phone")}</div>
+                    <div class="info-value">${customer.customer.phone || t("hooks.pdf.generate.noData")}</div>
                   </div>
                 </div>
 
                 <div class="section"> 
-                  <div class="section-title">Podatki vozila</div>
+                  <div class="section-title">${t("hooks.pdf.generate.vehicleSectionTitle")}</div>
                   <div class="info-item">
-                    <div class="info-label">Znamka:</div>
+                    <div class="info-label">${t("hooks.pdf.generate.brand")}</div>
                     <div class="info-value">${customer.vehicle.brand}</div>
                   </div>
                   <div class="info-item">
-                    <div class="info-label">Model:</div>
+                    <div class="info-label">${t("hooks.pdf.generate.model")}</div>
                     <div class="info-value">${customer.vehicle.model}</div>
                   </div>
                   <div class="info-item">
-                    <div class="info-label">Leto:</div>
-                    <div class="info-value">${customer.vehicle.buildYear || "Ni podatka"}</div>
+                    <div class="info-label">${t("hooks.pdf.generate.buildYear")}</div>
+                    <div class="info-value">${customer.vehicle.buildYear || t("hooks.pdf.generate.noData")}</div>
                   </div>
                   <div class="info-item">
-                    <div class="info-label">VIN:</div>
-                    <div class="info-value">${customer.vehicle.vin || "Ni podatka"}</div>
+                    <div class="info-label">${t("hooks.pdf.generate.vin")}</div>
+                    <div class="info-value">${customer.vehicle.vin || t("hooks.pdf.generate.noData")}</div>
                   </div>
                   ${
                     customer.vehicle.description
                       ? `
                   <div class="info-item">
-                    <div class="info-label">Opis:</div>
+                    <div class="info-label">${t("hooks.pdf.generate.description")}</div>
                     <div class="info-value">${customer.vehicle.description}</div>
                   </div>
                   `
@@ -294,19 +298,20 @@ export const usePdf = () => {
               </div>
 
               <div class="section">
-                <div class="section-title">Seznam servisov</div>
+                <div class="section-title">${t("hooks.pdf.generate.repairSectionTitle")}</div>
                 ${
                   repairs.length > 0
                     ? repairs
                         .map((repair) => {
                           const completedServices = getServiceTranslation(
-                            repair.options
+                            repair.options,
+                            t
                           );
                           return `
                     <div class="repair-item">
                       <div class="repair-header">
                         <div>
-                          <div class="repair-type">${formatRepairType(repair.type)}</div>
+                          <div class="repair-type">${formatRepairType(repair.type, t)}</div>
                           <div class="repair-date">${formatDate(repair.repairDate)}</div>
                         </div>
                         <div>
@@ -338,7 +343,7 @@ export const usePdf = () => {
                         repair.description
                           ? `
                       <div class="repair-description">
-                        <strong>Opis dodatnih del:</strong><br>
+                        <strong>${t("hooks.pdf.generate.repairDescription")}</strong><br>
                         ${repair.description}
                       </div>
                       `
@@ -349,7 +354,7 @@ export const usePdf = () => {
                         repair.note
                           ? `
                       <div class="repair-note">
-                        <strong>Opombe:</strong><br>
+                        <strong>${t("hooks.pdf.generate.repairNote")}</strong><br>
                         ${repair.note}
                       </div>
                       `
@@ -360,12 +365,12 @@ export const usePdf = () => {
                         repair.images && repair.images.length > 0
                           ? `
                         <div class="section">
-                          <div class="section-title">Slike servisa</div>
+                          <div class="section-title">${t("hooks.pdf.generate.repairImages")}</div>
                             <div class="image-container">
                               ${repair.images
                                 .map(
                                   (img) => `
-                                  <img src="${img}" alt="Slika servisa" class="service-image">
+                                  <img src="${img}" alt=${t("hooks.pdf.generate.repairImageAlt")} class="service-image">
                               `
                                 )
                                 .join("")}
@@ -376,7 +381,7 @@ export const usePdf = () => {
                       }
 
                       <div class="info-item">
-                        <div class="info-label">ID servisa:</div>
+                        <div class="info-label">${t("hooks.pdf.generate.repairId")}</div>
                         <div class="info-value">${repair.uuid}</div>
                       </div>
                     </div>
@@ -385,24 +390,24 @@ export const usePdf = () => {
                         .join("")
                     : `
                   <div class="no-repairs">
-                    Ni zabeleženih servisov za to stranko.
+                    ${t("hooks.pdf.generate.noRepairs")}
                   </div>
                 `
                 }
               </div>
               
-              <div class="thank-you">HVALA ZA ZAUPANJE!</div>
+              <div class="thank-you">${t("hooks.pdf.generate.thankYouNote")}</div>
 
               <div class="footer">
-                <p>ID stranke: ${customer.customer.uuid}</p>
-                <p>Dokument generiran: ${new Date().toLocaleDateString("sl-SI")} ob ${new Date().toLocaleTimeString("sl-SI")}</p>
+                <p>${t("hooks.pdf.generate.customerId")} ${customer.customer.uuid}</p>
+                <p>${t("hooks.pdf.generate.documentGenerated")} ${new Date().toLocaleDateString("sl-SI")} ${t("hooks.pdf.generate.at")} ${new Date().toLocaleTimeString("sl-SI")}</p>
               </div>
             </div>
           </body>
         </html>`;
 
       const fileName =
-        `stranka_${customer.customer.firstName}_${customer.customer.lastName}`
+        `customer_${customer.customer.firstName}_${customer.customer.lastName}`
           .toLowerCase()
           .replace(/\s+/g, "_");
 
@@ -418,7 +423,10 @@ export const usePdf = () => {
       let file = await RNHTMLtoPDF.convert(PDFOptions);
 
       if (!file.filePath) {
-        Alert.alert("Napaka", "PDF datoteka za stranko ni bila zgenerirana");
+        Alert.alert(
+          t("hooks.pdf.generate.generatePdfFailTitle"),
+          t("hooks.pdf.generate.generatePdfFailText")
+        );
         console.error("Failed to generate customer pdf: ", file);
         return;
       }
@@ -430,7 +438,10 @@ export const usePdf = () => {
       );
     } catch (error) {
       console.log("PDF failed to generate customer pdf: ", error);
-      Alert.alert("Napaka", "Prišlo je do napake pri generiranju PDF datoteke");
+      Alert.alert(
+        t("hooks.pdf.generate.generatePdfFailTitle"),
+        `Catch: ${t("hooks.pdf.generate.generatePdfFailText")}`
+      );
     }
   };
 
@@ -638,53 +649,53 @@ export const usePdf = () => {
           <body>
             <div class="document">
               <div class="header">
-                <div class="document-title">POROČILO SERVISA</div>
+                <div class="document-title">${t("hooks.pdf.generate.customerDocumentTitle")}</div>
               </div>
 
               <div class="info-grid">
                 <div class="section">
-                  <div class="section-title">Podatki stranke</div>
+                  <div class="section-title">${t("hooks.pdf.generate.customerSectionTitle")}</div>
                   <div class="info-item">
-                    <div class="info-label">Ime:</div>
+                    <div class="info-label">${t("hooks.pdf.generate.name")}</div>
                     <div class="info-value">${customer.firstName}</div>
                   </div>
                   <div class="info-item">
-                    <div class="info-label">Priimek:</div>
+                    <div class="info-label">${t("hooks.pdf.generate.surname")}</div>
                     <div class="info-value">${customer.lastName}</div>
                   </div>
                   <div class="info-item">
-                    <div class="info-label">Email:</div>
-                    <div class="info-value">${customer.email || "Ni podatka"}</div>
+                    <div class="info-label">${t("hooks.pdf.generate.email")}</div>
+                    <div class="info-value">${customer.email || t("hooks.pdf.generate.noData")}</div>
                   </div>
                   <div class="info-item">
-                    <div class="info-label">Telefon:</div>
-                    <div class="info-value">${customer.phone || "Ni podatka"}</div>
+                    <div class="info-label">${t("hooks.pdf.generate.phone")}</div>
+                    <div class="info-value">${customer.phone || t("hooks.pdf.generate.noData")}</div>
                   </div>
                 </div>
 
                 <div class="section"> 
-                  <div class="section-title">Podatki vozila</div>
+                  <div class="section-title">${t("hooks.pdf.generate.vehicleSectionTitle")}</div>
                   <div class="info-item">
-                    <div class="info-label">Znamka:</div>
+                    <div class="info-label">${t("hooks.pdf.generate.brand")}</div>
                     <div class="info-value">${vehicle.brand}</div>
                   </div>
                   <div class="info-item">
-                    <div class="info-label">Model:</div>
+                    <div class="info-label">${t("hooks.pdf.generate.model")}</div>
                     <div class="info-value">${vehicle.model}</div>
                   </div>
                   <div class="info-item">
-                    <div class="info-label">Leto:</div>
-                    <div class="info-value">${vehicle.buildYear || "Ni podatka"}</div>
+                    <div class="info-label">${t("hooks.pdf.generate.buildYear")}</div>
+                    <div class="info-value">${vehicle.buildYear || t("hooks.pdf.generate.noData")}</div>
                   </div>
                   <div class="info-item">
-                    <div class="info-label">VIN:</div>
-                    <div class="info-value">${vehicle.vin || "Ni podatka"}</div>
+                    <div class="info-label">${t("hooks.pdf.generate.vin")}</div>
+                    <div class="info-value">${vehicle.vin || t("hooks.pdf.generate.noData")}</div>
                   </div>
                   ${
                     vehicle.description
                       ? `
                   <div class="info-item">
-                    <div class="info-label">Opis:</div>
+                    <div class="info-label">${t("hooks.pdf.generate.description")}</div>
                     <div class="info-value">${vehicle.description}</div>
                   </div>
                   `
@@ -694,11 +705,11 @@ export const usePdf = () => {
               </div>
 
               <div class="section">
-                <div class="section-title">Podrobnosti servisa</div>
+                <div class="section-title">${t("hooks.pdf.generate.repairInfo")}</div>
                 <div class="repair-section">
                   <div class="repair-header">
                     <div>
-                      <div class="repair-type">${formatRepairType(repair.type)}</div>
+                      <div class="repair-type">${formatRepairType(repair.type, t)}</div>
                       <div class="repair-date">${formatDate(repair.repairDate)}</div>
                     </div>
                     <div>
@@ -708,11 +719,11 @@ export const usePdf = () => {
                   </div>
                     
                   ${
-                    getServiceTranslation(repair.options).length > 0
+                    getServiceTranslation(repair.options, t).length > 0
                       ? `
                   <div class="services-list">
-                    <strong>Opravljene storitve:</strong>
-                    ${getServiceTranslation(repair.options)
+                    <strong>${t("hooks.pdf.generate.repairsDone")}</strong>
+                    ${getServiceTranslation(repair.options, t)
                       .map(
                         (service) => `
                       <div class="service-item">
@@ -731,7 +742,7 @@ export const usePdf = () => {
                     repair.description
                       ? `
                   <div class="repair-description">
-                    <strong>Opis dodatnih del:</strong><br>
+                    <strong>${t("hooks.pdf.generate.repairDescription")}</strong><br>
                     ${repair.description}
                   </div>
                   `
@@ -742,7 +753,7 @@ export const usePdf = () => {
                     repair.note
                       ? `
                   <div class="repair-note">
-                    <strong>Opombe:</strong><br>
+                    <strong>${t("hooks.pdf.generate.repairNote")}</strong><br>
                     ${repair.note}
                   </div>
                   `
@@ -753,12 +764,12 @@ export const usePdf = () => {
                     repair.images && repair.images.length > 0
                       ? `
                     <div class="section">
-                      <div class="section-title">Slike servisa</div>
+                      <div class="section-title">${t("hooks.pdf.generate.repairImages")}</div>
                         <div class="image-container">
                           ${repair.images
                             .map(
                               (img) => `
-                              <img src="${img}" alt="Slika servisa" class="service-image">
+                              <img src="${img}" alt=${t("hooks.pdf.generate.repairImageAlt")} class="service-image">
                           `
                             )
                             .join("")}
@@ -769,23 +780,23 @@ export const usePdf = () => {
                   }
 
                   <div class="info-item" style="margin-top: 15px; padding-top: 10px; border-top: 1px solid #ccc;">
-                    <div class="info-label">ID servisa:</div>
+                    <div class="info-label">${t("hooks.pdf.generate.repairId")}</div>
                     <div class="info-value">${repair.uuid}</div>
                   </div>
                 </div>
               </div>
               
-              <div class="thank-you">HVALA ZA ZAUPANJE!</div>
+              <div class="thank-you">${t("hooks.pdf.generate.thankYouNote")}</div>
 
               <div class="footer">
                 <p>ID stranke: ${customer.uuid}</p>
-                <p>Dokument generiran: ${new Date().toLocaleDateString("sl-SI")} ob ${new Date().toLocaleTimeString("sl-SI")}</p>
+                <p>${t("hooks.pdf.generate.documentGenerated")} ${new Date().toLocaleDateString("sl-SI")} ${t("hooks.pdf.generate.at")} ${new Date().toLocaleTimeString("sl-SI")}</p>
               </div>
             </div>
           </body>
         </html>`;
 
-      const fileName = `servis_${formatRepairType(repair.type).toLowerCase().replace(" ", "_")}`;
+      const fileName = `repair_${formatRepairType(repair.type, t).toLowerCase().replace(" ", "_")}`;
 
       let PDFOptions = {
         html: htmlContent,
@@ -799,7 +810,10 @@ export const usePdf = () => {
       let file = await RNHTMLtoPDF.convert(PDFOptions);
 
       if (!file.filePath) {
-        Alert.alert("Napaka", "PDF datoteka za servis ni bila zgenerirana");
+        Alert.alert(
+          t("hooks.pdf.generate.generateRepairPdfFailTitle"),
+          t("hooks.pdf.generate.generateRepairPdfFailText")
+        );
         console.error("Failed to generate repair pdf: ", file);
         return;
       }
@@ -811,7 +825,10 @@ export const usePdf = () => {
       );
     } catch (error) {
       console.log("PDF failed to generate repair pdf: ", error);
-      Alert.alert("Napaka", "Prišlo je do napake pri generiranju PDF datoteke");
+      Alert.alert(
+        t("hooks.pdf.generate.generateRepairPdfFailTitle"),
+        `Catch: ${t("hooks.pdf.generate.generateRepairPdfFailText")}`
+      );
     }
   };
 
@@ -839,15 +856,22 @@ export const usePdf = () => {
   ) => {
     const fileExists = await RNFS.exists(filePath);
     if (!fileExists) {
-      Alert.alert("Napaka", "PDF datoteka ni bila najdena");
+      Alert.alert(
+        t("hooks.pdf.share.shareFailTitle"),
+        t("hooks.pdf.share.shareFailText")
+      );
       return;
     }
 
-    const titleStr = isRepair ? "Izvoz servisa" : "Izvoz stranke";
-    const subjectStr = isRepair ? "Servis za vozilo" : "Servisi za vozilo";
+    const titleStr = isRepair
+      ? t("hooks.pdf.share.exportRepairTitle")
+      : t("hooks.pdf.share.exportCustomerTitle");
+    const subjectStr = isRepair
+      ? t("hooks.pdf.share.exportRepairSubject")
+      : t("hooks.pdf.share.exportCustomerSubject");
     const messageStr = isRepair
-      ? `V prilogi je izvožen servis za vaše vozilo\n\nLp,\n${process.env.EXPO_PUBLIC_AUTO_MECHANIC}`
-      : `V prilogi so izvoženi servisi za vaše vozilo\n\nLp,\n${process.env.EXPO_PUBLIC_AUTO_MECHANIC}`;
+      ? `${t("hooks.pdf.share.exportRepairText")}${useUserStore.getState().firstName} ${useUserStore.getState().lastName}`
+      : `${t("hooks.pdf.share.exportCustomerText")}${useUserStore.getState().firstName} ${useUserStore.getState().lastName}`;
 
     const shareOptions: ShareOptions = {
       email: recipient, // Customer email

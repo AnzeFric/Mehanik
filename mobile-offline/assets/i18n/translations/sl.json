@@ -170,5 +170,75 @@
         "menuExport": "IZVOZI"
       }
     }
+  },
+  "hooks": {
+    "pdf": {
+      "generate": {
+        "customerDocumentTitle": "POROČILO STRANKE",
+        "customerSectionTitle": "Podatki stranke",
+        "noData": "Ni podatka",
+        "name": "Ime:",
+        "surname": "Priimek:",
+        "email": "Email:",
+        "phone": "Telefon:",
+        "vehicleSectionTitle": "Podatki vozila",
+        "brand": "Znamka:",
+        "model": "Model:",
+        "buildYear": "Leto:",
+        "vin": "VIN:",
+        "description": "Opis:",
+        "repairSectionTitle": "Seznam servisov",
+        "repairDescription": "Opis dodatnih del",
+        "repairNote": "Opombe:",
+        "repairImages": "Slike servisa",
+        "repairImageAlt": "Slika servisa",
+        "repairId": "ID servisa:",
+        "noRepairs": "Ni zabeleženih servisov za to stranko.",
+        "thankYouNote": "HVALA ZA ZAUPANJE!",
+        "customerId": "ID stranke:",
+        "documentGenerated": "Dokument generiran:",
+        "at": "ob",
+        "generatePdfFailTitle": "Napaka",
+        "generatePdfFailText": "PDF datoteka za stranko ni bila zgenerirana",
+        "repairDocumentTitle": "POROČILO SERVISA",
+        "repairInfo": "Podrobnosti servisa",
+        "repairsDone": "Opravljene storitve",
+        "generateRepairPdfFailTitle": "Napaka",
+        "generateRepairPdfFailText": "PDF datoteka za servis ni bila zgenerirana"
+      },
+      "share": {
+        "shareFailTitle": "Napaka",
+        "shareFailText": "PDF datoteka ni bila najdena",
+        "exportRepairTitle": "Izvoz servisa",
+        "exportCustomerTitle": "Izvoz stranke",
+        "exportRepairSubject": "Servis za vozilo",
+        "exportCustomerSubject": "Servisi za vozilo",
+        "exportRepairText": "V prilogi je izvožen servis za vaše vozilo.\n\nLp,\n",
+        "exportCustomerText": "V prilogi so izvoženi servisi za vaše vozilo.\n\nLp,\n"
+      }
+    }
+  },
+  "utils": {
+    "small": "Mali servis",
+    "large": "Veliki servis",
+    "other": "Drugo",
+    "default": "Servis",
+    "oilChange": "Olje",
+    "filterChange": "Oljni filter",
+    "airFilter": "Zračni filter",
+    "cabinFilter": "Kabinski filter",
+    "frontBrakes": "Sprednje zavore",
+    "backBrakes": "Zadnje zavore",
+    "batteryCheck": "Preverjanje akumulatorja",
+    "brakeFluid": "Menjava zavorne tekočine",
+    "coolant": "Menjava hladilne tekočine",
+    "sparkPlugs": "Svečke",
+    "outerTiming": "Zunanji jermen",
+    "outerTimingComplete": "Zunanji jermne kpl.",
+    "timingChain": "Zobati jermen/Veriga kpl.",
+    "transmissionFluid": "Menjava olja menjalnika",
+    "transmissionFilter": "Filter menjalnika",
+    "gearFluid": "Olje pogonov",
+    "waterPump": "Vodna črpalka"
   }
 }

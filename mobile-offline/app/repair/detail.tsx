@@ -88,7 +88,7 @@ export default function DetailRepairScreen() {
   return (
     <ThemedView type={"background"} style={styles.container}>
       <TitleRow
-        title={formatRepairType(repairData?.type || "")}
+        title={formatRepairType(repairData?.type || "", t)}
         hasBackButton={true}
         menuButton={
           <ThemedIcon
@@ -180,7 +180,7 @@ export default function DetailRepairScreen() {
                         />
                       </View>
                       <ThemedText type={"small"}>
-                        {formatRepairItems(key)}
+                        {formatRepairItems(key, t)}
                       </ThemedText>
                     </View>
                   ))}
