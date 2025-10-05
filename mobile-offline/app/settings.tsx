@@ -3,7 +3,6 @@ import TitleRow from "@/components/global/TitleRow";
 import { useTheme } from "@/context/ThemeContext";
 import ThemedText from "@/components/global/themed/ThemedText";
 import ThemedButton from "@/components/global/themed/ThemedButton";
-import ThemedView from "@/components/global/themed/ThemedView";
 import DatabaseBackupService from "@/database/services/DatabaseService";
 import { router } from "expo-router";
 import { useCustomers } from "@/hooks/useCustomers";
@@ -12,10 +11,15 @@ import { useTranslation } from "react-i18next";
 import useTranslationStore from "@/stores/useTranslationStore";
 import i18n from "@/assets/i18n/i18n";
 import { Translation } from "@/interfaces/translation";
+import ThemedTextInput from "@/components/global/themed/ThemedTextInput";
+import { Colors } from "@/constants/Colors";
+import ThemedScrollView from "@/components/global/themed/ThemedScrollView";
+import useUserStore from "@/stores/useUserStore";
 
 export default function SettingsScreen() {
   const { setCustomers } = useDataStore();
   const { selectedTranslation, setSelectedTranslation } = useTranslationStore();
+  const { firstName, lastName, setFirstName, setLastName } = useUserStore();
 
   const { selectedTheme, setSelectedTheme } = useTheme();
   const { fetchCustomers } = useCustomers();
@@ -63,7 +67,7 @@ export default function SettingsScreen() {
   };
 
   return (
-    <ThemedView type={"background"} style={styles.container}>
+    <ThemedScrollView contentContainerStyle={styles.container}>
       <TitleRow title={t("screens.settings.text.title")} hasBackButton={true} />
       <View style={styles.itemContainer}>
         <ThemedText type={"normal"}>
@@ -107,19 +111,50 @@ export default function SettingsScreen() {
           />
         </View>
       </View>
-      <View style={styles.exportImportContainer}>
-        <ThemedButton
-          buttonType={"small"}
-          buttonText={t("screens.settings.text.export")}
-          onPress={exportDatabase}
-        />
-        <ThemedButton
-          buttonType={"small"}
-          buttonText={t("screens.settings.text.import")}
-          onPress={importDatabase}
-        />
+      <View style={styles.itemContainer}>
+        <View>
+          <ThemedText type={"normal"}>
+            {t("screens.settings.text.nameLabel")}
+          </ThemedText>
+          <ThemedText type={"small"}>
+            {t("screens.settings.text.nameDisclaimer")}
+          </ThemedText>
+        </View>
+        <View style={styles.nameContainer}>
+          <ThemedTextInput
+            style={styles.input}
+            placeholder={t("screens.settings.text.name")}
+            value={firstName}
+            onChangeText={setFirstName}
+            autoCapitalize={"words"}
+          />
+          <ThemedTextInput
+            style={styles.input}
+            placeholder={t("screens.settings.text.surname")}
+            value={lastName}
+            onChangeText={setLastName}
+            autoCapitalize={"words"}
+          />
+        </View>
       </View>
-    </ThemedView>
+      <View style={styles.itemContainer}>
+        <ThemedText type={"normal"}>
+          {t("screens.settings.text.importExportLabel")}
+        </ThemedText>
+        <View style={styles.itemContainer}>
+          <ThemedButton
+            buttonType={"small"}
+            buttonText={t("screens.settings.text.export")}
+            onPress={exportDatabase}
+          />
+          <ThemedButton
+            buttonType={"small"}
+            buttonText={t("screens.settings.text.import")}
+            onPress={importDatabase}
+          />
+        </View>
+      </View>
+    </ThemedScrollView>
   );
 }
 
@@ -127,11 +162,10 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 20,
     paddingHorizontal: 25,
-    gap: 20,
-    flex: 1,
+    gap: 30,
   },
   itemContainer: {
-    gap: 10,
+    gap: 20,
   },
   optionContainer: {
     flexDirection: "row",
@@ -144,10 +178,16 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: "center",
   },
-  exportImportContainer: {
-    flex: 1,
+  nameContainer: {
+    flexDirection: "row",
     gap: 20,
-    justifyContent: "flex-end",
-    paddingBottom: 20,
+  },
+  input: {
+    height: 45,
+    fontSize: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.light.inactiveBorder,
+    paddingVertical: 8,
+    flex: 1,
   },
 });
