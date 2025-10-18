@@ -241,11 +241,11 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 15,
     paddingHorizontal: 25,
-    paddingTop: 20,
+    paddingBottom: 20,
   },
   contentContainer: {
     gap: 15,
-    paddingVertical: 20,
+    paddingBottom: 20,
   },
   itemContainer: {
     paddingHorizontal: 20,

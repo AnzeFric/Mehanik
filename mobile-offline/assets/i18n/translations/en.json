@@ -5,7 +5,7 @@
       "title": "Index screen",
       "text": {
         "loading": "Loading data...",
-        "title": "Service library",
+        "title": "Repair library",
         "empty": "Customers do not exist."
       }
     },
@@ -49,8 +49,8 @@
         "title": "Add Customer",
         "customerSection": "Customer",
         "vehicleSection": "Vehicle",
-        "repairSection": "Service",
-        "emptyRepairNotice": "If no service was performed, select \"Other\" and leave it blank.",
+        "repairSection": "Repair",
+        "emptyRepairNotice": "If no repair was performed, select \"Other\" and leave it blank.",
         "buttonSavingText": "Saving...",
         "buttonAddText": "Add"
       }
@@ -77,8 +77,8 @@
       "title": "Repair add",
       "text": {
         "repairSaveFailTitle": "Error",
-        "repairSaveFailText": "An error occurred while saving the service.",
-        "title": "Save Service",
+        "repairSaveFailText": "An error occurred while saving the repair.",
+        "title": "Save Repair",
         "save": "Save"
       }
     },
@@ -86,13 +86,13 @@
       "title": "Repair detail",
       "text": {
         "repairFetchFailTitle": "Error",
-        "repairFetchFailText": "The service could not be found.",
+        "repairFetchFailText": "The repair could not be found.",
         "priceLabel": "Repair Price",
         "kilometersLabel": "Kilometers",
-        "repairDateLabel": "Date of Service",
+        "repairDateLabel": "Date of Repair",
         "doneRepairsLabel": "Repairs",
         "noteLabel": "Additional Notes",
-        "repairImages": "Service Images",
+        "repairImages": "Repair Images",
         "image": "images",
         "loading": "Loading..."
       }
@@ -101,10 +101,10 @@
       "title": "Repair edit",
       "text": {
         "repairFetchFailTitle": "Error",
-        "repairFetchFailText": "The service could not be found.",
+        "repairFetchFailText": "The repair could not be found.",
         "repairEditFailTitle": "Error",
-        "repairEditFailText": "An error occurred while updating the service.",
-        "title": "Edit Service",
+        "repairEditFailText": "An error occurred while updating the repair.",
+        "title": "Edit Repair",
         "editing": "Editing...",
         "edit": "Edit"
       }
@@ -122,12 +122,12 @@
         "customerDeleteFailText": "An error occurred while deleting the customer.",
         "customerModalDeleteMessage": "The customer will be permanently deleted.",
         "repairDeleteFailTitle": "Error",
-        "repairDeleteFailText": "An error occurred while deleting the service.",
-        "repairModalDeleteMessage": "The service will be permanently deleted."
+        "repairDeleteFailText": "An error occurred while deleting the repair.",
+        "repairModalDeleteMessage": "The repair will be permanently deleted."
       },
       "displays": {
         "customerTitle": "Customer Information",
-        "repairEmptyList": "You have no recorded services.",
+        "repairEmptyList": "You have no recorded repairs.",
         "vehicleTitle": "Vehicle Information"
       },
       "forms": {
@@ -187,13 +187,13 @@
         "buildYear": "Year:",
         "vin": "VIN:",
         "description": "Description:",
-        "repairSectionTitle": "Service Records",
+        "repairSectionTitle": "Repair Records",
         "repairDescription": "Additional Work Description",
         "repairNote": "Notes:",
-        "repairImages": "Service Images",
-        "repairImageAlt": "Service Image",
-        "repairId": "Service ID:",
-        "noRepairs": "No recorded services for this customer.",
+        "repairImages": "Repair Images",
+        "repairImageAlt": "Repair Image",
+        "repairId": "Repair ID:",
+        "noRepairs": "No recorded repairs for this customer.",
         "thankYouNote": "THANK YOU FOR YOUR TRUST!",
         "customerId": "Customer ID:",
         "documentGenerated": "Document generated:",
@@ -202,7 +202,7 @@
         "generatePdfFailText": "PDF file for the customer was not generated",
         "repairDocumentTitle": "REPAIR REPORT",
         "repairInfo": "Repair details",
-        "repairsDone": "Completed services",
+        "repairsDone": "Completed repairs",
         "generateRepairPdfFailTitle": "Error",
         "generateRepairPdfFailText": "PDF file for the repair was not generated"
       },

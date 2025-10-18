@@ -33,7 +33,7 @@ export default function NotFoundScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 25,
+    paddingBottom: 25,
     paddingHorizontal: 20,
     flex: 1,
   },

@@ -149,7 +149,7 @@ export default function AddCustomerScreen() {
 const styles = StyleSheet.create({
   container: {
     gap: 25,
-    paddingVertical: 20,
+    paddingBottom: 25,
     paddingHorizontal: 25,
   },
   buttonContainer: {

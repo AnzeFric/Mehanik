@@ -1,13 +1,29 @@
 import { Stack } from "expo-router";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import {
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 import { ThemeProvider } from "@/context/ThemeContext";
 import ThemedStatusBar from "@/components/global/themed/ThemedStatusBar";
+import * as NavigationBar from "expo-navigation-bar";
+import { useEffect } from "react";
+import { View } from "react-native";
+import ThemedView from "@/components/global/themed/ThemedView";
 
-export default function RootLayout() {
+function RootLayoutContent() {
+  const insets = useSafeAreaInsets();
+
+  useEffect(() => {
+    NavigationBar.setVisibilityAsync("hidden");
+  }, []);
+
   return (
-    <SafeAreaProvider>
-      <ThemeProvider>
-        <ThemedStatusBar />
+    <ThemeProvider>
+      <ThemedStatusBar />
+      <ThemedView
+        type={"background"}
+        style={{ flex: 1, paddingTop: insets.top }}
+      >
         <Stack>
           <Stack.Screen name="index" options={{ headerShown: false }} />
           <Stack.Screen name="settings" options={{ headerShown: false }} />
@@ -22,7 +38,15 @@ export default function RootLayout() {
           <Stack.Screen name="repair/add" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" options={{ headerShown: false }} />
         </Stack>
-      </ThemeProvider>
+      </ThemedView>
+    </ThemeProvider>
+  );
+}
+
+export default function RootLayout() {
+  return (
+    <SafeAreaProvider>
+      <RootLayoutContent />
     </SafeAreaProvider>
   );
 }

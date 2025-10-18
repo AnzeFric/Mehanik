@@ -113,7 +113,7 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   header: {
-    paddingVertical: 25,
+    paddingBottom: 25,
     paddingHorizontal: 20,
     gap: 20,
   },
